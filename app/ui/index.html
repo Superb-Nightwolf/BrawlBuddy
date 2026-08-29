@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123a78">
+  <meta name="description" content="BrawlBuddy — your personal Brawl Stars progression companion.">
+  <title>BrawlBuddy</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css?v=5">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <a class="brand" href="/" aria-label="BrawlBuddy home">
+        <span class="brand-mark"><b>★</b></span>
+        <span class="brand-copy"><strong>BrawlBuddy</strong><small>POWER UP SMARTER</small></span>
+      </a>
+      <nav class="nav-list">
+        <a class="nav-item" data-nav="overview" href="/"><span class="nav-icon">⌂</span><span>Overview</span></a>
+        <a class="nav-item" data-nav="battles" href="/battles"><span class="nav-icon">⚔</span><span>Battle Log</span></a>
+        <a class="nav-item" data-nav="events" href="/events"><span class="nav-icon">🗺</span><span>Events & Maps</span></a>
+        <a class="nav-item" data-nav="leaderboards" href="/leaderboards"><span class="nav-icon">🏆</span><span>Leaderboards</span></a>
+        <a class="nav-item" data-nav="calculator" href="/calculator"><span class="nav-icon">🎛</span><span>Calculator</span></a>
+        <a class="nav-item" data-nav="brawlers" href="/brawlers"><span class="nav-icon">★</span><span>Brawlers</span></a>
+        <a class="nav-item" data-nav="club" href="/club"><span class="nav-icon">🛡</span><span>Club Hub</span></a>
+        <a class="nav-item" data-nav="resources" href="/resources"><span class="nav-icon">◆</span><span>Resources</span></a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-header-copy">
+          <p id="page-eyebrow" class="eyebrow">BRAWL COMMAND CENTER</p>
+          <h1 id="page-title">Command HQ: <span id="welcome-name">Brawler</span></h1>
+          <p id="page-subtitle" class="page-subtitle">Track live trophy milestones, max out your brawlers, and dominate the arena with smart upgrades.</p>
+        </div>
+        <div class="topbar-actions">
+          <span id="api-status" class="status-pill"><i></i><span>Checking API</span></span>
+          <button id="share-card-btn" class="subtle-button" type="button"><span>🎴</span> Share Card</button>
+          <button id="connect-button" class="primary-button" type="button"><span>＋</span> Connect tag</button>
+        </div>
+      </header>
+
+      <div id="notice" class="notice hidden" role="status"></div>
+      <div id="loading-state" class="loading-state"><div class="loading-star">★</div><strong>Loading your BrawlBuddy HQ…</strong></div>
+
+      <section id="overview-view" class="view hidden">
+        <article class="player-hero">
+          <div class="hero-burst" aria-hidden="true"></div>
+          <div class="player-avatar-card">
+            <div class="avatar-frame">
+              <img id="player-art" src="/assets/brawlers/16000000.png" alt="BrawlBuddy official brawler mascot">
+              <span id="exp-badge" class="exp-badge">LVL <strong id="exp-level">181</strong></span>
+            </div>
+          </div>
+          <div class="player-hero-copy">
+            <div class="label-row">
+              <span id="data-label" class="data-label demo">OFFICIAL BRAWLER</span>
+              <span id="prestige-tier-badge" class="prestige-tier-badge">⚡ MASTERS LEAGUE</span>
+              <span id="brawler-prestige-badge" class="brawler-prestige-badge"><i class="badge-crown">👑</i> PRESTIGE <b id="brawler-prestige-val" class="prestige-num-bubble">0</b></span>
+              <span id="champ-badge" class="champ-badge hidden">🏆 15-WIN QUALIFIED</span>
+              <span id="hero-xp-badge" class="hero-xp-badge">⭐ <strong id="hero-xp-points">169,043</strong> XP</span>
+              <span id="freshness" class="freshness-pill"><i class="live-dot"></i> <span id="freshness-text">Updated now</span></span>
+            </div>
+            <h2 id="profile-name">Loading brawler</h2>
+            <div class="profile-meta">
+              <span id="player-tag" class="meta-tag">#2PP</span>
+              <span>•</span>
+              <span id="club-pill" class="club-pill"><i class="club-shield">🛡</i> <strong id="club-name">Starrbound</strong> <span id="club-tag" class="club-tag-small">#PQL20</span></span>
+              <span>•</span>
+              <span id="hero-level-tag" class="hero-level-tag">🎖 <strong id="hero-level-num">Level 181</strong></span>
+            </div>
+            <div class="hero-stats">
+              <div><span class="mini-icon trophy-icon">★</span><strong id="trophy-count">—</strong><small>Current Trophies</small></div>
+              <div><span class="mini-icon best-icon">↗</span><strong id="highest-trophies">—</strong><small>Personal Best</small></div>
+              <div><span class="mini-icon win-icon">⚔</span><strong id="total-victories-count">—</strong><small>Total Victories</small></div>
+              <div><span class="mini-icon prestige-stat-icon">👑</span><strong id="hero-prestige-count" class="prestige-stat-highlight">0</strong><small>1000+ Prestige</small></div>
+              <div><span class="mini-icon champ-stat-icon">🏆</span><strong id="hero-champ-status">Pending</strong><small>Championship</small></div>
+            </div>
+          </div>
+          <a class="hero-collection-link" href="/brawlers"><span>VIEW COLLECTION</span><strong id="hero-brawler-count">—</strong><small>Brawlers →</small></a>
+        </article>
+
+        <!-- Combat Archetype & Account Completion Overview Strip -->
+        <section class="panel archetype-summary-panel">
+          <div class="archetype-strip-grid">
+            <div class="archetype-cell">
+              <span class="mini-kicker">COMBAT ARCHETYPE</span>
+              <strong id="combat-archetype-text" class="archetype-title">⚔ 3v3 Team Tactician</strong>
+              <small id="combat-archetype-desc">Dominates team coordination & objective control</small>
+            </div>
+            <div class="archetype-cell">
+              <span class="mini-kicker">ACCOUNT COMPLETION INDEX</span>
+              <div class="completion-bar-wrap">
+                <div class="completion-bar-track">
+                  <div id="completion-bar-fill" class="completion-bar-fill" style="width: 42%"></div>
+                </div>
+                <strong id="completion-score-badge">42% Max Score</strong>
+              </div>
+              <small>Calculated from roster, Power 11s, & equipment</small>
+            </div>
+            <div class="archetype-cell">
+              <span class="mini-kicker">HYPERCHARGE READY</span>
+              <strong id="hypercharge-ready-val" class="hypercharge-val">3 Brawlers (P11)</strong>
+              <small>Eligible for peak overdrive combat</small>
+            </div>
+            <div class="archetype-cell">
+              <span class="mini-kicker">POWER PLAY RECORD</span>
+              <strong id="power-play-val" class="power-play-val">1,250 Pts</strong>
+              <small>All-time historic competitive peak</small>
+            </div>
+          </div>
+        </section>
+
+        <!-- Top Flagship Brawler Loadouts Snapshot -->
+        <section class="panel flagship-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">TACTICAL LOADOUTS</p>
+              <h2>Top Flagship Brawlers & Active Equipment</h2>
+            </div>
+            <span class="source-chip official-chip">CORE LINEUP</span>
+          </div>
+          <div id="flagship-loadouts-grid" class="flagship-grid"></div>
+        </section>
+
+        <!-- Trophy Road Milestone Journey -->
+        <section class="panel trophy-road-panel" aria-label="Trophy road progression">
+          <div class="section-heading">
+            <div><p class="eyebrow">TROPHY ROAD</p><h2>Next Milestone Journey</h2></div>
+            <span class="source-chip calculated">TIER PROGRESSION</span>
+          </div>
+          <div class="trophy-road-body">
+            <div class="milestone-status">
+              <div class="milestone-badge">★ <strong id="milestone-target">30,000</strong></div>
+              <div class="milestone-text">
+                <strong id="milestone-headline">Road to 30,000 Trophies</strong>
+                <p id="milestone-sub"><span id="milestone-needed">880 trophies needed</span> • <span id="milestone-pct">97%</span> reached</p>
+              </div>
+              <div class="retention-stat">
+                <small>PEAK RETENTION</small>
+                <strong id="peak-retention">97.8%</strong>
+              </div>
+            </div>
+            <div class="milestone-track-wrap">
+              <div class="milestone-track">
+                <div id="milestone-fill" class="milestone-fill" style="width: 95%"></div>
+              </div>
+              <div class="milestone-markers">
+                <span>0</span>
+                <span id="marker-current">29,120 Peak</span>
+                <span id="marker-next">30,000 Next Tier</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="overview-metrics" aria-label="Account summary">
+          <article class="metric-card blue"><span>UNLOCKED</span><strong id="brawler-count">—</strong><small>Brawlers in this account</small></article>
+          <article class="metric-card yellow"><span>AVERAGE POWER</span><strong id="average-power">—</strong><small>Across your collection</small></article>
+          <article class="metric-card pink"><span>POWER 11</span><strong id="power-eleven">—</strong><small>Max power brawlers</small></article>
+          <article class="metric-card green"><span>EQUIPPED</span><strong id="equipped-count">—</strong><small>With SP or Gadget</small></article>
+        </section>
+
+        <!-- Visual Analytics Grid -->
+        <div class="analytics-charts-grid">
+          <!-- Chart 1: Combat Roles Donut Chart -->
+          <section class="panel chart-card class-chart-card">
+            <div class="section-heading">
+              <div><p class="eyebrow">COMBAT SPECIALIZATION</p><h2>Brawler Roles & Classes</h2></div>
+              <span class="source-chip official-chip">ROSTER SPECTRUM</span>
+            </div>
+            <div class="donut-chart-layout">
+              <div class="donut-visual-wrap">
+                <div id="role-donut" class="donut-chart">
+                  <div class="donut-hole">
+                    <strong id="donut-center-count">—</strong>
+                    <small>BRAWLERS</small>
+                  </div>
+                </div>
+              </div>
+              <div id="role-legend" class="donut-legend-grid"></div>
+            </div>
+          </section>
+
+          <!-- Chart 2: Equipment & Loadout Completion Rings -->
+          <section class="panel chart-card equipment-vault-card">
+            <div class="section-heading">
+              <div><p class="eyebrow">LOADOUT MASTERY</p><h2>Equipment Vault</h2></div>
+              <span class="source-chip calculated">COLLECTION METER</span>
+            </div>
+            <div class="vault-meters-grid">
+              <div class="meter-item">
+                <div id="ring-gadget" class="ring-meter" style="--val: 65%"><span id="meter-gadget-val">0%</span></div>
+                <strong>Gadgets</strong>
+                <p><span id="count-gadgets">0</span> owned</p>
+              </div>
+              <div class="meter-item">
+                <div id="ring-sp" class="ring-meter" style="--val: 50%"><span id="meter-sp-val">0%</span></div>
+                <strong>Star Powers</strong>
+                <p><span id="count-star-powers">0</span> owned</p>
+              </div>
+              <div class="meter-item">
+                <div id="ring-gear" class="ring-meter" style="--val: 40%"><span id="meter-gear-val">0%</span></div>
+                <strong>Gears</strong>
+                <p><span id="count-gears">0</span> owned</p>
+              </div>
+            </div>
+            <div class="vault-summary-footer">
+              <div><span>Total Equipment Built</span><strong id="total-equipment-count">0</strong></div>
+              <div><span>Avg Equipment / Brawler</span><strong id="avg-equipment-count">0.0</strong></div>
+            </div>
+          </section>
+
+          <!-- Chart 3: Roster Mastery & Rank Tiers -->
+          <section class="panel chart-card rank-tier-card">
+            <div class="section-heading">
+              <div><p class="eyebrow">TROPHY TIERS</p><h2>Roster Rank Mastery</h2></div>
+              <span class="source-chip official-chip">TIER BREAKDOWN</span>
+            </div>
+            <div id="rank-tier-bars" class="rank-tier-bars"></div>
+          </section>
+
+          <!-- Chart 4: Special Event & Boss Records -->
+          <section class="panel chart-card special-events-card">
+            <div class="section-heading">
+              <div><p class="eyebrow">SPECIAL OPERATIONS</p><h2>Event & Boss Records</h2></div>
+              <span class="source-chip official-chip">RECORDS</span>
+            </div>
+            <div class="event-records-list">
+              <div class="event-record-item">
+                <span class="event-icon robo">🤖</span>
+                <div class="event-info">
+                  <strong>Robo Rumble Record</strong>
+                  <small>Highest difficulty level cleared</small>
+                </div>
+                <b id="rec-robo-rumble" class="event-badge">Insane XVI</b>
+              </div>
+              <div class="event-record-item">
+                <span class="event-icon big">👾</span>
+                <div class="event-info">
+                  <strong>Big Brawler Survival</strong>
+                  <small>Personal best survival timer</small>
+                </div>
+                <b id="rec-big-brawler" class="event-badge">Record set</b>
+              </div>
+              <div class="event-record-item">
+                <span class="event-icon tourney">🏆</span>
+                <div class="event-info">
+                  <strong>Championship Challenge</strong>
+                  <small>15-win monthly qualification</small>
+                </div>
+                <b id="rec-championship" class="event-badge qualified">Qualified ★</b>
+              </div>
+              <div class="event-record-item">
+                <span class="event-icon xp">⭐</span>
+                <div class="event-info">
+                  <strong>Account Experience</strong>
+                  <small id="rec-xp-points">143,200 Total XP</small>
+                </div>
+                <b id="rec-exp-lvl" class="event-badge">Level 186</b>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="battle-club-grid">
+          <section class="panel battle-records">
+            <div class="section-heading">
+              <div><p class="eyebrow">VICTORIES & MODES</p><h2>Battle Records & Showdown</h2></div>
+              <span class="source-chip official-chip">OFFICIAL API</span>
+            </div>
+            <div class="battle-stats-grid">
+              <div class="battle-card solo-card">
+                <div class="battle-card-head"><span class="battle-icon solo">☠</span><div><strong>Solo Showdown</strong><small>1st place finishes</small></div></div>
+                <strong id="solo-wins-count" class="battle-count">—</strong>
+              </div>
+              <div class="battle-card duo-card">
+                <div class="battle-card-head"><span class="battle-icon duo">👥</span><div><strong>Duo Showdown</strong><small>Victories with teammate</small></div></div>
+                <strong id="duo-wins-count" class="battle-count">—</strong>
+              </div>
+              <div class="battle-card trio-card">
+                <div class="battle-card-head"><span class="battle-icon trio">⚔</span><div><strong>3v3 Victories</strong><small>Team battle wins</small></div></div>
+                <strong id="victories-3v3-count" class="battle-count">—</strong>
+              </div>
+            </div>
+            <div class="win-breakdown-bar">
+              <div class="breakdown-label"><span>Victory Distribution</span><span id="win-ratio-summary">—</span></div>
+              <div class="win-track">
+                <i id="bar-3v3" class="seg-3v3" style="width: 70%" title="3v3 Wins"></i>
+                <i id="bar-solo" class="seg-solo" style="width: 15%" title="Solo Showdown"></i>
+                <i id="bar-duo" class="seg-duo" style="width: 15%" title="Duo Showdown"></i>
+              </div>
+              <div class="win-legend">
+                <span><b class="dot dot-3v3"></b> 3v3 Battles (<span id="pct-3v3">0%</span>)</span>
+                <span><b class="dot dot-solo"></b> Solo Showdown (<span id="pct-solo">0%</span>)</span>
+                <span><b class="dot dot-duo"></b> Duo Showdown (<span id="pct-duo">0%</span>)</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel club-card-panel">
+            <div class="section-heading">
+              <div><p class="eyebrow">ALLIANCE & SYNDICATE</p><h2>Current Club</h2></div>
+              <span id="club-status-chip" class="source-chip">ACTIVE CLUB</span>
+            </div>
+            <div class="club-detail-body">
+              <div class="club-emblem">🛡</div>
+              <div class="club-info">
+                <h3 id="panel-club-name">Starrbound</h3>
+                <p id="panel-club-tag" class="club-tag-code">#PQL20</p>
+                <p id="panel-club-desc" class="club-desc">Compete together in Club events, Mega Pig, and trophy pushes.</p>
+              </div>
+            </div>
+            <div class="club-actions">
+              <button id="copy-club-tag" class="subtle-button" type="button">📋 Copy Club Tag</button>
+              <button id="copy-player-tag" class="subtle-button" type="button">📋 Copy Brawler Tag</button>
+            </div>
+          </section>
+        </div>
+
+        <section class="wallet-strip panel">
+          <div class="wallet-title"><span class="section-icon">◆</span><div><p class="eyebrow">YOUR WALLET</p><h2>Current resources</h2></div></div>
+          <div class="wallet-items">
+            <div><i class="resource-icon coins">●</i><span>Coins</span><strong id="overview-coins">0</strong></div>
+            <div><i class="resource-icon power-points">◆</i><span>Power Points</span><strong id="overview-power-points">0</strong></div>
+            <div><i class="resource-icon gems">♦</i><span>Gems</span><strong id="overview-gems">0</strong></div>
+            <div><i class="resource-icon bling">✦</i><span>Bling</span><strong id="overview-bling">0</strong></div>
+          </div>
+          <a class="small-action" href="/resources">Edit wallet →</a>
+        </section>
+
+        <div class="overview-grid">
+          <section class="panel account-shape">
+            <div class="section-heading"><div><p class="eyebrow">POWER DISTRIBUTION</p><h2>Your roster shape</h2></div><span class="source-chip calculated">CALCULATED</span></div>
+            <div class="ring-wrap"><div id="power-ring" class="power-ring" style="--progress:0"><span><strong id="ring-value">0%</strong><small>AT P11</small></span></div><div class="ring-copy"><strong id="ring-heading">Building snapshot…</strong><p id="ring-description">Loading your power-level distribution.</p></div></div>
+            <div id="power-bars" class="power-bars"></div>
+          </section>
+          <section class="panel quick-collection">
+            <div class="section-heading"><div><p class="eyebrow">TOP BRAWLERS</p><h2>Collection highlights</h2></div><a href="/brawlers">See all →</a></div>
+            <div id="quick-brawlers" class="quick-brawlers"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="brawlers-view" class="view hidden">
+        <div class="collection-banner panel">
+          <div><span class="banner-chip">FULL CATALOG</span><h2>106 brawlers. Every level.<br><em>One clear picture.</em></h2><p>Open any brawler to see its artwork and level journey. Owned account progress remains clearly separated from catalog entries.</p></div>
+          <div class="collection-badge"><strong id="collection-total">106</strong><span>BRAWLERS</span></div>
+        </div>
+        <section class="panel brawler-panel">
+          <div class="collection-toolbar">
+            <label class="search-box"><span>⌕</span><input id="brawler-search" type="search" placeholder="Search all 106 brawlers" aria-label="Search brawlers"></label>
+            <select id="brawler-sort" aria-label="Sort brawlers"><option value="power_asc">Power 1 → 11</option><option value="power_desc">Power 11 → 1</option><option value="trophies">Most trophies</option><option value="name">Name A–Z</option></select>
+            <select id="equipment-filter" aria-label="Filter equipment ownership"><option value="all">All equipment</option><option value="has_hypercharge">Has Hypercharge</option><option value="no_hypercharge">No Hypercharge</option><option value="has_sp">Has Star Power</option><option value="no_sp">No Star Power</option><option value="has_gadget">Has Gadget</option><option value="no_gadget">No Gadget</option><option value="has_gear">Has Gear</option><option value="no_gear">No Gear</option></select>
+            <div class="view-toggle"><button id="grid-view" class="active" type="button" aria-label="Card view">▦</button><button id="table-view" type="button" aria-label="Table view">☷</button></div>
+          </div>
+          <div class="level-filter-label"><span>POWER LEVEL</span><small>Select one exact level</small></div>
+          <div id="level-filter" class="level-filter">
+            <button class="level-chip active" data-level="all" type="button">ALL</button>
+            <button class="level-chip" data-level="1" type="button">1</button><button class="level-chip" data-level="2" type="button">2</button><button class="level-chip" data-level="3" type="button">3</button><button class="level-chip" data-level="4" type="button">4</button><button class="level-chip" data-level="5" type="button">5</button><button class="level-chip" data-level="6" type="button">6</button><button class="level-chip" data-level="7" type="button">7</button><button class="level-chip" data-level="8" type="button">8</button><button class="level-chip" data-level="9" type="button">9</button><button class="level-chip" data-level="10" type="button">10</button><button class="level-chip max" data-level="11" type="button">11</button>
+          </div>
+          <div id="brawler-grid" class="brawler-grid" aria-live="polite"></div><div id="brawler-empty" class="empty-state hidden">No brawlers match those filters.</div>
+        </section>
+      </section>
+
+      <section id="resources-view" class="view hidden">
+        <div class="resource-hero panel">
+          <div><span class="banner-chip yellow-chip">MANUAL WALLET</span><h2>Know exactly what<br><em>you can work with.</em></h2><p>Supercell’s public player API does not return private spendable balances, so these values are entered by you and stored only on this device.</p></div>
+          <img src="/assets/player-mascot.png" alt="BrawlBuddy resource guide mascot">
+        </div>
+        <section class="resource-balance-grid" aria-label="Resource balances">
+          <article class="balance-card coin-card"><i class="resource-icon coins">●</i><span>COINS</span><strong id="balance-coins">0</strong><small>Manual balance</small></article>
+          <article class="balance-card pp-card"><i class="resource-icon power-points">◆</i><span>POWER POINTS</span><strong id="balance-power-points">0</strong><small>Manual balance</small></article>
+          <article class="balance-card gem-card"><i class="resource-icon gems">♦</i><span>GEMS</span><strong id="balance-gems">0</strong><small>Manual balance</small></article>
+          <article class="balance-card bling-card"><i class="resource-icon bling">✦</i><span>BLING</span><strong id="balance-bling">0</strong><small>Manual balance</small></article>
+          <article class="balance-card credit-card"><i class="resource-icon credits">★</i><span>CREDITS</span><strong id="balance-credits">0</strong><small>Manual balance</small></article>
+        </section>
+        <div class="resource-page-grid">
+          <section class="panel resource-editor">
+            <div class="section-heading"><div><p class="eyebrow">UPDATE WALLET</p><h2>Enter your current balances</h2></div><span class="source-chip">USER INPUT</span></div>
+            <form id="resource-form" class="resource-form">
+              <label><span><i class="resource-icon coins">●</i>Coins</span><input id="coins" name="coins" type="number" min="0" max="100000000" value="0"></label>
+              <label><span><i class="resource-icon power-points">◆</i>Power Points</span><input id="power-points" name="power_points" type="number" min="0" max="100000000" value="0"></label>
+              <label><span><i class="resource-icon gems">♦</i>Gems</span><input id="gems" name="gems" type="number" min="0" max="100000000" value="0"></label>
+              <label><span><i class="resource-icon credits">★</i>Credits</span><input id="credits" name="credits" type="number" min="0" max="100000000" value="0"></label>
+              <label><span><i class="resource-icon bling">✦</i>Bling</span><input id="bling" name="bling" type="number" min="0" max="100000000" value="0"></label>
+              <button class="primary-button wide" type="submit">SAVE MY WALLET <span>→</span></button>
+            </form>
+          </section>
+          <aside class="panel resource-explainer"><span class="explainer-icon">!</span><h3>Why are these manual?</h3><p>The official API provides public account statistics and unlocked brawlers, but it does not provide your private Coins, Power Points, Gems, Credits, or Bling balance.</p><ul><li>Balances are stored in local SQLite.</li><li>Each player tag has its own wallet.</li><li>No wallet value is sent to Supercell.</li><li>Recommendation math will use these values later.</li></ul></aside>
+        </div>
+      </section>
+
+      <!-- Club / Clan Hub View -->
+      <section id="club-view" class="view hidden">
+        <article class="player-hero club-hero-banner">
+          <div class="hero-burst" aria-hidden="true"></div>
+          <div class="player-avatar-card">
+            <div class="avatar-frame club-badge-frame">
+              <span id="club-hero-badge-icon" class="club-badge-symbol">🛡</span>
+              <img id="club-hero-badge-img" class="club-badge-img hidden" src="" alt="Club Emblem">
+              <span id="club-capacity-pill" class="exp-badge">30 / 30</span>
+            </div>
+          </div>
+          <div class="player-hero-copy">
+            <div class="label-row">
+              <span id="club-data-label" class="data-label demo">DEMO CLUB</span>
+              <span id="club-prestige-badge" class="prestige-tier-badge">⚡ LEGENDARY ALLIANCE</span>
+              <span id="club-type-badge" class="banner-chip">OPEN CLUB</span>
+              <span id="club-freshness" class="freshness">Updated now</span>
+            </div>
+            <h2 id="club-view-name">Starrbound Alliance</h2>
+            <div class="profile-meta">
+              <span id="club-view-tag" class="meta-tag">#PQL20</span>
+              <span>•</span>
+              <span id="club-desc-text" class="club-hero-desc">Top club pushing trophies, Mega Pig & championship qualifiers.</span>
+            </div>
+            <div class="hero-stats">
+              <div><span class="mini-icon trophy-icon">★</span><strong id="club-total-trophies">—</strong><small>Total Trophies</small></div>
+              <div><span class="mini-icon win-icon">👥</span><strong id="club-member-count">—</strong><small>Members</small></div>
+              <div><span class="mini-icon best-icon">🎯</span><strong id="club-required-trophies">—</strong><small>Min Required</small></div>
+            </div>
+          </div>
+          <a class="hero-collection-link" id="copy-club-hero-tag" href="#roster"><span>ACTION</span><strong>📋</strong><small>Copy Tag</small></a>
+        </article>
+
+        <section class="prestige-bar panel" aria-label="Club highlights">
+          <div class="prestige-item"><span class="prestige-icon exp-icon">⭐</span><div><small>AVG TROPHIES</small><strong id="club-avg-trophies">—</strong><span>Per member</span></div></div>
+          <div class="prestige-item"><span class="prestige-icon rank30-icon">👑</span><div><small>TOP BRAWLER</small><strong id="club-top-member-name">—</strong><span id="club-top-member-trophies">— ★</span></div></div>
+          <div class="prestige-item"><span class="prestige-icon rank25-icon">🛡</span><div><small>LEADERSHIP</small><strong id="club-leadership-count">—</strong><span>President & VPs</span></div></div>
+          <div class="prestige-item"><span class="prestige-icon champ-icon">🏆</span><div><small>ALLIANCE STATUS</small><strong id="club-capacity-status">Full (30/30)</strong><span>Active Syndicate</span></div></div>
+        </section>
+
+        <div class="analytics-charts-grid">
+          <!-- Club Chart 1: Role Composition Donut Chart -->
+          <section class="panel chart-card">
+            <div class="section-heading">
+              <div><p class="eyebrow">COMMAND HIERARCHY</p><h2>Leadership & Roles</h2></div>
+              <span class="source-chip official-chip">ROSTER SPECTRUM</span>
+            </div>
+            <div class="donut-chart-layout">
+              <div class="donut-visual-wrap">
+                <div id="club-role-donut" class="donut-chart">
+                  <div class="donut-hole">
+                    <strong id="club-donut-count">30</strong>
+                    <small>MEMBERS</small>
+                  </div>
+                </div>
+              </div>
+              <div id="club-role-legend" class="donut-legend-grid"></div>
+            </div>
+          </section>
+
+          <!-- Club Chart 2: Trophy Tier Spectrum -->
+          <section class="panel chart-card">
+            <div class="section-heading">
+              <div><p class="eyebrow">TROPHY SPECTRUM</p><h2>Member Trophy Tiers</h2></div>
+              <span class="source-chip calculated">DISTRIBUTION</span>
+            </div>
+            <div id="club-trophy-bars" class="rank-tier-bars"></div>
+          </section>
+        </div>
+
+        <!-- Club Member Roster Table -->
+        <section class="panel club-roster-panel" id="roster">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">ALLIANCE ROSTER</p>
+              <h2>Club Members Leaderboard (<span id="roster-count-label">30</span>)</h2>
+            </div>
+            <div class="roster-toolbar">
+              <input id="roster-search" class="search-box-input" type="text" placeholder="Search members by name or tag…" aria-label="Search members">
+            </div>
+          </div>
+          <div class="roster-table-wrap">
+            <table class="roster-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">#</th>
+                  <th>Member</th>
+                  <th>Role</th>
+                  <th>Trophies</th>
+                  <th>Brawler Tag</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="club-members-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <!-- Battle Log & Tactical Match Recreator View -->
+      <section id="battles-view" class="view hidden">
+        <div class="collection-banner panel battles-hero">
+          <div>
+            <span class="banner-chip pink-chip">ARENA CHRONICLES</span>
+            <h2>Match History &amp;<br><em>Tactical Recreator.</em></h2>
+            <p>Review your last 25 battles with full team lineups, MVP awards, power differentials, and 2D tactical arena recreation.</p>
+          </div>
+          <div class="collection-badge">
+            <strong id="battles-count-badge">25</strong>
+            <span>MATCHES</span>
+          </div>
+        </div>
+
+        <section class="panel battles-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">MATCH TELEMETRY</p>
+              <h2>Recent Arena Battles</h2>
+            </div>
+            <div class="battle-filter-tabs">
+              <button class="level-chip active" id="battle-filter-all" type="button">ALL MODES</button>
+              <button class="level-chip" id="battle-filter-3v3" type="button">3v3 TEAM</button>
+              <button class="level-chip" id="battle-filter-sd" type="button">SHOWDOWN</button>
+            </div>
+          </div>
+          <div id="battle-cards-list" class="battle-cards-list"></div>
+        </section>
+      </section>
+
+      <!-- Event Rotation & Map Tracker View -->
+      <section id="events-view" class="view hidden">
+        <div class="collection-banner panel events-hero">
+          <div>
+            <span class="banner-chip yellow-chip">LIVE ROTATION</span>
+            <h2>Active Events &amp;<br><em>Map Strategy.</em></h2>
+            <p>Live countdown timers for all active slots, game modifiers, and curated meta brawler picks for every active map.</p>
+          </div>
+          <div class="collection-badge">
+            <strong id="events-count-badge">6</strong>
+            <span>ACTIVE</span>
+          </div>
+        </div>
+
+        <section class="panel events-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">ROTATION TIMERS</p>
+              <h2>Current Active Modes &amp; Map Operations</h2>
+            </div>
+            <span class="source-chip official-chip">LIVE ROTATION</span>
+          </div>
+          <div id="events-grid" class="events-grid"></div>
+        </section>
+
+        <!-- Meta Tier List Snapshot -->
+        <section class="panel meta-tier-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">ARENA META</p>
+              <h2>Competitive Brawler Tier List</h2>
+            </div>
+            <span class="source-chip calculated">CURRENT BALANCE</span>
+          </div>
+          <div id="meta-tierlist-container" class="meta-tierlist-grid"></div>
+        </section>
+      </section>
+
+      <!-- Global & Regional Leaderboards View -->
+      <section id="leaderboards-view" class="view hidden">
+        <div class="collection-banner panel leaderboards-hero">
+          <div>
+            <span class="banner-chip blue-chip">HALL OF CHAMPIONS</span>
+            <h2>Global &amp; Regional<br><em>Leaderboards.</em></h2>
+            <p>Track top 200 brawlers and alliances across the world. Click any brawler tag to inspect their full live profile.</p>
+          </div>
+          <div class="collection-badge">
+            <strong>#1</strong>
+            <span>RANKINGS</span>
+          </div>
+        </div>
+
+        <section class="panel leaderboard-panel">
+          <div class="leaderboard-toolbar">
+            <div class="ranking-tab-group">
+              <button id="tab-rankings-players" class="primary-button" type="button">Top Brawlers</button>
+              <button id="tab-rankings-clubs" class="subtle-button" type="button">Top Clubs</button>
+            </div>
+            <label class="region-select-label">
+              <span>REGION</span>
+              <select id="ranking-region-select" aria-label="Select Region">
+                <option value="global">🌍 Global</option>
+                <option value="us">🇺🇸 United States</option>
+                <option value="in">🇮🇳 India</option>
+                <option value="br">🇧🇷 Brazil</option>
+                <option value="de">🇩🇪 Germany</option>
+                <option value="jp">🇯🇵 Japan</option>
+                <option value="fr">🇫🇷 France</option>
+                <option value="gb">🇬🇧 United Kingdom</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="roster-table-wrap" style="margin-top: 18px;">
+            <table class="roster-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">Rank</th>
+                  <th id="lb-col-name">Brawler</th>
+                  <th id="lb-col-meta">Club / Syndicate</th>
+                  <th>Trophies</th>
+                  <th style="text-align: right;">Profile Action</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <!-- Upgrade Calculator & Season Reset View -->
+      <section id="calculator-view" class="view hidden">
+        <div class="collection-banner panel calculator-hero">
+          <div>
+            <span class="banner-chip yellow-chip">RESOURCE MATH</span>
+            <h2>Upgrade Calculator &amp;<br><em>Trophy Reset Engine.</em></h2>
+            <p>Accurate Supercell power level math synced directly to your saved wallet balances. See what you can max out today.</p>
+          </div>
+          <div class="collection-badge">
+            <strong id="calc-affordable-badge">0</strong>
+            <span>READY</span>
+          </div>
+        </div>
+
+        <!-- Wallet Optimization Summary Strip -->
+        <section class="panel calc-summary-panel">
+          <div class="calc-summary-grid">
+            <div class="calc-summary-cell">
+              <span class="mini-kicker">SAVED WALLET COINS</span>
+              <strong id="calc-wallet-coins" class="resource-gold">0</strong>
+              <small>From your manual SQLite wallet</small>
+            </div>
+            <div class="calc-summary-cell">
+              <span class="mini-kicker">SAVED POWER POINTS</span>
+              <strong id="calc-wallet-pp" class="resource-purple">0</strong>
+              <small>From your manual SQLite wallet</small>
+            </div>
+            <div class="calc-summary-cell">
+              <span class="mini-kicker">TOTAL TO MAX ROSTER</span>
+              <strong id="calc-total-coins-needed">0 Coins</strong>
+              <small id="calc-total-pp-needed">0 PP needed</small>
+            </div>
+            <div class="calc-summary-cell">
+              <span class="mini-kicker">MAX READY TODAY</span>
+              <strong id="calc-brawlers-ready-count" class="resource-green">0 Brawlers</strong>
+              <small>Sufficient Coins + PP in wallet</small>
+            </div>
+          </div>
+        </section>
+
+        <!-- Monthly Season Reset & Bling Decay Panel -->
+        <section class="panel season-reset-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">MONTHLY END-OF-SEASON DECAY</p>
+              <h2>Trophy Reset &amp; Bling Rewards (1000+ ★)</h2>
+            </div>
+            <span class="source-chip calculated">SEASON REWARDS</span>
+          </div>
+          <div class="reset-stats-grid">
+            <div>
+              <span>ELIGIBLE BRAWLERS (1000+ ★)</span>
+              <strong id="reset-eligible-count">0</strong>
+            </div>
+            <div>
+              <span>TROPHIES RESET TO 1000</span>
+              <strong id="reset-decay-count">0 ★</strong>
+            </div>
+            <div>
+              <span>PROJECTED BLING EARNED</span>
+              <strong id="reset-bling-earned" class="resource-pink">✦ 0 Bling</strong>
+            </div>
+          </div>
+          <div id="reset-brawlers-list" class="reset-brawlers-list"></div>
+        </section>
+
+        <!-- Brawlers Upgrade Matrix Table -->
+        <section class="panel calc-roster-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">UPGRADE MATRIX</p>
+              <h2>Brawler Upgrade Requirements</h2>
+            </div>
+            <span class="source-chip calculated">POWER 1 → 11</span>
+          </div>
+          <div class="roster-table-wrap">
+            <table class="roster-table">
+              <thead>
+                <tr>
+                  <th>Brawler</th>
+                  <th>Current Level</th>
+                  <th>Coins to P11</th>
+                  <th>PP to P11</th>
+                  <th>Wallet Status</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="calc-roster-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="detail-view" class="view hidden">
+        <a class="back-link" href="/brawlers">← Back to all brawlers</a>
+        <div class="detail-hero panel">
+          <div class="detail-art">
+            <div class="detail-burst" aria-hidden="true"></div>
+            <img id="detail-image" src="/assets/brawlers/16000000.png" alt="Official brawler portrait artwork">
+          </div>
+          <div class="detail-copy">
+            <div class="label-row">
+              <span id="detail-rarity" class="rarity-badge epic">EPIC</span>
+              <span id="detail-class" class="class-badge">⚔ DAMAGE DEALER</span>
+              <span id="detail-account-status" class="data-label demo">OWNED IN ACCOUNT</span>
+            </div>
+            <div class="detail-title-row">
+              <div class="detail-portrait-box">
+                <img id="detail-portrait-icon" src="/assets/brawlers/thumbs/16000000.webp" alt="Official in-game brawler portrait">
+              </div>
+              <h2 id="detail-name">Brawler</h2>
+            </div>
+            <p id="detail-intro">Loading this brawler’s combat guide…</p>
+            <div class="detail-account-stats">
+              <div><span>POWER</span><strong id="detail-power">—</strong></div>
+              <div><span>TROPHIES</span><strong id="detail-trophies">—</strong></div>
+              <div><span>PRESTIGE</span><strong id="detail-prestige" class="prestige-stat-highlight">0</strong></div>
+              <div><span>RANK</span><strong id="detail-rank">—</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-grid">
+          <section class="panel combat-guide"><div class="section-heading"><div><p class="eyebrow">COMBAT KIT</p><h2>How this brawler works</h2></div></div><article class="ability-card attack"><span class="ability-icon">➤</span><div><small>MAIN ATTACK</small><h3 id="attack-name">Attack</h3><p id="attack-description">No curated attack guide is available yet.</p></div></article><article class="ability-card super"><span class="ability-icon">★</span><div><small>SUPER</small><h3 id="super-name">Super</h3><p id="super-description">No curated Super guide is available yet.</p></div></article><div class="how-to"><h3>How to use</h3><ol id="how-to-list"></ol></div></section>
+          <section class="panel priority-panel"><div class="section-heading"><div><p class="eyebrow">ACCOUNT READINESS</p><h2>What to prioritize</h2></div><span class="source-chip calculated">RULE-BASED</span></div><div id="priority-list" class="priority-list"></div><p class="priority-note">This is a transparent readiness order based on your current power and missing equipment—not a live meta score or invented upgrade cost.</p></section>
+        </div>
+        <section id="guide-profile-panel" class="panel guide-profile-panel hidden">
+          <div class="section-heading"><div><p class="eyebrow">CURATED GUIDE SNAPSHOT</p><h2>Stats, build, and match plan</h2></div><span class="source-chip calculated">LEVEL 11 SNAPSHOT</span></div>
+          <div class="guide-profile-grid">
+            <article class="guide-fact-card">
+              <h3>Core statistics</h3>
+              <div id="combat-stats" class="combat-stats"></div>
+            </article>
+            <article class="guide-fact-card combined-hc-build-card">
+              <div class="hc-build-hypercharge-block">
+                <span class="fact-kicker">HYPERCHARGE</span>
+                <h3 id="hypercharge-name">—</h3>
+                <p id="hypercharge-description"></p>
+              </div>
+              <div class="hc-build-divider"></div>
+              <h3 class="hc-build-label">Recommended build</h3>
+              <div id="recommended-build" class="recommended-build"></div>
+            </article>
+            <article class="guide-fact-card field-notes"><div><h3>Strong when</h3><ul id="strength-list"></ul></div><div><h3>Watch out for</h3><ul id="caution-list"></ul></div><div><h3>Useful modes</h3><div id="mode-list" class="mode-list"></div></div></article>
+          </div>
+        </section>
+        <section class="panel power-ladder-panel"><div class="section-heading"><div><p class="eyebrow">POWER JOURNEY</p><h2>Levels 1 through 11</h2></div><span id="current-power-label" class="current-power-label">CURRENT: —</span></div><div id="power-ladder" class="power-ladder"></div></section>
+        <section class="panel equipment-panel"><div class="section-heading"><div><p class="eyebrow">LOADOUT TRACKER</p><h2>Owned and available equipment</h2></div><span class="source-chip official-chip">PLAYER API + GUIDE</span></div><div class="equipment-columns"><div><div class="equipment-heading"><span class="equipment-type gadget">G</span><h3>Gadgets</h3></div><div id="gadget-list" class="equipment-list"></div></div><div><div class="equipment-heading"><span class="equipment-type star-power">★</span><h3>Star Powers</h3></div><div id="star-power-list" class="equipment-list"></div></div><div><div class="equipment-heading"><span class="equipment-type gear">◆</span><h3>Gears</h3></div><div id="gear-list" class="equipment-list"></div></div><div><div class="equipment-heading"><span class="equipment-type hypercharge">⚡</span><h3>Hypercharge</h3></div><div id="hypercharge-list" class="equipment-list"></div></div></div><div id="guide-sources" class="guide-sources"></div></section>
+      </section>
+
+      <!-- Error & Recovery View -->
+      <section id="error-view" class="view hidden">
+        <div class="panel error-recovery-card">
+          <div class="error-icon-box">⚠️</div>
+          <h2>Lost in the Arena?</h2>
+          <p id="error-message-text">We couldn’t locate that page, player, or alliance in the active database.</p>
+          <div class="error-actions">
+            <a href="/" class="primary-button" id="return-home-btn"><span>⌂</span> Return to Command HQ</a>
+            <button class="subtle-button" id="error-connect-btn" type="button">Connect Player or Club</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer"><div><strong>BrawlBuddy</strong><span>Your unofficial progression companion. All rights reserved to BrawlBuddy.</span></div><p>This material is unofficial and is not endorsed by Supercell. For more information see <a href="https://supercell.com/en/fan-content-policy/" target="_blank" rel="noreferrer">Supercell’s Fan Content Policy</a>.</p></footer>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a data-nav="overview" href="/"><span>⌂</span>Overview</a>
+    <a data-nav="battles" href="/battles"><span>⚔</span>Battles</a>
+    <a data-nav="events" href="/events"><span>🗺</span>Events</a>
+    <a data-nav="leaderboards" href="/leaderboards"><span>🏆</span>Ranks</a>
+    <a data-nav="calculator" href="/calculator"><span>🎛</span>Calc</a>
+    <a data-nav="brawlers" href="/brawlers"><span>★</span>Brawlers</a>
+    <a data-nav="club" href="/club"><span>🛡</span>Club</a>
+    <a data-nav="resources" href="/resources"><span>◆</span>Wallet</a>
+  </nav>
+  
+  <!-- Tactical Match Recreator Dialog -->
+  <dialog id="recreator-dialog" class="recreator-dialog">
+    <div class="recreator-shell">
+      <button id="recreator-close-btn" class="dialog-close" type="button" aria-label="Close recreator">✕</button>
+      <div class="recreator-header">
+        <span class="banner-chip pink-chip" id="rec-match-mode">3v3 BRAWL BALL</span>
+        <h2 id="rec-match-map">Center Stage</h2>
+        <p id="rec-match-meta">Match Breakdown &amp; Tactical Simulation</p>
+      </div>
+
+      <!-- 2D Arena Canvas Recreator -->
+      <div class="arena-board-wrap">
+        <div class="arena-board" id="arena-board">
+          <!-- Blue Team Spawn Base -->
+          <div class="arena-zone blue-zone">
+            <span class="zone-label">BLUE TEAM (HOME)</span>
+            <div id="arena-blue-spawns" class="team-spawns"></div>
+          </div>
+          <!-- Neutral Objective Center -->
+          <div class="arena-center">
+            <div class="objective-core">
+              <span id="arena-objective-icon">⚽</span>
+              <small id="arena-objective-label">CENTER ARENA</small>
+            </div>
+            <div class="advantage-pill" id="arena-advantage-pill">BALANCED MATCHUP</div>
+          </div>
+          <!-- Red Team Spawn Base -->
+          <div class="arena-zone red-zone">
+            <span class="zone-label">RED TEAM (OPPONENTS)</span>
+            <div id="arena-red-spawns" class="team-spawns"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tactical Breakdown Cards -->
+      <div class="recreator-stats-grid">
+        <div class="recreator-stat-card">
+          <small>STAR PLAYER / MVP</small>
+          <strong id="rec-mvp-name">—</strong>
+          <span id="rec-mvp-brawler">—</span>
+        </div>
+        <div class="recreator-stat-card">
+          <small>AVERAGE POWER DIFF</small>
+          <strong id="rec-power-diff">Blue 11.0 vs Red 10.3</strong>
+          <span id="rec-power-status">+0.7 Blue Advantage</span>
+        </div>
+        <div class="recreator-stat-card">
+          <small>MATCH DURATION</small>
+          <strong id="rec-duration">2m 22s</strong>
+          <span id="rec-outcome-pill">VICTORY +8 ★</span>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Shareable Brawler Card Dialog -->
+  <dialog id="share-dialog" class="share-dialog">
+    <div class="share-shell">
+      <button id="share-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
+      <p class="eyebrow">COMMAND CARD EXPORT</p>
+      <h2>Brawl Stars Brawler Card</h2>
+      <div id="share-card-canvas-wrap" class="share-card-preview">
+        <div class="share-card-inner">
+          <div class="share-hero-burst"></div>
+          <div class="share-top">
+            <div class="share-avatar-frame">
+              <img id="share-avatar-img" src="/assets/brawlers/16000000.png" alt="Avatar">
+            </div>
+            <div class="share-player-info">
+              <span id="share-tier-pill" class="prestige-tier-badge">⚡ MYTHIC CHAMPION</span>
+              <h3 id="share-player-name">Nova</h3>
+              <p><span id="share-player-tag">#2PP</span> • <strong id="share-club-name">Starrbound</strong></p>
+            </div>
+          </div>
+          <div class="share-stats-row">
+            <div><small>CURRENT</small><strong id="share-trophies">28,476 ★</strong></div>
+            <div><small>PEAK</small><strong id="share-highest">29,120 ★</strong></div>
+            <div><small>VICTORIES</small><strong id="share-victories">10,093 ⚔</strong></div>
+            <div><small>BRAWLERS</small><strong id="share-brawlers">13 / 106</strong></div>
+          </div>
+          <div class="share-footer-brand">
+            <span>Powered by <strong>BrawlBuddy</strong></span>
+            <small>brawlbuddy.app</small>
+          </div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button id="copy-share-btn" class="primary-button" type="button">📋 Copy Brawler Summary</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="connect-dialog" class="connect-dialog">
+    <div class="dialog-shell">
+      <button id="dialog-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
+      <div class="dialog-icon">★</div>
+      <p class="eyebrow">OFFICIAL BRAWL STARS DATA</p>
+      <h2>Connect Brawler or Club</h2>
+      <p>Enter any <strong>Brawler Tag</strong> (e.g. <code>#2PP</code>) or <strong>Club Tag</strong> (e.g. <code>#PQL20</code>). BrawlBuddy will auto-detect and load the full dashboard.</p>
+      <form id="connect-form">
+        <label class="tag-input"><span>#</span><input id="tag-input" type="text" maxlength="20" autocomplete="off" placeholder="2PP or PQL20" aria-label="Brawler or Club tag"></label>
+        <div id="dialog-error" class="dialog-error hidden"></div>
+        <button id="load-player" class="primary-button wide" type="submit">SEARCH & CONNECT <span>→</span></button>
+      </form>
+      <div class="dialog-demo-actions">
+        <button id="load-demo" class="text-button" type="button">Explore Demo Brawler</button>
+        <span>•</span>
+        <button id="load-demo-club" class="text-button" type="button">Explore Demo Club</button>
+      </div>
+      <small>Live lookup uses your server API token. Public brawler and club data is cached briefly.</small>
+    </div>
+  </dialog>
+  <script src="/assets/app.js?v=14" defer></script>
+</body>
+</html>

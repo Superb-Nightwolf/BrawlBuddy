@@ -1,0 +1,251 @@
+{
+  "tag": "#PQL20",
+  "name": "Starrbound Alliance",
+  "description": "Top club pushing trophies, Mega Pig champion, 15-win championship qualifiers & team tactics. Stay active or get kicked!",
+  "type": "open",
+  "badgeId": 8000024,
+  "requiredTrophies": 10000,
+  "trophies": 842190,
+  "members": [
+    {
+      "tag": "#2PP",
+      "name": "SuperBrawler",
+      "nameColor": "0xfff05638",
+      "role": "president",
+      "trophies": 29120,
+      "icon": { "id": 28000000 }
+    },
+    {
+      "tag": "#9Q889JCR0",
+      "name": "HyperStar",
+      "nameColor": "0xff00d5ff",
+      "role": "vicePresident",
+      "trophies": 32450,
+      "icon": { "id": 28000002 }
+    },
+    {
+      "tag": "#89UJG2UQG",
+      "name": "MortisGod",
+      "nameColor": "0xffff5964",
+      "role": "vicePresident",
+      "trophies": 31200,
+      "icon": { "id": 28000005 }
+    },
+    {
+      "tag": "#2Y8LV90P",
+      "name": "ShadowNinja",
+      "nameColor": "0xff40d990",
+      "role": "senior",
+      "trophies": 30540,
+      "icon": { "id": 28000010 }
+    },
+    {
+      "tag": "#8GCL882P",
+      "name": "DynamikePro",
+      "nameColor": "0xffffd32e",
+      "role": "senior",
+      "trophies": 29980,
+      "icon": { "id": 28000012 }
+    },
+    {
+      "tag": "#9YCL2299",
+      "name": "CrowMaster",
+      "nameColor": "0xffb64be3",
+      "role": "senior",
+      "trophies": 29450,
+      "icon": { "id": 28000015 }
+    },
+    {
+      "tag": "#22UUL98P",
+      "name": "SurgeOverload",
+      "nameColor": "0xfff05638",
+      "role": "senior",
+      "trophies": 29110,
+      "icon": { "id": 28000018 }
+    },
+    {
+      "tag": "#88PPLQ90",
+      "name": "LeonSneak",
+      "nameColor": "0xff40d990",
+      "role": "member",
+      "trophies": 28900,
+      "icon": { "id": 28000020 }
+    },
+    {
+      "tag": "#90QQCL81",
+      "name": "ShellyBlast",
+      "nameColor": "0xff00d5ff",
+      "role": "member",
+      "trophies": 28750,
+      "icon": { "id": 28000022 }
+    },
+    {
+      "tag": "#29UULC88",
+      "name": "ColtSheriff",
+      "nameColor": "0xffffd32e",
+      "role": "member",
+      "trophies": 28620,
+      "icon": { "id": 28000025 }
+    },
+    {
+      "tag": "#80LLPU91",
+      "name": "BullCharger",
+      "nameColor": "0xffff5964",
+      "role": "member",
+      "trophies": 28400,
+      "icon": { "id": 28000028 }
+    },
+    {
+      "tag": "#92CCL880",
+      "name": "BrockRocket",
+      "nameColor": "0xffb64be3",
+      "role": "member",
+      "trophies": 28210,
+      "icon": { "id": 28000030 }
+    },
+    {
+      "tag": "#28PUL899",
+      "name": "ElPrimoElbow",
+      "nameColor": "0xff40d990",
+      "role": "member",
+      "trophies": 28050,
+      "icon": { "id": 28000032 }
+    },
+    {
+      "tag": "#81QQCL90",
+      "name": "SpikeCactus",
+      "nameColor": "0xff00d5ff",
+      "role": "member",
+      "trophies": 27900,
+      "icon": { "id": 28000035 }
+    },
+    {
+      "tag": "#98UULC81",
+      "name": "PocoEncore",
+      "nameColor": "0xffffd32e",
+      "role": "member",
+      "trophies": 27750,
+      "icon": { "id": 28000038 }
+    },
+    {
+      "tag": "#20LLPU88",
+      "name": "RosaShield",
+      "nameColor": "0xffff5964",
+      "role": "member",
+      "trophies": 27600,
+      "icon": { "id": 28000040 }
+    },
+    {
+      "tag": "#83CCL900",
+      "name": "JessieScrappy",
+      "nameColor": "0xffb64be3",
+      "role": "member",
+      "trophies": 27420,
+      "icon": { "id": 28000042 }
+    },
+    {
+      "tag": "#91PUL881",
+      "name": "TickMines",
+      "nameColor": "0xff40d990",
+      "role": "member",
+      "trophies": 27300,
+      "icon": { "id": 28000045 }
+    },
+    {
+      "tag": "#23QQCL89",
+      "name": "EightBitArcade",
+      "nameColor": "0xff00d5ff",
+      "role": "member",
+      "trophies": 27150,
+      "icon": { "id": 28000048 }
+    },
+    {
+      "tag": "#84UULC90",
+      "name": "RicoBouncy",
+      "nameColor": "0xffffd32e",
+      "role": "member",
+      "trophies": 26980,
+      "icon": { "id": 28000050 }
+    },
+    {
+      "tag": "#93LLPU81",
+      "name": "DarrylRoll",
+      "nameColor": "0xffff5964",
+      "role": "member",
+      "trophies": 26800,
+      "icon": { "id": 28000052 }
+    },
+    {
+      "tag": "#25CCL888",
+      "name": "PennyCannon",
+      "nameColor": "0xffb64be3",
+      "role": "member",
+      "trophies": 26650,
+      "icon": { "id": 28000055 }
+    },
+    {
+      "tag": "#85PUL901",
+      "name": "CarlPickaxe",
+      "nameColor": "0xff40d990",
+      "role": "member",
+      "trophies": 26490,
+      "icon": { "id": 28000058 }
+    },
+    {
+      "tag": "#94QQCL82",
+      "name": "JackyDrill",
+      "nameColor": "0xff00d5ff",
+      "role": "member",
+      "trophies": 26300,
+      "icon": { "id": 28000060 }
+    },
+    {
+      "tag": "#26UULC89",
+      "name": "GusGhost",
+      "nameColor": "0xffffd32e",
+      "role": "member",
+      "trophies": 26150,
+      "icon": { "id": 28000062 }
+    },
+    {
+      "tag": "#86LLPU90",
+      "name": "BoEagle",
+      "nameColor": "0xffff5964",
+      "role": "member",
+      "trophies": 25980,
+      "icon": { "id": 28000065 }
+    },
+    {
+      "tag": "#95CCL881",
+      "name": "EmzHairspray",
+      "nameColor": "0xffb64be3",
+      "role": "member",
+      "trophies": 25800,
+      "icon": { "id": 28000068 }
+    },
+    {
+      "tag": "#27PUL889",
+      "name": "StuSpeedster",
+      "nameColor": "0xff40d990",
+      "role": "member",
+      "trophies": 25620,
+      "icon": { "id": 28000070 }
+    },
+    {
+      "tag": "#87QQCL91",
+      "name": "PiperSniper",
+      "nameColor": "0xff00d5ff",
+      "role": "member",
+      "trophies": 25450,
+      "icon": { "id": 28000072 }
+    },
+    {
+      "tag": "#96UULC80",
+      "name": "PamHealer",
+      "nameColor": "0xffffd32e",
+      "role": "member",
+      "trophies": 25100,
+      "icon": { "id": 28000075 }
+    }
+  ]
+}

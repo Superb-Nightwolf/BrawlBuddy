@@ -1,0 +1,16 @@
+app:
+  name: "BrawlBuddy"
+  debug: false
+  demo_mode: true
+  host: "127.0.0.1"
+  port: 8000
+
+brawl_stars:
+  api_base_url: "https://api.brawlstars.com/v1"
+  token_env: "BRAWL_STARS_API_TOKEN"
+  timeout_seconds: 10.0
+  retry_attempts: 3
+
+cache:
+  player_seconds: 180
+  brawlers_seconds: 86400

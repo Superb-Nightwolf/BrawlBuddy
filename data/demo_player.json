@@ -1,0 +1,33 @@
+{
+  "tag": "#2PP",
+  "name": "Nova",
+  "nameColor": "0xfff3c46b",
+  "icon": {"id": 28000000},
+  "trophies": 28476,
+  "highestTrophies": 29120,
+  "expLevel": 186,
+  "expPoints": 143200,
+  "3vs3Victories": 8421,
+  "soloVictories": 614,
+  "duoVictories": 1058,
+  "isQualifiedFromChampionshipChallenge": true,
+  "bestRoboRumbleTime": 16,
+  "bestTimeAsBigBrawler": 195,
+  "highestPowerPlayPoints": 1250,
+  "club": {"tag": "#PQL20", "name": "Starrbound Alliance"},
+  "brawlers": [
+    {"id": 16000000, "name": "SHELLY", "power": 11, "rank": 30, "trophies": 906, "highestTrophies": 1014, "gadgets": [{"id": 23000255, "name": "FAST FORWARD"}], "starPowers": [{"id": 23000076, "name": "SHELL SHOCK"}], "gears": [{"id": 62000000, "name": "SPEED", "level": 3}]},
+    {"id": 16000001, "name": "COLT", "power": 10, "rank": 28, "trophies": 812, "highestTrophies": 884, "gadgets": [{"id": 23000273, "name": "SPEEDLOADER"}], "starPowers": [], "gears": [{"id": 62000002, "name": "DAMAGE", "level": 3}]},
+    {"id": 16000002, "name": "BULL", "power": 9, "rank": 24, "trophies": 656, "highestTrophies": 705, "gadgets": [], "starPowers": [{"id": 23000077, "name": "BERSERKER"}], "gears": []},
+    {"id": 16000003, "name": "BROCK", "power": 11, "rank": 29, "trophies": 854, "highestTrophies": 936, "gadgets": [{"id": 23000245, "name": "ROCKET LACES"}], "starPowers": [{"id": 23000078, "name": "MORE ROCKETS!"}], "gears": [{"id": 62000002, "name": "DAMAGE", "level": 3}, {"id": 62000004, "name": "SHIELD", "level": 3}]},
+    {"id": 16000005, "name": "SPIKE", "power": 10, "rank": 27, "trophies": 768, "highestTrophies": 820, "gadgets": [{"id": 23000247, "name": "POPPING PINCUSHION"}], "starPowers": [{"id": 23000080, "name": "FERTILIZE"}], "gears": []},
+    {"id": 16000015, "name": "PIPER", "power": 9, "rank": 26, "trophies": 724, "highestTrophies": 782, "gadgets": [{"id": 23000257, "name": "AUTO AIMER"}], "starPowers": [], "gears": []},
+    {"id": 16000019, "name": "PENNY", "power": 8, "rank": 22, "trophies": 584, "highestTrophies": 627, "gadgets": [], "starPowers": [], "gears": []},
+    {"id": 16000021, "name": "GENE", "power": 9, "rank": 25, "trophies": 690, "highestTrophies": 742, "gadgets": [{"id": 23000252, "name": "LAMP BLOWOUT"}], "starPowers": [], "gears": []},
+    {"id": 16000024, "name": "ROSA", "power": 7, "rank": 20, "trophies": 518, "highestTrophies": 560, "gadgets": [], "starPowers": [], "gears": []},
+    {"id": 16000026, "name": "BIBI", "power": 11, "rank": 31, "trophies": 948, "highestTrophies": 1032, "gadgets": [{"id": 23000264, "name": "VITAMIN BOOSTER"}], "starPowers": [{"id": 23000098, "name": "HOME RUN"}], "gears": [{"id": 62000000, "name": "SPEED", "level": 3}]},
+    {"id": 16000029, "name": "BEA", "power": 9, "rank": 25, "trophies": 677, "highestTrophies": 731, "gadgets": [], "starPowers": [{"id": 23000109, "name": "INSTA BEALOAD"}], "gears": []},
+    {"id": 16000038, "name": "SURGE", "power": 10, "rank": 28, "trophies": 826, "highestTrophies": 905, "gadgets": [{"id": 23000285, "name": "POWER SURGE"}], "starPowers": [{"id": 23000283, "name": "TO THE MAX!"}], "gears": [{"id": 62000002, "name": "DAMAGE", "level": 3}]},
+    {"id": 16000047, "name": "SQUEAK", "power": 8, "rank": 21, "trophies": 552, "highestTrophies": 604, "gadgets": [], "starPowers": [], "gears": []}
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "players": [
+    { "rank": 1, "tag": "#280LC99AA", "name": "Hyra", "name_color": "0xffff5964", "icon_id": 28000000, "trophies": 96420, "club_name": "Tribe Gaming" },
+    { "rank": 2, "tag": "#9Q889JCR0", "name": "Tensai", "name_color": "0xff00d5ff", "icon_id": 28000001, "trophies": 94810, "club_name": "ZETA DIVISION" },
+    { "rank": 3, "tag": "#8Y92LC09P", "name": "Sitetampo", "name_color": "0xffffd32e", "icon_id": 28000002, "trophies": 93200, "club_name": "Crazy Raccoon" },
+    { "rank": 4, "tag": "#2PP", "name": "Nova", "name_color": "0xfff3c46b", "icon_id": 28000000, "trophies": 88476, "club_name": "Starrbound Alliance" },
+    { "rank": 5, "tag": "#88190LCP2", "name": "SpenLC", "name_color": "0xff40d990", "icon_id": 28000005, "trophies": 86900, "club_name": "SK Gaming" },
+    { "rank": 6, "tag": "#4409LKJ1A", "name": "Symantec", "name_color": "0xffb64be3", "icon_id": 28000008, "trophies": 85400, "club_name": "FUT Esports" },
+    { "rank": 7, "tag": "#1109LAAM9", "name": "Bobby", "name_color": "0xffff5964", "icon_id": 28000010, "trophies": 84120, "club_name": "STMN Esports" },
+    { "rank": 8, "tag": "#99A0LKP11", "name": "Drage", "name_color": "0xff32d6ff", "icon_id": 28000015, "trophies": 83450, "club_name": "Reply TOTEM" },
+    { "rank": 9, "tag": "#3390LKP12", "name": "Cori", "name_color": "0xffffd32e", "icon_id": 28000018, "trophies": 82900, "club_name": "Tribe Gaming" },
+    { "rank": 10, "tag": "#7710LKJ99", "name": "Achille", "name_color": "0xff40d990", "icon_id": 28000021, "trophies": 81500, "club_name": "HMBLE" }
+  ],
+  "clubs": [
+    { "rank": 1, "tag": "#PQL20", "name": "Starrbound Alliance", "badge_id": 8000000, "trophies": 842190, "member_count": 30 },
+    { "rank": 2, "tag": "#290LKP8A", "name": "Tribe Gaming Pro", "badge_id": 8000001, "trophies": 829400, "member_count": 30 },
+    { "rank": 3, "tag": "#880LA921", "name": "ZETA HQ", "badge_id": 8000002, "trophies": 815600, "member_count": 30 },
+    { "rank": 4, "tag": "#770LA812", "name": "Crazy Raccoon BS", "badge_id": 8000003, "trophies": 798200, "member_count": 30 },
+    { "rank": 5, "tag": "#660LA711", "name": "SK Gaming Elite", "badge_id": 8000004, "trophies": 789100, "member_count": 30 },
+    { "rank": 6, "tag": "#550LA610", "name": "STMN Vanguard", "badge_id": 8000005, "trophies": 776400, "member_count": 30 },
+    { "rank": 7, "tag": "#440LA509", "name": "Reply Totem Syndicate", "badge_id": 8000006, "trophies": 765900, "member_count": 30 },
+    { "rank": 8, "tag": "#330LA408", "name": "HMBLE Champions", "badge_id": 8000007, "trophies": 754200, "member_count": 30 }
+  ]
+}

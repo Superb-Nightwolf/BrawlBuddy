@@ -1,0 +1,245 @@
+{
+  "items": [
+    {
+      "battleTime": "20260829T001000.000Z",
+      "event": {
+        "id": 15000001,
+        "mode": "brawlBall",
+        "map": "Center Stage"
+      },
+      "battle": {
+        "mode": "brawlBall",
+        "type": "ranked",
+        "result": "victory",
+        "duration": 142,
+        "trophyChange": 8,
+        "starPlayer": {
+          "tag": "#2PP",
+          "name": "Nova",
+          "brawler": {
+            "id": 16000000,
+            "name": "SHELLY",
+            "power": 11,
+            "trophies": 906
+          }
+        },
+        "teams": [
+          [
+            {
+              "tag": "#2PP",
+              "name": "Nova",
+              "brawler": { "id": 16000000, "name": "SHELLY", "power": 11, "trophies": 906 }
+            },
+            {
+              "tag": "#9Q889JCR0",
+              "name": "Vortex",
+              "brawler": { "id": 16000001, "name": "COLT", "power": 11, "trophies": 890 }
+            },
+            {
+              "tag": "#8Y92LC09P",
+              "name": "Aura",
+              "brawler": { "id": 16000026, "name": "BIBI", "power": 11, "trophies": 912 }
+            }
+          ],
+          [
+            {
+              "tag": "#P8L902KJ1",
+              "name": "Shadow",
+              "brawler": { "id": 16000005, "name": "SPIKE", "power": 10, "trophies": 880 }
+            },
+            {
+              "tag": "#QR990PL11",
+              "name": "Blaze",
+              "brawler": { "id": 16000003, "name": "BROCK", "power": 10, "trophies": 875 }
+            },
+            {
+              "tag": "#28LC99AA0",
+              "name": "Titan",
+              "brawler": { "id": 16000002, "name": "BULL", "power": 10, "trophies": 860 }
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "battleTime": "20260828T234500.000Z",
+      "event": {
+        "id": 15000004,
+        "mode": "knockout",
+        "map": "Goldarm Gulch"
+      },
+      "battle": {
+        "mode": "knockout",
+        "type": "ranked",
+        "result": "victory",
+        "duration": 98,
+        "trophyChange": 8,
+        "starPlayer": {
+          "tag": "#8Y92LC09P",
+          "name": "Aura",
+          "brawler": {
+            "id": 16000015,
+            "name": "PIPER",
+            "power": 11,
+            "trophies": 940
+          }
+        },
+        "teams": [
+          [
+            {
+              "tag": "#2PP",
+              "name": "Nova",
+              "brawler": { "id": 16000003, "name": "BROCK", "power": 11, "trophies": 854 }
+            },
+            {
+              "tag": "#8Y92LC09P",
+              "name": "Aura",
+              "brawler": { "id": 16000015, "name": "PIPER", "power": 11, "trophies": 940 }
+            },
+            {
+              "tag": "#9Q889JCR0",
+              "name": "Vortex",
+              "brawler": { "id": 16000021, "name": "GENE", "power": 10, "trophies": 820 }
+            }
+          ],
+          [
+            {
+              "tag": "#88190LCP2",
+              "name": "Draco",
+              "brawler": { "id": 16000014, "name": "MORTIS", "power": 11, "trophies": 910 }
+            },
+            {
+              "tag": "#4409LKJ1A",
+              "name": "Phantom",
+              "brawler": { "id": 16000005, "name": "SPIKE", "power": 11, "trophies": 890 }
+            },
+            {
+              "tag": "#1109LAAM9",
+              "name": "Echo",
+              "brawler": { "id": 16000010, "name": "TICK", "power": 10, "trophies": 830 }
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "battleTime": "20260828T231500.000Z",
+      "event": {
+        "id": 15000002,
+        "mode": "gemGrab",
+        "map": "Hard Rock Mine"
+      },
+      "battle": {
+        "mode": "gemGrab",
+        "type": "ranked",
+        "result": "defeat",
+        "duration": 185,
+        "trophyChange": -6,
+        "starPlayer": {
+          "tag": "#99A0LKP11",
+          "name": "Cyber",
+          "brawler": {
+            "id": 16000020,
+            "name": "CARL",
+            "power": 11,
+            "trophies": 880
+          }
+        },
+        "teams": [
+          [
+            {
+              "tag": "#2PP",
+              "name": "Nova",
+              "brawler": { "id": 16000026, "name": "BIBI", "power": 11, "trophies": 948 }
+            },
+            {
+              "tag": "#22A88L99K",
+              "name": "Zero",
+              "brawler": { "id": 16000006, "name": "POCO", "power": 9, "trophies": 710 }
+            },
+            {
+              "tag": "#55K90LK11",
+              "name": "Rex",
+              "brawler": { "id": 16000007, "name": "ROSA", "power": 9, "trophies": 690 }
+            }
+          ],
+          [
+            {
+              "tag": "#99A0LKP11",
+              "name": "Cyber",
+              "brawler": { "id": 16000020, "name": "CARL", "power": 11, "trophies": 880 }
+            },
+            {
+              "tag": "#3390LKP12",
+              "name": "Havoc",
+              "brawler": { "id": 16000018, "name": "PAM", "power": 11, "trophies": 895 }
+            },
+            {
+              "tag": "#7710LKJ99",
+              "name": "Rogue",
+              "brawler": { "id": 16000004, "name": "EL PRIMO", "power": 10, "trophies": 820 }
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "battleTime": "20260828T223000.000Z",
+      "event": {
+        "id": 15000003,
+        "mode": "soloShowdown",
+        "map": "Skull Creek"
+      },
+      "battle": {
+        "mode": "soloShowdown",
+        "type": "ranked",
+        "rank": 1,
+        "trophyChange": 10,
+        "players": [
+          { "tag": "#2PP", "name": "Nova", "brawler": { "id": 16000000, "name": "SHELLY", "power": 11, "trophies": 898 } },
+          { "tag": "#01P991LA", "name": "Hunter", "brawler": { "id": 16000002, "name": "BULL", "power": 10, "trophies": 780 } },
+          { "tag": "#02P991LA", "name": "Reaper", "brawler": { "id": 16000008, "name": "DARRYL", "power": 10, "trophies": 760 } },
+          { "tag": "#03P991LA", "name": "Viper", "brawler": { "id": 16000012, "name": "CROW", "power": 11, "trophies": 850 } },
+          { "tag": "#04P991LA", "name": "Apex", "brawler": { "id": 16000013, "name": "LEON", "power": 10, "trophies": 810 } }
+        ]
+      }
+    },
+    {
+      "battleTime": "20260828T215000.000Z",
+      "event": {
+        "id": 15000005,
+        "mode": "wipeout",
+        "map": "Infinite Doom"
+      },
+      "battle": {
+        "mode": "wipeout",
+        "type": "ranked",
+        "result": "victory",
+        "duration": 110,
+        "trophyChange": 8,
+        "starPlayer": {
+          "tag": "#2PP",
+          "name": "Nova",
+          "brawler": {
+            "id": 16000001,
+            "name": "COLT",
+            "power": 10,
+            "trophies": 812
+          }
+        },
+        "teams": [
+          [
+            { "tag": "#2PP", "name": "Nova", "brawler": { "id": 16000001, "name": "COLT", "power": 10, "trophies": 812 } },
+            { "tag": "#9Q889JCR0", "name": "Vortex", "brawler": { "id": 16000015, "name": "PIPER", "power": 10, "trophies": 790 } },
+            { "tag": "#8Y92LC09P", "name": "Aura", "brawler": { "id": 16000005, "name": "SPIKE", "power": 10, "trophies": 810 } }
+          ],
+          [
+            { "tag": "#9190AL11", "name": "Fang", "brawler": { "id": 16000014, "name": "MORTIS", "power": 10, "trophies": 800 } },
+            { "tag": "#9290AL11", "name": "Venom", "brawler": { "id": 16000012, "name": "CROW", "power": 10, "trophies": 780 } },
+            { "tag": "#9390AL11", "name": "Dynamite", "brawler": { "id": 16000009, "name": "DYNAMIKE", "power": 9, "trophies": 750 } }
+          ]
+        ]
+      }
+    }
+  ]
+}

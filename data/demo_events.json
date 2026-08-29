@@ -1,0 +1,92 @@
+[
+  {
+    "slot_id": 1,
+    "event": {
+      "id": 15000001,
+      "mode": "brawlBall",
+      "map": "Center Stage",
+      "image_url": "https://cdn.brawlify.com/maps/regular/15000001.png"
+    },
+    "start_time": "2026-08-29T00:00:00Z",
+    "end_time": "2026-08-29T16:00:00Z",
+    "time_remaining_seconds": 36000,
+    "time_remaining_label": "10h 00m",
+    "modifiers": ["SUPER CHARGE"],
+    "top_meta_picks": ["Shelly", "Bibi", "Frank", "Colt", "Max"]
+  },
+  {
+    "slot_id": 2,
+    "event": {
+      "id": 15000004,
+      "mode": "knockout",
+      "map": "Goldarm Gulch",
+      "image_url": "https://cdn.brawlify.com/maps/regular/15000004.png"
+    },
+    "start_time": "2026-08-29T00:00:00Z",
+    "end_time": "2026-08-29T12:00:00Z",
+    "time_remaining_seconds": 21600,
+    "time_remaining_label": "6h 00m",
+    "modifiers": [],
+    "top_meta_picks": ["Piper", "Brock", "Nani", "Gene", "Mandy"]
+  },
+  {
+    "slot_id": 3,
+    "event": {
+      "id": 15000002,
+      "mode": "gemGrab",
+      "map": "Hard Rock Mine",
+      "image_url": "https://cdn.brawlify.com/maps/regular/15000002.png"
+    },
+    "start_time": "2026-08-29T00:00:00Z",
+    "end_time": "2026-08-29T18:00:00Z",
+    "time_remaining_seconds": 43200,
+    "time_remaining_label": "12h 00m",
+    "modifiers": ["ENERGY DRINK"],
+    "top_meta_picks": ["Gene", "Tara", "Carl", "Poco", "Pam"]
+  },
+  {
+    "slot_id": 4,
+    "event": {
+      "id": 15000003,
+      "mode": "soloShowdown",
+      "map": "Skull Creek",
+      "image_url": "https://cdn.brawlify.com/maps/regular/15000003.png"
+    },
+    "start_time": "2026-08-29T00:00:00Z",
+    "end_time": "2026-08-29T08:00:00Z",
+    "time_remaining_seconds": 7200,
+    "time_remaining_label": "2h 00m",
+    "modifiers": ["ANGRY ROBO"],
+    "top_meta_picks": ["Shelly", "Bull", "Edgar", "Cordelius", "Buzz"]
+  },
+  {
+    "slot_id": 5,
+    "event": {
+      "id": 15000005,
+      "mode": "wipeout",
+      "map": "Infinite Doom",
+      "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+    },
+    "start_time": "2026-08-29T00:00:00Z",
+    "end_time": "2026-08-29T20:00:00Z",
+    "time_remaining_seconds": 50400,
+    "time_remaining_label": "14h 00m",
+    "modifiers": ["HEALING MUSHROOMS"],
+    "top_meta_picks": ["Colt", "Brock", "Spike", "Leon", "Crow"]
+  },
+  {
+    "slot_id": 6,
+    "event": {
+      "id": 15000006,
+      "mode": "hotZone",
+      "map": "Dueling Beetles",
+      "image_url": "https://cdn.brawlify.com/maps/regular/15000006.png"
+    },
+    "start_time": "2026-08-29T00:00:00Z",
+    "end_time": "2026-08-29T22:00:00Z",
+    "time_remaining_seconds": 57600,
+    "time_remaining_label": "16h 00m",
+    "modifiers": [],
+    "top_meta_picks": ["Jessie", "Penny", "Tick", "Emz", "Amber"]
+  }
+]
