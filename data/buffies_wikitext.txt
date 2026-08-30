@@ -1,0 +1,137 @@
+{{Protection}}
+[[File:Buffie.png|left|90px|link=]]
+Buffies are abilities introduced in the [[Version History#Update 65: Buffies!|December 2025 update]]. They enhance the abilities of a Brawler's Gadget, Star Power, and Hypercharge. Gadget Buffies and Star Power Buffies either add a second effect or buff the existing effect, while Hypercharge Buffies all make the Hypercharge last two more seconds and increase the effectiveness of the main attack in addition to the Super buff it has at base. Buffies can be unlocked by spending [[Coins]] and [[Power Points]], [[Gems]] or [[Vault Keys#Buffie Keys|Buffie Keys]], and can be obtained randomly from [[Chaos Drops|Ultra Chaos Drops]]. Buffies are available at 1000 Trophies, but if the player unlocks one by a special gacha or an Ultra Chaos Drop, the menu is instantly unlocked. Once a Buffie is unlocked, it can also closely follow a Brawler around as a cosmetic item. Each Buffie also unlocks a new color option, though as long as one is unlocked its effects will be permanently active. After collecting all the Buffies in a claw machine, the player can spend [[Bling]] to unlock a Bling Buffie, which adds a fourth color option to the Buffie. Bling Buffies are purely cosmetic and do not affect gameplay.
+
+==Cost==
+When choosing to buy the Buffies with resources, players cannot choose which Buffie they want to unlock. Instead, one will be selected at random by the claw machine. Bling Buffies can only be pulled out of the claw machine for 10000 [[Bling]] after unlocking all Gadget, Star, and Hyper Buffies from that claw machine. Alternatively, specific Buffies can be bought for Gems or a [[Buffie Key]]. Each claw machine contains one Trio of related Brawlers. With 3 Buffies for each Brawler, there are 9 total Buffies per claw machine.
+
+{|class="article-table"
+!Buffie
+!Resources Cost (random Buffie)
+!Gems Cost
+!Buffie Keys Cost
+|-
+|Gadget Buffie
+|rowspan="3"|1000 {{Icon|Coin}} [[Coins]] and
+2000 {{Icon|Power Point}} [[Power Points]]
+|149 {{Icon|Gem}} [[Gems]]
+|rowspan="3"| 1 {{Icon|Buffie Key}} Buffie Key
+|-
+|Star Buffie
+|179 {{Icon|Gem}} [[Gems]]
+|-
+|Hyper Buffie
+|199 {{Icon|Gem}} [[Gems]]
+|-
+|Bling Buffie
+|10000 {{Icon|Bling}} [[Bling]]
+|N/A
+|N/A
+|}
+
+==List of Buffies==
+{| class="article-table mw-collapsible mw-collapsed"
+! colspan="5" |Ranger Ranch
+|-
+!Brawler!!Gadget!!Star!!Hyper!!Bling
+|-
+|[[File:Shelly Pin-Neutral.png|60px|link=Shelly]]||[[File:Shelly Buffie-Gadget.png|60px|link=Shelly#Gadgets]]||[[File:Shelly Buffie-Star.png|60px|link=Shelly#Star Powers]]||[[File:Shelly Buffie-Hyper.png|60px|link=Shelly#Hypercharge: Double Barrel]]||[[File:Shelly Buffie-Bling.png|60px]] 
+|-
+|[[File:Colt Pin-Neutral.png|60px|link=Colt]]||[[File:Colt Buffie-Gadget.png|60px|link=Colt#Gadgets]]||[[File:Colt Buffie-Star.png|60px|link=Colt#Star Powers]]||[[File:Colt Buffie-Hyper.png|60px|link=Colt#Hypercharge: Dual Wielding]]||[[File:Colt Buffie-Bling.png|60px]] 
+|-
+|[[File:Spike Pin-Neutral.png|60px|link=Spike]]||[[File:Spike Buffie-Gadget.png|60px|link=Spike#Gadgets]]||[[File:Spike Buffie-Star.png|60px|link=Spike#Star Powers]]||[[File:Spike Buffie-Hyper.png|60px|link=Spike#Hypercharge: Blooming Season]]||[[File:Spike Buffie-Bling.png|60px]]
+|}
+
+{| class="article-table mw-collapsible mw-collapsed"
+! colspan="5" |Mortis' Mortuary
+|-
+!Brawler!!Gadget!!Star!!Hyper!!Bling
+|-
+|[[File:Mortis Pin-Neutral.png|60px|link=Mortis]]||[[File:Mortis Buffie-Gadget.png|60px|link=Mortis#Gadgets]]||[[File:Mortis Buffie-Star.png|60px|link=Mortis#Star Powers]]||[[File:Mortis Buffie-Hyper.png|60px|link=Mortis#Hypercharge: Blood Boomerang]]||[[File:Mortis Buffie-Bling.png|60px]]
+|-
+|[[File:Frank Pin-Neutral.png|60px|link=Frank]]||[[File:Frank Buffie-Gadget.png|60px|link=Frank#Gadgets]]||[[File:Frank Buffie-Star.png|60px|link=Frank#Star Powers]]||[[File:Frank Buffie-Hyper.png|60px|link=Frank#Hypercharge: Seismic Smash]]||[[File:Frank Buffie-Bling.png|60px]]
+|-
+|[[File:Emz Pin-Neutral.png|60px|link=Emz]]||[[File:Emz Buffie-Gadget.png|60px|link=Emz#Gadgets]]||[[File:Emz Buffie-Star.png|60px|link=Emz#Star Powers]]||[[File:Emz Buffie-Hyper.png|60px|link=Emz#Hypercharge: Overhyped Haze]]||[[File:Emz Buffie-Bling.png|60px]]
+|}
+
+{| class="article-table mw-collapsible mw-collapsed"
+! colspan="5" |Bull's Diner
+|-
+!Brawler!!Gadget!!Star!!Hyper!!Bling
+|-
+|[[File:Bull Pin-Neutral.png|60px|link=Bull]]||[[File:Bull Buffie-Gadget.png|60px|link=Bull#Gadgets]]||[[File:Bull Buffie-Star.png|60px|link=Bull#Star Powers]]||[[File:Bull Buffie-Hyper.png|60px|link=Bull#Hypercharge: Jaws of Steel]]||[[File:Bull Buffie-Bling.png|60px]] 
+|-
+|[[File:Crow Pin-Neutral.png|60px|link=Crow]]||[[File:Crow Buffie-Gadget.png|60px|link=Crow#Gadgets]]||[[File:Crow Buffie-Star.png|60px|link=Crow#Star Powers]]||[[File:Crow Buffie-Hyper.png|60px|link=Crow#Hypercharge: Utility Knives]]||[[File:Crow Buffie-Bling.png|60px]]
+|-
+|[[File:Bibi Pin-Neutral.png|60px|link=Bibi]]||[[File:Bibi Buffie-Gadget.png|60px|link=Bibi#Gadgets]]||[[File:Bibi Buffie-Star.png|60px|link=Bibi#Star Powers]]||[[File:Bibi Buffie-Hyper.png|60px|link=Bibi#Hypercharge: Out of Bounds]]||[[File:Bibi Buffie-Bling.png|60px]] 
+|}
+{| class="article-table mw-collapsible mw-collapsed"
+! colspan="5" |Rumble Jungle
+|-
+!Brawler!!Gadget!!Star!!Hyper!!Bling
+|-
+|[[File:Nita Pin-Neutral.png|60px|link=Nita]]||[[File:Nita Buffie-Gadget.png|60px|link=Nita#Gadgets]]||[[File:Nita Buffie-Star.png|60px|link=Nita#Star Powers]]||[[File:Nita Buffie-Hyper.png|60px|link=Nita#Hypercharge: Hyper Bear]]||[[File:Nita Buffie-Bling.png|60px]]
+|-
+|[[File:Bo Pin-Neutral.png|60px|link=Bo]]||[[File:Bo Buffie-Gadget.png|60px|link=Bo#Gadgets]]||[[File:Bo Buffie-Star.png|60px|link=Bo#Star Powers]]||[[File:Bo Buffie-Hyper.png|60px|link=Bo#Hypercharge: Catch a Bear]]||[[File:Bo Buffie-Bling.png|60px]]
+|-
+|[[File:Leon Pin-Neutral.png|60px|link=Leon]]||[[File:Leon Buffie-Gadget.png|60px|link=Leon#Gadgets]]||[[File:Leon Buffie-Star.png|60px|link=Leon#Star Powers]]||[[File:Leon Buffie-Hyper.png|60px|link=Leon#Hypercharge: Limbo]]||[[File:Leon Buffie-Bling.png|60px]]
+|}
+{|class="article-table mw-collapsible mw-collapsed"
+!colspan=5|Gift Shop
+|-
+!Brawler!!Gadget!!Star!!Hyper!!Bling
+|-
+|[[File:Colette Pin-Neutral.png|60px|link=Colette]]||[[File:Colette Buffie-Gadget.png|60px|link=Colette#Gadgets]]||[[File:Colette Buffie-Star.png|60px|link=Colette#Star Powers]]||[[File:Colette Buffie-Hyper.png|60px|link=Colette#Hypercharge: Teen Spirit]]||[[File:Colette Buffie-Bling.png|60px]]
+|-
+|[[File:Edgar Pin-Neutral.png|60px|link=Edgar]]||[[File:Edgar Buffie-Gadget.png|60px|link=Edgar#Gadgets]]||[[File:Edgar Buffie-Star.png|60px|link=Edgar#Star Powers]]||[[File:Edgar Buffie-Hyper.png|60px|link=Edgar#Hypercharge: ]]||[[File:Edgar Buffie-Bling.png|60px]] 
+|-
+|[[File:Griff Pin-Neutral.png|60px|link=Griff]]||[[File:Griff Buffie-Gadget.png|60px|link=Griff#Gadgets]]||[[File:Griff Buffie-Star.png|60px|link=Griff#Star Powers]]||[[File:Griff Buffie-Hyper.png|60px|link=Griff#Hypercharge: Tax Rebate]]||[[File:Griff Buffie-Bling.png|60px]] 
+|}
+{|class="article-table mw-collapsible mw-collapsed"
+!colspan=5|Arcade
+|-
+!Brawler!!Gadget!!Star!!Hyper!!Bling
+|-
+|[[File:Rico Pin-Neutral.png|60px|link=Rico]]||[[File:Rico Buffie-Gadget.png|60px|link=Rico#Gadgets]]||[[File:Rico Buffie-Star.png|60px|link=Rico#Star Powers]]||[[File:Rico Buffie-Hyper.png|60px|link=Rico#Hypercharge: Trickshot King]]||[[File:Rico Buffie-Bling.png|60px]]
+|-
+|[[File:Brock Pin-Neutral.png|60px|link=Brock]]||[[File:Brock Buffie-Gadget.png|60px|link=Brock#Gadgets]]||[[File:Brock Buffie-Star.png|60px|link=Brock#Star Powers]]||[[File:Brock Buffie-Hyper.png|60px|link=Brock#Hypercharge: Rocket Barrage]]||[[File:Brock Buffie-Bling.png|60px]] 
+|-
+|[[File:8-Bit Pin-Neutral.png|60px|link=8-Bit]]||[[File:8-Bit Buffie-Gadget.png|60px|link=8-Bit#Gadgets]]||[[File:8-Bit Buffie-Star.png|60px|link=8-Bit#Star Powers]]||[[File:8-Bit Buffie-Hyper.png|60px|link=8-Bit#Hypercharge: Aimbot]]||[[File:8-Bit Buffie-Bling.png|60px]] 
+|}
+{|class="article-table mw-collapsible mw-collapsed"
+!colspan=5|Super City
+|-
+!Brawler!!Gadget!!Star!!Hyper!!Bling
+|-
+|[[File:Max Pin-Neutral.png|60px|link=Max]]||[[File:Max Buffie-Gadget.png|60px|link=Max#Gadgets]]||[[File:Max Buffie-Star.png|60px|link=Max#Star Powers]]||[[File:Max Buffie-Hyper.png|60px|link=Max#Hypercharge: Unlimited Energy]]||[[File:Max Buffie-Bling.png|60px]]
+|-
+|[[File:Surge Pin-Neutral.png|60px|link=Surge]]||[[File:Surge Buffie-Gadget.png|60px|link=Surge#Gadgets]]||[[File:Surge Buffie-Star.png|60px|link=Surge#Star Powers]]||[[File:Surge Buffie-Hyper.png|60px|link=Surge#Hypercharge: Stage 5]]||[[File:Surge Buffie-Bling.png|60px]] 
+|-
+|[[File:Meg Pin-Neutral.png|60px|link=Meg]]||[[File:Meg Buffie-Gadget.png|60px|link=Meg#Gadgets]]||[[File:Meg Buffie-Star.png|60px|link=Meg#Star Powers]]||[[File:Meg Buffie-Hyper.png|60px|link=Meg#Hypercharge: Tungsten Toughness]]||[[File:Meg Buffie-Bling.png|60px]] 
+|}
+
+==History==
+*On 16/12/25, the combined Ranger Ranch and Mortis' Mortuary Claw Machine were added to the game.
+*On 25/02/26, the combined Bull's Diner and Rumble Jungle Claw Machine were added to the game.
+*On 22/04/26, Buffie Claw Machines now include only one Trio per machine instead of two, and the existing Claw Machines were split accordingly. Instead of getting a free Buffie per new Claw Machine, players get a random Buffie per update. The Gift Shop Claw Machine was added to the game.
+*On 30/06/26, the Arcade and Super City Claw Machines were added to the game. The UI was changed so each Trio Claw Machine has a separate tab.
+<!-- *01/09/26: The Ghost Station and Poco's Bandstand Claw Machines were added. Added new exclusive Buffie Skins for Mortis' Mortuary and Gift Shop Claw Machines. -->
+
+==Gallery==
+<gallery>
+File:Buffies-Pic1.png|Old interface
+File:Buffies Pic 1-1.png|New interface after the 30/06/26 update
+File:Buffies-Pic2.png
+File:Buffies-Pic3.png
+File:Buffies-Pic4.png
+File:Buffies-Pic5.png
+File:Buffies-Pic6.png
+File:Buffies-Pic7.png
+</gallery>
+
+{{Navigation}}
+
+[[Category:Abilities]]
+[[Category:Cosmetics]]
+
+[[ru:Предметы#Баффи]]

@@ -1,0 +1,217 @@
+{{Protection}}{{MagicWords}}           
+Gears are additional abilities that can be bought with [[Coins]] and can be equipped to Brawlers at or above [[Power Points|Power Level 8]]. The first slot unlocks at Power Level 8, and an additional second slot becomes available when the Brawler is at Power Level 10. Buying a Gear for a [[:Category:Brawlers|Brawler]] will have that one Gear equipped on only that Brawler.
+
+==Super Rare Gears==
+Super Rare Gears can be bought and equipped on all Brawlers. They cost 1000 Coins each. 
+
+===Speed Gear===
+{{Quote|Gain 15% speed increase when moving in bushes.}}{{Gear|Filename=SpeedGear}}
+Brawlers with this Gear will move 15% faster while inside a bush.
+
+===Health Gear===
+{{Quote|Recover health 50% more effectively. }}{{Gear|Filename=HealthGear}}
+Brawlers with this Gear will increase their health regeneration rate from 13% of their maximum health every second to 19.5% every second, decreasing the amount of time to restore health.
+
+===Damage Gear===
+{{Quote|Deal 15% extra damage when your Brawler is below 50% Health.}}{{Gear|Filename=DamageGear}}
+Brawlers with this Gear will deal 15% more damage when they have less than half of their maximum health. This does not affect spawnables or pets. For damaging abilities that can also heal teammates, in most cases the healing is not affected, except for [[Berry]] and [[Doug]]'s main attack and [[Byron]]'s Super.
+
+===Vision Gear===
+{{Quote|Reveal opponents for 2 seconds after dealing damage to them.}}{{Gear|Filename=VisionGear}}
+Brawlers with this Gear can see enemies for 2 seconds in a bush after damaging them with their attack, Gadget, or Star Power. The revealed enemy is visible to everyone in the match (e.g. teammates and other opponents in [[Showdown]]).
+
+===Shield Gear===
+{{Quote|Gain extra 900 health as a consumable shield. The shield regenerates in 10 seconds, when at full health.}}{{Gear|Filename=ShieldGear}}
+Brawlers with this Gear will receive 900 additional health. The shield is similar to [[Gus]]' Super and [[Edgar]]'s Hardcore Gadget shield, but it does not lose health over time once completely regenerated. The shield is at maximum health upon spawning and will regenerate 45 health per half-second when the Brawler is at maximum health. The regeneration of the shield persists even when attacking or using Super. 
+
+===Gadget Cooldown Gear===
+{{Quote|Reduces Gadget cooldown by 15%.}}{{Gear|Filename=GadgetGear}}
+Brawlers with this Gear will have the cooldown time of their Gadgets reduced by 15%.
+
+{|class="article-table mw-collapsible mw-collapsed"
+!Base cooldown<br>(seconds)||Cooldown with Gear<br>(seconds)
+|-
+|6||5.10
+|-
+|7||5.95
+|-
+|8||6.80
+|-
+|9||7.65
+|-
+|10||8.50
+|-
+|11||9.35
+|-
+|12||10.20
+|-
+|13||11.05
+|-
+|14||11.90
+|-
+|15||12.75
+|-
+|16||13.60
+|-
+|17||14.45
+|-
+|18||15.30
+|-
+|19||16.15
+|-
+|20||17.00
+|-
+|21||17.85
+|-
+|22||18.70
+|-
+|23||19.55
+|-
+|24||20.40
+|}
+
+==Epic and Mythic Gears==
+Epic Gears can be bought and equipped on specific Brawlers, which cost 1500 Coins each. Mythic Gears are unique to a specific Brawler and cost 2000 Coins each. Once a Brawler's [[Buffies]] are added, their Epic and Mythic Gears will be removed and refunded, and in some cases their effect is partially added to either the base kit or one of the Buffies.
+
+The charts below include brawlers who have had their Epic and Mythic Gears removed upon receiving their Buffies, and those that still have Epic and/or Mythic Gears due to not receiving Buffies yet.
+
+===Reload Speed Gear===
+{{Quote|15% faster reload.}}{{Gear|Filename=ReloadGear}}
+Brawlers with this Gear will reload 15% faster.
+
+{|class="article-table"
+!colspan=5|Brawlers that have a Reload Speed Gear
+|-
+|{{Pfp|Amber1|Link=Amber}}||{{Pfp|Belle1|Link=Belle}}||{{Pfp|Eve1|Link=Eve}}||{{Pfp|Lola1|Link=Lola}}
+|-
+!colspan=5|Brawlers that used to have a Reload Speed Gear
+|-
+|{{Pfp|Colt1|Link=Colt}}
+|{{Pfp|Bo1|Link=Bo}}
+|{{Pfp|Griff1|Link=Griff}}
+|{{Pfp|Rico1|Link=Rico}}
+|{{Pfp|Brock1|Link=Brock}}
+|-
+|{{Pfp|8-Bit1|Link=8-Bit}}
+|}
+
+===Super Charge Gear===
+{{Quote|Super charges 10% faster.}}{{Gear|Filename=SuperChargeGear}}
+Brawlers with this Gear will charge their Super and Hypercharge 10% faster. This Gear also affects the Trait that allows Brawlers to charge their Super automatically over time, affecting [[Edgar]], and stacks with other passive Super charging abilities such as Edgar's Let's Fly Gadget and [[Bo]]'s Super Totem Gadget. It also affects the Trait that allows Brawlers to charge their Super from taking damage from enemies, which affects [[Bull]], [[El Primo]], and [[Jacky]]. However, this Gear does not affect [[Bonnie]] while in her alternate mode.
+
+{|class="article-table"
+!colspan=5|Brawlers that have a Super Charge Gear
+|-
+|{{Pfp|Ash1|Link=Ash}}||{{Pfp|Bonnie1|Link=Bonnie}}||{{Pfp|El Primo1|Link=El Primo}}||{{Pfp|Jacky1|Link=Jacky}}
+|-
+|{{Pfp|Lou1|Link=Lou}}||{{Pfp|Nani1|Link=Nani}}||{{Pfp|Otis1|Link=Otis}}||{{Pfp|Sprout1|Link=Sprout}}
+|-
+!colspan=5|Brawlers that used to have a Super Charge Gear
+|-
+|{{Pfp|Bull1|Link=Bull}}
+|{{Pfp|Edgar1|Link=Edgar}}
+|}
+
+===Pet Power Gear===
+{{Quote|Pet power increased by 25%.}}{{Gear|Filename=PetPowerGear}}
+Brawlers with this Gear will have their spawnables' damage and healing increased by 25%. This Gear affects the damage of [[Tara]]'s Black Portal Star Power, and the healing of her Healing Shade Star Power, but does not affect the damage of her Support from Beyond Gadget.
+
+{|class="article-table"
+!colspan=5|Brawlers that have a Pet Power Gear
+|-
+|{{Pfp|Jessie1|Link=Jessie}}||{{Pfp|Mr. P1|Link=Mr. P}}||{{Pfp|Penny1|Link=Penny}}||{{Pfp|Tara1|Link=Tara}}
+|-
+!colspan=5|Brawlers that used to have a Pet Power Gear
+|-
+|{{Pfp|Nita1|Link=Nita}}
+|}
+
+===Mythic Gears===
+Each Mythic Gear has a unique effect, detailed on their respective Brawler's page
+{{Gear|Filename=MythicGear}}
+
+{|class="article-table"
+!colspan=5|Brawlers that have a Mythic Gear
+|-
+|{{Pfp|Amber1|Link=Amber}}||{{Pfp|Eve1|Link=Eve}}||{{Pfp|Gene1|Link=Gene}}||
+|-
+|{{Pfp|Tick1|Link=Tick}}||{{Pfp|Pam1|Link=Pam}}||{{Pfp|Sandy1|Link=Sandy}}||||
+|-
+!colspan=5|Brawlers that used to have a Mythic Gear
+|-
+|{{Pfp|Mortis1|Link=Mortis}}||{{Pfp|Spike1|Link=Spike}}||{{Pfp|Crow1|Link=Crow}}||{{Pfp|Leon1|Link=Leon}}||
+|}
+
+==Gear Tokens==
+{{RemovedContent|section}}
+Gear Tokens were required for crafting and upgrading specific Gears. They could be obtained from [[Brawl Boxes]] with a 10% drop rate and from the [[Club League#Club Coins|Club Shop]] after you upgraded your first Brawler to Power Level 10.
+
+{|class="article-table"
+!Gear Token||Icon
+|-
+|Speed Gear||[[File:SpeedGear Token.png|80x80px]]
+|-
+|Heal Gear ||[[File:HealGear Token.png|80x80px]]
+|-
+|Damage Gear||[[File:DamageGear Token.png|80x80px]]
+|-
+|Vision Gear||[[File:VisionGear Token.png|80x80px]]
+|-
+|Shield Gear||[[File:ShieldGear Token.png|80x80px]]
+|}
+
+==Gear Scraps==
+{{RemovedContent|section}}[[File:Icon-Gear Scrap.png|left|90px|link=]]
+Gear Scraps were an in-game currency that could be obtained from Brawl Boxes and from the [[Club League#Club Coins|Club Shop]] after you upgraded your first Brawler to Power Level 10. Along with Gear Tokens, they were required for crafting and upgrading Gears.
+
+{|class="article-table"
+!Level||Gear Scraps||Gear Tokens
+|-
+|{{Icon|Gear Level 1}}1||{{Icon|Gear Scrap}}40 ||{{Icon|Gear Token}}1 
+|-
+|{{Icon|Gear Level 2}}2||{{Icon|Gear Scrap}}100||{{Icon|Gear Token}}1 
+|-
+|{{Icon|Gear Level 3}}3||{{Icon|Gear Scrap}}200||{{Icon|Gear Token}}2
+|-style="font-weight:bold"
+|Total||{{Icon|Gear Scrap}}340||{{Icon|Gear Token}}4
+|}
+
+==Tips==
+*The Speed and Vision Gears are only useful on maps with a lot of bushes, but are extremely powerful on said maps.
+*Speed Gear is very useful for Brawlers who would normally want to play around bushes, primarily short-range Brawlers such as [[Shelly]], [[Alli]], and [[Sandy]].
+*Vision Gear is extremely useful on Brawlers with very long range and either wide or multiple projectiles, such as [[Gene]], [[Janet]], and [[Byron]]. Conversely, it is nearly useless on short range Brawlers such as [[Edgar]], as they will be able to see opponents up close regardless.
+*Shield Gear is highly recommended for every Brawler with low health, such as [[Tick]], [[Meg]], or [[Piper]]. On Brawlers with high health, Shield Gear can still be useful for winning certain interactions.
+*Health Gear is highly recommended for high-health Brawlers, primarily Tanks. It is also useful on Brawlers with a fast reload, such as [[Max]], [[Nita]], and [[Cordelius]], allowing them to play more aggressively by spending less time retreating to regenerate health. Health Gear can still be useful on lower health Brawlers to help them stay in their lanes.
+*Brawlers with 6000 or less health normally prefer Shield Gear, while Brawlers with 7000 or more health normally prefer Health Gear, with exceptions on both ends. Brawlers whose health is between 6000 and 7000, such as Max and Cordelius, can make great use of both Gears. Equipping both gears means reaching full health earlier and thus starting Shield's regeneration earlier.
+*Damage Gear is a good all-rounder gear that benefits nearly every Brawler. It is particularly useful on short range Brawlers such as Edgar or [[Kenji]], as they will usually be taking a lot of damage when up close and thus will often activate Damage Gear. Very long-range Brawlers such as Piper and [[Brock]] will also be able to take advantage of the boosted damage from positions of relative safety.
+*Damage Gear has synergy with Shield Gear, allowing Brawlers to survive and take advantage of the boosted damage. Health Gear has pros and cons with Damage Gear; it can cause less time to take advantage of the boosted damage, but it can also allow for recovering from riskier plays, since generally it is better to enter combat at full health than to intentionally stay below half health for the damage boost.
+*Gadget Cooldown Gear is useful for Gears with long cooldowns, such as [[Lily]]'s Vanish, and Gadgets that are best activated as soon as they are off of their cooldowns, such as [[Jacky]]'s Pneumatic Boosters.
+*Epic and Mythic Gears are usually the best options for each Brawler that can equip them, but are set to be removed and refunded. Some Brawlers may get the effect partially added to their base kit or one of their Buffies.
+
+==History== 
+*On 17/11/21, Gears were added to the game.
+*On 25/01/22, the Speed Gear's speed buff was decreased to 10/15/20% (from 15/20/25%).
+*On 01/03/22, the Heal Gear was renamed to Health Gear and reworked from recovering 100/150/200 health while stationary to increasing auto-regeneration healing by 30%/40%/50%.
+*On 27/04/22, the Resistance Gear was renamed to Vision Gear and reworked from reducing stun durations and the effectiveness of slows by 25/30/35% to revealing enemies inside a bush for 1/1.5/2 seconds after dealing damage to them.
+*On 31/08/22, the cost of crafting gears was decreased to 40 Gear Scraps for Level 1, 100 for Level 2, and 200 for Level 3 (from 80, 200, and 400 respectively), and the number of Gear Tokens required for crafting was decreased to 1 Gear Token for Level 1, 1 for Level 2, and 2 for Level 3 (from 1, 2, and 4 respectively).
+*On 25/10/22, Gear Tokens, Gear Scraps and Gear levels were removed. Each Scrap was converted to 2.25 Coins and each Token was converted to 217.5 Coins. Gears now come in three rarities: Super Rare, Epic, and Mythic. Gears can now be bought with Coins. The Reload Gear and the Super Charge Gear were added. [[Gene]]'s Talk to the Hand Mythic Gear and [[Tick]]'s Thicc Head Mythic Gear 1were added.
+*On 27/10/22, fixed an issue with [[Bonnie]] that has her Super Charge Gear crashing the game.
+*On 31/10/22, fixed an issue with Brawlers that have the Reload Gear having weird coloring.
+*On 08/11/22, the Damage Gear's damage buff was decreased to 15% (from 20%) and the Reload Gear's reload buff was decreased to 15% (from 20%).
+*On 12/12/22, [[Spike]]'s Sticky Spikes Mythic Gear, [[Crow]]'s Enduring Toxins Mythic Gear, [[Leon]]'s Lingering Smoke Mythic Gear, and [[Sandy]]'s Exhausting Storm Mythic Gear were added.
+*On 25/04/23, the Pet Power Gear, [[Amber]]'s Sticky Oil Mythic Gear, and [[Eve]]'s Quadruplets Mythic Gear were added.
+*On 23/05/23, the Vision Gear no longer reveals invisible targets.
+*On 27/06/23, [[Pam]]'s Super Turret Mythic Gear was added.
+*On 05/09/23, the first Gear slot is now unlocked at Power Level 8 (from 10), and the second slot is now unlocked at Power Level 10 (from 11). The Gadget Charge Gear was added.
+*On 24/10/23, the Shield Gear's health was increased to 900 (from 600), Pet Power Gear's damage and healing buff was increased to 25% (from 20%), and the Speed Gear's speed buff was decreased to 15% (from 20%).
+*On 12/12/23, [[Mortis]]' Bat Storm Mythic Gear was added.
+*On 25/02/25, the Gadget Charge Gear was renamed to Gadget Cooldown Gear, and was reworked from increasing the number of Gadget uses from 3 to 4 to reducing the cooldown to use the Gadget again by 15%.
+*On 16/12/25, Colt, Mortis and Spike's Epic and Mythic Gears were removed from the game. The particles when using a Damage Gear were changed from bubbles to swords.
+*On 25/02/26, Bo, Bull, Crow, Leon and Nita's Epic and Mythic Gears were removed from the game.
+*On 22/04/26, Edgar and Griff's Epic Gears were removed.
+*On 30/06/26, Rico, Brock and 8-Bit's Epic Gears were removed. The Speed Gear now stacks with other speed boosts, while other speed boosts no longer stack with each other.
+
+{{Navigation}}
+[[Category:Abilities]]
+[[ru:Предметы#Снаряжения]]
+[[vi:Trang bị]]

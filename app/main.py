@@ -2,9 +2,13 @@ from __future__ import annotations
 
 import logging
 import json
+import mimetypes
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import AsyncIterator
+
+mimetypes.add_type('image/webp', '.webp')
+mimetypes.add_type('image/png', '.png')
 
 from fastapi import FastAPI, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
@@ -58,6 +62,16 @@ with (PROJECT_ROOT / "data" / "brawler_guides.json").open("r", encoding="utf-8")
     brawler_guides = json.load(handle)
 with (PROJECT_ROOT / "data" / "brawler_catalog.json").open("r", encoding="utf-8") as handle:
     brawler_catalog = json.load(handle)
+equipment_db = {}
+equipment_path = PROJECT_ROOT / "data" / "equipment_ids.json"
+if equipment_path.exists():
+    with equipment_path.open("r", encoding="utf-8") as handle:
+        equipment_db = json.load(handle)
+buffies_db = {}
+buffies_path = PROJECT_ROOT / "data" / "buffies_db.json"
+if buffies_path.exists():
+    with buffies_path.open("r", encoding="utf-8") as handle:
+        buffies_db = json.load(handle)
 
 
 @asynccontextmanager
@@ -296,6 +310,16 @@ async def get_brawler_guide(brawler_id: int) -> dict:
     return brawler_guides.get(str(brawler_id), {})
 
 
+@app.get("/api/equipment")
+async def get_equipment_catalog() -> dict:
+    return equipment_db
+
+
+@app.get("/api/buffies")
+async def get_buffies_catalog() -> dict:
+    return buffies_db
+
+
 @app.get("/api/battlelog")
 async def get_battlelog(tag: str = Query(min_length=3, max_length=20)) -> dict:
     entries, source = await battlelog_service.get_battlelog(tag)
@@ -367,7 +391,7 @@ async def get_demo_rankings() -> dict:
 async def calculate_upgrade_plan(request: Request) -> dict:
     body = await request.json()
     brawlers = body.get("brawlers", [])
-    player_tag = body.get("player_tag", "#2PP")
+    player_tag = body.get("player_tag", "#9Q889JCR0")
     wallet_data = resource_service.get(player_tag)
     wallet = {"coins": wallet_data.coins, "power_points": wallet_data.power_points}
     return UpgradeService.calculate_roster_plan(brawlers, wallet)

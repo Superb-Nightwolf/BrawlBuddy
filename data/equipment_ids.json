@@ -1,0 +1,2970 @@
+{
+  "FAST FORWARD": {
+    "id": 23000255,
+    "type": "gadget",
+    "brawler_id": "16000000",
+    "brawler_name": "SHELLY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000255.png"
+  },
+  "CLAY PIGEONS": {
+    "id": 23000288,
+    "type": "gadget",
+    "brawler_id": "16000000",
+    "brawler_name": "SHELLY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000288.png"
+  },
+  "SHELL SHOCK": {
+    "id": 23000076,
+    "type": "star_power",
+    "brawler_id": "16000000",
+    "brawler_name": "SHELLY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000076.png"
+  },
+  "BAND-AID": {
+    "id": 23000135,
+    "type": "star_power",
+    "brawler_id": "16000000",
+    "brawler_name": "SHELLY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000135.png"
+  },
+  "SPEEDLOADER": {
+    "id": 23000273,
+    "type": "gadget",
+    "brawler_id": "16000001",
+    "brawler_name": "COLT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000273.png"
+  },
+  "SILVER BULLET": {
+    "id": 23000319,
+    "type": "gadget",
+    "brawler_id": "16000001",
+    "brawler_name": "COLT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000319.png"
+  },
+  "SLICK BOOTS": {
+    "id": 23000077,
+    "type": "star_power",
+    "brawler_id": "16000001",
+    "brawler_name": "COLT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000077.png"
+  },
+  "MAGNUM SPECIAL": {
+    "id": 23000138,
+    "type": "star_power",
+    "brawler_id": "16000001",
+    "brawler_name": "COLT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000138.png"
+  },
+  "T-BONE MISSILE": {
+    "id": 23000272,
+    "type": "gadget",
+    "brawler_id": "16000002",
+    "brawler_name": "BULL",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000272.png"
+  },
+  "STOMPER": {
+    "id": 23000310,
+    "type": "gadget",
+    "brawler_id": "16000002",
+    "brawler_name": "BULL",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000310.png"
+  },
+  "BERSERKER": {
+    "id": 23000078,
+    "type": "star_power",
+    "brawler_id": "16000002",
+    "brawler_name": "BULL",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000078.png"
+  },
+  "TOUGH GUY": {
+    "id": 23000137,
+    "type": "star_power",
+    "brawler_id": "16000002",
+    "brawler_name": "BULL",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000137.png"
+  },
+  "ROCKET LACES": {
+    "id": 23000245,
+    "type": "gadget",
+    "brawler_id": "16000003",
+    "brawler_name": "BROCK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000245.png"
+  },
+  "ROCKET FUEL": {
+    "id": 23000316,
+    "type": "gadget",
+    "brawler_id": "16000003",
+    "brawler_name": "BROCK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000316.png"
+  },
+  "MORE ROCKETS!": {
+    "id": 23000079,
+    "type": "star_power",
+    "brawler_id": "16000003",
+    "brawler_name": "BROCK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000079.png"
+  },
+  "ROCKET NO. 4": {
+    "id": 23000150,
+    "type": "star_power",
+    "brawler_id": "16000003",
+    "brawler_name": "BROCK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000150.png"
+  },
+  "MULTIBALL LAUNCHER": {
+    "id": 23000246,
+    "type": "gadget",
+    "brawler_id": "16000004",
+    "brawler_name": "RICO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000246.png"
+  },
+  "BOUNCY CASTLE": {
+    "id": 23000409,
+    "type": "gadget",
+    "brawler_id": "16000004",
+    "brawler_name": "RICO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000409.png"
+  },
+  "SUPER BOUNCY": {
+    "id": 23000080,
+    "type": "star_power",
+    "brawler_id": "16000004",
+    "brawler_name": "RICO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000080.png"
+  },
+  "ROBO RETREAT": {
+    "id": 23000156,
+    "type": "star_power",
+    "brawler_id": "16000004",
+    "brawler_name": "RICO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000156.png"
+  },
+  "POPPING PINCUSHION": {
+    "id": 23000247,
+    "type": "gadget",
+    "brawler_id": "16000005",
+    "brawler_name": "SPIKE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000247.png"
+  },
+  "LIFE PLANT": {
+    "id": 23000406,
+    "type": "gadget",
+    "brawler_id": "16000005",
+    "brawler_name": "SPIKE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000406.png"
+  },
+  "FERTILIZE": {
+    "id": 23000081,
+    "type": "star_power",
+    "brawler_id": "16000005",
+    "brawler_name": "SPIKE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000081.png"
+  },
+  "CURVEBALL": {
+    "id": 23000151,
+    "type": "star_power",
+    "brawler_id": "16000005",
+    "brawler_name": "SPIKE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000151.png"
+  },
+  "STICKY SYRUP MIXER": {
+    "id": 23000250,
+    "type": "gadget",
+    "brawler_id": "16000006",
+    "brawler_name": "BARLEY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000250.png"
+  },
+  "HERBAL TONIC": {
+    "id": 23000293,
+    "type": "gadget",
+    "brawler_id": "16000006",
+    "brawler_name": "BARLEY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000293.png"
+  },
+  "MEDICAL USE": {
+    "id": 23000082,
+    "type": "star_power",
+    "brawler_id": "16000006",
+    "brawler_name": "BARLEY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000082.png"
+  },
+  "EXTRA NOXIOUS": {
+    "id": 23000158,
+    "type": "star_power",
+    "brawler_id": "16000006",
+    "brawler_name": "BARLEY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000158.png"
+  },
+  "SPARK PLUG": {
+    "id": 23000251,
+    "type": "gadget",
+    "brawler_id": "16000007",
+    "brawler_name": "JESSIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000251.png"
+  },
+  "RECOIL SPRING": {
+    "id": 23000295,
+    "type": "gadget",
+    "brawler_id": "16000007",
+    "brawler_name": "JESSIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000295.png"
+  },
+  "ENERGIZE": {
+    "id": 23000083,
+    "type": "star_power",
+    "brawler_id": "16000007",
+    "brawler_name": "JESSIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000083.png"
+  },
+  "SHOCKY": {
+    "id": 23000149,
+    "type": "star_power",
+    "brawler_id": "16000007",
+    "brawler_name": "JESSIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000149.png"
+  },
+  "BEAR PAWS": {
+    "id": 23000249,
+    "type": "gadget",
+    "brawler_id": "16000008",
+    "brawler_name": "NITA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000249.png"
+  },
+  "FAUX FUR": {
+    "id": 23000314,
+    "type": "gadget",
+    "brawler_id": "16000008",
+    "brawler_name": "NITA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000314.png"
+  },
+  "BEAR WITH ME": {
+    "id": 23000084,
+    "type": "star_power",
+    "brawler_id": "16000008",
+    "brawler_name": "NITA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000084.png"
+  },
+  "HYPER BEAR": {
+    "id": 23000136,
+    "type": "star_power",
+    "brawler_id": "16000008",
+    "brawler_name": "NITA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000136.png"
+  },
+  "FIDGET SPINNER": {
+    "id": 23000258,
+    "type": "gadget",
+    "brawler_id": "16000009",
+    "brawler_name": "DYNAMIKE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000258.png"
+  },
+  "SATCHEL CHARGE": {
+    "id": 23000294,
+    "type": "gadget",
+    "brawler_id": "16000009",
+    "brawler_name": "DYNAMIKE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000294.png"
+  },
+  "DYNA-JUMP": {
+    "id": 23000085,
+    "type": "star_power",
+    "brawler_id": "16000009",
+    "brawler_name": "DYNAMIKE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000085.png"
+  },
+  "DEMOLITION": {
+    "id": 23000155,
+    "type": "star_power",
+    "brawler_id": "16000009",
+    "brawler_name": "DYNAMIKE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000155.png"
+  },
+  "SUPLEX SUPPLEMENT": {
+    "id": 23000264,
+    "type": "gadget",
+    "brawler_id": "16000010",
+    "brawler_name": "EL PRIMO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000264.png"
+  },
+  "ASTEROID BELT": {
+    "id": 23000292,
+    "type": "gadget",
+    "brawler_id": "16000010",
+    "brawler_name": "EL PRIMO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000292.png"
+  },
+  "EL FUEGO": {
+    "id": 23000086,
+    "type": "star_power",
+    "brawler_id": "16000010",
+    "brawler_name": "EL PRIMO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000086.png"
+  },
+  "METEOR RUSH": {
+    "id": 23000140,
+    "type": "star_power",
+    "brawler_id": "16000010",
+    "brawler_name": "EL PRIMO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000140.png"
+  },
+  "COMBO SPINNER": {
+    "id": 23000265,
+    "type": "gadget",
+    "brawler_id": "16000011",
+    "brawler_name": "MORTIS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000265.png"
+  },
+  "CREATURE OF THE NIGHT": {
+    "id": 23000290,
+    "type": "gadget",
+    "brawler_id": "16000011",
+    "brawler_name": "MORTIS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000290.png"
+  },
+  "CREEPY HARVEST": {
+    "id": 23000087,
+    "type": "star_power",
+    "brawler_id": "16000011",
+    "brawler_name": "MORTIS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000087.png"
+  },
+  "COILED SNAKE": {
+    "id": 23000154,
+    "type": "star_power",
+    "brawler_id": "16000011",
+    "brawler_name": "MORTIS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000154.png"
+  },
+  "INSTAPOISON": {
+    "id": 23000243,
+    "type": "gadget",
+    "brawler_id": "16000012",
+    "brawler_name": "CROW",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000243.png"
+  },
+  "SLOWING TOXIN": {
+    "id": 23000286,
+    "type": "gadget",
+    "brawler_id": "16000012",
+    "brawler_name": "CROW",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000286.png"
+  },
+  "EXTRA TOXIC": {
+    "id": 23000088,
+    "type": "star_power",
+    "brawler_id": "16000012",
+    "brawler_name": "CROW",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000088.png"
+  },
+  "CARRION CROW": {
+    "id": 23000143,
+    "type": "star_power",
+    "brawler_id": "16000012",
+    "brawler_name": "CROW",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000143.png"
+  },
+  "TUNING FORK": {
+    "id": 23000267,
+    "type": "gadget",
+    "brawler_id": "16000013",
+    "brawler_name": "POCO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000267.png"
+  },
+  "PROTECTIVE TUNES": {
+    "id": 23000350,
+    "type": "gadget",
+    "brawler_id": "16000013",
+    "brawler_name": "POCO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000350.png"
+  },
+  "DA CAPO!": {
+    "id": 23000089,
+    "type": "star_power",
+    "brawler_id": "16000013",
+    "brawler_name": "POCO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000089.png"
+  },
+  "SCREECHING SOLO": {
+    "id": 23000144,
+    "type": "star_power",
+    "brawler_id": "16000013",
+    "brawler_name": "POCO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000144.png"
+  },
+  "SUPER TOTEM": {
+    "id": 23000263,
+    "type": "gadget",
+    "brawler_id": "16000014",
+    "brawler_name": "BO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000263.png"
+  },
+  "TRIPWIRE": {
+    "id": 23000289,
+    "type": "gadget",
+    "brawler_id": "16000014",
+    "brawler_name": "BO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000289.png"
+  },
+  "CIRCLING EAGLE": {
+    "id": 23000090,
+    "type": "star_power",
+    "brawler_id": "16000014",
+    "brawler_name": "BO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000090.png"
+  },
+  "SNARE A BEAR": {
+    "id": 23000148,
+    "type": "star_power",
+    "brawler_id": "16000014",
+    "brawler_name": "BO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000148.png"
+  },
+  "AUTO AIMER": {
+    "id": 23000268,
+    "type": "gadget",
+    "brawler_id": "16000015",
+    "brawler_name": "PIPER",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000268.png"
+  },
+  "HOMEMADE RECIPE": {
+    "id": 23000291,
+    "type": "gadget",
+    "brawler_id": "16000015",
+    "brawler_name": "PIPER",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000291.png"
+  },
+  "AMBUSH": {
+    "id": 23000091,
+    "type": "star_power",
+    "brawler_id": "16000015",
+    "brawler_name": "PIPER",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000091.png"
+  },
+  "SNAPPY SNIPING": {
+    "id": 23000152,
+    "type": "star_power",
+    "brawler_id": "16000015",
+    "brawler_name": "PIPER",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000152.png"
+  },
+  "PULSE MODULATOR": {
+    "id": 23000257,
+    "type": "gadget",
+    "brawler_id": "16000016",
+    "brawler_name": "PAM",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000257.png"
+  },
+  "SCRAPSUCKER": {
+    "id": 23000404,
+    "type": "gadget",
+    "brawler_id": "16000016",
+    "brawler_name": "PAM",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000404.png"
+  },
+  "MAMA'S HUG": {
+    "id": 23000092,
+    "type": "star_power",
+    "brawler_id": "16000016",
+    "brawler_name": "PAM",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000092.png"
+  },
+  "MAMA'S SQUEEZE": {
+    "id": 23000139,
+    "type": "star_power",
+    "brawler_id": "16000016",
+    "brawler_name": "PAM",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000139.png"
+  },
+  "PSYCHIC ENHANCER": {
+    "id": 23000266,
+    "type": "gadget",
+    "brawler_id": "16000017",
+    "brawler_name": "TARA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000266.png"
+  },
+  "SUPPORT FROM BEYOND": {
+    "id": 23000356,
+    "type": "gadget",
+    "brawler_id": "16000017",
+    "brawler_name": "TARA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000356.png"
+  },
+  "BLACK PORTAL": {
+    "id": 23000093,
+    "type": "star_power",
+    "brawler_id": "16000017",
+    "brawler_name": "TARA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000093.png"
+  },
+  "HEALING SHADE": {
+    "id": 23000160,
+    "type": "star_power",
+    "brawler_id": "16000017",
+    "brawler_name": "TARA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000160.png"
+  },
+  "RECOILING ROTATOR": {
+    "id": 23000260,
+    "type": "gadget",
+    "brawler_id": "16000018",
+    "brawler_name": "DARRYL",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000260.png"
+  },
+  "TAR BARREL": {
+    "id": 23000313,
+    "type": "gadget",
+    "brawler_id": "16000018",
+    "brawler_name": "DARRYL",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000313.png"
+  },
+  "STEEL HOOPS": {
+    "id": 23000094,
+    "type": "star_power",
+    "brawler_id": "16000018",
+    "brawler_name": "DARRYL",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000094.png"
+  },
+  "ROLLING RELOAD": {
+    "id": 23000157,
+    "type": "star_power",
+    "brawler_id": "16000018",
+    "brawler_name": "DARRYL",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000157.png"
+  },
+  "SALTY BARREL": {
+    "id": 23000248,
+    "type": "gadget",
+    "brawler_id": "16000019",
+    "brawler_name": "PENNY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000248.png"
+  },
+  "TRUSTY SPYGLASS": {
+    "id": 23000287,
+    "type": "gadget",
+    "brawler_id": "16000019",
+    "brawler_name": "PENNY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000287.png"
+  },
+  "HEAVY COFFERS": {
+    "id": 23000099,
+    "type": "star_power",
+    "brawler_id": "16000019",
+    "brawler_name": "PENNY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000099.png"
+  },
+  "MASTER BLASTER": {
+    "id": 23000142,
+    "type": "star_power",
+    "brawler_id": "16000019",
+    "brawler_name": "PENNY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000142.png"
+  },
+  "ACTIVE NOISE CANCELING": {
+    "id": 23000261,
+    "type": "gadget",
+    "brawler_id": "16000020",
+    "brawler_name": "FRANK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000261.png"
+  },
+  "IRRESISTIBLE ATTRACTION": {
+    "id": 23000351,
+    "type": "gadget",
+    "brawler_id": "16000020",
+    "brawler_name": "FRANK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000351.png"
+  },
+  "POWER GRAB": {
+    "id": 23000104,
+    "type": "star_power",
+    "brawler_id": "16000020",
+    "brawler_name": "FRANK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000104.png"
+  },
+  "SPONGE": {
+    "id": 23000153,
+    "type": "star_power",
+    "brawler_id": "16000020",
+    "brawler_name": "FRANK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000153.png"
+  },
+  "LAMP BLOWOUT": {
+    "id": 23000252,
+    "type": "gadget",
+    "brawler_id": "16000021",
+    "brawler_name": "GENE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000252.png"
+  },
+  "VENGEFUL SPIRITS": {
+    "id": 23000352,
+    "type": "gadget",
+    "brawler_id": "16000021",
+    "brawler_name": "GENE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000352.png"
+  },
+  "MAGIC PUFFS": {
+    "id": 23000109,
+    "type": "star_power",
+    "brawler_id": "16000021",
+    "brawler_name": "GENE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000109.png"
+  },
+  "SPIRIT SLAP": {
+    "id": 23000159,
+    "type": "star_power",
+    "brawler_id": "16000021",
+    "brawler_name": "GENE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000159.png"
+  },
+  "MINE MANIA": {
+    "id": 23000253,
+    "type": "gadget",
+    "brawler_id": "16000022",
+    "brawler_name": "TICK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000253.png"
+  },
+  "LAST HURRAH": {
+    "id": 23000355,
+    "type": "gadget",
+    "brawler_id": "16000022",
+    "brawler_name": "TICK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000355.png"
+  },
+  "WELL OILED": {
+    "id": 23000114,
+    "type": "star_power",
+    "brawler_id": "16000022",
+    "brawler_name": "TICK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000114.png"
+  },
+  "AUTOMA-TICK RELOAD": {
+    "id": 23000161,
+    "type": "star_power",
+    "brawler_id": "16000022",
+    "brawler_name": "TICK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000161.png"
+  },
+  "CLONE PROJECTOR": {
+    "id": 23000276,
+    "type": "gadget",
+    "brawler_id": "16000023",
+    "brawler_name": "LEON",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000276.png"
+  },
+  "LOLLIPOP DROP": {
+    "id": 23000408,
+    "type": "gadget",
+    "brawler_id": "16000023",
+    "brawler_name": "LEON",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000408.png"
+  },
+  "SMOKE TRAILS": {
+    "id": 23000119,
+    "type": "star_power",
+    "brawler_id": "16000023",
+    "brawler_name": "LEON",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000119.png"
+  },
+  "INVISIHEAL": {
+    "id": 23000141,
+    "type": "star_power",
+    "brawler_id": "16000023",
+    "brawler_name": "LEON",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000141.png"
+  },
+  "GROW LIGHT": {
+    "id": 23000242,
+    "type": "gadget",
+    "brawler_id": "16000024",
+    "brawler_name": "ROSA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000242.png"
+  },
+  "UNFRIENDLY BUSHES": {
+    "id": 23000348,
+    "type": "gadget",
+    "brawler_id": "16000024",
+    "brawler_name": "ROSA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000348.png"
+  },
+  "PLANT LIFE": {
+    "id": 23000124,
+    "type": "star_power",
+    "brawler_id": "16000024",
+    "brawler_name": "ROSA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000124.png"
+  },
+  "THORNY GLOVES": {
+    "id": 23000147,
+    "type": "star_power",
+    "brawler_id": "16000024",
+    "brawler_name": "ROSA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000147.png"
+  },
+  "HEAT EJECTOR": {
+    "id": 23000262,
+    "type": "gadget",
+    "brawler_id": "16000025",
+    "brawler_name": "CARL",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000262.png"
+  },
+  "FLYING HOOK": {
+    "id": 23000317,
+    "type": "gadget",
+    "brawler_id": "16000025",
+    "brawler_name": "CARL",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000317.png"
+  },
+  "POWER THROW": {
+    "id": 23000129,
+    "type": "star_power",
+    "brawler_id": "16000025",
+    "brawler_name": "CARL",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000129.png"
+  },
+  "PROTECTIVE PIROUETTE": {
+    "id": 23000145,
+    "type": "star_power",
+    "brawler_id": "16000025",
+    "brawler_name": "CARL",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000145.png"
+  },
+  "VITAMIN BOOSTER": {
+    "id": 23000275,
+    "type": "gadget",
+    "brawler_id": "16000026",
+    "brawler_name": "BIBI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000275.png"
+  },
+  "EXTRA STICKY": {
+    "id": 23000458,
+    "type": "gadget",
+    "brawler_id": "16000026",
+    "brawler_name": "BIBI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000458.png"
+  },
+  "HOME RUN": {
+    "id": 23000134,
+    "type": "star_power",
+    "brawler_id": "16000026",
+    "brawler_name": "BIBI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000134.png"
+  },
+  "BATTING STANCE": {
+    "id": 23000146,
+    "type": "star_power",
+    "brawler_id": "16000026",
+    "brawler_name": "BIBI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000146.png"
+  },
+  "CHEAT CARTRIDGE": {
+    "id": 23000259,
+    "type": "gadget",
+    "brawler_id": "16000027",
+    "brawler_name": "8-BIT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000259.png"
+  },
+  "EXTRA CREDITS": {
+    "id": 23000318,
+    "type": "gadget",
+    "brawler_id": "16000027",
+    "brawler_name": "8-BIT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000318.png"
+  },
+  "BOOSTED BOOSTER": {
+    "id": 23000168,
+    "type": "star_power",
+    "brawler_id": "16000027",
+    "brawler_name": "8-BIT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000168.png"
+  },
+  "PLUGGED IN": {
+    "id": 23000181,
+    "type": "star_power",
+    "brawler_id": "16000027",
+    "brawler_name": "8-BIT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000181.png"
+  },
+  "SLEEP STIMULATOR": {
+    "id": 23000270,
+    "type": "gadget",
+    "brawler_id": "16000028",
+    "brawler_name": "SANDY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000270.png"
+  },
+  "SWEET DREAMS": {
+    "id": 23000405,
+    "type": "gadget",
+    "brawler_id": "16000028",
+    "brawler_name": "SANDY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000405.png"
+  },
+  "RUDE SANDS": {
+    "id": 23000186,
+    "type": "star_power",
+    "brawler_id": "16000028",
+    "brawler_name": "SANDY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000186.png"
+  },
+  "HEALING WINDS": {
+    "id": 23000187,
+    "type": "star_power",
+    "brawler_id": "16000028",
+    "brawler_name": "SANDY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000187.png"
+  },
+  "HONEY MOLASSES": {
+    "id": 23000271,
+    "type": "gadget",
+    "brawler_id": "16000029",
+    "brawler_name": "BEA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000271.png"
+  },
+  "RATTLED HIVE": {
+    "id": 23000312,
+    "type": "gadget",
+    "brawler_id": "16000029",
+    "brawler_name": "BEA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000312.png"
+  },
+  "INSTA BEALOAD": {
+    "id": 23000192,
+    "type": "star_power",
+    "brawler_id": "16000029",
+    "brawler_name": "BEA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000192.png"
+  },
+  "HONEYCOMB": {
+    "id": 23000193,
+    "type": "star_power",
+    "brawler_id": "16000029",
+    "brawler_name": "BEA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000193.png"
+  },
+  "FRIENDZONER": {
+    "id": 23000274,
+    "type": "gadget",
+    "brawler_id": "16000030",
+    "brawler_name": "EMZ",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000274.png"
+  },
+  "ACID SPRAY": {
+    "id": 23000459,
+    "type": "gadget",
+    "brawler_id": "16000030",
+    "brawler_name": "EMZ",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000459.png"
+  },
+  "BAD KARMA": {
+    "id": 23000198,
+    "type": "star_power",
+    "brawler_id": "16000030",
+    "brawler_name": "EMZ",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000198.png"
+  },
+  "HYPE": {
+    "id": 23000199,
+    "type": "star_power",
+    "brawler_id": "16000030",
+    "brawler_name": "EMZ",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000199.png"
+  },
+  "SERVICE BELL": {
+    "id": 23000269,
+    "type": "gadget",
+    "brawler_id": "16000031",
+    "brawler_name": "MR. P",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000269.png"
+  },
+  "PORTER REINFORCEMENTS": {
+    "id": 23000349,
+    "type": "gadget",
+    "brawler_id": "16000031",
+    "brawler_name": "MR. P",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000349.png"
+  },
+  "HANDLE WITH CARE": {
+    "id": 23000204,
+    "type": "star_power",
+    "brawler_id": "16000031",
+    "brawler_name": "MR. P",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000204.png"
+  },
+  "REVOLVING DOOR": {
+    "id": 23000205,
+    "type": "star_power",
+    "brawler_id": "16000031",
+    "brawler_name": "MR. P",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000205.png"
+  },
+  "PHASE SHIFTER": {
+    "id": 23000254,
+    "type": "gadget",
+    "brawler_id": "16000032",
+    "brawler_name": "MAX",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000254.png"
+  },
+  "SNEAKY SNEAKERS": {
+    "id": 23000311,
+    "type": "gadget",
+    "brawler_id": "16000032",
+    "brawler_name": "MAX",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000311.png"
+  },
+  "SUPER CHARGED": {
+    "id": 23000210,
+    "type": "star_power",
+    "brawler_id": "16000032",
+    "brawler_name": "MAX",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000210.png"
+  },
+  "RUN N GUN": {
+    "id": 23000211,
+    "type": "star_power",
+    "brawler_id": "16000032",
+    "brawler_name": "MAX",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000211.png"
+  },
+  "PNEUMATIC BOOSTER": {
+    "id": 23000256,
+    "type": "gadget",
+    "brawler_id": "16000034",
+    "brawler_name": "JACKY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000256.png"
+  },
+  "REBUILD": {
+    "id": 23000486,
+    "type": "gadget",
+    "brawler_id": "16000034",
+    "brawler_name": "JACKY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000486.png"
+  },
+  "COUNTER CRUSH": {
+    "id": 23000222,
+    "type": "star_power",
+    "brawler_id": "16000034",
+    "brawler_name": "JACKY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000222.png"
+  },
+  "HARDY HARD HAT": {
+    "id": 23000223,
+    "type": "star_power",
+    "brawler_id": "16000034",
+    "brawler_name": "JACKY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000223.png"
+  },
+  "SPRING EJECTOR": {
+    "id": 23000277,
+    "type": "gadget",
+    "brawler_id": "16000035",
+    "brawler_name": "GALE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000277.png"
+  },
+  "TWISTER": {
+    "id": 23000407,
+    "type": "gadget",
+    "brawler_id": "16000035",
+    "brawler_name": "GALE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000407.png"
+  },
+  "BLUSTERY BLOW": {
+    "id": 23000228,
+    "type": "star_power",
+    "brawler_id": "16000035",
+    "brawler_name": "GALE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000228.png"
+  },
+  "FREEZING SNOW": {
+    "id": 23000229,
+    "type": "star_power",
+    "brawler_id": "16000035",
+    "brawler_name": "GALE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000229.png"
+  },
+  "WARPIN' TIME": {
+    "id": 23000278,
+    "type": "gadget",
+    "brawler_id": "16000036",
+    "brawler_name": "NANI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000278.png"
+  },
+  "RETURN TO SENDER": {
+    "id": 23000353,
+    "type": "gadget",
+    "brawler_id": "16000036",
+    "brawler_name": "NANI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000353.png"
+  },
+  "AUTOFOCUS": {
+    "id": 23000234,
+    "type": "star_power",
+    "brawler_id": "16000036",
+    "brawler_name": "NANI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000234.png"
+  },
+  "TEMPERED STEEL": {
+    "id": 23000235,
+    "type": "star_power",
+    "brawler_id": "16000036",
+    "brawler_name": "NANI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000235.png"
+  },
+  "GARDEN MULCHER": {
+    "id": 23000244,
+    "type": "gadget",
+    "brawler_id": "16000037",
+    "brawler_name": "SPROUT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000244.png"
+  },
+  "TRANSPLANT": {
+    "id": 23000315,
+    "type": "gadget",
+    "brawler_id": "16000037",
+    "brawler_name": "SPROUT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000315.png"
+  },
+  "OVERGROWTH": {
+    "id": 23000240,
+    "type": "star_power",
+    "brawler_id": "16000037",
+    "brawler_name": "SPROUT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000240.png"
+  },
+  "PHOTOSYNTHESIS": {
+    "id": 23000241,
+    "type": "star_power",
+    "brawler_id": "16000037",
+    "brawler_name": "SPROUT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000241.png"
+  },
+  "POWER SURGE": {
+    "id": 23000285,
+    "type": "gadget",
+    "brawler_id": "16000038",
+    "brawler_name": "SURGE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000285.png"
+  },
+  "POWER SHIELD": {
+    "id": 23000485,
+    "type": "gadget",
+    "brawler_id": "16000038",
+    "brawler_name": "SURGE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000485.png"
+  },
+  "TO THE MAX!": {
+    "id": 23000283,
+    "type": "star_power",
+    "brawler_id": "16000038",
+    "brawler_name": "SURGE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000283.png"
+  },
+  "SERVE ICE COLD": {
+    "id": 23000284,
+    "type": "star_power",
+    "brawler_id": "16000038",
+    "brawler_name": "SURGE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000284.png"
+  },
+  "NA-AH!": {
+    "id": 23000302,
+    "type": "gadget",
+    "brawler_id": "16000039",
+    "brawler_name": "COLETTE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000302.png"
+  },
+  "GOTCHA!": {
+    "id": 23000457,
+    "type": "gadget",
+    "brawler_id": "16000039",
+    "brawler_name": "COLETTE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000457.png"
+  },
+  "PUSH IT": {
+    "id": 23000300,
+    "type": "star_power",
+    "brawler_id": "16000039",
+    "brawler_name": "COLETTE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000300.png"
+  },
+  "MASS TAX": {
+    "id": 23000301,
+    "type": "star_power",
+    "brawler_id": "16000039",
+    "brawler_name": "COLETTE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000301.png"
+  },
+  "FIRE STARTERS": {
+    "id": 23000309,
+    "type": "gadget",
+    "brawler_id": "16000040",
+    "brawler_name": "AMBER",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000309.png"
+  },
+  "DANCING FLAMES": {
+    "id": 23000488,
+    "type": "gadget",
+    "brawler_id": "16000040",
+    "brawler_name": "AMBER",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000488.png"
+  },
+  "WILD FLAMES": {
+    "id": 23000307,
+    "type": "star_power",
+    "brawler_id": "16000040",
+    "brawler_name": "AMBER",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000307.png"
+  },
+  "SCORCHIN' SIPHON": {
+    "id": 23000308,
+    "type": "star_power",
+    "brawler_id": "16000040",
+    "brawler_name": "AMBER",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000308.png"
+  },
+  "ICE BLOCK": {
+    "id": 23000326,
+    "type": "gadget",
+    "brawler_id": "16000041",
+    "brawler_name": "LOU",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000326.png"
+  },
+  "CRYO SYRUP": {
+    "id": 23000400,
+    "type": "gadget",
+    "brawler_id": "16000041",
+    "brawler_name": "LOU",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000400.png"
+  },
+  "SUPERCOOL": {
+    "id": 23000324,
+    "type": "star_power",
+    "brawler_id": "16000041",
+    "brawler_name": "LOU",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000324.png"
+  },
+  "HYPOTHERMIA": {
+    "id": 23000325,
+    "type": "star_power",
+    "brawler_id": "16000041",
+    "brawler_name": "LOU",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000325.png"
+  },
+  "SHOT IN THE ARM": {
+    "id": 23000333,
+    "type": "gadget",
+    "brawler_id": "16000042",
+    "brawler_name": "BYRON",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000333.png"
+  },
+  "BOOSTER SHOTS": {
+    "id": 23000461,
+    "type": "gadget",
+    "brawler_id": "16000042",
+    "brawler_name": "BYRON",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000461.png"
+  },
+  "MALAISE": {
+    "id": 23000331,
+    "type": "star_power",
+    "brawler_id": "16000042",
+    "brawler_name": "BYRON",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000331.png"
+  },
+  "INJECTION": {
+    "id": 23000332,
+    "type": "star_power",
+    "brawler_id": "16000042",
+    "brawler_name": "BYRON",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000332.png"
+  },
+  "LET'S FLY": {
+    "id": 23000340,
+    "type": "gadget",
+    "brawler_id": "16000043",
+    "brawler_name": "EDGAR",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000340.png"
+  },
+  "HARDCORE": {
+    "id": 23000403,
+    "type": "gadget",
+    "brawler_id": "16000043",
+    "brawler_name": "EDGAR",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000403.png"
+  },
+  "HARD LANDING": {
+    "id": 23000338,
+    "type": "star_power",
+    "brawler_id": "16000043",
+    "brawler_name": "EDGAR",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000338.png"
+  },
+  "FISTICUFFS": {
+    "id": 23000339,
+    "type": "star_power",
+    "brawler_id": "16000043",
+    "brawler_name": "EDGAR",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000339.png"
+  },
+  "TAKE COVER": {
+    "id": 23000347,
+    "type": "gadget",
+    "brawler_id": "16000044",
+    "brawler_name": "RUFFS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000347.png"
+  },
+  "AIR SUPPORT": {
+    "id": 23000402,
+    "type": "gadget",
+    "brawler_id": "16000044",
+    "brawler_name": "RUFFS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000402.png"
+  },
+  "AIR SUPERIORITY": {
+    "id": 23000345,
+    "type": "star_power",
+    "brawler_id": "16000044",
+    "brawler_name": "RUFFS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000345.png"
+  },
+  "FIELD PROMOTION": {
+    "id": 23000346,
+    "type": "star_power",
+    "brawler_id": "16000044",
+    "brawler_name": "RUFFS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000346.png"
+  },
+  "SPEED ZONE": {
+    "id": 23000364,
+    "type": "gadget",
+    "brawler_id": "16000045",
+    "brawler_name": "STU",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000364.png"
+  },
+  "BREAKTHROUGH": {
+    "id": 23000401,
+    "type": "gadget",
+    "brawler_id": "16000045",
+    "brawler_name": "STU",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000401.png"
+  },
+  "ZERO DRAG": {
+    "id": 23000362,
+    "type": "star_power",
+    "brawler_id": "16000045",
+    "brawler_name": "STU",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000362.png"
+  },
+  "GASO-HEAL": {
+    "id": 23000363,
+    "type": "star_power",
+    "brawler_id": "16000045",
+    "brawler_name": "STU",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000363.png"
+  },
+  "NEST EGG": {
+    "id": 23000371,
+    "type": "gadget",
+    "brawler_id": "16000046",
+    "brawler_name": "BELLE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000371.png"
+  },
+  "REVERSE POLARITY": {
+    "id": 23000463,
+    "type": "gadget",
+    "brawler_id": "16000046",
+    "brawler_name": "BELLE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000463.png"
+  },
+  "POSITIVE FEEDBACK": {
+    "id": 23000369,
+    "type": "star_power",
+    "brawler_id": "16000046",
+    "brawler_name": "BELLE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000369.png"
+  },
+  "GROUNDED": {
+    "id": 23000370,
+    "type": "star_power",
+    "brawler_id": "16000046",
+    "brawler_name": "BELLE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000370.png"
+  },
+  "WINDUP": {
+    "id": 23000378,
+    "type": "gadget",
+    "brawler_id": "16000047",
+    "brawler_name": "SQUEAK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000378.png"
+  },
+  "RESIDUE": {
+    "id": 23000462,
+    "type": "gadget",
+    "brawler_id": "16000047",
+    "brawler_name": "SQUEAK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000462.png"
+  },
+  "CHAIN REACTION": {
+    "id": 23000376,
+    "type": "star_power",
+    "brawler_id": "16000047",
+    "brawler_name": "SQUEAK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000376.png"
+  },
+  "SUPER STICKY": {
+    "id": 23000377,
+    "type": "star_power",
+    "brawler_id": "16000047",
+    "brawler_name": "SQUEAK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000377.png"
+  },
+  "WATCHTOWER": {
+    "id": 23000385,
+    "type": "gadget",
+    "brawler_id": "16000048",
+    "brawler_name": "GROM",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000385.png"
+  },
+  "RADIO CHECK": {
+    "id": 23000460,
+    "type": "gadget",
+    "brawler_id": "16000048",
+    "brawler_name": "GROM",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000460.png"
+  },
+  "FOOT PATROL": {
+    "id": 23000383,
+    "type": "star_power",
+    "brawler_id": "16000048",
+    "brawler_name": "GROM",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000383.png"
+  },
+  "X-FACTOR": {
+    "id": 23000384,
+    "type": "star_power",
+    "brawler_id": "16000048",
+    "brawler_name": "GROM",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000384.png"
+  },
+  "RESERVE BUOY": {
+    "id": 23000392,
+    "type": "gadget",
+    "brawler_id": "16000049",
+    "brawler_name": "BUZZ",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000392.png"
+  },
+  "X-RAY-SHADES": {
+    "id": 23000490,
+    "type": "gadget",
+    "brawler_id": "16000049",
+    "brawler_name": "BUZZ",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000490.png"
+  },
+  "TOUGHER TORPEDO": {
+    "id": 23000390,
+    "type": "star_power",
+    "brawler_id": "16000049",
+    "brawler_name": "BUZZ",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000390.png"
+  },
+  "EYES SHARP": {
+    "id": 23000391,
+    "type": "star_power",
+    "brawler_id": "16000049",
+    "brawler_name": "BUZZ",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000391.png"
+  },
+  "PIGGY BANK": {
+    "id": 23000399,
+    "type": "gadget",
+    "brawler_id": "16000050",
+    "brawler_name": "GRIFF",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000399.png"
+  },
+  "COIN SHOWER": {
+    "id": 23000487,
+    "type": "gadget",
+    "brawler_id": "16000050",
+    "brawler_name": "GRIFF",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000487.png"
+  },
+  "KEEP THE CHANGE": {
+    "id": 23000397,
+    "type": "star_power",
+    "brawler_id": "16000050",
+    "brawler_name": "GRIFF",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000397.png"
+  },
+  "BUSINESS RESILIENCE": {
+    "id": 23000398,
+    "type": "star_power",
+    "brawler_id": "16000050",
+    "brawler_name": "GRIFF",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000398.png"
+  },
+  "CHILL PILL": {
+    "id": 23000416,
+    "type": "gadget",
+    "brawler_id": "16000051",
+    "brawler_name": "ASH",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000416.png"
+  },
+  "ROTTEN BANANA": {
+    "id": 23000465,
+    "type": "gadget",
+    "brawler_id": "16000051",
+    "brawler_name": "ASH",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000465.png"
+  },
+  "FIRST BASH": {
+    "id": 23000414,
+    "type": "star_power",
+    "brawler_id": "16000051",
+    "brawler_name": "ASH",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000414.png"
+  },
+  "MAD AS HECK": {
+    "id": 23000415,
+    "type": "star_power",
+    "brawler_id": "16000051",
+    "brawler_name": "ASH",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000415.png"
+  },
+  "JOLTING VOLTS": {
+    "id": 23000423,
+    "type": "gadget",
+    "brawler_id": "16000052",
+    "brawler_name": "MEG",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000423.png"
+  },
+  "TOOLBOX": {
+    "id": 23000489,
+    "type": "gadget",
+    "brawler_id": "16000052",
+    "brawler_name": "MEG",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000489.png"
+  },
+  "FORCE FIELD": {
+    "id": 23000421,
+    "type": "star_power",
+    "brawler_id": "16000052",
+    "brawler_name": "MEG",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000421.png"
+  },
+  "HEAVY METAL": {
+    "id": 23000422,
+    "type": "star_power",
+    "brawler_id": "16000052",
+    "brawler_name": "MEG",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000422.png"
+  },
+  "FREEZE FRAME": {
+    "id": 23000433,
+    "type": "gadget",
+    "brawler_id": "16000053",
+    "brawler_name": "LOLA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000433.png"
+  },
+  "STUNT DOUBLE": {
+    "id": 23000456,
+    "type": "gadget",
+    "brawler_id": "16000053",
+    "brawler_name": "LOLA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000456.png"
+  },
+  "IMPROVISE": {
+    "id": 23000431,
+    "type": "star_power",
+    "brawler_id": "16000053",
+    "brawler_name": "LOLA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000431.png"
+  },
+  "SEALED WITH A KISS": {
+    "id": 23000432,
+    "type": "star_power",
+    "brawler_id": "16000053",
+    "brawler_name": "LOLA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000432.png"
+  },
+  "CORN-FU": {
+    "id": 23000440,
+    "type": "gadget",
+    "brawler_id": "16000054",
+    "brawler_name": "FANG",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000440.png"
+  },
+  "ROUNDHOUSE KICK": {
+    "id": 23000464,
+    "type": "gadget",
+    "brawler_id": "16000054",
+    "brawler_name": "FANG",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000464.png"
+  },
+  "FRESH KICKS": {
+    "id": 23000438,
+    "type": "star_power",
+    "brawler_id": "16000054",
+    "brawler_name": "FANG",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000438.png"
+  },
+  "DIVINE SOLES": {
+    "id": 23000439,
+    "type": "star_power",
+    "brawler_id": "16000054",
+    "brawler_name": "FANG",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000439.png"
+  },
+  "GOTTA GO!": {
+    "id": 23000454,
+    "type": "gadget",
+    "brawler_id": "16000056",
+    "brawler_name": "EVE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000454.png"
+  },
+  "MOTHERLY LOVE": {
+    "id": 23000455,
+    "type": "gadget",
+    "brawler_id": "16000056",
+    "brawler_name": "EVE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000455.png"
+  },
+  "UNNATURAL ORDER": {
+    "id": 23000452,
+    "type": "star_power",
+    "brawler_id": "16000056",
+    "brawler_name": "EVE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000452.png"
+  },
+  "HAPPY SURPRISE": {
+    "id": 23000453,
+    "type": "star_power",
+    "brawler_id": "16000056",
+    "brawler_name": "EVE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000453.png"
+  },
+  "DROP THE BASS": {
+    "id": 23000472,
+    "type": "gadget",
+    "brawler_id": "16000057",
+    "brawler_name": "JANET",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000472.png"
+  },
+  "BACKSTAGE PASS": {
+    "id": 23000473,
+    "type": "gadget",
+    "brawler_id": "16000057",
+    "brawler_name": "JANET",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000473.png"
+  },
+  "STAGE VIEW": {
+    "id": 23000470,
+    "type": "star_power",
+    "brawler_id": "16000057",
+    "brawler_name": "JANET",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000470.png"
+  },
+  "VOCAL WARM UP": {
+    "id": 23000471,
+    "type": "star_power",
+    "brawler_id": "16000057",
+    "brawler_name": "JANET",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000471.png"
+  },
+  "SUGAR RUSH": {
+    "id": 23000480,
+    "type": "gadget",
+    "brawler_id": "16000058",
+    "brawler_name": "BONNIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000480.png"
+  },
+  "CRASH TEST": {
+    "id": 23000481,
+    "type": "gadget",
+    "brawler_id": "16000058",
+    "brawler_name": "BONNIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000481.png"
+  },
+  "BLACK POWDER": {
+    "id": 23000478,
+    "type": "star_power",
+    "brawler_id": "16000058",
+    "brawler_name": "BONNIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000478.png"
+  },
+  "WISDOM TOOTH": {
+    "id": 23000479,
+    "type": "star_power",
+    "brawler_id": "16000058",
+    "brawler_name": "BONNIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000479.png"
+  },
+  "DORMANT STAR": {
+    "id": 23000497,
+    "type": "gadget",
+    "brawler_id": "16000059",
+    "brawler_name": "OTIS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000497.png"
+  },
+  "PHAT SPLATTER": {
+    "id": 23000498,
+    "type": "gadget",
+    "brawler_id": "16000059",
+    "brawler_name": "OTIS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000498.png"
+  },
+  "STENCIL GLUE": {
+    "id": 23000495,
+    "type": "star_power",
+    "brawler_id": "16000059",
+    "brawler_name": "OTIS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000495.png"
+  },
+  "INK REFILLS": {
+    "id": 23000496,
+    "type": "star_power",
+    "brawler_id": "16000059",
+    "brawler_name": "OTIS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000496.png"
+  },
+  "MAGNETIC FIELD": {
+    "id": 23000505,
+    "type": "gadget",
+    "brawler_id": "16000060",
+    "brawler_name": "SAM",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000505.png"
+  },
+  "PULSE REPELLENT": {
+    "id": 23000506,
+    "type": "gadget",
+    "brawler_id": "16000060",
+    "brawler_name": "SAM",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000506.png"
+  },
+  "HEARTY RECOVERY": {
+    "id": 23000503,
+    "type": "star_power",
+    "brawler_id": "16000060",
+    "brawler_name": "SAM",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000503.png"
+  },
+  "REMOTE RECHARGE": {
+    "id": 23000504,
+    "type": "star_power",
+    "brawler_id": "16000060",
+    "brawler_name": "SAM",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000504.png"
+  },
+  "KOOKY POPPER": {
+    "id": 23000513,
+    "type": "gadget",
+    "brawler_id": "16000061",
+    "brawler_name": "GUS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000513.png"
+  },
+  "SOUL SWITCHER": {
+    "id": 23000514,
+    "type": "gadget",
+    "brawler_id": "16000061",
+    "brawler_name": "GUS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000514.png"
+  },
+  "HEALTH BONANZA": {
+    "id": 23000511,
+    "type": "star_power",
+    "brawler_id": "16000061",
+    "brawler_name": "GUS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000511.png"
+  },
+  "SPIRIT ANIMAL": {
+    "id": 23000512,
+    "type": "star_power",
+    "brawler_id": "16000061",
+    "brawler_name": "GUS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000512.png"
+  },
+  "UTILITY BELT": {
+    "id": 23000521,
+    "type": "gadget",
+    "brawler_id": "16000062",
+    "brawler_name": "BUSTER",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000521.png"
+  },
+  "SLO-MO REPLAY": {
+    "id": 23000522,
+    "type": "gadget",
+    "brawler_id": "16000062",
+    "brawler_name": "BUSTER",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000522.png"
+  },
+  "BLOCKBUSTER": {
+    "id": 23000519,
+    "type": "star_power",
+    "brawler_id": "16000062",
+    "brawler_name": "BUSTER",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000519.png"
+  },
+  "KEVLAR VEST": {
+    "id": 23000520,
+    "type": "star_power",
+    "brawler_id": "16000062",
+    "brawler_name": "BUSTER",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000520.png"
+  },
+  "SPICY DICE": {
+    "id": 23000529,
+    "type": "gadget",
+    "brawler_id": "16000063",
+    "brawler_name": "CHESTER",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000529.png"
+  },
+  "CANDY BEANS": {
+    "id": 23000530,
+    "type": "gadget",
+    "brawler_id": "16000063",
+    "brawler_name": "CHESTER",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000530.png"
+  },
+  "SINGLE BELL'O'MANIA": {
+    "id": 23000527,
+    "type": "star_power",
+    "brawler_id": "16000063",
+    "brawler_name": "CHESTER",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000527.png"
+  },
+  "SNEAK PEEK": {
+    "id": 23000528,
+    "type": "star_power",
+    "brawler_id": "16000063",
+    "brawler_name": "CHESTER",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000528.png"
+  },
+  "WALKING CANE": {
+    "id": 23000537,
+    "type": "gadget",
+    "brawler_id": "16000064",
+    "brawler_name": "GRAY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000537.png"
+  },
+  "GRAND PIANO": {
+    "id": 23000538,
+    "type": "gadget",
+    "brawler_id": "16000064",
+    "brawler_name": "GRAY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000538.png"
+  },
+  "FAKE INJURY": {
+    "id": 23000535,
+    "type": "star_power",
+    "brawler_id": "16000064",
+    "brawler_name": "GRAY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000535.png"
+  },
+  "NEW PERSPECTIVE": {
+    "id": 23000536,
+    "type": "star_power",
+    "brawler_id": "16000064",
+    "brawler_name": "GRAY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000536.png"
+  },
+  "CARAMELIZE": {
+    "id": 23000545,
+    "type": "gadget",
+    "brawler_id": "16000065",
+    "brawler_name": "MANDY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000545.png"
+  },
+  "COOKIE CRUMBS": {
+    "id": 23000546,
+    "type": "gadget",
+    "brawler_id": "16000065",
+    "brawler_name": "MANDY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000546.png"
+  },
+  "IN MY SIGHTS": {
+    "id": 23000543,
+    "type": "star_power",
+    "brawler_id": "16000065",
+    "brawler_name": "MANDY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000543.png"
+  },
+  "HARD CANDY": {
+    "id": 23000544,
+    "type": "star_power",
+    "brawler_id": "16000065",
+    "brawler_name": "MANDY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000544.png"
+  },
+  "OUT OF LINE": {
+    "id": 23000555,
+    "type": "gadget",
+    "brawler_id": "16000066",
+    "brawler_name": "R-T",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000555.png"
+  },
+  "HACKS!": {
+    "id": 23000556,
+    "type": "gadget",
+    "brawler_id": "16000066",
+    "brawler_name": "R-T",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000556.png"
+  },
+  "QUICK MATHS": {
+    "id": 23000553,
+    "type": "star_power",
+    "brawler_id": "16000066",
+    "brawler_name": "R-T",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000553.png"
+  },
+  "RECORDING": {
+    "id": 23000554,
+    "type": "star_power",
+    "brawler_id": "16000066",
+    "brawler_name": "R-T",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000554.png"
+  },
+  "SPELLBOUND": {
+    "id": 23000563,
+    "type": "gadget",
+    "brawler_id": "16000067",
+    "brawler_name": "WILLOW",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000563.png"
+  },
+  "DIVE": {
+    "id": 23000564,
+    "type": "gadget",
+    "brawler_id": "16000067",
+    "brawler_name": "WILLOW",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000564.png"
+  },
+  "LOVE IS BLIND": {
+    "id": 23000561,
+    "type": "star_power",
+    "brawler_id": "16000067",
+    "brawler_name": "WILLOW",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000561.png"
+  },
+  "OBSESSION": {
+    "id": 23000562,
+    "type": "star_power",
+    "brawler_id": "16000067",
+    "brawler_name": "WILLOW",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000562.png"
+  },
+  "DISENGAGE!": {
+    "id": 23000571,
+    "type": "gadget",
+    "brawler_id": "16000068",
+    "brawler_name": "MAISIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000571.png"
+  },
+  "FINISH THEM!": {
+    "id": 23000572,
+    "type": "gadget",
+    "brawler_id": "16000068",
+    "brawler_name": "MAISIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000572.png"
+  },
+  "PINPOINT PRECISION": {
+    "id": 23000569,
+    "type": "star_power",
+    "brawler_id": "16000068",
+    "brawler_name": "MAISIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000569.png"
+  },
+  "TREMORS": {
+    "id": 23000570,
+    "type": "star_power",
+    "brawler_id": "16000068",
+    "brawler_name": "MAISIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000570.png"
+  },
+  "WATER BALLOONS": {
+    "id": 23000579,
+    "type": "gadget",
+    "brawler_id": "16000069",
+    "brawler_name": "HANK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000579.png"
+  },
+  "BARRICADE": {
+    "id": 23000580,
+    "type": "gadget",
+    "brawler_id": "16000069",
+    "brawler_name": "HANK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000580.png"
+  },
+  "IT'S GONNA BLOW": {
+    "id": 23000577,
+    "type": "star_power",
+    "brawler_id": "16000069",
+    "brawler_name": "HANK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000577.png"
+  },
+  "TAKE COVER!": {
+    "id": 23000578,
+    "type": "star_power",
+    "brawler_id": "16000069",
+    "brawler_name": "HANK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000578.png"
+  },
+  "REPLANTING": {
+    "id": 23000587,
+    "type": "gadget",
+    "brawler_id": "16000070",
+    "brawler_name": "CORDELIUS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000587.png"
+  },
+  "POISON MUSHROOM": {
+    "id": 23000588,
+    "type": "gadget",
+    "brawler_id": "16000070",
+    "brawler_name": "CORDELIUS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000588.png"
+  },
+  "COMBOSHROOMS": {
+    "id": 23000585,
+    "type": "star_power",
+    "brawler_id": "16000070",
+    "brawler_name": "CORDELIUS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000585.png"
+  },
+  "MUSHROOM KINGDOM": {
+    "id": 23000586,
+    "type": "star_power",
+    "brawler_id": "16000070",
+    "brawler_name": "CORDELIUS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000586.png"
+  },
+  "DOUBLE SAUSAGE": {
+    "id": 23000595,
+    "type": "gadget",
+    "brawler_id": "16000071",
+    "brawler_name": "DOUG",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000595.png"
+  },
+  "EXTRA MUSTARD": {
+    "id": 23000596,
+    "type": "gadget",
+    "brawler_id": "16000071",
+    "brawler_name": "DOUG",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000596.png"
+  },
+  "FAST FOOD": {
+    "id": 23000593,
+    "type": "star_power",
+    "brawler_id": "16000071",
+    "brawler_name": "DOUG",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000593.png"
+  },
+  "SELF SERVICE": {
+    "id": 23000594,
+    "type": "star_power",
+    "brawler_id": "16000071",
+    "brawler_name": "DOUG",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000594.png"
+  },
+  "OVERCOOKED": {
+    "id": 23000603,
+    "type": "gadget",
+    "brawler_id": "16000072",
+    "brawler_name": "PEARL",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000603.png"
+  },
+  "MADE WITH LOVE": {
+    "id": 23000604,
+    "type": "gadget",
+    "brawler_id": "16000072",
+    "brawler_name": "PEARL",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000604.png"
+  },
+  "HEAT RETENTION": {
+    "id": 23000601,
+    "type": "star_power",
+    "brawler_id": "16000072",
+    "brawler_name": "PEARL",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000601.png"
+  },
+  "HEAT SHIELD": {
+    "id": 23000602,
+    "type": "star_power",
+    "brawler_id": "16000072",
+    "brawler_name": "PEARL",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000602.png"
+  },
+  "REROUTING": {
+    "id": 23000611,
+    "type": "gadget",
+    "brawler_id": "16000073",
+    "brawler_name": "CHUCK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000611.png"
+  },
+  "GHOST TRAIN": {
+    "id": 23000612,
+    "type": "gadget",
+    "brawler_id": "16000073",
+    "brawler_name": "CHUCK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000612.png"
+  },
+  "PIT STOP": {
+    "id": 23000609,
+    "type": "star_power",
+    "brawler_id": "16000073",
+    "brawler_name": "CHUCK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000609.png"
+  },
+  "TICKETS PLEASE!": {
+    "id": 23000610,
+    "type": "star_power",
+    "brawler_id": "16000073",
+    "brawler_name": "CHUCK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000610.png"
+  },
+  "SPIDERS": {
+    "id": 23000625,
+    "type": "gadget",
+    "brawler_id": "16000074",
+    "brawler_name": "CHARLIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000625.png"
+  },
+  "PERSONAL SPACE": {
+    "id": 23000626,
+    "type": "gadget",
+    "brawler_id": "16000074",
+    "brawler_name": "CHARLIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000626.png"
+  },
+  "DIGESTIVE": {
+    "id": 23000623,
+    "type": "star_power",
+    "brawler_id": "16000074",
+    "brawler_name": "CHARLIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000623.png"
+  },
+  "SLIMY": {
+    "id": 23000624,
+    "type": "star_power",
+    "brawler_id": "16000074",
+    "brawler_name": "CHARLIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000624.png"
+  },
+  "CLIPPING SCREAM": {
+    "id": 23000639,
+    "type": "gadget",
+    "brawler_id": "16000075",
+    "brawler_name": "MICO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000639.png"
+  },
+  "PRESTO": {
+    "id": 23000640,
+    "type": "gadget",
+    "brawler_id": "16000075",
+    "brawler_name": "MICO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000640.png"
+  },
+  "MONKEY BUSINESS": {
+    "id": 23000637,
+    "type": "star_power",
+    "brawler_id": "16000075",
+    "brawler_name": "MICO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000637.png"
+  },
+  "RECORD SMASH": {
+    "id": 23000638,
+    "type": "star_power",
+    "brawler_id": "16000075",
+    "brawler_name": "MICO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000638.png"
+  },
+  "CARDBOARD BOX": {
+    "id": 23000648,
+    "type": "gadget",
+    "brawler_id": "16000076",
+    "brawler_name": "KIT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000648.png"
+  },
+  "CHEESEBURGER": {
+    "id": 23000649,
+    "type": "gadget",
+    "brawler_id": "16000076",
+    "brawler_name": "KIT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000649.png"
+  },
+  "POWER HUNGRY": {
+    "id": 23000646,
+    "type": "star_power",
+    "brawler_id": "16000076",
+    "brawler_name": "KIT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000646.png"
+  },
+  "OVERLY ATTACHED": {
+    "id": 23000647,
+    "type": "star_power",
+    "brawler_id": "16000076",
+    "brawler_name": "KIT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000647.png"
+  },
+  "ORDER: SWAP": {
+    "id": 23000661,
+    "type": "gadget",
+    "brawler_id": "16000077",
+    "brawler_name": "LARRY & LAWRIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000661.png"
+  },
+  "ORDER: FALL BACK": {
+    "id": 23000662,
+    "type": "gadget",
+    "brawler_id": "16000077",
+    "brawler_name": "LARRY & LAWRIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000662.png"
+  },
+  "PROTOCOL: PROTECT": {
+    "id": 23000659,
+    "type": "star_power",
+    "brawler_id": "16000077",
+    "brawler_name": "LARRY & LAWRIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000659.png"
+  },
+  "PROTOCOL: ASSIST": {
+    "id": 23000660,
+    "type": "star_power",
+    "brawler_id": "16000077",
+    "brawler_name": "LARRY & LAWRIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000660.png"
+  },
+  "PERFECT PITCH": {
+    "id": 23000669,
+    "type": "gadget",
+    "brawler_id": "16000078",
+    "brawler_name": "MELODIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000669.png"
+  },
+  "INTERLUDE": {
+    "id": 23000670,
+    "type": "gadget",
+    "brawler_id": "16000078",
+    "brawler_name": "MELODIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000670.png"
+  },
+  "FAST BEATS": {
+    "id": 23000667,
+    "type": "star_power",
+    "brawler_id": "16000078",
+    "brawler_name": "MELODIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000667.png"
+  },
+  "EXTENDED MIX": {
+    "id": 23000668,
+    "type": "star_power",
+    "brawler_id": "16000078",
+    "brawler_name": "MELODIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000668.png"
+  },
+  "STINGING FLIGHT": {
+    "id": 23000677,
+    "type": "gadget",
+    "brawler_id": "16000079",
+    "brawler_name": "ANGELO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000677.png"
+  },
+  "MASTER FLETCHER": {
+    "id": 23000678,
+    "type": "gadget",
+    "brawler_id": "16000079",
+    "brawler_name": "ANGELO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000678.png"
+  },
+  "EMPOWER": {
+    "id": 23000675,
+    "type": "star_power",
+    "brawler_id": "16000079",
+    "brawler_name": "ANGELO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000675.png"
+  },
+  "FLOW": {
+    "id": 23000676,
+    "type": "star_power",
+    "brawler_id": "16000079",
+    "brawler_name": "ANGELO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000676.png"
+  },
+  "UPPER CUT": {
+    "id": 23000736,
+    "type": "gadget",
+    "brawler_id": "16000080",
+    "brawler_name": "DRACO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000736.png"
+  },
+  "LAST STAND": {
+    "id": 23000737,
+    "type": "gadget",
+    "brawler_id": "16000080",
+    "brawler_name": "DRACO",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000737.png"
+  },
+  "EXPOSE": {
+    "id": 23000734,
+    "type": "star_power",
+    "brawler_id": "16000080",
+    "brawler_name": "DRACO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000734.png"
+  },
+  "SHREDDING": {
+    "id": 23000735,
+    "type": "star_power",
+    "brawler_id": "16000080",
+    "brawler_name": "DRACO",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000735.png"
+  },
+  "VANISH": {
+    "id": 23000754,
+    "type": "gadget",
+    "brawler_id": "16000081",
+    "brawler_name": "LILY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000754.png"
+  },
+  "REPOT": {
+    "id": 23000755,
+    "type": "gadget",
+    "brawler_id": "16000081",
+    "brawler_name": "LILY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000755.png"
+  },
+  "SPIKY": {
+    "id": 23000752,
+    "type": "star_power",
+    "brawler_id": "16000081",
+    "brawler_name": "LILY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000752.png"
+  },
+  "VIGILANCE": {
+    "id": 23000753,
+    "type": "star_power",
+    "brawler_id": "16000081",
+    "brawler_name": "LILY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000753.png"
+  },
+  "FRIENDSHIP IS GREAT": {
+    "id": 23000766,
+    "type": "gadget",
+    "brawler_id": "16000082",
+    "brawler_name": "BERRY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000766.png"
+  },
+  "HEALTHY ADDITIVES": {
+    "id": 23000767,
+    "type": "gadget",
+    "brawler_id": "16000082",
+    "brawler_name": "BERRY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000767.png"
+  },
+  "FLOOR IS FINE": {
+    "id": 23000764,
+    "type": "star_power",
+    "brawler_id": "16000082",
+    "brawler_name": "BERRY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000764.png"
+  },
+  "MAKING A MESS": {
+    "id": 23000765,
+    "type": "star_power",
+    "brawler_id": "16000082",
+    "brawler_name": "BERRY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000765.png"
+  },
+  "SNAPPY SHOOTING": {
+    "id": 23000774,
+    "type": "gadget",
+    "brawler_id": "16000083",
+    "brawler_name": "CLANCY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000774.png"
+  },
+  "TACTICAL RETREAT": {
+    "id": 23000775,
+    "type": "gadget",
+    "brawler_id": "16000083",
+    "brawler_name": "CLANCY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000775.png"
+  },
+  "RECON": {
+    "id": 23000772,
+    "type": "star_power",
+    "brawler_id": "16000083",
+    "brawler_name": "CLANCY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000772.png"
+  },
+  "PUMPING UP": {
+    "id": 23000773,
+    "type": "star_power",
+    "brawler_id": "16000083",
+    "brawler_name": "CLANCY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000773.png"
+  },
+  "DODGY DIGGING": {
+    "id": 23000806,
+    "type": "gadget",
+    "brawler_id": "16000084",
+    "brawler_name": "MOE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000806.png"
+  },
+  "RAT RACE": {
+    "id": 23000807,
+    "type": "gadget",
+    "brawler_id": "16000084",
+    "brawler_name": "MOE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000807.png"
+  },
+  "SKIPPING STONES": {
+    "id": 23000804,
+    "type": "star_power",
+    "brawler_id": "16000084",
+    "brawler_name": "MOE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000804.png"
+  },
+  "SPEEDING TICKET": {
+    "id": 23000805,
+    "type": "star_power",
+    "brawler_id": "16000084",
+    "brawler_name": "MOE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000805.png"
+  },
+  "DASHI DASH": {
+    "id": 23000817,
+    "type": "gadget",
+    "brawler_id": "16000085",
+    "brawler_name": "KENJI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000817.png"
+  },
+  "HOSOMAKI HEALING": {
+    "id": 23000818,
+    "type": "gadget",
+    "brawler_id": "16000085",
+    "brawler_name": "KENJI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000818.png"
+  },
+  "STUDIED THE BLADE": {
+    "id": 23000815,
+    "type": "star_power",
+    "brawler_id": "16000085",
+    "brawler_name": "KENJI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000815.png"
+  },
+  "NIGIRI NEMESIS": {
+    "id": 23000816,
+    "type": "star_power",
+    "brawler_id": "16000085",
+    "brawler_name": "KENJI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000816.png"
+  },
+  "LONGARMS": {
+    "id": 23000834,
+    "type": "gadget",
+    "brawler_id": "16000086",
+    "brawler_name": "SHADE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000834.png"
+  },
+  "JUMP SCARE": {
+    "id": 23000835,
+    "type": "gadget",
+    "brawler_id": "16000086",
+    "brawler_name": "SHADE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000835.png"
+  },
+  "SPOOKY SPEEDSTER": {
+    "id": 23000832,
+    "type": "star_power",
+    "brawler_id": "16000086",
+    "brawler_name": "SHADE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000832.png"
+  },
+  "HARDENED HOODIE": {
+    "id": 23000833,
+    "type": "star_power",
+    "brawler_id": "16000086",
+    "brawler_name": "SHADE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000833.png"
+  },
+  "VOODOO CHILE": {
+    "id": 23000850,
+    "type": "gadget",
+    "brawler_id": "16000087",
+    "brawler_name": "JUJU",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000850.png"
+  },
+  "ELEMENTALIST": {
+    "id": 23000851,
+    "type": "gadget",
+    "brawler_id": "16000087",
+    "brawler_name": "JUJU",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000851.png"
+  },
+  "GUARDED GRIS-GRIS": {
+    "id": 23000848,
+    "type": "star_power",
+    "brawler_id": "16000087",
+    "brawler_name": "JUJU",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000848.png"
+  },
+  "NUMBING NEEDLES": {
+    "id": 23000849,
+    "type": "star_power",
+    "brawler_id": "16000087",
+    "brawler_name": "JUJU",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000849.png"
+  },
+  "MANSIONS OF MEEPLE": {
+    "id": 23000877,
+    "type": "gadget",
+    "brawler_id": "16000089",
+    "brawler_name": "MEEPLE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000877.png"
+  },
+  "RAGEQUIT": {
+    "id": 23000878,
+    "type": "gadget",
+    "brawler_id": "16000089",
+    "brawler_name": "MEEPLE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000878.png"
+  },
+  "DO NOT PASS GO": {
+    "id": 23000875,
+    "type": "star_power",
+    "brawler_id": "16000089",
+    "brawler_name": "MEEPLE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000875.png"
+  },
+  "RULE BENDING": {
+    "id": 23000876,
+    "type": "star_power",
+    "brawler_id": "16000089",
+    "brawler_name": "MEEPLE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000876.png"
+  },
+  "REGULATE": {
+    "id": 23000885,
+    "type": "gadget",
+    "brawler_id": "16000090",
+    "brawler_name": "OLLIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000885.png"
+  },
+  "ALL EYEZ ON ME": {
+    "id": 23000886,
+    "type": "gadget",
+    "brawler_id": "16000090",
+    "brawler_name": "OLLIE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000886.png"
+  },
+  "KICK, PUSH": {
+    "id": 23000883,
+    "type": "star_power",
+    "brawler_id": "16000090",
+    "brawler_name": "OLLIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000883.png"
+  },
+  "RENEGADE": {
+    "id": 23000884,
+    "type": "star_power",
+    "brawler_id": "16000090",
+    "brawler_name": "OLLIE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000884.png"
+  },
+  "HIT THE LIGHTS": {
+    "id": 23000907,
+    "type": "gadget",
+    "brawler_id": "16000091",
+    "brawler_name": "LUMI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000907.png"
+  },
+  "GRIM AND FROSTBITTEN": {
+    "id": 23000908,
+    "type": "gadget",
+    "brawler_id": "16000091",
+    "brawler_name": "LUMI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000908.png"
+  },
+  "42% BURNT": {
+    "id": 23000905,
+    "type": "star_power",
+    "brawler_id": "16000091",
+    "brawler_name": "LUMI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000905.png"
+  },
+  "HALF-TIME": {
+    "id": 23000906,
+    "type": "star_power",
+    "brawler_id": "16000091",
+    "brawler_name": "LUMI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000906.png"
+  },
+  "BACK TO THE FINXTURE": {
+    "id": 23000917,
+    "type": "gadget",
+    "brawler_id": "16000092",
+    "brawler_name": "FINX",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000917.png"
+  },
+  "NO ESCAPE": {
+    "id": 23000918,
+    "type": "gadget",
+    "brawler_id": "16000092",
+    "brawler_name": "FINX",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000918.png"
+  },
+  "HIEROGLYPH HALT": {
+    "id": 23000915,
+    "type": "star_power",
+    "brawler_id": "16000092",
+    "brawler_name": "FINX",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000915.png"
+  },
+  "PRIMER": {
+    "id": 23000916,
+    "type": "star_power",
+    "brawler_id": "16000092",
+    "brawler_name": "FINX",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000916.png"
+  },
+  "WEEKEND WARRIOR": {
+    "id": 23000931,
+    "type": "gadget",
+    "brawler_id": "16000093",
+    "brawler_name": "JAE-YONG",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000931.png"
+  },
+  "TIME FOR A SLOW SONG": {
+    "id": 23000932,
+    "type": "gadget",
+    "brawler_id": "16000093",
+    "brawler_name": "JAE-YONG",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000932.png"
+  },
+  "THE CROWD GOES MILD": {
+    "id": 23000929,
+    "type": "star_power",
+    "brawler_id": "16000093",
+    "brawler_name": "JAE-YONG",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000929.png"
+  },
+  "EXTRA HIGH NOTE": {
+    "id": 23000930,
+    "type": "star_power",
+    "brawler_id": "16000093",
+    "brawler_name": "JAE-YONG",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000930.png"
+  },
+  "GRACIOUS HOST": {
+    "id": 23000940,
+    "type": "gadget",
+    "brawler_id": "16000094",
+    "brawler_name": "KAZE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000940.png"
+  },
+  "HENSOJUTSU": {
+    "id": 23000941,
+    "type": "gadget",
+    "brawler_id": "16000094",
+    "brawler_name": "KAZE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000941.png"
+  },
+  "ADVANCED TECHNIQUES": {
+    "id": 23000938,
+    "type": "star_power",
+    "brawler_id": "16000094",
+    "brawler_name": "KAZE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000938.png"
+  },
+  "GRATUITY INCLUDED": {
+    "id": 23000939,
+    "type": "star_power",
+    "brawler_id": "16000094",
+    "brawler_name": "KAZE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000939.png"
+  },
+  "FEED THE GATORS": {
+    "id": 23000991,
+    "type": "gadget",
+    "brawler_id": "16000095",
+    "brawler_name": "ALLI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000991.png"
+  },
+  "COLD-BLOODED": {
+    "id": 23000992,
+    "type": "gadget",
+    "brawler_id": "16000095",
+    "brawler_name": "ALLI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23000992.png"
+  },
+  "LIZARD LIMBS": {
+    "id": 23000989,
+    "type": "star_power",
+    "brawler_id": "16000095",
+    "brawler_name": "ALLI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000989.png"
+  },
+  "YOU BETTER RUN, YOU BETTER TAKE COVER": {
+    "id": 23000990,
+    "type": "star_power",
+    "brawler_id": "16000095",
+    "brawler_name": "ALLI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000990.png"
+  },
+  "FOR THE QUEEN!": {
+    "id": 23001000,
+    "type": "gadget",
+    "brawler_id": "16000096",
+    "brawler_name": "TRUNK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001000.png"
+  },
+  "WORKER ANTS": {
+    "id": 23001001,
+    "type": "gadget",
+    "brawler_id": "16000096",
+    "brawler_name": "TRUNK",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001001.png"
+  },
+  "NEW INSECT OVERLORDS": {
+    "id": 23000998,
+    "type": "star_power",
+    "brawler_id": "16000096",
+    "brawler_name": "TRUNK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000998.png"
+  },
+  "COLONY SCOUTS": {
+    "id": 23000999,
+    "type": "star_power",
+    "brawler_id": "16000096",
+    "brawler_name": "TRUNK",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23000999.png"
+  },
+  "WINDMILL": {
+    "id": 23001041,
+    "type": "gadget",
+    "brawler_id": "16000097",
+    "brawler_name": "MINA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001041.png"
+  },
+  "CAPO-WHAT?": {
+    "id": 23001042,
+    "type": "gadget",
+    "brawler_id": "16000097",
+    "brawler_name": "MINA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001042.png"
+  },
+  "ZUM ZUM ZUM": {
+    "id": 23001039,
+    "type": "star_power",
+    "brawler_id": "16000097",
+    "brawler_name": "MINA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001039.png"
+  },
+  "BLOWN AWAY": {
+    "id": 23001040,
+    "type": "star_power",
+    "brawler_id": "16000097",
+    "brawler_name": "MINA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001040.png"
+  },
+  "ELECTRIC SHUFFLE": {
+    "id": 23001049,
+    "type": "gadget",
+    "brawler_id": "16000098",
+    "brawler_name": "ZIGGY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001049.png"
+  },
+  "NOW YOU SEE ME...": {
+    "id": 23001050,
+    "type": "gadget",
+    "brawler_id": "16000098",
+    "brawler_name": "ZIGGY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001050.png"
+  },
+  "THUNDERSTRUCK": {
+    "id": 23001047,
+    "type": "star_power",
+    "brawler_id": "16000098",
+    "brawler_name": "ZIGGY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001047.png"
+  },
+  "THE GREAT ZIGGINI": {
+    "id": 23001048,
+    "type": "star_power",
+    "brawler_id": "16000098",
+    "brawler_name": "ZIGGY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001048.png"
+  },
+  "BOTTOMLESS MAGS": {
+    "id": 23001062,
+    "type": "gadget",
+    "brawler_id": "16000099",
+    "brawler_name": "PIERCE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001062.png"
+  },
+  "YOU ONLY BRAWL TWICE": {
+    "id": 23001063,
+    "type": "gadget",
+    "brawler_id": "16000099",
+    "brawler_name": "PIERCE",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001063.png"
+  },
+  "MISSION: SWIMPOSSIBLE": {
+    "id": 23001060,
+    "type": "star_power",
+    "brawler_id": "16000099",
+    "brawler_name": "PIERCE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001060.png"
+  },
+  "SLIP 'N SNIPE": {
+    "id": 23001061,
+    "type": "star_power",
+    "brawler_id": "16000099",
+    "brawler_name": "PIERCE",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001061.png"
+  },
+  "LONGER STRINGS": {
+    "id": 23001070,
+    "type": "gadget",
+    "brawler_id": "16000100",
+    "brawler_name": "GIGI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001070.png"
+  },
+  "DISAPPEARING ACT": {
+    "id": 23001071,
+    "type": "gadget",
+    "brawler_id": "16000100",
+    "brawler_name": "GIGI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001071.png"
+  },
+  "PLI\u00c9 PROTECTION": {
+    "id": 23001068,
+    "type": "star_power",
+    "brawler_id": "16000100",
+    "brawler_name": "GIGI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001068.png"
+  },
+  "A HELPING HAND": {
+    "id": 23001069,
+    "type": "star_power",
+    "brawler_id": "16000100",
+    "brawler_name": "GIGI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001069.png"
+  },
+  "SLIPPERY SAVIOR": {
+    "id": 23001183,
+    "type": "gadget",
+    "brawler_id": "16000101",
+    "brawler_name": "GLOWY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001183.png"
+  },
+  "MORE LUMENS!": {
+    "id": 23001184,
+    "type": "gadget",
+    "brawler_id": "16000101",
+    "brawler_name": "GLOWY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001184.png"
+  },
+  "BIOTIC ECOSYSTEM": {
+    "id": 23001181,
+    "type": "star_power",
+    "brawler_id": "16000101",
+    "brawler_name": "GLOWY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001181.png"
+  },
+  "PARASITISM": {
+    "id": 23001182,
+    "type": "star_power",
+    "brawler_id": "16000101",
+    "brawler_name": "GLOWY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001182.png"
+  },
+  "A STARR IS BORN": {
+    "id": 23001191,
+    "type": "gadget",
+    "brawler_id": "16000102",
+    "brawler_name": "SIRIUS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001191.png"
+  },
+  "MASTER OF SHADOWS": {
+    "id": 23001192,
+    "type": "gadget",
+    "brawler_id": "16000102",
+    "brawler_name": "SIRIUS",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001192.png"
+  },
+  "DUSK RUNNERS": {
+    "id": 23001189,
+    "type": "star_power",
+    "brawler_id": "16000102",
+    "brawler_name": "SIRIUS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001189.png"
+  },
+  "THE DARKEST STARR": {
+    "id": 23001190,
+    "type": "star_power",
+    "brawler_id": "16000102",
+    "brawler_name": "SIRIUS",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001190.png"
+  },
+  "POISON PUDDLES": {
+    "id": 23001218,
+    "type": "gadget",
+    "brawler_id": "16000103",
+    "brawler_name": "NAJIA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001218.png"
+  },
+  "NAJIA JAR": {
+    "id": 23001219,
+    "type": "gadget",
+    "brawler_id": "16000103",
+    "brawler_name": "NAJIA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001219.png"
+  },
+  "POISONOUS PROTECTOR": {
+    "id": 23001216,
+    "type": "star_power",
+    "brawler_id": "16000103",
+    "brawler_name": "NAJIA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001216.png"
+  },
+  "VENOMOUS": {
+    "id": 23001217,
+    "type": "star_power",
+    "brawler_id": "16000103",
+    "brawler_name": "NAJIA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001217.png"
+  },
+  "SPIRITUAL HEALING": {
+    "id": 23001247,
+    "type": "gadget",
+    "brawler_id": "16000104",
+    "brawler_name": "DAMIAN",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001247.png"
+  },
+  "WALL OF SOUND": {
+    "id": 23001248,
+    "type": "gadget",
+    "brawler_id": "16000104",
+    "brawler_name": "DAMIAN",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001248.png"
+  },
+  "CROWDKILL": {
+    "id": 23001245,
+    "type": "star_power",
+    "brawler_id": "16000104",
+    "brawler_name": "DAMIAN",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001245.png"
+  },
+  "VULGAR DISPLAY OF PUNCH": {
+    "id": 23001246,
+    "type": "star_power",
+    "brawler_id": "16000104",
+    "brawler_name": "DAMIAN",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001246.png"
+  },
+  "FLOATY TIME": {
+    "id": 23001255,
+    "type": "gadget",
+    "brawler_id": "16000105",
+    "brawler_name": "STARR NOVA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001255.png"
+  },
+  "SHINING STARR OF FRIENDSHIP AND JUSTICE": {
+    "id": 23001256,
+    "type": "gadget",
+    "brawler_id": "16000105",
+    "brawler_name": "STARR NOVA",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001256.png"
+  },
+  "POWER LEVEL: MAXIMUM": {
+    "id": 23001253,
+    "type": "star_power",
+    "brawler_id": "16000105",
+    "brawler_name": "STARR NOVA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001253.png"
+  },
+  "MYSTICAL STARR TECHNIQUE": {
+    "id": 23001254,
+    "type": "star_power",
+    "brawler_id": "16000105",
+    "brawler_name": "STARR NOVA",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001254.png"
+  },
+  "OIL CHANGE": {
+    "id": 23001281,
+    "type": "gadget",
+    "brawler_id": "16000106",
+    "brawler_name": "BOLT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001281.png"
+  },
+  "BOUNCY BALL": {
+    "id": 23001282,
+    "type": "gadget",
+    "brawler_id": "16000106",
+    "brawler_name": "BOLT",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001282.png"
+  },
+  "TOSS UP": {
+    "id": 23001279,
+    "type": "star_power",
+    "brawler_id": "16000106",
+    "brawler_name": "BOLT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001279.png"
+  },
+  "UNSTOPPABALL": {
+    "id": 23001280,
+    "type": "star_power",
+    "brawler_id": "16000106",
+    "brawler_name": "BOLT",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001280.png"
+  },
+  "SUSHI SNACK": {
+    "id": 23001297,
+    "type": "gadget",
+    "brawler_id": "16000107",
+    "brawler_name": "NORI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001297.png"
+  },
+  "GONNA NEED A BIGGER NET": {
+    "id": 23001298,
+    "type": "gadget",
+    "brawler_id": "16000107",
+    "brawler_name": "NORI",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001298.png"
+  },
+  "BIG HAUL": {
+    "id": 23001295,
+    "type": "star_power",
+    "brawler_id": "16000107",
+    "brawler_name": "NORI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001295.png"
+  },
+  "HIS MOTHER\u2019S SON": {
+    "id": 23001296,
+    "type": "star_power",
+    "brawler_id": "16000107",
+    "brawler_name": "NORI",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001296.png"
+  },
+  "WIND-POWERED": {
+    "id": 23001320,
+    "type": "gadget",
+    "brawler_id": "16000108",
+    "brawler_name": "WENDY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001320.png"
+  },
+  "GREEN GRENADE": {
+    "id": 23001321,
+    "type": "gadget",
+    "brawler_id": "16000108",
+    "brawler_name": "WENDY",
+    "image_url": "https://cdn.brawlify.com/gadgets/regular/23001321.png"
+  },
+  "SLOWING SHIELD": {
+    "id": 23001318,
+    "type": "star_power",
+    "brawler_id": "16000108",
+    "brawler_name": "WENDY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001318.png"
+  },
+  "SOLAR SHIELD": {
+    "id": 23001319,
+    "type": "star_power",
+    "brawler_id": "16000108",
+    "brawler_name": "WENDY",
+    "image_url": "https://cdn.brawlify.com/star-powers/regular/23001319.png"
+  }
+}

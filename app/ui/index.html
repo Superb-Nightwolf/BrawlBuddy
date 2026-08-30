@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=5">
+  <link rel="stylesheet" href="/assets/styles.css?v=39">
 </head>
 <body>
   <div class="app-shell">
@@ -68,10 +68,8 @@
             </div>
             <h2 id="profile-name">Loading brawler</h2>
             <div class="profile-meta">
-              <span id="player-tag" class="meta-tag">#2PP</span>
-              <span>•</span>
+              <span id="player-tag" class="meta-tag">#9Q889JCR0</span>
               <span id="club-pill" class="club-pill"><i class="club-shield">🛡</i> <strong id="club-name">Starrbound</strong> <span id="club-tag" class="club-tag-small">#PQL20</span></span>
-              <span>•</span>
               <span id="hero-level-tag" class="hero-level-tag">🎖 <strong id="hero-level-num">Level 181</strong></span>
             </div>
             <div class="hero-stats">
@@ -84,6 +82,19 @@
           </div>
           <a class="hero-collection-link" href="/brawlers"><span>VIEW COLLECTION</span><strong id="hero-brawler-count">—</strong><small>Brawlers →</small></a>
         </article>
+
+        <!-- Upgraded Resource & Progression Wallet Strip -->
+        <section class="wallet-strip panel">
+          <div class="wallet-title"><span class="section-icon">◆</span><div><p class="eyebrow">YOUR WALLET &amp; READINESS</p><h2>Current Resources</h2></div></div>
+          <div class="wallet-items">
+            <div><i class="resource-icon coins">●</i><span>Coins</span><strong id="overview-coins">0</strong></div>
+            <div><i class="resource-icon power-points">◆</i><span>Power Points</span><strong id="overview-power-points">0</strong></div>
+            <div><i class="resource-icon gems">♦</i><span>Gems</span><strong id="overview-gems">0</strong></div>
+            <div><i class="resource-icon credits">★</i><span>Credits</span><strong id="overview-credits">0</strong></div>
+            <div><i class="resource-icon bling">✦</i><span>Bling</span><strong id="overview-bling">0</strong></div>
+          </div>
+          <a class="small-action" href="/resources">Edit wallet →</a>
+        </section>
 
         <!-- Combat Archetype & Account Completion Overview Strip -->
         <section class="panel archetype-summary-panel">
@@ -101,11 +112,11 @@
                 </div>
                 <strong id="completion-score-badge">42% Max Score</strong>
               </div>
-              <small>Calculated from roster, Power 11s, & equipment</small>
+              <small>Calculated from roster, L11s, & equipment</small>
             </div>
             <div class="archetype-cell">
               <span class="mini-kicker">HYPERCHARGE READY</span>
-              <strong id="hypercharge-ready-val" class="hypercharge-val">3 Brawlers (P11)</strong>
+              <strong id="hypercharge-ready-val" class="hypercharge-val">3 Brawlers (L11)</strong>
               <small>Eligible for peak overdrive combat</small>
             </div>
             <div class="archetype-cell">
@@ -323,21 +334,10 @@
           </section>
         </div>
 
-        <section class="wallet-strip panel">
-          <div class="wallet-title"><span class="section-icon">◆</span><div><p class="eyebrow">YOUR WALLET</p><h2>Current resources</h2></div></div>
-          <div class="wallet-items">
-            <div><i class="resource-icon coins">●</i><span>Coins</span><strong id="overview-coins">0</strong></div>
-            <div><i class="resource-icon power-points">◆</i><span>Power Points</span><strong id="overview-power-points">0</strong></div>
-            <div><i class="resource-icon gems">♦</i><span>Gems</span><strong id="overview-gems">0</strong></div>
-            <div><i class="resource-icon bling">✦</i><span>Bling</span><strong id="overview-bling">0</strong></div>
-          </div>
-          <a class="small-action" href="/resources">Edit wallet →</a>
-        </section>
-
         <div class="overview-grid">
           <section class="panel account-shape">
             <div class="section-heading"><div><p class="eyebrow">POWER DISTRIBUTION</p><h2>Your roster shape</h2></div><span class="source-chip calculated">CALCULATED</span></div>
-            <div class="ring-wrap"><div id="power-ring" class="power-ring" style="--progress:0"><span><strong id="ring-value">0%</strong><small>AT P11</small></span></div><div class="ring-copy"><strong id="ring-heading">Building snapshot…</strong><p id="ring-description">Loading your power-level distribution.</p></div></div>
+            <div class="ring-wrap"><div id="power-ring" class="power-ring" style="--progress:0"><span><strong id="ring-value">0%</strong><small>AT L11</small></span></div><div class="ring-copy"><strong id="ring-heading">Building snapshot…</strong><p id="ring-description">Loading your power-level distribution.</p></div></div>
             <div id="power-bars" class="power-bars"></div>
           </section>
           <section class="panel quick-collection">
@@ -696,8 +696,8 @@
                 <tr>
                   <th>Brawler</th>
                   <th>Current Level</th>
-                  <th>Coins to P11</th>
-                  <th>PP to P11</th>
+                  <th>Coins to L11</th>
+                  <th>PP to L11</th>
                   <th>Wallet Status</th>
                   <th style="text-align: right;">Action</th>
                 </tr>
@@ -737,31 +737,173 @@
           </div>
         </div>
         <div class="detail-grid">
-          <section class="panel combat-guide"><div class="section-heading"><div><p class="eyebrow">COMBAT KIT</p><h2>How this brawler works</h2></div></div><article class="ability-card attack"><span class="ability-icon">➤</span><div><small>MAIN ATTACK</small><h3 id="attack-name">Attack</h3><p id="attack-description">No curated attack guide is available yet.</p></div></article><article class="ability-card super"><span class="ability-icon">★</span><div><small>SUPER</small><h3 id="super-name">Super</h3><p id="super-description">No curated Super guide is available yet.</p></div></article><div class="how-to"><h3>How to use</h3><ol id="how-to-list"></ol></div></section>
-          <section class="panel priority-panel"><div class="section-heading"><div><p class="eyebrow">ACCOUNT READINESS</p><h2>What to prioritize</h2></div><span class="source-chip calculated">RULE-BASED</span></div><div id="priority-list" class="priority-list"></div><p class="priority-note">This is a transparent readiness order based on your current power and missing equipment—not a live meta score or invented upgrade cost.</p></section>
+          <section class="panel combat-guide">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">COMBAT KIT</p>
+                <h2>How this brawler works</h2>
+              </div>
+            </div>
+            <article class="ability-card attack">
+              <span class="ability-icon">➤</span>
+              <div>
+                <small>MAIN ATTACK</small>
+                <h3 id="attack-name">Attack</h3>
+                <p id="attack-description">No curated attack guide is available yet.</p>
+              </div>
+            </article>
+            <article class="ability-card super">
+              <span class="ability-icon">★</span>
+              <div>
+                <small>SUPER</small>
+                <h3 id="super-name">Super</h3>
+                <p id="super-description">No curated Super guide is available yet.</p>
+              </div>
+            </article>
+            <div class="how-to">
+              <h3>How to use</h3>
+              <ol id="how-to-list"></ol>
+            </div>
+          </section>
+
+          <section class="panel priority-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">ACCOUNT READINESS</p>
+                <h2>What to prioritize</h2>
+              </div>
+              <span class="source-chip calculated">RULE-BASED</span>
+            </div>
+
+            <!-- Readiness Quick Status Metrics -->
+            <div class="readiness-summary-grid">
+              <div class="readiness-pill-box">
+                <span class="readiness-box-label">POWER</span>
+                <strong id="readiness-power-val">LVL —</strong>
+              </div>
+              <div class="readiness-pill-box">
+                <span class="readiness-box-label">GADGETS</span>
+                <strong id="readiness-gadget-val">—</strong>
+              </div>
+              <div class="readiness-pill-box">
+                <span class="readiness-box-label">STAR POWERS</span>
+                <strong id="readiness-star-val">—</strong>
+              </div>
+              <div class="readiness-pill-box">
+                <span class="readiness-box-label">GEARS</span>
+                <strong id="readiness-gear-val">—</strong>
+              </div>
+            </div>
+
+            <div id="priority-list" class="priority-list"></div>
+            <p class="priority-note">This is a transparent readiness order based on your current power and missing equipment—not a live meta score or invented upgrade cost.</p>
+          </section>
         </div>
         <section id="guide-profile-panel" class="panel guide-profile-panel hidden">
-          <div class="section-heading"><div><p class="eyebrow">CURATED GUIDE SNAPSHOT</p><h2>Stats, build, and match plan</h2></div><span class="source-chip calculated">LEVEL 11 SNAPSHOT</span></div>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">CURATED GUIDE & BRAWLER STATS</p>
+              <h2>Stats, build, and match plan</h2>
+            </div>
+            <span id="guide-level-chip" class="source-chip calculated">LEVEL 11 SNAPSHOT</span>
+          </div>
+
+          <!-- Integrated Level Ladder Bar directly above stats -->
+          <div class="integrated-ladder-wrap">
+            <div class="integrated-ladder-header">
+              <span class="ladder-eyebrow">⚡ SELECT BRAWLER LEVEL TO PREVIEW LIVE STATS:</span>
+              <span id="current-power-label" class="current-power-label">CURRENT: BRAWLER —</span>
+            </div>
+            <div id="power-ladder" class="power-ladder"></div>
+          </div>
+
           <div class="guide-profile-grid">
             <article class="guide-fact-card">
-              <h3>Core statistics</h3>
+              <h3 id="stats-header-title">Core statistics (Level 11 Preview)</h3>
               <div id="combat-stats" class="combat-stats"></div>
             </article>
             <article class="guide-fact-card combined-hc-build-card">
               <div class="hc-build-hypercharge-block">
-                <span class="fact-kicker">HYPERCHARGE</span>
+                <span class="fact-kicker">⚡ HYPERCHARGE</span>
                 <h3 id="hypercharge-name">—</h3>
                 <p id="hypercharge-description"></p>
               </div>
               <div class="hc-build-divider"></div>
-              <h3 class="hc-build-label">Recommended build</h3>
-              <div id="recommended-build" class="recommended-build"></div>
+              <div class="hc-build-content">
+                <h3 class="hc-build-label">Recommended build</h3>
+                <div id="recommended-build" class="recommended-build"></div>
+              </div>
             </article>
-            <article class="guide-fact-card field-notes"><div><h3>Strong when</h3><ul id="strength-list"></ul></div><div><h3>Watch out for</h3><ul id="caution-list"></ul></div><div><h3>Useful modes</h3><div id="mode-list" class="mode-list"></div></div></article>
+            <article class="guide-fact-card field-notes">
+              <div class="field-notes-col strengths-col">
+                <div class="field-notes-header header-strength">
+                  <span class="field-header-accent"></span>
+                  <h3>Strong when</h3>
+                </div>
+                <ul id="strength-list" class="field-notes-list"></ul>
+              </div>
+              <div class="field-notes-col cautions-col">
+                <div class="field-notes-header header-caution">
+                  <span class="field-header-accent"></span>
+                  <h3>Watch out for</h3>
+                </div>
+                <ul id="caution-list" class="field-notes-list"></ul>
+              </div>
+              <div class="field-notes-col modes-col">
+                <div class="field-notes-header header-modes">
+                  <span class="field-header-accent"></span>
+                  <h3>Useful modes</h3>
+                </div>
+                <div id="mode-list" class="mode-list"></div>
+              </div>
+            </article>
           </div>
         </section>
-        <section class="panel power-ladder-panel"><div class="section-heading"><div><p class="eyebrow">POWER JOURNEY</p><h2>Levels 1 through 11</h2></div><span id="current-power-label" class="current-power-label">CURRENT: —</span></div><div id="power-ladder" class="power-ladder"></div></section>
-        <section class="panel equipment-panel"><div class="section-heading"><div><p class="eyebrow">LOADOUT TRACKER</p><h2>Owned and available equipment</h2></div><span class="source-chip official-chip">PLAYER API + GUIDE</span></div><div class="equipment-columns"><div><div class="equipment-heading"><span class="equipment-type gadget">G</span><h3>Gadgets</h3></div><div id="gadget-list" class="equipment-list"></div></div><div><div class="equipment-heading"><span class="equipment-type star-power">★</span><h3>Star Powers</h3></div><div id="star-power-list" class="equipment-list"></div></div><div><div class="equipment-heading"><span class="equipment-type gear">◆</span><h3>Gears</h3></div><div id="gear-list" class="equipment-list"></div></div><div><div class="equipment-heading"><span class="equipment-type hypercharge">⚡</span><h3>Hypercharge</h3></div><div id="hypercharge-list" class="equipment-list"></div></div></div><div id="guide-sources" class="guide-sources"></div></section>
+        <section class="panel equipment-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">LOADOUT TRACKER & BUFFIES</p>
+              <h2>Owned equipment & Buffie augmentations</h2>
+            </div>
+            <span class="source-chip official-chip">PLAYER API + GUIDE</span>
+          </div>
+
+          <div class="equipment-columns">
+            <div class="equipment-col">
+              <div class="equipment-heading heading-gadget">
+                <span class="heading-accent-bar"></span>
+                <h3>Gadgets</h3>
+                <span class="heading-milestone-pill">LVL 7</span>
+              </div>
+              <div id="gadget-list" class="equipment-list"></div>
+            </div>
+            <div class="equipment-col">
+              <div class="equipment-heading heading-star-power">
+                <span class="heading-accent-bar"></span>
+                <h3>Star Powers</h3>
+                <span class="heading-milestone-pill">LVL 9</span>
+              </div>
+              <div id="star-power-list" class="equipment-list"></div>
+            </div>
+            <div class="equipment-col">
+              <div class="equipment-heading heading-gear">
+                <span class="heading-accent-bar"></span>
+                <h3>Gears</h3>
+                <span class="heading-milestone-pill">LVL 8+</span>
+              </div>
+              <div id="gear-list" class="equipment-list"></div>
+            </div>
+            <div class="equipment-col">
+              <div class="equipment-heading heading-hypercharge">
+                <span class="heading-accent-bar"></span>
+                <h3>Hypercharge</h3>
+                <span class="heading-milestone-pill">LVL 11</span>
+              </div>
+              <div id="hypercharge-list" class="equipment-list"></div>
+            </div>
+          </div>
+          <div id="guide-sources" class="guide-sources"></div>
+        </section>
       </section>
 
       <!-- Error & Recovery View -->
@@ -890,9 +1032,9 @@
       <div class="dialog-icon">★</div>
       <p class="eyebrow">OFFICIAL BRAWL STARS DATA</p>
       <h2>Connect Brawler or Club</h2>
-      <p>Enter any <strong>Brawler Tag</strong> (e.g. <code>#2PP</code>) or <strong>Club Tag</strong> (e.g. <code>#PQL20</code>). BrawlBuddy will auto-detect and load the full dashboard.</p>
+      <p>Enter any <strong>Brawler Tag</strong> (e.g. <code>#9Q889JCR0</code>) or <strong>Club Tag</strong> (e.g. <code>#PQL20</code>). BrawlBuddy will auto-detect and load the full dashboard.</p>
       <form id="connect-form">
-        <label class="tag-input"><span>#</span><input id="tag-input" type="text" maxlength="20" autocomplete="off" placeholder="2PP or PQL20" aria-label="Brawler or Club tag"></label>
+        <label class="tag-input"><span>#</span><input id="tag-input" type="text" maxlength="20" autocomplete="off" placeholder="9Q889JCR0 or PQL20" aria-label="Brawler or Club tag"></label>
         <div id="dialog-error" class="dialog-error hidden"></div>
         <button id="load-player" class="primary-button wide" type="submit">SEARCH & CONNECT <span>→</span></button>
       </form>
@@ -904,6 +1046,6 @@
       <small>Live lookup uses your server API token. Public brawler and club data is cached briefly.</small>
     </div>
   </dialog>
-  <script src="/assets/app.js?v=14" defer></script>
+  <script src="/assets/app.js?v=54" defer></script>
 </body>
 </html>
