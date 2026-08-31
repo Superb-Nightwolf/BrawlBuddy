@@ -140,10 +140,6 @@ async def leaderboards_page() -> FileResponse:
     return FileResponse(PROJECT_ROOT / "app" / "ui" / "index.html")
 
 
-@app.get("/calculator", include_in_schema=False)
-async def calculator_page() -> FileResponse:
-    return FileResponse(PROJECT_ROOT / "app" / "ui" / "index.html")
-
 
 @app.get("/brawlers/{brawler_id}", include_in_schema=False)
 async def brawler_detail_page(brawler_id: int) -> FileResponse:
@@ -178,6 +174,8 @@ def _player_analytics(player) -> dict:
         "total_gadgets_count": player.total_gadgets_count,
         "total_star_powers_count": player.total_star_powers_count,
         "total_gears_count": player.total_gears_count,
+        "total_hypercharges_count": player.total_hypercharges_count,
+        "active_hypercharges_count": player.active_hypercharges_count,
         "total_showdown_victories": player.total_showdown_victories,
         "total_victories": player.total_victories,
         "victories_3v3_pct": round((player.victories_3v3 / total_victories) * 100),

@@ -24,10 +24,8 @@
         <a class="nav-item" data-nav="battles" href="/battles"><span class="nav-icon">⚔</span><span>Battle Log</span></a>
         <a class="nav-item" data-nav="events" href="/events"><span class="nav-icon">🗺</span><span>Events & Maps</span></a>
         <a class="nav-item" data-nav="leaderboards" href="/leaderboards"><span class="nav-icon">🏆</span><span>Leaderboards</span></a>
-        <a class="nav-item" data-nav="calculator" href="/calculator"><span class="nav-icon">🎛</span><span>Calculator</span></a>
         <a class="nav-item" data-nav="brawlers" href="/brawlers"><span class="nav-icon">★</span><span>Brawlers</span></a>
         <a class="nav-item" data-nav="club" href="/club"><span class="nav-icon">🛡</span><span>Club Hub</span></a>
-        <a class="nav-item" data-nav="resources" href="/resources"><span class="nav-icon">◆</span><span>Resources</span></a>
       </nav>
     </aside>
 
@@ -83,19 +81,6 @@
           <a class="hero-collection-link" href="/brawlers"><span>VIEW COLLECTION</span><strong id="hero-brawler-count">—</strong><small>Brawlers →</small></a>
         </article>
 
-        <!-- Upgraded Resource & Progression Wallet Strip -->
-        <section class="wallet-strip panel">
-          <div class="wallet-title"><span class="section-icon">◆</span><div><p class="eyebrow">YOUR WALLET &amp; READINESS</p><h2>Current Resources</h2></div></div>
-          <div class="wallet-items">
-            <div><i class="resource-icon coins">●</i><span>Coins</span><strong id="overview-coins">0</strong></div>
-            <div><i class="resource-icon power-points">◆</i><span>Power Points</span><strong id="overview-power-points">0</strong></div>
-            <div><i class="resource-icon gems">♦</i><span>Gems</span><strong id="overview-gems">0</strong></div>
-            <div><i class="resource-icon credits">★</i><span>Credits</span><strong id="overview-credits">0</strong></div>
-            <div><i class="resource-icon bling">✦</i><span>Bling</span><strong id="overview-bling">0</strong></div>
-          </div>
-          <a class="small-action" href="/resources">Edit wallet →</a>
-        </section>
-
         <!-- Combat Archetype & Account Completion Overview Strip -->
         <section class="panel archetype-summary-panel">
           <div class="archetype-strip-grid">
@@ -115,9 +100,9 @@
               <small>Calculated from roster, L11s, & equipment</small>
             </div>
             <div class="archetype-cell">
-              <span class="mini-kicker">HYPERCHARGE READY</span>
-              <strong id="hypercharge-ready-val" class="hypercharge-val">3 Brawlers (L11)</strong>
-              <small>Eligible for peak overdrive combat</small>
+              <span class="mini-kicker">HYPERCHARGES</span>
+              <strong id="hypercharge-ready-val" class="hypercharge-val">0 Owned (0 Active)</strong>
+              <small>Owned in inventory & active at L11</small>
             </div>
             <div class="archetype-cell">
               <span class="mini-kicker">POWER PLAY RECORD</span>
@@ -356,7 +341,28 @@
           <div class="collection-toolbar">
             <label class="search-box"><span>⌕</span><input id="brawler-search" type="search" placeholder="Search all 106 brawlers" aria-label="Search brawlers"></label>
             <select id="brawler-sort" aria-label="Sort brawlers"><option value="power_asc">Power 1 → 11</option><option value="power_desc">Power 11 → 1</option><option value="trophies">Most trophies</option><option value="name">Name A–Z</option></select>
-            <select id="equipment-filter" aria-label="Filter equipment ownership"><option value="all">All equipment</option><option value="has_hypercharge">Has Hypercharge</option><option value="no_hypercharge">No Hypercharge</option><option value="has_sp">Has Star Power</option><option value="no_sp">No Star Power</option><option value="has_gadget">Has Gadget</option><option value="no_gadget">No Gadget</option><option value="has_gear">Has Gear</option><option value="no_gear">No Gear</option></select>
+            <select id="equipment-filter" aria-label="Filter equipment ownership">
+              <option value="all">All Brawlers</option>
+              <option value="has_gadget_1">Has Gadget One (1)</option>
+              <option value="has_gadget_2">Has Gadget Two (2)</option>
+              <option value="has_gadget_1_or_more">Has Gadget One or More (1+)</option>
+              <option value="no_gadget">No Gadget / Zero Gadget (0)</option>
+              <option value="has_sp_1">Has Star Power One (1)</option>
+              <option value="has_sp_2">Has Star Power Two (2)</option>
+              <option value="has_sp_1_or_more">Has Star Power One or More (1+)</option>
+              <option value="no_sp">No Star Power / Zero Star Power (0)</option>
+              <option value="has_gear_1">Has Gear One (1)</option>
+              <option value="has_gears_2_or_more">Has Gears Two or More (2+)</option>
+              <option value="no_gear">No Gear / Zero Gear (0)</option>
+              <option value="has_hypercharge">Has Hypercharge (Active/Stored)</option>
+              <option value="active_hypercharge">Has Hypercharge - Active (L11)</option>
+              <option value="stored_hypercharge">Has Hypercharge - Stored (L7-10)</option>
+              <option value="no_hypercharge">No Hypercharge (0)</option>
+              <option value="has_buffies_gadget">Has Active Buffies - Gadget ⚡</option>
+              <option value="has_buffies_sp">Has Active Buffies - Star Power ⚡</option>
+              <option value="has_buffies_hc">Has Active Buffies - Hypercharge ⚡</option>
+              <option value="max_out">Max Out (L11 + Full Loadout + All Buffies ⚡)</option>
+            </select>
             <div class="view-toggle"><button id="grid-view" class="active" type="button" aria-label="Card view">▦</button><button id="table-view" type="button" aria-label="Table view">☷</button></div>
           </div>
           <div class="level-filter-label"><span>POWER LEVEL</span><small>Select one exact level</small></div>
@@ -366,34 +372,6 @@
           </div>
           <div id="brawler-grid" class="brawler-grid" aria-live="polite"></div><div id="brawler-empty" class="empty-state hidden">No brawlers match those filters.</div>
         </section>
-      </section>
-
-      <section id="resources-view" class="view hidden">
-        <div class="resource-hero panel">
-          <div><span class="banner-chip yellow-chip">MANUAL WALLET</span><h2>Know exactly what<br><em>you can work with.</em></h2><p>Supercell’s public player API does not return private spendable balances, so these values are entered by you and stored only on this device.</p></div>
-          <img src="/assets/player-mascot.png" alt="BrawlBuddy resource guide mascot">
-        </div>
-        <section class="resource-balance-grid" aria-label="Resource balances">
-          <article class="balance-card coin-card"><i class="resource-icon coins">●</i><span>COINS</span><strong id="balance-coins">0</strong><small>Manual balance</small></article>
-          <article class="balance-card pp-card"><i class="resource-icon power-points">◆</i><span>POWER POINTS</span><strong id="balance-power-points">0</strong><small>Manual balance</small></article>
-          <article class="balance-card gem-card"><i class="resource-icon gems">♦</i><span>GEMS</span><strong id="balance-gems">0</strong><small>Manual balance</small></article>
-          <article class="balance-card bling-card"><i class="resource-icon bling">✦</i><span>BLING</span><strong id="balance-bling">0</strong><small>Manual balance</small></article>
-          <article class="balance-card credit-card"><i class="resource-icon credits">★</i><span>CREDITS</span><strong id="balance-credits">0</strong><small>Manual balance</small></article>
-        </section>
-        <div class="resource-page-grid">
-          <section class="panel resource-editor">
-            <div class="section-heading"><div><p class="eyebrow">UPDATE WALLET</p><h2>Enter your current balances</h2></div><span class="source-chip">USER INPUT</span></div>
-            <form id="resource-form" class="resource-form">
-              <label><span><i class="resource-icon coins">●</i>Coins</span><input id="coins" name="coins" type="number" min="0" max="100000000" value="0"></label>
-              <label><span><i class="resource-icon power-points">◆</i>Power Points</span><input id="power-points" name="power_points" type="number" min="0" max="100000000" value="0"></label>
-              <label><span><i class="resource-icon gems">♦</i>Gems</span><input id="gems" name="gems" type="number" min="0" max="100000000" value="0"></label>
-              <label><span><i class="resource-icon credits">★</i>Credits</span><input id="credits" name="credits" type="number" min="0" max="100000000" value="0"></label>
-              <label><span><i class="resource-icon bling">✦</i>Bling</span><input id="bling" name="bling" type="number" min="0" max="100000000" value="0"></label>
-              <button class="primary-button wide" type="submit">SAVE MY WALLET <span>→</span></button>
-            </form>
-          </section>
-          <aside class="panel resource-explainer"><span class="explainer-icon">!</span><h3>Why are these manual?</h3><p>The official API provides public account statistics and unlocked brawlers, but it does not provide your private Coins, Power Points, Gems, Credits, or Bling balance.</p><ul><li>Balances are stored in local SQLite.</li><li>Each player tag has its own wallet.</li><li>No wallet value is sent to Supercell.</li><li>Recommendation math will use these values later.</li></ul></aside>
-        </div>
       </section>
 
       <!-- Club / Clan Hub View -->
@@ -610,99 +588,6 @@
                 </tr>
               </thead>
               <tbody id="leaderboard-tbody"></tbody>
-            </table>
-          </div>
-        </section>
-      </section>
-
-      <!-- Upgrade Calculator & Season Reset View -->
-      <section id="calculator-view" class="view hidden">
-        <div class="collection-banner panel calculator-hero">
-          <div>
-            <span class="banner-chip yellow-chip">RESOURCE MATH</span>
-            <h2>Upgrade Calculator &amp;<br><em>Trophy Reset Engine.</em></h2>
-            <p>Accurate Supercell power level math synced directly to your saved wallet balances. See what you can max out today.</p>
-          </div>
-          <div class="collection-badge">
-            <strong id="calc-affordable-badge">0</strong>
-            <span>READY</span>
-          </div>
-        </div>
-
-        <!-- Wallet Optimization Summary Strip -->
-        <section class="panel calc-summary-panel">
-          <div class="calc-summary-grid">
-            <div class="calc-summary-cell">
-              <span class="mini-kicker">SAVED WALLET COINS</span>
-              <strong id="calc-wallet-coins" class="resource-gold">0</strong>
-              <small>From your manual SQLite wallet</small>
-            </div>
-            <div class="calc-summary-cell">
-              <span class="mini-kicker">SAVED POWER POINTS</span>
-              <strong id="calc-wallet-pp" class="resource-purple">0</strong>
-              <small>From your manual SQLite wallet</small>
-            </div>
-            <div class="calc-summary-cell">
-              <span class="mini-kicker">TOTAL TO MAX ROSTER</span>
-              <strong id="calc-total-coins-needed">0 Coins</strong>
-              <small id="calc-total-pp-needed">0 PP needed</small>
-            </div>
-            <div class="calc-summary-cell">
-              <span class="mini-kicker">MAX READY TODAY</span>
-              <strong id="calc-brawlers-ready-count" class="resource-green">0 Brawlers</strong>
-              <small>Sufficient Coins + PP in wallet</small>
-            </div>
-          </div>
-        </section>
-
-        <!-- Monthly Season Reset & Bling Decay Panel -->
-        <section class="panel season-reset-panel">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">MONTHLY END-OF-SEASON DECAY</p>
-              <h2>Trophy Reset &amp; Bling Rewards (1000+ ★)</h2>
-            </div>
-            <span class="source-chip calculated">SEASON REWARDS</span>
-          </div>
-          <div class="reset-stats-grid">
-            <div>
-              <span>ELIGIBLE BRAWLERS (1000+ ★)</span>
-              <strong id="reset-eligible-count">0</strong>
-            </div>
-            <div>
-              <span>TROPHIES RESET TO 1000</span>
-              <strong id="reset-decay-count">0 ★</strong>
-            </div>
-            <div>
-              <span>PROJECTED BLING EARNED</span>
-              <strong id="reset-bling-earned" class="resource-pink">✦ 0 Bling</strong>
-            </div>
-          </div>
-          <div id="reset-brawlers-list" class="reset-brawlers-list"></div>
-        </section>
-
-        <!-- Brawlers Upgrade Matrix Table -->
-        <section class="panel calc-roster-panel">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">UPGRADE MATRIX</p>
-              <h2>Brawler Upgrade Requirements</h2>
-            </div>
-            <span class="source-chip calculated">POWER 1 → 11</span>
-          </div>
-          <div class="roster-table-wrap">
-            <table class="roster-table">
-              <thead>
-                <tr>
-                  <th>Brawler</th>
-                  <th>Current Level</th>
-                  <th>Coins to L11</th>
-                  <th>PP to L11</th>
-                  <th>Wallet Status</th>
-                  <th style="text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="calc-roster-tbody"></tbody>
             </table>
           </div>
         </section>
@@ -928,10 +813,8 @@
     <a data-nav="battles" href="/battles"><span>⚔</span>Battles</a>
     <a data-nav="events" href="/events"><span>🗺</span>Events</a>
     <a data-nav="leaderboards" href="/leaderboards"><span>🏆</span>Ranks</a>
-    <a data-nav="calculator" href="/calculator"><span>🎛</span>Calc</a>
     <a data-nav="brawlers" href="/brawlers"><span>★</span>Brawlers</a>
     <a data-nav="club" href="/club"><span>🛡</span>Club</a>
-    <a data-nav="resources" href="/resources"><span>◆</span>Wallet</a>
   </nav>
   
   <!-- Tactical Match Recreator Dialog -->

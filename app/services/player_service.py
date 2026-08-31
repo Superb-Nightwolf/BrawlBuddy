@@ -32,26 +32,58 @@ def normalize_player_tag(raw_tag: str) -> str:
     return tag
 
 
-def _equipment(items: list[dict[str, Any]] | None) -> list[EquipmentItem]:
-    return [EquipmentItem.model_validate(item) for item in (items or [])]
+def _equipment(items: list[dict[str, Any]] | list[str] | dict[str, Any] | None) -> list[EquipmentItem]:
+    if not items:
+        return []
+    if isinstance(items, dict):
+        items = [items]
+    result: list[EquipmentItem] = []
+    for item in items:
+        if isinstance(item, str):
+            result.append(EquipmentItem(id=0, name=item))
+        elif isinstance(item, dict):
+            item_id = item.get("id", 0)
+            item_name = item.get("name", "")
+            item_level = item.get("level")
+            result.append(EquipmentItem(id=item_id, name=item_name, level=item_level))
+        elif isinstance(item, EquipmentItem):
+            result.append(item)
+    return result
 
 
 def parse_player(payload: dict[str, Any], source: DataSource = DataSource.OFFICIAL_API) -> PlayerProfile:
-    brawlers = [
-        PlayerBrawler(
-            id=item["id"],
-            name=item["name"],
-            power=item["power"],
-            rank=item.get("rank", 1),
-            trophies=item.get("trophies", 0),
-            highest_trophies=item.get("highestTrophies", 0),
-            gadgets=_equipment(item.get("gadgets")),
-            star_powers=_equipment(item.get("starPowers")),
-            gears=_equipment(item.get("gears")),
-            source=source,
+    brawlers: list[PlayerBrawler] = []
+    for item in payload.get("brawlers", []):
+        hc_raw = item.get("hypercharges") or item.get("hypercharge") or item.get("hyperCharges") or []
+        if isinstance(hc_raw, bool) and hc_raw:
+            hc_items = [EquipmentItem(id=0, name="Hypercharge")]
+        else:
+            hc_items = _equipment(hc_raw)
+
+        buffies_raw = item.get("buffies") or []
+        if isinstance(buffies_raw, dict):
+            buffies = [k for k, v in buffies_raw.items() if v]
+        elif isinstance(buffies_raw, list):
+            buffies = [b if isinstance(b, str) else b.get("name", "") for b in buffies_raw]
+        else:
+            buffies = []
+
+        brawlers.append(
+            PlayerBrawler(
+                id=item["id"],
+                name=item["name"],
+                power=item["power"],
+                rank=item.get("rank", 1),
+                trophies=item.get("trophies", 0),
+                highest_trophies=item.get("highestTrophies", 0),
+                gadgets=_equipment(item.get("gadgets")),
+                star_powers=_equipment(item.get("starPowers") or item.get("star_powers")),
+                gears=_equipment(item.get("gears")),
+                hypercharges=hc_items,
+                buffies=buffies,
+                source=source,
+            )
         )
-        for item in payload.get("brawlers", [])
-    ]
     club_data = payload.get("club") or None
     return PlayerProfile(
         tag=payload["tag"],

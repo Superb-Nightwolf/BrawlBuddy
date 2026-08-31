@@ -174,7 +174,7 @@ a { color: inherit; }
 .role-legend-item strong { font-weight: 700; color: var(--ink); }
 
 /* Equipment Vault Meters */
-.vault-meters-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; text-align: center; }
+.vault-meters-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; text-align: center; }
 .meter-item { padding: 12px 8px; border-radius: 14px; background: #f8fbff; border: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; }
 .ring-meter { width: 70px; height: 70px; border-radius: 50%; background: conic-gradient(var(--blue) var(--val, 0%), #e3ecf5 0%); display: grid; place-items: center; position: relative; margin-bottom: 8px; }
 .ring-meter::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: #fff; }
@@ -350,6 +350,9 @@ a { color: inherit; }
 .equipment-chip.owned { color: #14714e; background: #dcf7eb; }
 .equipment-chip.missing { color: #8b6070; background: #f4edf0; }
 .equipment-chip.locked { color: #677795; background: #e9eef5; }
+.equipment-chip.hc-active { color: #fff; background: linear-gradient(135deg, #8b3ed9, #e0267c); border: 1px solid #c084fc; box-shadow: 0 1px 4px rgba(224,38,124,0.3); }
+.equipment-chip.hc-stored { color: #854d0e; background: linear-gradient(135deg, #fef08a, #facc15); border: 1px solid #eab308; box-shadow: 0 1px 4px rgba(234,179,8,0.25); }
+.equipment-chip.hc-eligible { color: #6b21a8; background: #f3e8ff; border: 1px solid #d8b4fe; }
 .open-guide { margin-top: auto; display: flex; justify-content: space-between; align-items: center; color: #fff; background: var(--blue); margin-left: -14px; margin-right: -14px; margin-bottom: -14px; padding: 12px 16px; font-size: 10px; font-weight: 900; letter-spacing: .8px; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; transition: background .15s ease; }
 .brawler-card:hover .open-guide { background: var(--blue-dark); }
 .brawler-grid.table-mode { display: block; border: 2px solid var(--line); border-radius: 15px; overflow: hidden; }
@@ -449,11 +452,11 @@ a { color: inherit; }
 .how-to-text { color:#334155; font-size:11.5px; line-height:1.45; font-weight:500; }
 
 /* Account Readiness (Priority List) - Matching Design System */
-.readiness-summary-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin:12px 0 14px; }
-.readiness-pill-box { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:8px 6px; border-radius:10px; background:#f8fafc; border:1.5px solid #e2e8f0; transition:all .15s ease; }
+.readiness-summary-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:7px; margin:12px 0 14px; }
+.readiness-pill-box { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:8px 4px; border-radius:10px; background:#f8fafc; border:1.5px solid #e2e8f0; transition:all .15s ease; text-align:center; }
 .readiness-pill-box:hover { background:#fff; border-color:#cbd5e1; transform:translateY(-1px); }
-.readiness-box-label { font-size:8.5px; font-weight:800; letter-spacing:0.6px; color:var(--muted); text-transform:uppercase; }
-.readiness-pill-box strong { font-size:13px; font-weight:900; color:var(--ink); font-family:var(--font-heading); line-height:1; }
+.readiness-box-label { font-size:8px; font-weight:800; letter-spacing:0.5px; color:var(--muted); text-transform:uppercase; white-space:nowrap; }
+.readiness-pill-box strong { font-size:12px; font-weight:900; color:var(--ink); font-family:var(--font-heading); line-height:1.1; white-space:nowrap; }
 
 .priority-list { display:flex; flex-direction:column; gap:8px; flex-grow:1; }
 .priority-card-item { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 13px; border-radius:10px; background:#f8fafc; border:1.5px solid #e2e8f0; transition:all .15s ease; }
@@ -804,7 +807,7 @@ a { color: inherit; }
   line-height: 1.45;
 }
 
-.owned-status, .missing-status, .hypercharge-owned-status, .hypercharge-locked-status { 
+.owned-status, .missing-status, .hypercharge-owned-status, .hypercharge-stored-status, .hypercharge-eligible-status, .hypercharge-locked-status { 
   white-space: nowrap; 
   padding: 4px 8px; 
   border-radius: 7px; 
@@ -818,7 +821,16 @@ a { color: inherit; }
 .owned-status { color: #166534; background: #dcfce7; border: 1px solid #86efac; }
 .missing-status { color: #64748b; background: #f1f5f9; border: 1px solid #cbd5e1; }
 .hypercharge-owned-status { color: #fff; background: linear-gradient(135deg, #8b3ed9, #e0267c); box-shadow: 0 2px 5px rgba(224,38,124,0.35); border: 1px solid #c084fc; }
+.hypercharge-stored-status { color: #854d0e; background: linear-gradient(135deg, #fef08a, #facc15); box-shadow: 0 2px 5px rgba(234,179,8,0.3); border: 1px solid #eab308; }
 .hypercharge-locked-status { color: #64748b; background: #f1f5f9; border: 1px solid #cbd5e1; }
+
+.hc-notice-banner { display:flex; align-items:flex-start; gap:8px; padding:9px 12px; border-radius:10px; font-size:11px; line-height:1.45; margin:10px 0; }
+.hc-notice-banner span { font-size:13px; flex-shrink:0; margin-top:-1px; }
+.hc-notice-banner strong { font-weight:800; }
+.hc-active-banner { background:#fdf4ff; border:1.5px solid #f0abfc; color:#701a75; }
+.hc-stored-banner { background:#fefce8; border:1.5px solid #fde047; color:#713f12; }
+.hc-eligible-banner { background:#faf5ff; border:1.5px solid #d8b4fe; color:#581c87; }
+.hc-locked-banner { background:#f8fafc; border:1.5px solid #e2e8f0; color:#475569; }
 .equipment-empty { color: var(--muted); font-size: 11px; }
 .guide-sources { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-top:19px; padding-top:16px; border-top:2px solid var(--line); }
 .guide-sources p { flex:1 1 100%; margin:0; color:var(--muted); font-size:10px; line-height:1.5; }

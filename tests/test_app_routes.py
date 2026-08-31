@@ -9,7 +9,7 @@ from app.main import app
 
 def test_product_pages_and_surge_guide_are_available() -> None:
     with TestClient(app) as client:
-        for path in ("/", "/brawlers", "/resources", "/brawlers/16000038"):
+        for path in ("/", "/brawlers", "/battles", "/events", "/leaderboards", "/brawlers/16000038"):
             response = client.get(path)
             assert response.status_code == 200
             assert "BrawlBuddy" in response.text

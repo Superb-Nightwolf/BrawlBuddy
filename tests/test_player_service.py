@@ -70,3 +70,63 @@ def test_parse_player_prestige_and_victories() -> None:
     assert player.club.name == "Starrbound"
 
 
+def test_hypercharge_ownership_and_level_logic() -> None:
+    payload = {
+        "tag": "#2PP",
+        "name": "Nova",
+        "trophies": 10000,
+        "brawlers": [
+            {
+                "id": 16000000,
+                "name": "SHELLY",
+                "power": 11,
+                "hypercharges": [{"id": 23000290, "name": "DOUBLE BARREL"}],
+            },
+            {
+                "id": 16000004,
+                "name": "RICO",
+                "power": 11,
+                "hypercharges": [],
+            },
+            {
+                "id": 16000066,
+                "name": "R-T",
+                "power": 7,
+                "gadgets": [],
+                "starPowers": [],
+                "gears": [],
+                "hypercharges": [{"id": 23000450, "name": "SURVEILLANCE"}],
+            },
+        ],
+    }
+    player = parse_player(payload)
+    shelly = player.brawlers[0]
+    rico = player.brawlers[1]
+    rt = player.brawlers[2]
+
+    # Shelly: Power 11 with Hypercharge -> Owned and Active
+    assert shelly.power == 11
+    assert shelly.has_hypercharge is True
+    assert shelly.is_hypercharge_active is True
+    assert shelly.is_hypercharge_stored is False
+
+    # Rico: Power 11 without Hypercharge -> NOT owned, NOT active (Level 11 != Owned)
+    assert rico.power == 11
+    assert rico.has_hypercharge is False
+    assert rico.is_hypercharge_active is False
+    assert rico.is_hypercharge_stored is False
+
+    # R-T: Power 7 with Hypercharge -> Owned in inventory, Stored until Level 11
+    assert rt.power == 7
+    assert len(rt.gadgets) == 0
+    assert len(rt.star_powers) == 0
+    assert rt.has_hypercharge is True
+    assert rt.is_hypercharge_active is False
+    assert rt.is_hypercharge_stored is True
+
+    # Account-wide counts
+    assert player.total_hypercharges_count == 2
+    assert player.active_hypercharges_count == 1
+
+
+

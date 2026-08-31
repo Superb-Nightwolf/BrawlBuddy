@@ -37,7 +37,21 @@ class PlayerBrawler(BaseModel):
     gadgets: list[EquipmentItem] = Field(default_factory=list)
     star_powers: list[EquipmentItem] = Field(default_factory=list)
     gears: list[EquipmentItem] = Field(default_factory=list)
+    hypercharges: list[EquipmentItem] = Field(default_factory=list)
+    buffies: list[str] = Field(default_factory=list)
     source: DataSource = DataSource.OFFICIAL_API
+
+    @property
+    def has_hypercharge(self) -> bool:
+        return len(self.hypercharges) > 0 or any("hyper" in b.lower() for b in self.buffies)
+
+    @property
+    def is_hypercharge_active(self) -> bool:
+        return self.has_hypercharge and self.power == 11
+
+    @property
+    def is_hypercharge_stored(self) -> bool:
+        return self.has_hypercharge and self.power < 11
 
 
 class PlayerProfile(BaseModel):
@@ -104,6 +118,14 @@ class PlayerProfile(BaseModel):
         return sum(len(item.gears) for item in self.brawlers)
 
     @property
+    def total_hypercharges_count(self) -> int:
+        return sum(1 for item in self.brawlers if item.has_hypercharge)
+
+    @property
+    def active_hypercharges_count(self) -> int:
+        return sum(1 for item in self.brawlers if item.is_hypercharge_active)
+
+    @property
     def next_trophy_milestone(self) -> int:
         trophies = self.highest_trophies or self.trophies
         milestones = [5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 50000, 60000, 70000, 80000, 100000]
@@ -158,11 +180,11 @@ class PlayerProfile(BaseModel):
 
     @property
     def completion_score(self) -> int:
-        total_possible_brawlers = 105
+        total_possible_brawlers = 106
         roster_pct = (len(self.brawlers) / total_possible_brawlers) * 100
         power11_pct = (self.power_11_count / max(1, len(self.brawlers))) * 100
-        max_equip = len(self.brawlers) * 7
-        total_equip = self.total_gadgets_count + self.total_star_powers_count + self.total_gears_count
+        max_equip = len(self.brawlers) * 8
+        total_equip = self.total_gadgets_count + self.total_star_powers_count + self.total_gears_count + self.total_hypercharges_count
         equip_pct = (total_equip / max(1, max_equip)) * 100
         score = (roster_pct * 0.4) + (power11_pct * 0.35) + (equip_pct * 0.25)
         return min(100, max(1, round(score)))
@@ -181,6 +203,7 @@ class PlayerProfile(BaseModel):
                 "gadget": b.gadgets[0].name if b.gadgets else None,
                 "star_power": b.star_powers[0].name if b.star_powers else None,
                 "gears": [g.name for g in b.gears],
+                "hypercharge": b.hypercharges[0].name if b.hypercharges else None,
             }
             for b in sorted_brawlers
         ]

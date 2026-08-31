@@ -196,8 +196,6 @@ This document tracks all identified UI, calculation, and data integration discre
 - **Root Cause**: `renderBrawlers()` filtering did not re-sync fallback catalog data if triggered before asynchronous catalog completion, and select element states were not proactively propagated during filter changes.
 - **Fix**: Rebuilt `renderBrawlers()` to guarantee complete filtering across search text, power level chips (`ALL`, `1` through `11`), equipment criteria (`has_sp`, `no_sp`, `has_gadget`, `no_gadget`, `has_gear`, `no_gear`), sort modes (`power_asc`, `power_desc`, `trophies`, `name`), and grid/table views.
 
----
-
 ### Issue 27: Roster Toolbar Layout CSS Styling & Forward/Back Scroll Restoration
 - **Root Cause**: 
   1. CSS classes for `.collection-toolbar`, `.search-box`, `.view-toggle`, `.level-filter-label`, and `.level-chip` were missing explicit definitions in `styles.css`, rendering the filter controls as unstyled text clumps.
@@ -205,3 +203,36 @@ This document tracks all identified UI, calculation, and data integration discre
 - **Fix**:
   1. Added dedicated layout CSS for `.collection-toolbar`, `.search-box`, `.view-toggle`, `.level-filter-label`, `.level-filter`, and interactive `.level-chip` buttons.
   2. Configured SPA scroll restoration: saving scroll positions into a `scrollPositions` map per route, instantly scrolling to top `(0, 0)` on new page transitions, and restoring exact previous coordinates on browser back/forward (`popstate`).
+
+---
+
+### Issue 28: Hypercharge Ownership Decoupled from Power 11 & Stored Inventory Support
+- **Root Cause**:
+  1. The app previously equated `brawler.power === 11` with owning a Hypercharge, erroneously marking Level 11 brawlers without a Hypercharge (e.g. Rico, Brock) as "⚡ UNLOCKED".
+  2. The equipment filter `has_hypercharge` checked `power === 11` rather than true Hypercharge ownership, causing brawlers at Power 1–10 who own a Hypercharge (e.g. R-T at Power 7 acquired via Starr Drops/Events) to be incorrectly excluded from the filter and labeled as not owned.
+  3. Detail guides lacked explicit distinction between the 5 authentic states: **Unreleased**, **Not in Account**, **Owned & Active (Power 11)**, **Owned in Inventory · Stored (Power 1–10, Unlocks at Level 11)**, and **Not Owned · Eligible to Unlock at Level 11 (5,000 Coins)**.
+- **Fix**:
+  1. Added `hypercharges: list[EquipmentItem]` and helper properties `has_hypercharge`, `is_hypercharge_active`, and `is_hypercharge_stored` to `PlayerBrawler` and `PlayerProfile` in [player.py](file:///c:/Users/bhala/Downloads/Couple/BrawlBuddy_AG/app/models/player.py) and [player_service.py](file:///c:/Users/bhala/Downloads/Couple/BrawlBuddy_AG/app/services/player_service.py).
+  2. Implemented `hasHypercharge(brawler, guide)` in [app.js](file:///c:/Users/bhala/Downloads/Couple/BrawlBuddy_AG/app/ui/assets/app.js) to evaluate true inventory possession across explicit API arrays and Buffie inventories regardless of current Power level.
+  3. Added an interactive `HC` equipment badge (`HC ⚡` Active, `HC 🔒` Stored, `HC 🛒` Eligible at L11, `HC —` Missing) to roster grid cards, table rows, and flagship loadout cards.
+  4. Updated `renderBrawlers()` filtering so `has_hypercharge` matches any brawler with a Hypercharge in inventory (e.g. R-T at Power 7), while `no_hypercharge` matches any brawler without one (e.g. Rico at Power 11).
+  5. Enhanced `renderHypercharge()` and `prioritySteps()` with distinct glowing state banners:
+     - **Owned & Active (Power 11)**: `⚡ ACTIVE & EQUIPPED` with purple/magenta radiance.
+     - **Owned & Stored (Power 1–10)**: `⚡ OWNED (STORED · L11 NEEDED)` with amber notice: *"Hypercharge In Inventory: Stored in inventory — upgrade from Power X to Power 11 to equip & unleash."*
+     - **Not Owned & Power 11**: `🛒 NOT OWNED (5,000 🪙)` with violet notice: *"Eligible at Power 11: Unlock for 5,000 Coins in the shop or from Starr Drops."*
+     - **Not Owned & Power 1–10**: `🔒 NOT OWNED (L11)` with neutral status.
+  6. Added a 5th metric pill (`HYPERCHARGE`) to the detail view readiness grid and integrated Hypercharge completion rings into the Equipment Vault.
+  7. Added comprehensive unit tests in [test_player_service.py](file:///c:/Users/bhala/Downloads/Couple/BrawlBuddy_AG/tests/test_player_service.py) verifying all 3 key scenarios (Rico Level 11 without HC, R-T Level 7 with HC stored, Shelly Level 11 with HC active).
+
+---
+
+### Issue 29: Alignment with Supercell Public API Capabilities & Presentation as Official Specs
+- **Root Cause**:
+  1. Supercell's public Brawl Stars API (`/players/{tag}`) only returns `power`, `trophies`, `rank`, `gadgets`, `starPowers`, and `gears`. It does not provide or share private `hypercharges` or `buffies` inventory data for player accounts.
+  2. Attempting to display speculative or simulated ownership labels (`OWNED`, `NOT OWNED`, `ACTIVE`, `STORED`) for Hypercharges and Buffies caused discrepancies with actual in-game player accounts (e.g. Bibi displaying unowned Hypercharges/Buffies).
+- **Fix**:
+  1. Removed all speculative ownership labels/status pills from Hypercharge cards and Buffie subfields.
+  2. Presented Hypercharges and Buffies purely as **Official Ability Specifications and Gameplay Guides** (showing ability mechanics, multiplier statistics, and compatibility notes).
+  3. Added an explicit, transparent Supercell API disclaimer note directly on Hypercharge and Buffie sections:
+     *"Supercell API Notice: The official Supercell Brawl Stars API does not provide or share private Hypercharge or Buffie inventory data. Details shown represent official game specifications and compatibility mechanics."*
+  4. Scoped roster equipment summary chips (`SP`, `Gadget`, `Gear`), readiness grid metrics (Power, Gadgets, Star Powers, Gears), and collection vault meters to the 3 equipment items verified by Supercell's public API.

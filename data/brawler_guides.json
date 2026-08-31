@@ -123,6 +123,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "PET POWER"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -261,6 +262,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "PET POWER"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -398,7 +400,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -536,6 +539,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "TALK TO THE HAND"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -674,7 +678,8 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
-      "THICK HEAD"
+      "GADGET CHARGE",
+      "HEADSTRONG"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -812,6 +817,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "LINGERING SMOKE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -949,7 +955,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -1086,7 +1093,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -1223,7 +1231,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -1360,7 +1369,9 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE",
+      "RELOAD SPEED"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -1498,6 +1509,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "EXHAUSTING STORM"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -1635,7 +1647,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -1772,7 +1785,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -1907,6 +1921,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "PET POWER"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -2044,7 +2059,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -2182,6 +2198,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -2319,7 +2336,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -2457,6 +2475,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -2595,6 +2614,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -2732,7 +2752,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
     "sources": [
@@ -2870,6 +2891,8 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
+      "RELOAD SPEED",
       "STICKY OIL"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -3008,6 +3031,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are its level-11 snapshot viewed on August 29, 2026; confirm exact live values in-game after balance changes.",
@@ -3145,7 +3169,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -3282,7 +3307,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -3420,6 +3446,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "RELOAD SPEED"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -3557,7 +3584,9 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE",
+      "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -3695,6 +3724,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "RELOAD SPEED"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -3832,7 +3862,9 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE",
+      "RELOAD SPEED"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -3970,7 +4002,9 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE",
+      "STICKY SPIKES"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -4107,7 +4141,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -4245,6 +4280,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "PET POWER"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -4382,7 +4418,9 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE",
+      "PET POWER"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -4519,7 +4557,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -4657,6 +4696,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -4795,7 +4835,9 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE",
+      "BAT STORM"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -4934,6 +4976,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "ENDURING TOXIN"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -5071,7 +5114,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -5209,7 +5253,8 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
-      "SUPER CHARGE"
+      "GADGET CHARGE",
+      "RELOAD SPEED"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -5346,7 +5391,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -5484,6 +5530,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER TURRET"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -5621,7 +5668,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -5755,7 +5803,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -5892,7 +5941,9 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE",
+      "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -6029,7 +6080,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -6166,7 +6218,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -6304,6 +6357,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "RELOAD SPEED"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -6441,7 +6495,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -6578,7 +6633,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -6715,7 +6771,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -6849,7 +6906,9 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE",
+      "RELOAD SPEED"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -6987,6 +7046,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -7121,7 +7181,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -7256,6 +7317,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "RELOAD SPEED"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -7393,7 +7455,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -7531,6 +7594,8 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
+      "RELOAD SPEED",
       "QUADRUPLETS"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -7668,7 +7733,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -7803,6 +7869,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -7941,6 +8008,7 @@
       "DAMAGE",
       "VISION",
       "SHIELD",
+      "GADGET CHARGE",
       "SUPER CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
@@ -8078,7 +8146,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -8212,7 +8281,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -8349,7 +8419,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -8486,7 +8557,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -8623,7 +8695,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -8757,7 +8830,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -8894,7 +8968,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -9028,7 +9103,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -9165,7 +9241,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -9299,7 +9376,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -9436,7 +9514,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -9570,7 +9649,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -9707,7 +9787,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -9841,7 +9922,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -9978,7 +10060,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -10115,7 +10198,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -10249,7 +10333,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -10383,7 +10468,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -10520,7 +10606,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -10657,7 +10744,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -10794,7 +10882,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -10928,7 +11017,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -11062,7 +11152,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -11199,7 +11290,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -11336,7 +11428,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -11473,7 +11566,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -11610,7 +11704,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -11747,7 +11842,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -11881,7 +11977,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -12015,7 +12112,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -12149,7 +12247,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -12283,7 +12382,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -12417,7 +12517,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -12551,7 +12652,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -12685,7 +12787,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -12819,7 +12922,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -12953,7 +13057,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -13087,7 +13192,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -13221,7 +13327,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -13355,7 +13462,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -13489,7 +13597,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -13623,7 +13732,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -13757,7 +13867,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -13891,7 +14002,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -14025,7 +14137,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -14159,7 +14272,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -14293,7 +14407,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Guide text is paraphrased from the linked community wiki. Statistics are the wiki's level-11 snapshot viewed on August 29, 2026; balance changes can make exact values outdated, so confirm them in-game.",
     "sources": [
@@ -14427,7 +14542,8 @@
       "HEALTH",
       "DAMAGE",
       "VISION",
-      "SHIELD"
+      "SHIELD",
+      "GADGET CHARGE"
     ],
     "source_note": "Curated official guide snapshot viewed on August 29, 2026.",
     "sources": [
