@@ -173,3 +173,70 @@ def test_all_106_brawlers_have_complete_curated_guides() -> None:
             assert len(guide["sources"]) >= 2, f"Missing sources for {name}"
             assert guide["sources"][0]["url"].startswith("https://brawlstars.fandom.com/wiki/"), f"Invalid wiki url for {name}"
 
+
+def test_spike_uses_current_gear_and_distinct_buffie_data() -> None:
+    with TestClient(app) as client:
+        spike = client.get("/api/guides/16000005").json()
+
+    assert spike["gears"] == [
+        "SPEED", "HEALTH", "DAMAGE", "VISION", "SHIELD", "GADGET COOLDOWN"
+    ]
+    assert "STICKY SPIKES" not in spike["recommended_build"]["gears"]
+    assert next(item for item in spike["star_powers"] if item["name"] == "FERTILIZE")["description"] == (
+        "Super heals for 75% of damage dealt."
+    )
+    assert next(item for item in spike["star_powers"] if item["name"] == "FERTILIZE")["buffie_description"] == (
+        "Super projectile speed is 30% faster."
+    )
+    assert next(item for item in spike["star_powers"] if item["name"] == "CURVEBALL")["buffie_description"] == (
+        "Curving spikes have extended range."
+    )
+    assert spike["hypercharge"]["buffie_description"] == "Main attack needle grenades detonate twice!"
+
+
+def test_current_gear_roster_is_consistent_for_every_brawler() -> None:
+    universal = ["SPEED", "HEALTH", "DAMAGE", "VISION", "SHIELD", "GADGET COOLDOWN"]
+    special = {
+        "AMBER": ["RELOAD SPEED", "STICKY OIL"],
+        "ASH": ["SUPER CHARGE"],
+        "BELLE": ["RELOAD SPEED"],
+        "BONNIE": ["SUPER CHARGE"],
+        "EL PRIMO": ["SUPER CHARGE"],
+        "EVE": ["RELOAD SPEED", "QUADRUPLETS"],
+        "GENE": ["TALK TO THE HAND"],
+        "JACKY": ["SUPER CHARGE"],
+        "JESSIE": ["PET POWER"],
+        "LOLA": ["RELOAD SPEED"],
+        "LOU": ["SUPER CHARGE"],
+        "MR. P": ["PET POWER"],
+        "NANI": ["SUPER CHARGE"],
+        "OTIS": ["SUPER CHARGE"],
+        "PAM": ["SUPER TURRET"],
+        "PENNY": ["PET POWER"],
+        "SANDY": ["EXHAUSTING STORM"],
+        "SPROUT": ["SUPER CHARGE"],
+        "TARA": ["PET POWER"],
+        "TICK": ["THICC HEAD"],
+    }
+
+    with TestClient(app) as client:
+        catalog = client.get("/api/brawlers/catalog").json()["list"]
+        guides = [client.get(f"/api/guides/{item['id']}").json() for item in catalog]
+
+    for guide in guides:
+        assert guide["gears"] == universal + special.get(guide["name"], []), guide["name"]
+    assert sum(len(guide["gears"]) == 6 for guide in guides) == 86
+    assert sum(len(guide["gears"]) == 7 for guide in guides) == 18
+    assert sum(len(guide["gears"]) == 8 for guide in guides) == 2
+
+
+def test_data_source_metadata_is_current_and_cross_validated() -> None:
+    with TestClient(app) as client:
+        payload = client.get("/api/data-sources").json()
+
+    assert payload["checked_at"] >= "2026-08-31"
+    assert payload["sync"]["guides"] == 106
+    assert payload["sync"]["wiki_pages_failed"] == 0
+    urls = {source["url"] for source in payload["sources"]}
+    assert "https://support.supercell.com/brawl-stars/en/articles/gears-8.html" in urls
+    assert "https://brawlstars.fandom.com/wiki/Gears" in urls

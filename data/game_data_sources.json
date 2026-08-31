@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-08-31",
+  "policy": "Supercell is authoritative for game rules and releases; the Brawl Stars Wiki supplies current per-ability text and per-brawler Gear rosters.",
+  "sources": [
+    {
+      "label": "Supercell Support — Gears",
+      "url": "https://support.supercell.com/brawl-stars/en/articles/gears-8.html",
+      "covers": "Gear slots and Power Level requirements"
+    },
+    {
+      "label": "Supercell — New Power, Brawl Pass Changes and a New Starr Drop",
+      "url": "https://supercell.com/en/games/brawlstars/blog/news/new-power-brawl-pass-changes-and-a-new-starr-drop-2/",
+      "covers": "Buffy ownership model and replacement of Epic/Mythic Gears"
+    },
+    {
+      "label": "Supercell — Release Notes June 2026",
+      "url": "https://supercell.com/en/games/brawlstars/blog/release-notes/release-notes-june-2026/",
+      "covers": "Latest official release and balance changes"
+    },
+    {
+      "label": "Brawl Stars Wiki — Gears",
+      "url": "https://brawlstars.fandom.com/wiki/Gears",
+      "covers": "Current per-brawler Gear availability and Gear history"
+    }
+  ],
+  "sync": {
+    "guides": 106,
+    "wiki_pages_loaded": 106,
+    "wiki_pages_failed": 0,
+    "base_ability_descriptions": 419,
+    "attack_and_super_descriptions": 197,
+    "buffie_descriptions": 105,
+    "hypercharge_descriptions": 93
+  }
+}

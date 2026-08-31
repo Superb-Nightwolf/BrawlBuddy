@@ -72,6 +72,11 @@ buffies_path = PROJECT_ROOT / "data" / "buffies_db.json"
 if buffies_path.exists():
     with buffies_path.open("r", encoding="utf-8") as handle:
         buffies_db = json.load(handle)
+data_sources = {}
+data_sources_path = PROJECT_ROOT / "data" / "game_data_sources.json"
+if data_sources_path.exists():
+    with data_sources_path.open("r", encoding="utf-8") as handle:
+        data_sources = json.load(handle)
 
 
 @asynccontextmanager
@@ -176,6 +181,11 @@ def _player_analytics(player) -> dict:
         "total_gears_count": player.total_gears_count,
         "total_hypercharges_count": player.total_hypercharges_count,
         "active_hypercharges_count": player.active_hypercharges_count,
+        "stored_hypercharges_count": player.stored_hypercharges_count,
+        "total_buffied_brawlers_count": player.total_buffied_brawlers_count,
+        "gadget_buffies_count": player.gadget_buffies_count,
+        "star_power_buffies_count": player.star_power_buffies_count,
+        "hypercharge_buffies_count": player.hypercharge_buffies_count,
         "total_showdown_victories": player.total_showdown_victories,
         "total_victories": player.total_victories,
         "victories_3v3_pct": round((player.victories_3v3 / total_victories) * 100),
@@ -318,6 +328,11 @@ async def get_buffies_catalog() -> dict:
     return buffies_db
 
 
+@app.get("/api/data-sources")
+async def get_data_sources() -> dict:
+    return data_sources
+
+
 @app.get("/api/battlelog")
 async def get_battlelog(tag: str = Query(min_length=3, max_length=20)) -> dict:
     entries, source = await battlelog_service.get_battlelog(tag)
@@ -423,5 +438,3 @@ async def get_brawler_catalog() -> dict:
 async def save_resources(player_tag: str, resources: PlayerResources) -> PlayerResources:
     resources.player_tag = player_tag
     return resource_service.save(resources)
-
-

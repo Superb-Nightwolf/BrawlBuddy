@@ -127,6 +127,55 @@ def test_hypercharge_ownership_and_level_logic() -> None:
     # Account-wide counts
     assert player.total_hypercharges_count == 2
     assert player.active_hypercharges_count == 1
+    assert player.stored_hypercharges_count == 1
 
+
+def test_official_hypercharge_and_buffie_fields_remain_independent() -> None:
+    payload = {
+        "tag": "#2PP",
+        "name": "Nova",
+        "brawlers": [
+            {
+                "id": 16000000,
+                "name": "SHELLY",
+                "power": 11,
+                "hyperCharges": [{"id": 23000290, "name": "DOUBLE BARREL"}],
+                "buffies": {"gadget": False, "starPower": False, "hyperCharge": True},
+            },
+            {
+                "id": 16000001,
+                "name": "COLT",
+                "power": 11,
+                "hyperCharges": [],
+                "buffies": {"gadget": True, "starPower": True, "hyperCharge": True},
+            },
+        ],
+    }
+
+    player = parse_player(payload)
+    shelly, colt = player.brawlers
+
+    assert shelly.has_hypercharge is True
+    assert shelly.buffies.hypercharge is True
+    assert colt.has_hypercharge is False
+    assert colt.is_hypercharge_active is False
+    assert colt.buffies.gadget is True
+    assert colt.buffies.star_power is True
+    assert colt.buffies.hypercharge is True
+    assert player.total_hypercharges_count == 1
+    assert player.active_hypercharges_count == 1
+    assert player.stored_hypercharges_count == 0
+    assert player.total_buffied_brawlers_count == 2
+    assert player.gadget_buffies_count == 1
+    assert player.star_power_buffies_count == 1
+    assert player.hypercharge_buffies_count == 2
+
+    serialized = colt.model_dump(mode="json")
+    assert serialized["hypercharges"] == []
+    assert serialized["buffies"] == {
+        "gadget": True,
+        "star_power": True,
+        "hypercharge": True,
+    }
 
 

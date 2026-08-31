@@ -27,6 +27,18 @@ class EquipmentItem(BaseModel):
     level: int | None = None
 
 
+class BuffieFlags(BaseModel):
+    """Per-category player ownership flags returned by the live player API."""
+
+    gadget: bool = False
+    star_power: bool = False
+    hypercharge: bool = False
+
+    @property
+    def any_owned(self) -> bool:
+        return self.gadget or self.star_power or self.hypercharge
+
+
 class PlayerBrawler(BaseModel):
     id: int
     name: str
@@ -38,12 +50,18 @@ class PlayerBrawler(BaseModel):
     star_powers: list[EquipmentItem] = Field(default_factory=list)
     gears: list[EquipmentItem] = Field(default_factory=list)
     hypercharges: list[EquipmentItem] = Field(default_factory=list)
-    buffies: list[str] = Field(default_factory=list)
+    buffies: BuffieFlags = Field(default_factory=BuffieFlags)
     source: DataSource = DataSource.OFFICIAL_API
 
     @property
     def has_hypercharge(self) -> bool:
-        return len(self.hypercharges) > 0 or any("hyper" in b.lower() for b in self.buffies)
+        # A Buffy Hypercharge flag is a separate unlock and must never be used
+        # to infer ownership of the brawler's base Hypercharge.
+        return len(self.hypercharges) > 0
+
+    @property
+    def has_any_buffie(self) -> bool:
+        return self.buffies.any_owned
 
     @property
     def is_hypercharge_active(self) -> bool:
@@ -124,6 +142,26 @@ class PlayerProfile(BaseModel):
     @property
     def active_hypercharges_count(self) -> int:
         return sum(1 for item in self.brawlers if item.is_hypercharge_active)
+
+    @property
+    def stored_hypercharges_count(self) -> int:
+        return sum(1 for item in self.brawlers if item.is_hypercharge_stored)
+
+    @property
+    def total_buffied_brawlers_count(self) -> int:
+        return sum(1 for item in self.brawlers if item.has_any_buffie)
+
+    @property
+    def gadget_buffies_count(self) -> int:
+        return sum(1 for item in self.brawlers if item.buffies.gadget)
+
+    @property
+    def star_power_buffies_count(self) -> int:
+        return sum(1 for item in self.brawlers if item.buffies.star_power)
+
+    @property
+    def hypercharge_buffies_count(self) -> int:
+        return sum(1 for item in self.brawlers if item.buffies.hypercharge)
 
     @property
     def next_trophy_milestone(self) -> int:
@@ -218,4 +256,3 @@ class PlayerResources(BaseModel):
     bling: int = Field(default=0, ge=0, le=100_000_000)
     source: DataSource = DataSource.USER_INPUT
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
-

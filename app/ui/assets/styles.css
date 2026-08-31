@@ -495,12 +495,50 @@ a { color: inherit; }
 .ladder-chip.level-selected .chip-status, .ladder-chip.level-selected .milestone-badge { color: #573300 !important; font-weight: 900; background: rgba(255, 255, 255, 0.45); }
 
 /* Equipment & Detail Guide */
-.equipment-columns { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:clamp(14px, 1.5vw, 20px); margin-top:23px; }
-@media (max-width: 1100px) {
-  .equipment-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.equipment-rule-strip {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));
+  gap:8px;
+  margin-top:16px;
 }
-@media (max-width: 640px) {
-  .equipment-columns { grid-template-columns: 1fr; }
+.equipment-rule-strip span {
+  min-width:0;
+  padding:9px 10px;
+  border:1.5px solid #dbe7f5;
+  border-radius:10px;
+  background:#f8fbff;
+  color:#5c6f8b;
+  font-size:9.5px;
+  line-height:1.35;
+  text-align:center;
+}
+.equipment-rule-strip strong { display:block; color:#17355f; font-size:9px; letter-spacing:.45px; }
+
+.equipment-columns {
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  align-items:start;
+  gap:clamp(14px, 1.5vw, 20px);
+  margin-top:18px;
+}
+.equipment-group {
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  padding:14px;
+  border:2px solid #dce8f6;
+  border-radius:18px;
+  background:linear-gradient(180deg,#fbfdff 0%,#f5f9ff 100%);
+  box-shadow:0 5px 15px rgba(30,64,110,.07);
+  break-inside:avoid;
+}
+.gadget-group { border-top-color:#22c55e; }
+.star-power-group { border-top-color:#f59e0b; }
+.gear-group { border-top-color:#3b82f6; }
+.hypercharge-group { border-top-color:#c026d3; }
+@media (max-width: 760px) {
+  .equipment-rule-strip { grid-template-columns:repeat(auto-fit, minmax(125px, 1fr)); }
+  .equipment-columns { grid-template-columns:1fr; }
 }
 
 .equipment-heading { 
@@ -535,8 +573,9 @@ a { color: inherit; }
 .heading-gear .heading-milestone-pill { background:#dbeafe; color:#1e40af; }
 .heading-hypercharge .heading-milestone-pill { background:#fae8ff; color:#86198f; }
 
-.equipment-list { display:flex; flex-direction:column; gap:12px; }
+.equipment-list { min-width:0; display:flex; flex-direction:column; gap:12px; }
 .equipment-list article { 
+  min-width:0;
   display:flex; 
   flex-direction:column; 
   gap:10px; 
@@ -553,13 +592,17 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap:wrap;
   gap: 10px;
 }
 .ability-title-wrap {
+  min-width:0;
   display: flex;
+  flex:1 1 150px;
   align-items: center;
   gap: 10px;
 }
+.ability-title-wrap strong { min-width:0; overflow-wrap:anywhere; }
 .ability-emblem-wrap {
   width: 34px;
   height: 34px;
@@ -645,6 +688,7 @@ a { color: inherit; }
 
 /* Unique Buffie Logos & Insignia System */
 .buffie-subfield {
+  min-width:0;
   margin-top: 6px;
   padding: 10px 12px;
   border-radius: 12px;
@@ -653,6 +697,7 @@ a { color: inherit; }
   gap: 5px;
   transition: transform .15s ease, box-shadow .15s ease;
 }
+.buffie-category-card { margin-top:2px; border-width:2px !important; }
 .buffie-subfield:hover {
   transform: translateY(-1px);
 }
@@ -744,9 +789,11 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap:wrap;
   gap: 8px;
 }
 .buffie-badge-wrap {
+  min-width:0;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -792,7 +839,8 @@ a { color: inherit; }
   letter-spacing: .5px;
   padding: 3px 6px;
   border-radius: 5px;
-  white-space: nowrap;
+  white-space: normal;
+  text-align:center;
 }
 .gadget-rank-pill { background: #bbf7d0; color: #166534; }
 .star_power-rank-pill { background: #fef08a; color: #854d0e; }
@@ -806,6 +854,10 @@ a { color: inherit; }
   font-weight: 600;
   line-height: 1.45;
 }
+.buffie-effect-list { display:grid; gap:8px; margin-top:9px; }
+.buffie-effect-item { min-width:0; padding:8px 10px; border:1px solid rgba(100,116,139,.22); border-radius:9px; background:rgba(255,255,255,.62); }
+.buffie-effect-item strong { display:block; margin-bottom:3px; color:#27364d; font-size:9px; letter-spacing:.35px; overflow-wrap:anywhere; }
+.buffie-effect-item .buffie-effect { margin:0; overflow-wrap:anywhere; }
 
 .owned-status, .missing-status, .hypercharge-owned-status, .hypercharge-stored-status, .hypercharge-eligible-status, .hypercharge-locked-status { 
   white-space: nowrap; 

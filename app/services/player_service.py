@@ -10,6 +10,7 @@ from typing import Any
 from app.clients.brawl_stars import BrawlStarsClient
 from app.core.errors import InvalidPlayerTag, MissingApiToken
 from app.models.player import (
+    BuffieFlags,
     ClubSummary,
     DataSource,
     EquipmentItem,
@@ -51,22 +52,45 @@ def _equipment(items: list[dict[str, Any]] | list[str] | dict[str, Any] | None) 
     return result
 
 
+def _buffie_flags(items: dict[str, Any] | list[Any] | None) -> BuffieFlags:
+    """Normalize the official flag object and older local list fixtures."""
+    gadget = False
+    star_power = False
+    hypercharge = False
+
+    if isinstance(items, dict):
+        gadget = bool(items.get("gadget", False))
+        star_power = bool(items.get("starPower", items.get("star_power", False)))
+        hypercharge = bool(items.get("hyperCharge", items.get("hypercharge", False)))
+    elif isinstance(items, list):
+        for item in items:
+            raw = item if isinstance(item, str) else item.get("name", "") if isinstance(item, dict) else ""
+            key = re.sub(r"[^a-z0-9]", "", raw.lower())
+            gadget = gadget or "gadget" in key
+            star_power = star_power or key in {"sp", "starpower"} or "starpower" in key
+            hypercharge = hypercharge or key in {"hc", "hypercharge"} or "hypercharge" in key
+
+    return BuffieFlags(gadget=gadget, star_power=star_power, hypercharge=hypercharge)
+
+
 def parse_player(payload: dict[str, Any], source: DataSource = DataSource.OFFICIAL_API) -> PlayerProfile:
     brawlers: list[PlayerBrawler] = []
     for item in payload.get("brawlers", []):
-        hc_raw = item.get("hypercharges") or item.get("hypercharge") or item.get("hyperCharges") or []
+        # The official API field is camelCase. Legacy aliases remain supported
+        # for demo data without overriding an explicitly empty official array.
+        hc_raw = item.get("hyperCharges")
+        if hc_raw is None:
+            hc_raw = item.get("hypercharges")
+        if hc_raw is None:
+            hc_raw = item.get("hypercharge")
+        if hc_raw is None:
+            hc_raw = []
         if isinstance(hc_raw, bool) and hc_raw:
             hc_items = [EquipmentItem(id=0, name="Hypercharge")]
         else:
             hc_items = _equipment(hc_raw)
 
-        buffies_raw = item.get("buffies") or []
-        if isinstance(buffies_raw, dict):
-            buffies = [k for k, v in buffies_raw.items() if v]
-        elif isinstance(buffies_raw, list):
-            buffies = [b if isinstance(b, str) else b.get("name", "") for b in buffies_raw]
-        else:
-            buffies = []
+        buffies = _buffie_flags(item.get("buffies"))
 
         brawlers.append(
             PlayerBrawler(
@@ -137,4 +161,3 @@ class PlayerService:
     def get_demo_player(self) -> PlayerProfile:
         with self._demo_file.open("r", encoding="utf-8") as handle:
             return parse_player(json.load(handle), source=DataSource.DEMO)
-

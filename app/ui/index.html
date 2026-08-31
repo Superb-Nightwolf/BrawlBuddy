@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=39">
+  <link rel="stylesheet" href="/assets/styles.css?v=40">
 </head>
 <body>
   <div class="app-shell">
@@ -334,7 +334,7 @@
 
       <section id="brawlers-view" class="view hidden">
         <div class="collection-banner panel">
-          <div><span class="banner-chip">FULL CATALOG</span><h2>106 brawlers. Every level.<br><em>One clear picture.</em></h2><p>Open any brawler to see its artwork and level journey. Owned account progress remains clearly separated from catalog entries.</p></div>
+          <div><span class="banner-chip">FULL CATALOG</span><h2>106 brawlers. Every level.<br><em>One clear picture.</em></h2><p>Equipment and Buffy ownership come from the loaded player API. Released abilities and descriptions come from catalog metadata, and are shown separately.</p></div>
           <div class="collection-badge"><strong id="collection-total">106</strong><span>BRAWLERS</span></div>
         </div>
         <section class="panel brawler-panel">
@@ -358,10 +358,10 @@
               <option value="active_hypercharge">Has Hypercharge - Active (L11)</option>
               <option value="stored_hypercharge">Has Hypercharge - Stored (L7-10)</option>
               <option value="no_hypercharge">No Hypercharge (0)</option>
-              <option value="has_buffies_gadget">Has Active Buffies - Gadget ⚡</option>
-              <option value="has_buffies_sp">Has Active Buffies - Star Power ⚡</option>
-              <option value="has_buffies_hc">Has Active Buffies - Hypercharge ⚡</option>
-              <option value="max_out">Max Out (L11 + Full Loadout + All Buffies ⚡)</option>
+              <option value="has_buffies_gadget">Gadget Buffy API Flag: Owned</option>
+              <option value="has_buffies_sp">Star Power Buffy API Flag: Owned</option>
+              <option value="has_buffies_hc">Hypercharge Buffy API Flag: Owned</option>
+              <option value="max_out">Complete Loadout + All 3 Buffy Flags</option>
             </select>
             <div class="view-toggle"><button id="grid-view" class="active" type="button" aria-label="Card view">▦</button><button id="table-view" type="button" aria-label="Table view">☷</button></div>
           </div>
@@ -750,11 +750,20 @@
               <p class="eyebrow">LOADOUT TRACKER & BUFFIES</p>
               <h2>Owned equipment & Buffie augmentations</h2>
             </div>
-            <span class="source-chip official-chip">PLAYER API + GUIDE</span>
+            <span class="source-chip official-chip">PLAYER API OWNERSHIP + GUIDE SPECS</span>
+          </div>
+
+          <div class="equipment-rule-strip" aria-label="Equipment activation rules">
+            <span><strong>GADGET</strong> Active at Power 7</span>
+            <span><strong>GEAR SLOT 1</strong> Available at Power 8</span>
+            <span><strong>STAR POWER</strong> Active at Power 9</span>
+            <span><strong>GEAR SLOT 2</strong> Available at Power 10</span>
+            <span><strong>HYPERCHARGE</strong> Active at Power 11</span>
+            <span><strong>OWNED EARLY</strong> Shown as Stored</span>
           </div>
 
           <div class="equipment-columns">
-            <div class="equipment-col">
+            <div class="equipment-col equipment-group gadget-group">
               <div class="equipment-heading heading-gadget">
                 <span class="heading-accent-bar"></span>
                 <h3>Gadgets</h3>
@@ -762,7 +771,7 @@
               </div>
               <div id="gadget-list" class="equipment-list"></div>
             </div>
-            <div class="equipment-col">
+            <div class="equipment-col equipment-group star-power-group">
               <div class="equipment-heading heading-star-power">
                 <span class="heading-accent-bar"></span>
                 <h3>Star Powers</h3>
@@ -770,7 +779,7 @@
               </div>
               <div id="star-power-list" class="equipment-list"></div>
             </div>
-            <div class="equipment-col">
+            <div class="equipment-col equipment-group gear-group">
               <div class="equipment-heading heading-gear">
                 <span class="heading-accent-bar"></span>
                 <h3>Gears</h3>
@@ -778,7 +787,7 @@
               </div>
               <div id="gear-list" class="equipment-list"></div>
             </div>
-            <div class="equipment-col">
+            <div class="equipment-col equipment-group hypercharge-group">
               <div class="equipment-heading heading-hypercharge">
                 <span class="heading-accent-bar"></span>
                 <h3>Hypercharge</h3>
@@ -929,6 +938,6 @@
       <small>Live lookup uses your server API token. Public brawler and club data is cached briefly.</small>
     </div>
   </dialog>
-  <script src="/assets/app.js?v=54" defer></script>
+  <script src="/assets/app.js?v=55" defer></script>
 </body>
 </html>

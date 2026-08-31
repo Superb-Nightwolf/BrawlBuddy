@@ -18,9 +18,10 @@ const state = {
   level: 'all',
   equipment: 'all',
   view: 'grid',
+  dataSources: {},
 };
 
-const ACCOUNT_CACHE_KEY = 'brawlbuddy_account_v3';
+const ACCOUNT_CACHE_KEY = 'brawlbuddy_account_v4';
 const CLUB_CACHE_KEY = 'brawlbuddy_club_v3';
 
 const $ = (id) => document.getElementById(id);
@@ -39,23 +40,71 @@ function hasHypercharge(brawler, guide = null) {
   return false;
 }
 
-function hasBuffie(brawler, abilityName, type = 'gadget') {
-  if (!brawler || !brawler.owned) return false;
-  if (!Array.isArray(brawler.buffies) || brawler.buffies.length === 0) return false;
+function getBuffieFlags(brawler) {
+  const flags = { gadget: false, star_power: false, hypercharge: false };
+  const raw = brawler?.buffies;
 
-  const normType = normalizeKey(type || '');
-  return brawler.buffies.some((b) => {
-    const norm = normalizeKey(b);
-    if (!norm) return false;
-    if (normType) {
-      if (norm === normType) return true;
-      if (normType.includes('gadget') && norm.includes('gadget')) return true;
-      if ((normType.includes('star') || normType === 'sp') && (norm.includes('star') || norm === 'sp')) return true;
-      if ((normType.includes('hyper') || normType === 'hc') && (norm.includes('hyper') || norm === 'hc')) return true;
-    }
-    if (abilityName && norm === normalizeKey(abilityName)) return true;
-    return false;
-  });
+  if (Array.isArray(raw)) {
+    raw.forEach((entry) => {
+      const value = normalizeKey(typeof entry === 'string' ? entry : entry?.name);
+      if (value.includes('gadget')) flags.gadget = true;
+      if (value === 'sp' || value.includes('starpower')) flags.star_power = true;
+      if (value === 'hc' || value.includes('hypercharge')) flags.hypercharge = true;
+    });
+  } else if (raw && typeof raw === 'object') {
+    flags.gadget = raw.gadget === true;
+    flags.star_power = raw.star_power === true || raw.starPower === true;
+    flags.hypercharge = raw.hypercharge === true || raw.hyperCharge === true;
+  }
+
+  return flags;
+}
+
+function hasBuffie(brawler, type = 'gadget') {
+  if (!brawler || !brawler.owned) return false;
+  const flags = getBuffieFlags(brawler);
+  const normType = normalizeKey(type);
+  if (normType.includes('gadget')) return flags.gadget;
+  if (normType === 'sp' || normType.includes('starpower')) return flags.star_power;
+  if (normType === 'hc' || normType.includes('hypercharge')) return flags.hypercharge;
+  return false;
+}
+
+const EQUIPMENT_UNLOCK_LEVEL = {
+  gadget: 7,
+  gear: 8,
+  star_power: 9,
+  hypercharge: 11,
+};
+
+function baseEquipmentOwned(brawler, type) {
+  if (type === 'gadget') return (brawler?.gadgets || []).length > 0;
+  if (type === 'star_power') return (brawler?.star_powers || []).length > 0;
+  if (type === 'hypercharge') return hasHypercharge(brawler);
+  return false;
+}
+
+function equipmentUseState(brawler, type, isOwned) {
+  const unlockLevel = EQUIPMENT_UNLOCK_LEVEL[type] || 1;
+  if (!brawler?.owned) return { key: 'not-account', label: 'NOT IN ACCOUNT', className: 'missing-status', unlockLevel };
+  if (!isOwned) return { key: 'not-owned', label: 'NOT OWNED', className: 'missing-status', unlockLevel };
+  if ((brawler.power || 0) < unlockLevel) {
+    return { key: 'stored', label: 'STORED', className: 'hypercharge-stored-status', unlockLevel };
+  }
+  return { key: 'active', label: 'ACTIVE', className: 'owned-status', unlockLevel };
+}
+
+function buffieUseState(brawler, type) {
+  const unlockLevel = EQUIPMENT_UNLOCK_LEVEL[type] || 1;
+  if (!brawler?.owned) return { key: 'not-account', label: 'NOT IN ACCOUNT', className: 'missing-status', unlockLevel };
+  if (!hasBuffie(brawler, type)) return { key: 'not-owned', label: 'NOT OWNED', className: 'missing-status', unlockLevel };
+  if (!baseEquipmentOwned(brawler, type)) {
+    return { key: 'stored', label: 'STORED', className: 'hypercharge-stored-status', unlockLevel };
+  }
+  if ((brawler.power || 0) < unlockLevel) {
+    return { key: 'stored', label: 'STORED', className: 'hypercharge-stored-status', unlockLevel };
+  }
+  return { key: 'active', label: 'ACTIVE', className: 'owned-status', unlockLevel };
 }
 
 function setText(id, value) {
@@ -187,14 +236,16 @@ async function loadStatus() {
 
 async function loadCatalog() {
   try {
-    const [catPayload, equipPayload, buffiesPayload] = await Promise.all([
+    const [catPayload, equipPayload, buffiesPayload, sourcesPayload] = await Promise.all([
       request('/api/brawlers/catalog'),
       request('/api/equipment').catch(() => ({})),
-      request('/api/buffies').catch(() => ({}))
+      request('/api/buffies').catch(() => ({})),
+      request('/api/data-sources').catch(() => ({}))
     ]);
     state.catalog = catPayload.list || [];
     state.equipmentDb = equipPayload || {};
     state.buffiesDb = buffiesPayload || {};
+    state.dataSources = sourcesPayload || {};
     state.brawlers = mergeCatalog(state.ownedBrawlers);
     if (state.page === 'brawlers') {
       renderBrawlers();
@@ -229,7 +280,7 @@ function mergeCatalog(ownedBrawlers) {
       star_powers: [],
       gears: [],
       hypercharges: [],
-      buffies: [],
+      buffies: { gadget: false, star_power: false, hypercharge: false },
     };
   });
 
@@ -368,7 +419,7 @@ async function loadPlayer(tag) {
     const dialog = $('connect-dialog');
     if (dialog && dialog.open) dialog.close();
     hideNotice();
-    if (state.page !== 'overview' && state.page !== 'brawlers' && state.page !== 'battles') {
+    if (state.page !== 'overview' && state.page !== 'brawlers' && state.page !== 'battles' && state.page !== 'detail') {
       history.pushState(null, '', '/');
       configurePage();
       showView();
@@ -498,7 +549,8 @@ function renderArchetypeStrip(analytics, player) {
   const brawlersList = player.brawlers || [];
   const totalHc = analytics.total_hypercharges_count ?? brawlersList.filter((b) => hasHypercharge(b)).length;
   const activeHc = analytics.active_hypercharges_count ?? brawlersList.filter((b) => hasHypercharge(b) && b.power === 11).length;
-  setText('hypercharge-ready-val', `${totalHc} Owned (${activeHc} Active)`);
+  const storedHc = analytics.stored_hypercharges_count ?? Math.max(0, totalHc - activeHc);
+  setText('hypercharge-ready-val', `${totalHc} Owned (${activeHc} Active, ${storedHc} Stored)`);
   setText('power-play-val', `${format(analytics.highest_power_play_points || 1250)} Pts`);
 }
 
@@ -1434,29 +1486,38 @@ function compactEquipmentSummary(holder, brawler) {
   if (!brawler.owned) {
     const chip = document.createElement('span'); chip.className = 'equipment-chip locked'; chip.textContent = 'NOT IN ACCOUNT'; holder.append(chip); return;
   }
+  const gadgetOwned = (brawler.gadgets || []).length > 0;
+  const starPowerOwned = (brawler.star_powers || []).length > 0;
   const isHcOwned = hasHypercharge(brawler);
-  const hcStatus = isHcOwned ? (brawler.power === 11 ? '✓' : '📦') : '—';
-  const hasActiveBuffy = Array.isArray(brawler.buffies) && brawler.buffies.length > 0;
+  const gadgetStatus = gadgetOwned ? (brawler.power >= 7 ? '✓' : '📦') : '—';
+  const starPowerStatus = starPowerOwned ? (brawler.power >= 9 ? '✓' : '📦') : '—';
+  const hcStatus = isHcOwned ? (brawler.power >= 11 ? '✓' : '📦') : '—';
+  const buffieFlags = getBuffieFlags(brawler);
 
   [
-    ['SP', (brawler.star_powers || []).length ? '✓' : '—', (brawler.star_powers || []).length > 0],
-    ['Gadget', (brawler.gadgets || []).length ? '✓' : '—', (brawler.gadgets || []).length > 0],
+    ['SP', starPowerStatus, starPowerOwned],
+    ['Gadget', gadgetStatus, gadgetOwned],
     ['Gear', (brawler.gears || []).length ? `${brawler.gears.length}` : '—', (brawler.gears || []).length > 0],
     ['HC', hcStatus, isHcOwned],
   ].forEach(([label, sym, isOwned]) => {
     const chip = document.createElement('span');
-    chip.className = `equipment-chip ${isOwned ? (label === 'HC' && brawler.power < 11 ? 'stored' : 'owned') : 'missing'}`;
+    const isStored = isOwned && ((label === 'Gadget' && brawler.power < 7) || (label === 'SP' && brawler.power < 9) || (label === 'HC' && brawler.power < 11));
+    chip.className = `equipment-chip ${isOwned ? (isStored ? 'stored' : 'owned') : 'missing'}`;
     chip.textContent = `${label} ${sym}`;
     holder.append(chip);
   });
 
-  if (hasActiveBuffy) {
+  [
+    ['Buffy G', buffieFlags.gadget],
+    ['Buffy SP', buffieFlags.star_power],
+    ['Buffy HC', buffieFlags.hypercharge],
+  ].filter(([, owned]) => owned).forEach(([label]) => {
     const buffyChip = document.createElement('span');
     buffyChip.className = 'equipment-chip buffy-chip owned';
-    buffyChip.textContent = 'Buffy ⚡';
-    buffyChip.title = `Active Buffy flags: ${brawler.buffies.join(', ')}`;
+    buffyChip.textContent = `${label} ✓`;
+    buffyChip.title = `${label} ownership flag returned by the player API`;
     holder.append(buffyChip);
-  }
+  });
 }
 
 function cardFor(brawler) {
@@ -1485,10 +1546,10 @@ function matchesEquipment(brawler, filter = state.equipment) {
   const spCount = (brawler.star_powers || []).length;
   const gearCount = (brawler.gears || []).length;
   const isHcOwned = hasHypercharge(brawler);
-  const hasGadgetBuffy = hasBuffie(brawler, null, 'gadget');
-  const hasSpBuffy = hasBuffie(brawler, null, 'star_power');
-  const hasHcBuffy = hasBuffie(brawler, null, 'hypercharge');
-  const hasAnyBuffy = hasGadgetBuffy || hasSpBuffy || hasHcBuffy || (Array.isArray(brawler.buffies) && brawler.buffies.length > 0);
+  const hasGadgetBuffy = hasBuffie(brawler, 'gadget');
+  const hasSpBuffy = hasBuffie(brawler, 'star_power');
+  const hasHcBuffy = hasBuffie(brawler, 'hypercharge');
+  const hasAnyBuffy = hasGadgetBuffy || hasSpBuffy || hasHcBuffy;
 
   switch (filter) {
     case 'has_gadget_1':
@@ -1616,9 +1677,11 @@ function prioritySteps(brawler, guide = {}) {
 
   if (!brawler.gadgets.length) {
     steps.push({
-      title: build.gadget ? `Unlock ${build.gadget}` : 'Unlock a Gadget',
-      reason: build.gadget ? `The curated guide recommends ${build.gadget} as the primary active utility tool.` : 'No owned Gadget is recorded in the player response.',
-      tag: 'LOADOUT GAP'
+      title: brawler.power < 7 ? 'Reach Power Level 7 for Gadgets' : (build.gadget ? `Unlock ${build.gadget}` : 'Unlock a Gadget'),
+      reason: brawler.power < 7
+        ? 'Gadgets and an owned Gadget Buffy remain stored until this brawler reaches Power Level 7.'
+        : (build.gadget ? `The curated guide recommends ${build.gadget} as the primary active utility tool.` : 'No owned Gadget is recorded in the player response.'),
+      tag: brawler.power < 7 ? 'LEVEL 7' : 'LOADOUT GAP'
     });
   } else if (brawler.gadgets.length < (guide.gadgets || []).length) {
     const missingGadget = (guide.gadgets || []).find(g => !brawler.gadgets.some(bg => bg.name?.toLowerCase() === g.name?.toLowerCase() || bg.id === g.id));
@@ -1633,9 +1696,11 @@ function prioritySteps(brawler, guide = {}) {
 
   if (!brawler.star_powers.length) {
     steps.push({
-      title: build.star_power ? `Unlock ${build.star_power}` : 'Unlock a Star Power',
-      reason: build.star_power ? `The curated guide recommends ${build.star_power} as the default permanent passive bonus.` : 'No owned Star Power is recorded in the player response.',
-      tag: 'LOADOUT GAP'
+      title: brawler.power < 9 ? 'Reach Power Level 9 for Star Powers' : (build.star_power ? `Unlock ${build.star_power}` : 'Unlock a Star Power'),
+      reason: brawler.power < 9
+        ? 'Star Powers and an owned Star Power Buffy remain stored until this brawler reaches Power Level 9.'
+        : (build.star_power ? `The curated guide recommends ${build.star_power} as the default permanent passive bonus.` : 'No owned Star Power is recorded in the player response.'),
+      tag: brawler.power < 9 ? 'LEVEL 9' : 'LOADOUT GAP'
     });
   } else if (brawler.star_powers.length < (guide.star_powers || []).length) {
     const missingSP = (guide.star_powers || []).find(s => !brawler.star_powers.some(bs => bs.name?.toLowerCase() === s.name?.toLowerCase() || bs.id === s.id));
@@ -1662,6 +1727,22 @@ function prioritySteps(brawler, guide = {}) {
     });
   }
 
+  const hcReleased = guide.hypercharge && guide.hypercharge.released !== false && guide.hypercharge.name?.toLowerCase() !== 'unreleased';
+  const hcOwned = hasHypercharge(brawler, guide);
+  if (hcOwned && brawler.power < 11) {
+    steps.push({
+      title: 'Hypercharge Stored',
+      reason: 'This Hypercharge is owned, but it cannot be used until the brawler reaches Power Level 11.',
+      tag: 'LEVEL 11'
+    });
+  } else if (hcReleased && !hcOwned && brawler.power >= 11) {
+    steps.push({
+      title: `Unlock ${guide.hypercharge.name}`,
+      reason: 'The Hypercharge is released and this brawler is eligible at Power Level 11, but the player response does not list it as owned.',
+      tag: 'LOADOUT GAP'
+    });
+  }
+
   if (brawler.power === 11 && brawler.gadgets.length && brawler.star_powers.length && brawler.gears.length >= 1) {
     steps.push({
       title: 'Core Loadout Ready',
@@ -1673,7 +1754,6 @@ function prioritySteps(brawler, guide = {}) {
       reason: 'Meets full Power 11 requirements for draft mode and high-elo competitive matches.',
       tag: 'RANKED'
     });
-    const hcReleased = guide.hypercharge && guide.hypercharge.released !== false && guide.hypercharge.name?.toLowerCase() !== 'unreleased';
     if (hcReleased) {
       steps.push({
         title: `Hypercharge Specification (${guide.hypercharge.name})`,
@@ -1822,11 +1902,11 @@ async function renderDetail() {
   if (!brawler && (state.catalog || []).length > 0) {
     const cat = state.catalog.find((item) => item.id === id);
     if (cat) {
-      brawler = { ...cat, owned: false, power: 0, rank: 0, trophies: 0, highest_trophies: 0, gadgets: [], star_powers: [], gears: [], hypercharges: [], buffies: [] };
+      brawler = { ...cat, owned: false, power: 0, rank: 0, trophies: 0, highest_trophies: 0, gadgets: [], star_powers: [], gears: [], hypercharges: [], buffies: { gadget: false, star_power: false, hypercharge: false } };
     }
   }
   if (!brawler) {
-    brawler = { id, name: 'Brawler', rarity: 'common', owned: false, power: 0, rank: 0, trophies: 0, highest_trophies: 0, gadgets: [], star_powers: [], gears: [], hypercharges: [], buffies: [] };
+    brawler = { id, name: 'Brawler', rarity: 'common', owned: false, power: 0, rank: 0, trophies: 0, highest_trophies: 0, gadgets: [], star_powers: [], gears: [], hypercharges: [], buffies: { gadget: false, star_power: false, hypercharge: false } };
   }
   hideNotice();
   let guide = {};
@@ -1927,22 +2007,16 @@ async function renderDetail() {
     'DAMAGE': 'Deals 15% extra damage when brawler health falls below 50%.',
     'VISION': 'Reveals hidden opponents for 2.0 seconds after dealing damage to them.',
     'SHIELD': 'Grants +900 extra consumable shield health (regenerates in 10s at max health).',
-    'GADGET CHARGE': 'Increases gadget uses per battle by 1 extra charge (from 3 to 4).',
+    'GADGET COOLDOWN': 'Reduces Gadget cooldown by 15%.',
     'RELOAD SPEED': 'Increases brawler basic attack reload speed by +15%.',
     'SUPER CHARGE': 'Increases Super attack charge rate by +10%.',
     'PET POWER': 'Spawnables and pets deal +25% extra damage or healing.',
     'QUADRUPLETS': "Eve's Baby Boom Super hatches 4 alien hatchlings instead of 3.",
-    'HEADSTRONG': "Tick's Head gains +1,000 extra health.",
+    'THICC HEAD': "Tick's Head gains +1,000 extra health.",
     'TALK TO THE HAND': "Increases Gene's Super hand range by 1 tile.",
-    'ENDURING TOXIN': "Increases Crow's poison damage over time by +30%.",
-    'LINGERING SMOKE': "Increases Leon's Smoke Bomb Super invisibility duration by 2 seconds.",
     'EXHAUSTING STORM': "Enemies inside Sandy's Sandstorm deal 20% less damage.",
-    'STICKY SPIKES': "Spike's Stick Around Super slows down enemies 50% more effectively.",
     'SUPER TURRET': "Mama's Kiss turret healing power is increased by +20%.",
     'STICKY OIL': "Amber's oil puddles slow enemies down by 10%.",
-    'BAT STORM': "Mortis's Life Blood Super bats travel 50% faster.",
-    'STICKY SPIDERS': "Charlie's Spiders slow down enemies by 25%.",
-    'SHADOW PURSUIT': "Tara's shadow companions move 20% faster to pursue opponents.",
   };
 
   const gearGuide = (guide.gears || []).map((name) => ({
@@ -1950,24 +2024,42 @@ async function renderDetail() {
     description: gearDescriptions[name] || gearDescriptions[name.toUpperCase()] || 'Available Gear option; confirm current unlock requirements in-game.'
   }));
   renderEquipment('gear-list', gearGuide, brawler.gears, brawler.owned ? 'No Gear data recorded.' : 'Unlock this brawler to track Gears.', 'gear', brawler, guide);
-  renderHypercharge('hypercharge-list', guide.hypercharge, brawler, guide);
+  const liveHypercharge = Array.isArray(brawler.hypercharges) ? brawler.hypercharges[0] : null;
+  const hyperchargeForDisplay = liveHypercharge
+    ? { ...(guide.hypercharge || {}), ...liveHypercharge, released: true }
+    : guide.hypercharge;
+  renderHypercharge('hypercharge-list', hyperchargeForDisplay, brawler, guide);
 
   const sources = $('guide-sources');
   if (sources) {
     sources.replaceChildren();
     const note = document.createElement('p');
-    note.textContent = 'All information referenced by BrawlBuddy is sourced from the Brawl Stars Wiki. Last updated on August 29, 2026.';
-    note.style.textAlign = 'center';
+    const checkedAt = state.dataSources?.checked_at || guide.verified_at || 'not recorded';
+    note.textContent = `Rules and releases: Supercell. Ability text and current per-brawler Gear availability: Brawl Stars Wiki. Verified ${checkedAt}.`;
     sources.append(note);
+
+    const combinedSources = [...(guide.sources || []).slice(0, 1), ...(state.dataSources?.sources || [])];
+    const seenUrls = new Set();
+    combinedSources.forEach((source) => {
+      if (!source?.url || seenUrls.has(source.url)) return;
+      seenUrls.add(source.url);
+      const link = document.createElement('a');
+      link.href = source.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = source.label || 'Source';
+      sources.append(link);
+    });
   }
 }
 
 function updateDetailReadiness(brawler, guide) {
-  const maxGears = (guide.gears || []).length || 6;
+  const gearSlots = brawler.owned ? (brawler.power >= 10 ? 2 : brawler.power >= 8 ? 1 : 0) : 0;
+  const usableGears = Math.min((brawler.gears || []).length, gearSlots);
   setText('readiness-power-val', brawler.owned ? `LVL ${brawler.power}` : 'LOCKED');
   setText('readiness-gadget-val', brawler.owned ? `${brawler.gadgets.length}/${(guide.gadgets || []).length || 2}` : '0/2');
   setText('readiness-star-val', brawler.owned ? `${brawler.star_powers.length}/${(guide.star_powers || []).length || 2}` : '0/2');
-  setText('readiness-gear-val', brawler.owned ? `${brawler.gears.length}/${maxGears}` : `0/${maxGears}`);
+  setText('readiness-gear-val', `${usableGears}/${gearSlots} slots`);
 
   const priorities = $('priority-list');
   if (priorities) {
@@ -1994,59 +2086,6 @@ function updateDetailReadiness(brawler, guide) {
       priorities.append(row);
     });
   }
-}
-
-function getBuffieEffect(brawlerName, abilityName, type) {
-  const normName = (abilityName || '').toUpperCase();
-  const bName = (brawlerName || '').toUpperCase();
-
-  // Buzz specific
-  if (normName.includes('RESERVE BUOY')) {
-    return 'Reduces Super activation latency and increases grapple launch velocity by +15%.';
-  }
-  if (normName.includes('X-RAY SHADES') || normName.includes('X-RAY-SHADES')) {
-    return 'Extends bush visibility reveal radius by +2.0 tiles and grants +10% bonus movement speed in bushes.';
-  }
-  if (normName.includes('ENHANCED EYES')) {
-    return 'Passive charging aura radius expanded by +12% with accelerated charge rate ticks.';
-  }
-  if (normName.includes('TOUGHER TORPEDO')) {
-    return 'Guarantees +0.5s minimum stun duration and grants a brief 15% damage shield upon arrival.';
-  }
-  if (normName.includes('BUZZZILLA')) {
-    return '+2.5s Hypercharge duration extension and +10% bonus damage shield during active overdrive.';
-  }
-
-  // Shelly specific
-  if (normName.includes('FAST FORWARD')) return 'Dash distance +1.5 tiles with an instant reload of 0.5 ammo.';
-  if (normName.includes('CLAY PIGEONS')) return 'Increases shotgun projectile velocity by +25% for 6.0 seconds.';
-  if (normName.includes('SHELL SHOCK')) return 'Increases Super slow duration by +1.5 seconds.';
-  if (normName.includes('BAND-AID')) return 'Band-Aid cooldown recovery timer accelerated by 3.5 seconds.';
-  if (normName.includes('DOUBLE BARREL')) return '+2.5s Overdrive duration and +15% Super projectile spread concentration.';
-
-  // Colt specific
-  if (normName.includes('SPEED BOOTS') || normName.includes('SLICK BOOTS')) return 'Grants an extra +5% base movement speed and instant turning responsiveness.';
-  if (normName.includes('MAGNUM SPECIAL')) return 'Increases bullet velocity by +12% and expands attack range by +1.0 tile.';
-  if (normName.includes('SILVER BULLET')) return 'Increases projectile size and piercing impact damage against obstacles.';
-  if (normName.includes('DUAL WIELDING')) return '+2.5s Overdrive duration with increased bullet spread density.';
-
-  // Bull specific
-  if (normName.includes('T-BONE')) return 'Heal value boosted by +20% and grants instant 10% damage shield for 2s.';
-  if (normName.includes('STOMPER')) return 'Expands stomper slow shockwave radius by +1.5 tiles.';
-  if (normName.includes('BERSERKER')) return 'Reload speed doubled when health drops below 50% instead of 40%.';
-  if (normName.includes('TOUGH GUY')) return 'Shield activation threshold increased to 45% remaining health.';
-
-  // Dynamic context generator for all other brawlers
-  if (type === 'gadget') {
-    return `Augments ${abilityName} with +15% enhanced activation efficiency and tactical responsiveness.`;
-  }
-  if (type === 'star_power') {
-    return `Amplifies ${abilityName} passive scaling by +20% and reinforces combat survivability.`;
-  }
-  if (type === 'hypercharge') {
-    return `Extends active Hypercharge overdrive state by +2.5s with amplified stat multipliers.`;
-  }
-  return 'Enhanced combat performance modifier.';
 }
 
 function getHyperchargeIcon(brawlerName, hyperchargeName) {
@@ -2232,22 +2271,10 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
   titleWrap.append(emblemWrap, name);
 
   const isOwned = brawler.owned && hasHypercharge(brawler, guide);
+  const useState = equipmentUseState(brawler, 'hypercharge', isOwned);
   const statusPill = document.createElement('span');
-  if (!brawler.owned) {
-    statusPill.className = 'missing-status';
-    statusPill.textContent = 'NOT IN ACCOUNT';
-  } else if (isOwned) {
-    if (brawler.power === 11) {
-      statusPill.className = 'hypercharge-owned-status';
-      statusPill.textContent = '⚡ HYPERCHARGE ACTIVE';
-    } else {
-      statusPill.className = 'hypercharge-owned-status hypercharge-stored-status';
-      statusPill.textContent = '📦 READY AT LVL 11 (STORED)';
-    }
-  } else {
-    statusPill.className = 'missing-status';
-    statusPill.textContent = 'NOT OWNED';
-  }
+  statusPill.className = useState.key === 'active' ? 'hypercharge-owned-status' : useState.className;
+  statusPill.textContent = useState.label;
 
   header.append(titleWrap, statusPill);
 
@@ -2258,54 +2285,28 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
   // Integrated Buffie Subfield for Hypercharge
   const buffieReleased = isBuffieReleased(brawler.name);
   const buffieImgUrl = getBuffieImageUrl(brawler.name, 'hypercharge');
-  const hasBuffieActive = brawler.owned && hasBuffie(brawler, hypercharge.name, 'hypercharge');
+  const buffieState = buffieUseState(brawler, 'hypercharge');
 
   const buffieBox = document.createElement('div');
   const buffieIconHtml = `<img src="${buffieImgUrl || '/assets/buffie_icon.webp'}" alt="Buffie" class="buffie-fandom-icon" onerror="this.src='/assets/buffie_icon.webp';">`;
-
-  if (!buffieReleased) {
-    buffieBox.className = 'buffie-subfield hypercharge-buffie disabled-buffie';
-    buffieBox.innerHTML = `
-      <div class="buffie-header-row">
-        <div class="buffie-badge-wrap">
-          <div class="buffie-icon-badge disabled-buffie-badge">
-            ${buffieIconHtml}
-          </div>
-          <span class="buffie-tag">HYPERCHARGE BUFFIE</span>
-        </div>
-        <span class="buffie-rank-pill unreleased-rank-pill">⏳ COMING SOON</span>
+  const buffieVisualState = !buffieReleased ? 'disabled-buffie' : buffieState.key === 'active' ? 'active-buffie' : buffieState.key === 'stored' ? 'inventory-buffie' : 'inactive-buffie';
+  const buffieIconClass = buffieReleased && buffieState.key === 'active' ? 'hypercharge-buffie-badge' : 'disabled-buffie-badge';
+  const buffieStatus = buffieReleased ? buffieState.label : 'COMING SOON';
+  const buffieStatusClass = buffieReleased ? buffieState.className : 'unreleased-rank-pill';
+  const buffieDescription = buffieReleased
+    ? (hypercharge.buffie_description || 'The exact Hypercharge Buffy effect is not available in the verified data snapshot.')
+    : `Buffies have not been released for ${brawler.name || 'this brawler'} in the loaded release catalog.`;
+  buffieBox.className = `buffie-subfield hypercharge-buffie ${buffieVisualState}`;
+  buffieBox.innerHTML = `
+    <div class="buffie-header-row">
+      <div class="buffie-badge-wrap">
+        <div class="buffie-icon-badge ${buffieIconClass}">${buffieIconHtml}</div>
+        <span class="buffie-tag">HYPERCHARGE BUFFIE</span>
       </div>
-      <p class="buffie-effect disabled-effect">Supercell has not yet released Buffies for ${brawler.name || 'this brawler'}.</p>
-    `;
-  } else if (hasBuffieActive) {
-    buffieBox.className = 'buffie-subfield hypercharge-buffie active-buffie';
-    buffieBox.innerHTML = `
-      <div class="buffie-header-row">
-        <div class="buffie-badge-wrap">
-          <div class="buffie-icon-badge hypercharge-buffie-badge">
-            ${buffieIconHtml}
-          </div>
-          <span class="buffie-tag">HYPERCHARGE BUFFIE</span>
-        </div>
-        <span class="buffie-rank-pill hypercharge-rank-pill">⚡ BUFFIE ACTIVE</span>
-      </div>
-      <p class="buffie-effect">${getBuffieEffect(brawler.name, hypercharge.name, 'hypercharge')}</p>
-    `;
-  } else {
-    buffieBox.className = 'buffie-subfield hypercharge-buffie inactive-buffie';
-    buffieBox.innerHTML = `
-      <div class="buffie-header-row">
-        <div class="buffie-badge-wrap">
-          <div class="buffie-icon-badge disabled-buffie-badge">
-            ${buffieIconHtml}
-          </div>
-          <span class="buffie-tag">HYPERCHARGE BUFFIE</span>
-        </div>
-        <span class="buffie-rank-pill missing-status">BUFFIE INACTIVE</span>
-      </div>
-      <p class="buffie-effect">${getBuffieEffect(brawler.name, hypercharge.name, 'hypercharge')}</p>
-    `;
-  }
+      <span class="buffie-rank-pill ${buffieStatusClass}">${buffieStatus}</span>
+    </div>
+    <p class="buffie-effect">${buffieDescription}</p>
+  `;
 
   row.append(header, description, buffieBox);
 
@@ -2471,20 +2472,74 @@ function getEquipmentImageUrl(item, type, brawler) {
     if (rawName.includes('PET')) return 'https://cdn.brawlify.com/gears/regular/62000008.png';
     if (rawName.includes('TALK') || rawName.includes('HAND')) return 'https://cdn.brawlify.com/gears/regular/62000009.png';
     if (rawName.includes('HEAD') || rawName.includes('THICK')) return 'https://cdn.brawlify.com/gears/regular/62000010.png';
-    if (rawName.includes('TOXIN') || rawName.includes('POISON')) return 'https://cdn.brawlify.com/gears/regular/62000011.png';
-    if (rawName.includes('SMOKE') || rawName.includes('LINGER')) return 'https://cdn.brawlify.com/gears/regular/62000012.png';
     if (rawName.includes('STORM') && rawName.includes('EXHAUST')) return 'https://cdn.brawlify.com/gears/regular/62000013.png';
-    if (rawName.includes('SPIKE') || rawName.includes('STICKY SPIKE')) return 'https://cdn.brawlify.com/gears/regular/62000014.png';
     if (rawName.includes('TURRET')) return 'https://cdn.brawlify.com/gears/regular/62000015.png';
     if (rawName.includes('QUAD') || rawName.includes('HATCH')) return 'https://cdn.brawlify.com/gears/regular/62000016.png';
     if (rawName.includes('OIL')) return 'https://cdn.brawlify.com/gears/regular/62000017.png';
-    if (rawName.includes('BAT')) return 'https://cdn.brawlify.com/gears/regular/62000018.png';
-    if (rawName.includes('SHADOW') || rawName.includes('PURSUIT') || rawName.includes('TELEPORT')) return 'https://cdn.brawlify.com/gears/regular/62000019.png';
-    if (rawName.includes('SPIDER')) return 'https://cdn.brawlify.com/gears/regular/62000020.png';
     return 'https://cdn.brawlify.com/gears/regular/62000000.png';
   }
 
   return null;
+}
+
+function renderCategoryBuffie(holder, brawler, type, abilities) {
+  if (type !== 'gadget' && type !== 'star_power') return;
+
+  const brawlerName = brawler?.name || 'Brawler';
+  const released = isBuffieReleased(brawlerName);
+  const stateInfo = buffieUseState(brawler, type);
+  const label = type === 'gadget' ? 'GADGET BUFFIE' : 'STAR POWER BUFFIE';
+  const imageUrl = getBuffieImageUrl(brawlerName, type) || '/assets/buffie_icon.webp';
+
+  const card = document.createElement('aside');
+  const visualState = !released ? 'disabled-buffie' : stateInfo.key === 'active' ? 'active-buffie' : stateInfo.key === 'stored' ? 'inventory-buffie' : 'inactive-buffie';
+  card.className = `buffie-subfield buffie-category-card ${type}-buffie ${visualState}`;
+
+  const header = document.createElement('div');
+  header.className = 'buffie-header-row';
+  const badgeWrap = document.createElement('div');
+  badgeWrap.className = 'buffie-badge-wrap';
+  const iconBadge = document.createElement('div');
+  iconBadge.className = `buffie-icon-badge ${stateInfo.key === 'active' ? `${type}-buffie-badge` : 'disabled-buffie-badge'}`;
+  const image = document.createElement('img');
+  image.src = imageUrl;
+  image.alt = `${label} icon`;
+  image.className = 'buffie-fandom-icon';
+  image.onerror = () => { image.src = '/assets/buffie_icon.webp'; };
+  iconBadge.append(image);
+  const title = document.createElement('span');
+  title.className = 'buffie-tag';
+  title.textContent = label;
+  badgeWrap.append(iconBadge, title);
+
+  const status = document.createElement('span');
+  status.className = `buffie-rank-pill ${released ? stateInfo.className : 'unreleased-rank-pill'}`;
+  status.textContent = released ? stateInfo.label : 'COMING SOON';
+  header.append(badgeWrap, status);
+
+  card.append(header);
+  if (released) {
+    const effects = document.createElement('div');
+    effects.className = 'buffie-effect-list';
+    (abilities || []).forEach((ability) => {
+      const item = document.createElement('div');
+      item.className = 'buffie-effect-item';
+      const abilityName = document.createElement('strong');
+      abilityName.textContent = ability.name;
+      const effect = document.createElement('p');
+      effect.className = 'buffie-effect';
+      effect.textContent = ability.buffie_description || 'The exact Buffy effect is not available in the verified data snapshot.';
+      item.append(abilityName, effect);
+      effects.append(item);
+    });
+    card.append(effects);
+  } else {
+    const description = document.createElement('p');
+    description.className = 'buffie-effect';
+    description.textContent = `Buffies have not been released for ${brawlerName} in the loaded release catalog.`;
+    card.append(description);
+  }
+  holder.append(card);
 }
 
 function renderEquipment(targetId, available, owned, emptyMessage, type, brawler, guide = null) {
@@ -2552,9 +2607,10 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
     titleWrap.append(emblemWrap, name);
 
     const isOwned = ownedKeys.has(normalizeKey(item.name)) || (item.id && ownedIds.has(String(item.id)));
+    const useState = equipmentUseState(brawler, type, isOwned);
     const status = document.createElement('span');
-    status.className = isOwned ? 'owned-status' : 'missing-status';
-    status.textContent = isOwned ? 'OWNED ✓' : 'NOT OWNED';
+    status.className = useState.className;
+    status.textContent = useState.label;
 
     header.append(titleWrap, status);
 
@@ -2564,65 +2620,10 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
 
     row.append(header, description);
 
-    // Integrated Buffie Subfield for Gadgets and Star Powers
-    if (type === 'gadget' || type === 'star_power') {
-      const brawlerName = brawler?.name || 'Brawler';
-      const buffieReleased = isBuffieReleased(brawlerName);
-      const buffieImgUrl = getBuffieImageUrl(brawlerName, type);
-      const hasBuffieInInventory = hasBuffie(brawler, item.name, type);
-
-      const buffieBox = document.createElement('div');
-      const buffieIconHtml = `<img src="${buffieImgUrl || '/assets/buffie_icon.webp'}" alt="Buffie" class="buffie-fandom-icon" onerror="this.src='/assets/buffie_icon.webp';">`;
-
-      if (!buffieReleased) {
-        buffieBox.className = `buffie-subfield ${type}-buffie disabled-buffie`;
-        buffieBox.innerHTML = `
-          <div class="buffie-header-row">
-            <div class="buffie-badge-wrap">
-              <div class="buffie-icon-badge disabled-buffie-badge">
-                ${buffieIconHtml}
-              </div>
-              <span class="buffie-tag">${type === 'gadget' ? 'GADGET BUFFIE' : 'STAR POWER BUFFIE'}</span>
-            </div>
-            <span class="buffie-rank-pill unreleased-rank-pill">⏳ COMING SOON</span>
-          </div>
-          <p class="buffie-effect disabled-effect">Supercell has not yet released Buffies for ${brawlerName}.</p>
-        `;
-      } else if (hasBuffieInInventory) {
-        buffieBox.className = `buffie-subfield ${type}-buffie active-buffie`;
-        buffieBox.innerHTML = `
-          <div class="buffie-header-row">
-            <div class="buffie-badge-wrap">
-              <div class="buffie-icon-badge ${type}-buffie-badge">
-                ${buffieIconHtml}
-              </div>
-              <span class="buffie-tag">${type === 'gadget' ? 'GADGET BUFFIE' : 'STAR POWER BUFFIE'}</span>
-            </div>
-            <span class="buffie-rank-pill ${type}-rank-pill">⚡ BUFFIE ACTIVE</span>
-          </div>
-          <p class="buffie-effect">${getBuffieEffect(brawlerName, item.name, type)}</p>
-        `;
-      } else {
-        buffieBox.className = `buffie-subfield ${type}-buffie inactive-buffie`;
-        buffieBox.innerHTML = `
-          <div class="buffie-header-row">
-            <div class="buffie-badge-wrap">
-              <div class="buffie-icon-badge disabled-buffie-badge">
-                ${buffieIconHtml}
-              </div>
-              <span class="buffie-tag">${type === 'gadget' ? 'GADGET BUFFIE' : 'STAR POWER BUFFIE'}</span>
-            </div>
-            <span class="buffie-rank-pill missing-status">BUFFIE INACTIVE</span>
-          </div>
-          <p class="buffie-effect">${getBuffieEffect(brawlerName, item.name, type)}</p>
-        `;
-      }
-
-      row.append(buffieBox);
-    }
-
     holder.append(row);
   });
+
+  renderCategoryBuffie(holder, brawler, type, combined);
 }
 
 function bindEvents() {
