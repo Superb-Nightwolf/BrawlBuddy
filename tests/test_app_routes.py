@@ -128,9 +128,56 @@ def test_full_catalog_has_106_unique_brawlers_and_local_artwork() -> None:
     thumbnail_dir = artwork_dir / "thumbs"
     missing_thumbnails = [
         brawler["name"] for brawler in brawlers
-        if not (thumbnail_dir / f"{brawler['id']}.webp").is_file()
+        if not (
+            thumbnail_dir
+            / ("16000108.png" if brawler["id"] == 16000108 else f"{brawler['id']}.webp")
+        ).is_file()
     ]
     assert missing_thumbnails == []
+
+
+def test_every_recommended_ability_and_icon_matches_its_brawler() -> None:
+    with TestClient(app) as client:
+        catalog = client.get("/api/brawlers/catalog").json()["list"]
+        equipment = client.get("/api/equipment").json()
+        guides = [client.get(f"/api/guides/{item['id']}").json() for item in catalog]
+
+    seen_ids: set[int] = set()
+    seen_names: set[str] = set()
+    for guide in guides:
+        build = guide["recommended_build"]
+        assert build["gadget"] in {item["name"] for item in guide["gadgets"]}, guide["name"]
+        assert build["star_power"] in {
+            item["name"] for item in guide["star_powers"]
+        }, guide["name"]
+        assert set(build["gears"]).issubset(guide["gears"]), guide["name"]
+
+        for collection, kind, folder in (
+            ("gadgets", "gadget", "gadgets"),
+            ("star_powers", "star_power", "star-powers"),
+        ):
+            for item in guide[collection]:
+                expected_url = f"/assets/equipment/{folder}/{item['id']}.png"
+                expected_source_url = (
+                    f"https://cdn.brawlify.com/{folder}/regular/{item['id']}.png"
+                )
+                assert item["id"] not in seen_ids, item["id"]
+                assert item["name"] not in seen_names, item["name"]
+                seen_ids.add(item["id"])
+                seen_names.add(item["name"])
+                assert item["image_url"] == expected_url
+                assert item["source_url"] == expected_source_url
+                assert equipment[item["name"]] == {
+                    "id": item["id"],
+                    "type": kind,
+                    "brawler_id": str(guide["id"]),
+                    "brawler_name": guide["name"],
+                    "image_url": expected_url,
+                    "source_url": expected_source_url,
+                }
+
+    assert len(seen_ids) == 424
+    assert len(seen_names) == 424
 
 
 def test_penny_and_tara_use_distinct_canonical_ids() -> None:

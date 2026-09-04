@@ -4,6 +4,7 @@ import logging
 import json
 import mimetypes
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import AsyncIterator
 
@@ -72,6 +73,11 @@ buffies_path = PROJECT_ROOT / "data" / "buffies_db.json"
 if buffies_path.exists():
     with buffies_path.open("r", encoding="utf-8") as handle:
         buffies_db = json.load(handle)
+visual_asset_manifest = {}
+visual_asset_manifest_path = PROJECT_ROOT / "data" / "visual_asset_manifest.json"
+if visual_asset_manifest_path.exists():
+    with visual_asset_manifest_path.open("r", encoding="utf-8") as handle:
+        visual_asset_manifest = json.load(handle)
 data_sources = {}
 data_sources_path = PROJECT_ROOT / "data" / "game_data_sources.json"
 if data_sources_path.exists():
@@ -95,6 +101,17 @@ app = FastAPI(
 )
 assets = PROJECT_ROOT / "app" / "ui" / "assets"
 app.mount("/assets", StaticFiles(directory=assets), name="assets")
+
+
+def _content_last_updated() -> str:
+    """Return the newest published data/UI timestamp without a manual date edit."""
+    published_files = list((PROJECT_ROOT / "data").glob("*.json"))
+    published_files.extend(
+        path for path in assets.rglob("*") if path.is_file()
+    )
+    published_files.append(PROJECT_ROOT / "app" / "ui" / "index.html")
+    newest = max(path.stat().st_mtime for path in published_files if path.exists())
+    return datetime.fromtimestamp(newest, tz=timezone.utc).replace(microsecond=0).isoformat()
 
 
 @app.exception_handler(BrawlAdvisorError)
@@ -162,6 +179,7 @@ async def status() -> dict[str, bool | str]:
         "app_name": settings.app.name,
         "live_api_configured": settings.api_token is not None,
         "demo_available": settings.app.demo_mode,
+        "content_last_updated": _content_last_updated(),
     }
 
 
@@ -326,6 +344,11 @@ async def get_equipment_catalog() -> dict:
 @app.get("/api/buffies")
 async def get_buffies_catalog() -> dict:
     return buffies_db
+
+
+@app.get("/api/visual-assets")
+async def get_visual_asset_manifest() -> dict:
+    return visual_asset_manifest
 
 
 @app.get("/api/data-sources")

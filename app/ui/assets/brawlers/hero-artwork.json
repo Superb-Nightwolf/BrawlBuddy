@@ -1,0 +1,862 @@
+{
+  "16000000": {
+    "name": "SHELLY",
+    "official": "/assets/brawlers/official/16000000.webp",
+    "source": "File:Shelly Skin-Default.png",
+    "generated": "/assets/brawlers/16000000.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/5e/Shelly_Skin-Default.png/revision/latest?cb=20251013023733"
+  },
+  "16000001": {
+    "name": "COLT",
+    "official": "/assets/brawlers/official/16000001.webp",
+    "source": "File:Colt Skin-Default.png",
+    "generated": "/assets/brawlers/16000001.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/8/8a/Colt_Skin-Default.png/revision/latest?cb=20260805010816"
+  },
+  "16000002": {
+    "name": "BULL",
+    "official": "/assets/brawlers/official/16000002.webp",
+    "source": "File:Bull Skin-Default.png",
+    "generated": "/assets/brawlers/16000002.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/b/b7/Bull_Skin-Default.png/revision/latest?cb=20250909063616"
+  },
+  "16000003": {
+    "name": "BROCK",
+    "official": "/assets/brawlers/official/16000003.webp",
+    "source": "File:Brock Skin-Default.png",
+    "generated": "/assets/brawlers/16000003.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/7/70/Brock_Skin-Default.png/revision/latest?cb=20250913182015"
+  },
+  "16000004": {
+    "name": "RICO",
+    "official": "/assets/brawlers/official/16000004.webp",
+    "source": "File:Rico Skin-Default.png",
+    "generated": "/assets/brawlers/16000004.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/7/71/Rico_Skin-Default.png/revision/latest?cb=20251031110328"
+  },
+  "16000005": {
+    "name": "SPIKE",
+    "official": "/assets/brawlers/official/16000005.webp",
+    "source": "File:Spike Skin-Default.png",
+    "generated": "/assets/brawlers/16000005.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/8/8e/Spike_Skin-Default.png/revision/latest?cb=20230630135425"
+  },
+  "16000006": {
+    "name": "BARLEY",
+    "official": "/assets/brawlers/official/16000006.webp",
+    "source": "File:Barley Skin-Default.png",
+    "generated": "/assets/brawlers/16000006.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/3c/Barley_Skin-Default.png/revision/latest?cb=20251113125930"
+  },
+  "16000007": {
+    "name": "JESSIE",
+    "official": "/assets/brawlers/official/16000007.webp",
+    "source": "File:Jessie Skin-Default.png",
+    "generated": "/assets/brawlers/16000007.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/1/15/Jessie_Skin-Default.png/revision/latest?cb=20250208020531"
+  },
+  "16000008": {
+    "name": "NITA",
+    "official": "/assets/brawlers/official/16000008.webp",
+    "source": "File:Nita Skin-Default.png",
+    "generated": "/assets/brawlers/16000008.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/36/Nita_Skin-Default.png/revision/latest?cb=20251122003823"
+  },
+  "16000009": {
+    "name": "DYNAMIKE",
+    "official": "/assets/brawlers/official/16000009.webp",
+    "source": "File:Dynamike Skin-Default.png",
+    "generated": "/assets/brawlers/16000009.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/6e/Dynamike_Skin-Default.png/revision/latest?cb=20260505183731"
+  },
+  "16000010": {
+    "name": "EL PRIMO",
+    "official": "/assets/brawlers/official/16000010.webp",
+    "source": "File:El Primo Skin-Default.png",
+    "generated": "/assets/brawlers/16000010.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/0/04/El_Primo_Skin-Default.png/revision/latest?cb=20250215023611"
+  },
+  "16000011": {
+    "name": "MORTIS",
+    "official": "/assets/brawlers/official/16000011.webp",
+    "source": "File:Mortis Skin-Default.png",
+    "generated": "/assets/brawlers/16000011.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/b/b2/Mortis_Skin-Default.png/revision/latest?cb=20251020175238"
+  },
+  "16000012": {
+    "name": "CROW",
+    "official": "/assets/brawlers/official/16000012.webp",
+    "source": "File:Crow Skin-Default.png",
+    "generated": "/assets/brawlers/16000012.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/a/a2/Crow_Skin-Default.png/revision/latest?cb=20201107182328"
+  },
+  "16000013": {
+    "name": "POCO",
+    "official": "/assets/brawlers/official/16000013.webp",
+    "source": "File:Poco Skin-Default.png",
+    "generated": "/assets/brawlers/16000013.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/2/24/Poco_Skin-Default.png/revision/latest?cb=20230225175317"
+  },
+  "16000014": {
+    "name": "BO",
+    "official": "/assets/brawlers/official/16000014.webp",
+    "source": "File:Bo Skin-Default.png",
+    "generated": "/assets/brawlers/16000014.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/e/ee/Bo_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20251127075651",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/ee/Bo_Skin-Default.png/revision/latest?cb=20251127075651"
+  },
+  "16000015": {
+    "name": "PIPER",
+    "official": "/assets/brawlers/official/16000015.webp",
+    "source": "File:Piper Skin-Default.png",
+    "generated": "/assets/brawlers/16000015.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/5d/Piper_Skin-Default.png/revision/latest?cb=20251018180616"
+  },
+  "16000016": {
+    "name": "PAM",
+    "official": "/assets/brawlers/official/16000016.webp",
+    "source": "File:Pam Skin-Default.png",
+    "generated": "/assets/brawlers/16000016.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/68/Pam_Skin-Default.png/revision/latest?cb=20201129223707"
+  },
+  "16000017": {
+    "name": "TARA",
+    "official": "/assets/brawlers/official/16000017.webp",
+    "source": "File:Tara Skin-Default.png",
+    "generated": "/assets/brawlers/16000017.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/a/a7/Tara_Skin-Default.png/revision/latest?cb=20251221182616"
+  },
+  "16000018": {
+    "name": "DARRYL",
+    "official": "/assets/brawlers/official/16000018.webp",
+    "source": "File:Darryl Skin-Default.png",
+    "generated": "/assets/brawlers/16000018.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/6/66/Darryl_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20220422040724",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/66/Darryl_Skin-Default.png/revision/latest?cb=20220422040724"
+  },
+  "16000019": {
+    "name": "PENNY",
+    "official": "/assets/brawlers/official/16000019.webp",
+    "source": "File:Penny Skin-Default.png",
+    "generated": "/assets/brawlers/16000019.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/d/d6/Penny_Skin-Default.png/revision/latest?cb=20260420210155"
+  },
+  "16000020": {
+    "name": "FRANK",
+    "official": "/assets/brawlers/official/16000020.webp",
+    "source": "File:Frank Skin-Default.png",
+    "generated": "/assets/brawlers/16000020.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/55/Frank_Skin-Default.png/revision/latest?cb=20250208034133"
+  },
+  "16000021": {
+    "name": "GENE",
+    "official": "/assets/brawlers/official/16000021.webp",
+    "source": "File:Gene Skin-Default.png",
+    "generated": "/assets/brawlers/16000021.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/54/Gene_Skin-Default.png/revision/latest?cb=20200608115231"
+  },
+  "16000022": {
+    "name": "TICK",
+    "official": "/assets/brawlers/official/16000022.webp",
+    "source": "File:Tick Skin-Default.png",
+    "generated": "/assets/brawlers/16000022.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/b/b1/Tick_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20250716191643",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/b/b1/Tick_Skin-Default.png/revision/latest?cb=20250716191643"
+  },
+  "16000023": {
+    "name": "LEON",
+    "official": "/assets/brawlers/official/16000023.webp",
+    "source": "File:Leon Skin-Default.png",
+    "generated": "/assets/brawlers/16000023.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/3/33/Leon_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20251010150951",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/33/Leon_Skin-Default.png/revision/latest?cb=20251010150951"
+  },
+  "16000024": {
+    "name": "ROSA",
+    "official": "/assets/brawlers/official/16000024.webp",
+    "source": "File:Rosa Skin-Default.png",
+    "generated": "/assets/brawlers/16000024.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/34/Rosa_Skin-Default.png/revision/latest?cb=20250922131552"
+  },
+  "16000025": {
+    "name": "CARL",
+    "official": "/assets/brawlers/official/16000025.webp",
+    "source": "File:Carl Skin-Default.png",
+    "generated": "/assets/brawlers/16000025.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/46/Carl_Skin-Default.png/revision/latest?cb=20251029185614"
+  },
+  "16000026": {
+    "name": "BIBI",
+    "official": "/assets/brawlers/official/16000026.webp",
+    "source": "File:Bibi Skin-Default.png",
+    "generated": "/assets/brawlers/16000026.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/c/c4/Bibi_Skin-Default.png/revision/latest?cb=20250922222505"
+  },
+  "16000027": {
+    "name": "8-BIT",
+    "official": "/assets/brawlers/official/16000027.webp",
+    "source": "File:8-Bit Skin-Default.png",
+    "generated": "/assets/brawlers/16000027.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/c/c1/8-Bit_Skin-Default.png/revision/latest?cb=20251219210721"
+  },
+  "16000028": {
+    "name": "SANDY",
+    "official": "/assets/brawlers/official/16000028.webp",
+    "source": "File:Sandy Skin-Default.png",
+    "generated": "/assets/brawlers/16000028.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/8/80/Sandy_Skin-Default.png/revision/latest?cb=20200226195634",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/8/80/Sandy_Skin-Default.png/revision/latest?cb=20200226195634"
+  },
+  "16000029": {
+    "name": "BEA",
+    "official": "/assets/brawlers/official/16000029.webp",
+    "source": "File:Bea Skin-Default.png",
+    "generated": "/assets/brawlers/16000029.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/7/73/Bea_Skin-Default.png/revision/latest?cb=20210319100234"
+  },
+  "16000030": {
+    "name": "EMZ",
+    "official": "/assets/brawlers/official/16000030.webp",
+    "source": "File:Emz Skin-Default.png",
+    "generated": "/assets/brawlers/16000030.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/e/e0/Emz_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20251124225846",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/e0/Emz_Skin-Default.png/revision/latest?cb=20251124225846"
+  },
+  "16000031": {
+    "name": "MR. P",
+    "official": "/assets/brawlers/official/16000031.webp",
+    "source": "File:Mr. P Skin-Default.png",
+    "generated": "/assets/brawlers/16000031.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/a/a4/Mr._P_Skin-Default.png/revision/latest?cb=20251225175556"
+  },
+  "16000032": {
+    "name": "MAX",
+    "official": "/assets/brawlers/official/16000032.webp",
+    "source": "File:Max Skin-Default.png",
+    "generated": "/assets/brawlers/16000032.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/33/Max_Skin-Default.png/revision/latest?cb=20201110222310"
+  },
+  "16000034": {
+    "name": "JACKY",
+    "official": "/assets/brawlers/official/16000034.webp",
+    "source": "File:Jacky Skin-Default.png",
+    "generated": "/assets/brawlers/16000034.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/52/Jacky_Skin-Default.png/revision/latest?cb=20200430211047"
+  },
+  "16000035": {
+    "name": "GALE",
+    "official": "/assets/brawlers/official/16000035.webp",
+    "source": "File:Gale Skin-Default.png",
+    "generated": "/assets/brawlers/16000035.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/1/1e/Gale_Skin-Default.png/revision/latest?cb=20220208174401"
+  },
+  "16000036": {
+    "name": "NANI",
+    "official": "/assets/brawlers/official/16000036.webp",
+    "source": "File:Nani Skin-Default.png",
+    "generated": "/assets/brawlers/16000036.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/2/20/Nani_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20201128223906",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/2/20/Nani_Skin-Default.png/revision/latest?cb=20201128223906"
+  },
+  "16000037": {
+    "name": "SPROUT",
+    "official": "/assets/brawlers/official/16000037.webp",
+    "source": "File:Sprout Skin-Default.png",
+    "generated": "/assets/brawlers/16000037.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/ec/Sprout_Skin-Default.png/revision/latest?cb=20260702213728"
+  },
+  "16000038": {
+    "name": "SURGE",
+    "official": "/assets/brawlers/official/16000038.webp",
+    "source": "File:Surge Skin-Default.png",
+    "generated": "/assets/brawlers/16000038.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/c/cf/Surge_Skin-Default.png/revision/latest?cb=20260330130915"
+  },
+  "16000039": {
+    "name": "COLETTE",
+    "official": "/assets/brawlers/official/16000039.webp",
+    "source": "File:Colette Skin-Default.png",
+    "generated": "/assets/brawlers/16000039.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/63/Colette_Skin-Default.png/revision/latest?cb=20201113164723"
+  },
+  "16000040": {
+    "name": "AMBER",
+    "official": "/assets/brawlers/official/16000040.webp",
+    "source": "File:Amber Skin-Default.png",
+    "generated": "/assets/brawlers/16000040.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/a/a3/Amber_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20230123182941",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/a/a3/Amber_Skin-Default.png/revision/latest?cb=20230123182941"
+  },
+  "16000041": {
+    "name": "LOU",
+    "official": "/assets/brawlers/official/16000041.webp",
+    "source": "File:Lou Skin-Default.png",
+    "generated": "/assets/brawlers/16000041.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/60/Lou_Skin-Default.png/revision/latest?cb=20230705221518"
+  },
+  "16000042": {
+    "name": "BYRON",
+    "official": "/assets/brawlers/official/16000042.webp",
+    "source": "File:Byron Skin-Default.png",
+    "generated": "/assets/brawlers/16000042.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/41/Byron_Skin-Default.png/revision/latest?cb=20220608200025"
+  },
+  "16000043": {
+    "name": "EDGAR",
+    "official": "/assets/brawlers/official/16000043.webp",
+    "source": "File:Edgar Skin-Default.png",
+    "generated": "/assets/brawlers/16000043.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/2/2b/Edgar_Skin-Default.png/revision/latest?cb=20230219113721"
+  },
+  "16000044": {
+    "name": "RUFFS",
+    "official": "/assets/brawlers/official/16000044.webp",
+    "source": "File:Ruffs Skin-Default.png",
+    "generated": "/assets/brawlers/16000044.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/40/Ruffs_Skin-Default.png/revision/latest?cb=20230210101310"
+  },
+  "16000045": {
+    "name": "STU",
+    "official": "/assets/brawlers/official/16000045.webp",
+    "source": "File:Stu Skin-Default.png",
+    "generated": "/assets/brawlers/16000045.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/b/b8/Stu_Skin-Default.png/revision/latest?cb=20250928173516"
+  },
+  "16000046": {
+    "name": "BELLE",
+    "official": "/assets/brawlers/official/16000046.webp",
+    "source": "File:Belle Skin-Default.png",
+    "generated": "/assets/brawlers/16000046.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/d/d9/Belle_Skin-Default.png/revision/latest?cb=20251126050516"
+  },
+  "16000047": {
+    "name": "SQUEAK",
+    "official": "/assets/brawlers/official/16000047.webp",
+    "source": "File:Squeak Skin-Default.png",
+    "generated": "/assets/brawlers/16000047.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/c/cf/Squeak_Skin-Default.png/revision/latest?cb=20230127144034"
+  },
+  "16000048": {
+    "name": "GROM",
+    "official": "/assets/brawlers/official/16000048.webp",
+    "source": "File:Grom Skin-Default.png",
+    "generated": "/assets/brawlers/16000048.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/0/0a/Grom_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20251209060950",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/0/0a/Grom_Skin-Default.png/revision/latest?cb=20251209060950"
+  },
+  "16000049": {
+    "name": "BUZZ",
+    "official": "/assets/brawlers/official/16000049.webp",
+    "source": "File:Buzz Skin-Default.png",
+    "generated": "/assets/brawlers/16000049.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/62/Buzz_Skin-Default.png/revision/latest?cb=20220123071159"
+  },
+  "16000050": {
+    "name": "GRIFF",
+    "official": "/assets/brawlers/official/16000050.webp",
+    "source": "File:Griff Skin-Default.png",
+    "generated": "/assets/brawlers/16000050.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/0/0f/Griff_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20230202181146",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/0/0f/Griff_Skin-Default.png/revision/latest?cb=20230202181146"
+  },
+  "16000051": {
+    "name": "ASH",
+    "official": "/assets/brawlers/official/16000051.webp",
+    "source": "File:Ash Skin-Default.png",
+    "generated": "/assets/brawlers/16000051.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/40/Ash_Skin-Default.png/revision/latest?cb=20230704155152"
+  },
+  "16000052": {
+    "name": "MEG",
+    "official": "/assets/brawlers/official/16000052.webp",
+    "source": "File:Meg Skin-Default.png",
+    "generated": "/assets/brawlers/16000052.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/e2/Meg_Skin-Default.png/revision/latest?cb=20230204211321"
+  },
+  "16000053": {
+    "name": "LOLA",
+    "official": "/assets/brawlers/official/16000053.webp",
+    "source": "File:Lola Skin-Default.png",
+    "generated": "/assets/brawlers/16000053.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/f/f1/Lola_Skin-Default.png/revision/latest?cb=20211130034036"
+  },
+  "16000054": {
+    "name": "FANG",
+    "official": "/assets/brawlers/official/16000054.webp",
+    "source": "File:Fang Skin-Default.png",
+    "generated": "/assets/brawlers/16000054.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/48/Fang_Skin-Default.png/revision/latest?cb=20251220195908"
+  },
+  "16000056": {
+    "name": "EVE",
+    "official": "/assets/brawlers/official/16000056.webp",
+    "source": "File:Eve Skin-Default.png",
+    "generated": "/assets/brawlers/16000056.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/3e/Eve_Skin-Default.png/revision/latest?cb=20251220171358"
+  },
+  "16000057": {
+    "name": "JANET",
+    "official": "/assets/brawlers/official/16000057.webp",
+    "source": "File:Janet Skin-Default.png",
+    "generated": "/assets/brawlers/16000057.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/a/a7/Janet_Skin-Default.png/revision/latest?cb=20230127120905"
+  },
+  "16000058": {
+    "name": "BONNIE",
+    "official": "/assets/brawlers/official/16000058.webp",
+    "source": "File:Bonnie Skin-Default.png",
+    "generated": "/assets/brawlers/16000058.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/9/90/Bonnie_Skin-Default.png/revision/latest?cb=20220527173920",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/9/90/Bonnie_Skin-Default.png/revision/latest?cb=20220527173920"
+  },
+  "16000059": {
+    "name": "OTIS",
+    "official": "/assets/brawlers/official/16000059.webp",
+    "source": "File:Otis Skin-Default.png",
+    "generated": "/assets/brawlers/16000059.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/f/fe/Otis_Skin-Default.png/revision/latest?cb=20230204020325"
+  },
+  "16000060": {
+    "name": "SAM",
+    "official": "/assets/brawlers/official/16000060.webp",
+    "source": "File:Sam Skin-Default.png",
+    "generated": "/assets/brawlers/16000060.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/8/87/Sam_Skin-Default.png/revision/latest?cb=20230206220911"
+  },
+  "16000061": {
+    "name": "GUS",
+    "official": "/assets/brawlers/official/16000061.webp",
+    "source": "File:Gus Skin-Default.png",
+    "generated": "/assets/brawlers/16000061.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/4/41/Gus_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20251011033746",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/41/Gus_Skin-Default.png/revision/latest?cb=20251011033746"
+  },
+  "16000062": {
+    "name": "BUSTER",
+    "official": "/assets/brawlers/official/16000062.webp",
+    "source": "File:Buster Skin-Default.png",
+    "generated": "/assets/brawlers/16000062.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/e3/Buster_Skin-Default.png/revision/latest?cb=20230204163432"
+  },
+  "16000063": {
+    "name": "CHESTER",
+    "official": "/assets/brawlers/official/16000063.webp",
+    "source": "File:Chester Skin-Default.png",
+    "generated": "/assets/brawlers/16000063.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/48/Chester_Skin-Default.png/revision/latest?cb=20260326184513"
+  },
+  "16000064": {
+    "name": "GRAY",
+    "official": "/assets/brawlers/official/16000064.webp",
+    "source": "File:Gray Skin-Default.png",
+    "generated": "/assets/brawlers/16000064.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/ed/Gray_Skin-Default.png/revision/latest?cb=20230118044908"
+  },
+  "16000065": {
+    "name": "MANDY",
+    "official": "/assets/brawlers/official/16000065.webp",
+    "source": "File:Mandy Skin-Default.png",
+    "generated": "/assets/brawlers/16000065.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/9/95/Mandy_Skin-Default.png/revision/latest?cb=20230213231248"
+  },
+  "16000066": {
+    "name": "R-T",
+    "official": "/assets/brawlers/official/16000066.webp",
+    "source": "File:R-T Skin-Default.png",
+    "generated": "/assets/brawlers/16000066.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/b/b7/R-T_Skin-Default.png/revision/latest?cb=20240803092909"
+  },
+  "16000067": {
+    "name": "WILLOW",
+    "official": "/assets/brawlers/official/16000067.webp",
+    "source": "File:Willow Skin-Default.png",
+    "generated": "/assets/brawlers/16000067.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/40/Willow_Skin-Default.png/revision/latest?cb=20240805095318"
+  },
+  "16000068": {
+    "name": "MAISIE",
+    "official": "/assets/brawlers/official/16000068.webp",
+    "source": "File:Maisie Skin-Default.png",
+    "generated": "/assets/brawlers/16000068.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/6a/Maisie_Skin-Default.png/revision/latest?cb=20240302211932"
+  },
+  "16000069": {
+    "name": "HANK",
+    "official": "/assets/brawlers/official/16000069.webp",
+    "source": "File:Hank Skin-Default.png",
+    "generated": "/assets/brawlers/16000069.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/7/7f/Hank_Skin-Default.png/revision/latest?cb=20230427101653"
+  },
+  "16000070": {
+    "name": "CORDELIUS",
+    "official": "/assets/brawlers/official/16000070.webp",
+    "source": "File:Cordelius Skin-Default.png",
+    "generated": "/assets/brawlers/16000070.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/1/1d/Cordelius_Skin-Default.png/revision/latest?cb=20251003231650"
+  },
+  "16000071": {
+    "name": "DOUG",
+    "official": "/assets/brawlers/official/16000071.webp",
+    "source": "File:Doug Skin-Default.png",
+    "generated": "/assets/brawlers/16000071.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/4d/Doug_Skin-Default.png/revision/latest?cb=20260326184421"
+  },
+  "16000072": {
+    "name": "PEARL",
+    "official": "/assets/brawlers/official/16000072.webp",
+    "source": "File:Pearl Skin-Default.png",
+    "generated": "/assets/brawlers/16000072.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/8/81/Pearl_Skin-Default.png/revision/latest?cb=20230907024954"
+  },
+  "16000073": {
+    "name": "CHUCK",
+    "official": "/assets/brawlers/official/16000073.webp",
+    "source": "File:Chuck Skin-Default.png",
+    "generated": "/assets/brawlers/16000073.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/a/a6/Chuck_Skin-Default.png/revision/latest?cb=20230907154111"
+  },
+  "16000074": {
+    "name": "CHARLIE",
+    "official": "/assets/brawlers/official/16000074.webp",
+    "source": "File:Charlie Skin-Default.png",
+    "generated": "/assets/brawlers/16000074.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/0/07/Charlie_Skin-Default.png/revision/latest?cb=20231022194111"
+  },
+  "16000075": {
+    "name": "MICO",
+    "official": "/assets/brawlers/official/16000075.webp",
+    "source": "File:Mico Skin-Default.png",
+    "generated": "/assets/brawlers/16000075.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/d/da/Mico_Skin-Default.png/revision/latest?cb=20250929001313"
+  },
+  "16000076": {
+    "name": "KIT",
+    "official": "/assets/brawlers/official/16000076.webp",
+    "source": "File:Kit Skin-Default.png",
+    "generated": "/assets/brawlers/16000076.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/1/15/Kit_Skin-Default.png/revision/latest?cb=20250921014921"
+  },
+  "16000077": {
+    "name": "LARRY & LAWRIE",
+    "official": "/assets/brawlers/official/16000077.webp",
+    "source": "File:Larry & Lawrie Skin-Default.png",
+    "generated": "/assets/brawlers/16000077.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/f/ff/Larry_%26_Lawrie_Skin-Default.png/revision/latest?cb=20240207083536"
+  },
+  "16000078": {
+    "name": "MELODIE",
+    "official": "/assets/brawlers/official/16000078.webp",
+    "source": "File:Melodie Skin-Default.png",
+    "generated": "/assets/brawlers/16000078.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/1/1f/Melodie_Skin-Default.png/revision/latest?cb=20240228162702"
+  },
+  "16000079": {
+    "name": "ANGELO",
+    "official": "/assets/brawlers/official/16000079.webp",
+    "source": "File:Angelo Skin-Default.png",
+    "generated": "/assets/brawlers/16000079.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/3e/Angelo_Skin-Default.png/revision/latest?cb=20240226185621"
+  },
+  "16000080": {
+    "name": "DRACO",
+    "official": "/assets/brawlers/official/16000080.webp",
+    "source": "File:Draco Skin-Default.png",
+    "generated": "/assets/brawlers/16000080.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/f/fe/Draco_Skin-Default.png/revision/latest?cb=20251116165253"
+  },
+  "16000081": {
+    "name": "LILY",
+    "official": "/assets/brawlers/official/16000081.webp",
+    "source": "File:Lily Skin-Default.png",
+    "generated": "/assets/brawlers/16000081.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/6a/Lily_Skin-Default.png/revision/latest?cb=20240420171855"
+  },
+  "16000082": {
+    "name": "BERRY",
+    "official": "/assets/brawlers/official/16000082.webp",
+    "source": "File:Berry Skin-Default.png",
+    "generated": "/assets/brawlers/16000082.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/f/f6/Berry_Skin-Default.png/revision/latest?cb=20250919190005"
+  },
+  "16000083": {
+    "name": "CLANCY",
+    "official": "/assets/brawlers/official/16000083.webp",
+    "source": "File:Clancy Skin-Default.png",
+    "generated": "/assets/brawlers/16000083.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/9/90/Clancy_Skin-Default.png/revision/latest?cb=20250618230811"
+  },
+  "16000084": {
+    "name": "MOE",
+    "official": "/assets/brawlers/official/16000084.webp",
+    "source": "File:Moe Skin-Default.png",
+    "generated": "/assets/brawlers/16000084.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/c/c9/Moe_Skin-Default.png/revision/latest?cb=20250919185859"
+  },
+  "16000085": {
+    "name": "KENJI",
+    "official": "/assets/brawlers/official/16000085.webp",
+    "source": "File:Kenji Skin-Default.png",
+    "generated": "/assets/brawlers/16000085.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/0/08/Kenji_Skin-Default.png/revision/latest?cb=20250913113858"
+  },
+  "16000086": {
+    "name": "SHADE",
+    "official": "/assets/brawlers/official/16000086.webp",
+    "source": "File:Shade Skin-Default.png",
+    "generated": "/assets/brawlers/16000086.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/64/Shade_Skin-Default.png/revision/latest?cb=20241029215101"
+  },
+  "16000087": {
+    "name": "JUJU",
+    "official": "/assets/brawlers/official/16000087.webp",
+    "source": "File:Juju Skin-Default.png",
+    "generated": "/assets/brawlers/16000087.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/e8/Juju_Skin-Default.png/revision/latest?cb=20241029215018"
+  },
+  "16000089": {
+    "name": "MEEPLE",
+    "official": "/assets/brawlers/official/16000089.webp",
+    "source": "File:Meeple Skin-Default.png",
+    "generated": "/assets/brawlers/16000089.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/2/27/Meeple_Skin-Default.png/revision/latest?cb=20241214062419"
+  },
+  "16000090": {
+    "name": "OLLIE",
+    "official": "/assets/brawlers/official/16000090.webp",
+    "source": "File:Ollie Skin-Default.png",
+    "generated": "/assets/brawlers/16000090.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/d/d3/Ollie_Skin-Default.png/revision/latest?cb=20251226013021"
+  },
+  "16000091": {
+    "name": "LUMI",
+    "official": "/assets/brawlers/official/16000091.webp",
+    "source": "File:Lumi Skin-Default.png",
+    "generated": "/assets/brawlers/16000091.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/53/Lumi_Skin-Default.png/revision/latest?cb=20250226113935"
+  },
+  "16000092": {
+    "name": "FINX",
+    "official": "/assets/brawlers/official/16000092.webp",
+    "source": "File:Finx Skin-Default.png",
+    "generated": "/assets/brawlers/16000092.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/31/Finx_Skin-Default.png/revision/latest?cb=20251008203912"
+  },
+  "16000093": {
+    "name": "JAE-YONG",
+    "official": "/assets/brawlers/official/16000093.webp",
+    "source": "File:Jae-yong Skin-Default.png",
+    "generated": "/assets/brawlers/16000093.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/3f/Jae-yong_Skin-Default.png/revision/latest?cb=20250424170043"
+  },
+  "16000094": {
+    "name": "KAZE",
+    "official": "/assets/brawlers/official/16000094.webp",
+    "source": "File:Kaze Skin-Default.png",
+    "generated": "/assets/brawlers/16000094.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/4d/Kaze_Skin-Default.png/revision/latest?cb=20250424194117"
+  },
+  "16000095": {
+    "name": "ALLI",
+    "official": "/assets/brawlers/official/16000095.webp",
+    "source": "File:Alli Skin-Default.png",
+    "generated": "/assets/brawlers/16000095.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/b/b9/Alli_Skin-Default.png/revision/latest?cb=20250625150836"
+  },
+  "16000096": {
+    "name": "TRUNK",
+    "official": "/assets/brawlers/official/16000096.webp",
+    "source": "File:Trunk Skin-Default.png",
+    "generated": "/assets/brawlers/16000096.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/5a/Trunk_Skin-Default.png/revision/latest?cb=20250625150733"
+  },
+  "16000097": {
+    "name": "MINA",
+    "official": "/assets/brawlers/official/16000097.webp",
+    "source": "File:Mina Skin-Default.png",
+    "generated": "/assets/brawlers/16000097.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/6d/Mina_Skin-Default.png/revision/latest?cb=20260519233909"
+  },
+  "16000098": {
+    "name": "ZIGGY",
+    "official": "/assets/brawlers/official/16000098.webp",
+    "source": "File:Ziggy Skin-Default.png",
+    "generated": "/assets/brawlers/16000098.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/4f/Ziggy_Skin-Default.png/revision/latest?cb=20251021214924"
+  },
+  "16000099": {
+    "name": "PIERCE",
+    "official": "/assets/brawlers/official/16000099.webp",
+    "source": "File:Pierce Skin-Default.png",
+    "generated": "/assets/brawlers/16000099.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/e4/Pierce_Skin-Default.png/revision/latest?cb=20251215050033"
+  },
+  "16000100": {
+    "name": "GIGI",
+    "official": "/assets/brawlers/official/16000100.webp",
+    "source": "File:Gigi Skin-Default.png",
+    "generated": "/assets/brawlers/16000100.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/5/52/Gigi_Skin-Default.png/revision/latest?cb=20251029114229",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/52/Gigi_Skin-Default.png/revision/latest?cb=20251029114229"
+  },
+  "16000101": {
+    "name": "GLOWY",
+    "official": "/assets/brawlers/official/16000101.webp",
+    "source": "File:Glowy Skin-Default.png",
+    "generated": "/assets/brawlers/16000101.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/c/cd/Glowy_Skin-Default.png/revision/latest?cb=20251215172355"
+  },
+  "16000102": {
+    "name": "SIRIUS",
+    "official": "/assets/brawlers/official/16000102.webp",
+    "source": "File:Sirius Skin-Default.png",
+    "generated": "/assets/brawlers/16000102.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/ee/Sirius_Skin-Default.png/revision/latest?cb=20260222060327"
+  },
+  "16000103": {
+    "name": "NAJIA",
+    "official": "/assets/brawlers/official/16000103.webp",
+    "source": "File:Najia Skin-Default.png",
+    "generated": "/assets/brawlers/16000103.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/9/91/Najia_Skin-Default.png/revision/latest?cb=20260222060355"
+  },
+  "16000104": {
+    "name": "DAMIAN",
+    "official": "/assets/brawlers/official/16000104.webp",
+    "source": "File:Damian Skin-Default.png",
+    "generated": "/assets/brawlers/16000104.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/1/13/Damian_Skin-Default.png/revision/latest?cb=20260425120111"
+  },
+  "16000105": {
+    "name": "STARR NOVA",
+    "official": "/assets/brawlers/official/16000105.webp",
+    "source": "File:Starr Nova Skin-Default.png",
+    "generated": "/assets/brawlers/16000105.png",
+    "initial": "generated",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/2/26/Starr_Nova_Skin-Default.png/revision/latest?cb=20260502153841"
+  },
+  "16000106": {
+    "name": "BOLT",
+    "official": "/assets/brawlers/official/16000106.webp",
+    "source": "File:Bolt Skin-Default.png",
+    "generated": "/assets/brawlers/16000106.png",
+    "initial": "generated",
+    "download_url": "https://static.wikia.nocookie.net/brawlstars/images/e/e6/Bolt_Skin-Default.png/revision/latest/scale-to-width-down/680?cb=20260423130134",
+    "source_url": "https://static.wikia.nocookie.net/brawlstars/images/e/e6/Bolt_Skin-Default.png/revision/latest?cb=20260423130134"
+  },
+  "16000107": {
+    "name": "NORI",
+    "official": "/assets/brawlers/16000107.png",
+    "source": "File:Nori Skin-Default.png",
+    "generated": "/assets/brawlers/generated/16000107.png",
+    "initial": "generated"
+  },
+  "16000108": {
+    "name": "WENDY",
+    "official": "/assets/brawlers/16000108.png",
+    "source": "File:Wendy Skin-Default.png",
+    "generated": "/assets/brawlers/generated/16000108.png",
+    "initial": "official"
+  }
+}

@@ -1,25 +1,32 @@
 {
   "released_brawlers": [
-    "SHELLY",
-    "COLT",
-    "SPIKE",
-    "MORTIS",
-    "FRANK",
-    "EMZ",
-    "BULL",
-    "CROW",
+    "8-BIT",
+    "AMBER",
     "BIBI",
-    "NITA",
     "BO",
-    "LEON",
-    "COLETTE",
-    "EDGAR",
-    "GRIFF",
-    "RICO",
     "BROCK",
-    "8 BIT",
+    "BULL",
+    "CHUCK",
+    "COLETTE",
+    "COLT",
+    "CROW",
+    "EDGAR",
+    "EL PRIMO",
+    "EMZ",
+    "FRANK",
+    "GRIFF",
+    "GUS",
+    "LEON",
     "MAX",
-    "MEG"
+    "MEG",
+    "MORTIS",
+    "NITA",
+    "POCO",
+    "RICO",
+    "SHADE",
+    "SHELLY",
+    "SPIKE",
+    "SURGE"
   ],
   "trios": [
     {
@@ -27,21 +34,21 @@
       "brawlers": [
         {
           "name": "Shelly",
-          "gadget_img_file": "File:Shelly_Buffie-Gadget.png",
-          "star_img_file": "File:Shelly_Buffie-Star.png",
-          "hyper_img_file": "File:Shelly_Buffie-Hyper.png"
+          "gadget_img_file": "File:Shelly Buffie-Gadget.png",
+          "star_img_file": "File:Shelly Buffie-Star.png",
+          "hyper_img_file": "File:Shelly Buffie-Hyper.png"
         },
         {
           "name": "Colt",
-          "gadget_img_file": "File:Colt_Buffie-Gadget.png",
-          "star_img_file": "File:Colt_Buffie-Star.png",
-          "hyper_img_file": "File:Colt_Buffie-Hyper.png"
+          "gadget_img_file": "File:Colt Buffie-Gadget.png",
+          "star_img_file": "File:Colt Buffie-Star.png",
+          "hyper_img_file": "File:Colt Buffie-Hyper.png"
         },
         {
           "name": "Spike",
-          "gadget_img_file": "File:Spike_Buffie-Gadget.png",
-          "star_img_file": "File:Spike_Buffie-Star.png",
-          "hyper_img_file": "File:Spike_Buffie-Hyper.png"
+          "gadget_img_file": "File:Spike Buffie-Gadget.png",
+          "star_img_file": "File:Spike Buffie-Star.png",
+          "hyper_img_file": "File:Spike Buffie-Hyper.png"
         }
       ]
     },
@@ -50,21 +57,21 @@
       "brawlers": [
         {
           "name": "Mortis",
-          "gadget_img_file": "File:Mortis_Buffie-Gadget.png",
-          "star_img_file": "File:Mortis_Buffie-Star.png",
-          "hyper_img_file": "File:Mortis_Buffie-Hyper.png"
+          "gadget_img_file": "File:Mortis Buffie-Gadget.png",
+          "star_img_file": "File:Mortis Buffie-Star.png",
+          "hyper_img_file": "File:Mortis Buffie-Hyper.png"
         },
         {
           "name": "Frank",
-          "gadget_img_file": "File:Frank_Buffie-Gadget.png",
-          "star_img_file": "File:Frank_Buffie-Star.png",
-          "hyper_img_file": "File:Frank_Buffie-Hyper.png"
+          "gadget_img_file": "File:Frank Buffie-Gadget.png",
+          "star_img_file": "File:Frank Buffie-Star.png",
+          "hyper_img_file": "File:Frank Buffie-Hyper.png"
         },
         {
           "name": "Emz",
-          "gadget_img_file": "File:Emz_Buffie-Gadget.png",
-          "star_img_file": "File:Emz_Buffie-Star.png",
-          "hyper_img_file": "File:Emz_Buffie-Hyper.png"
+          "gadget_img_file": "File:Emz Buffie-Gadget.png",
+          "star_img_file": "File:Emz Buffie-Star.png",
+          "hyper_img_file": "File:Emz Buffie-Hyper.png"
         }
       ]
     },
@@ -73,21 +80,21 @@
       "brawlers": [
         {
           "name": "Bull",
-          "gadget_img_file": "File:Bull_Buffie-Gadget.png",
-          "star_img_file": "File:Bull_Buffie-Star.png",
-          "hyper_img_file": "File:Bull_Buffie-Hyper.png"
+          "gadget_img_file": "File:Bull Buffie-Gadget.png",
+          "star_img_file": "File:Bull Buffie-Star.png",
+          "hyper_img_file": "File:Bull Buffie-Hyper.png"
         },
         {
           "name": "Crow",
-          "gadget_img_file": "File:Crow_Buffie-Gadget.png",
-          "star_img_file": "File:Crow_Buffie-Star.png",
-          "hyper_img_file": "File:Crow_Buffie-Hyper.png"
+          "gadget_img_file": "File:Crow Buffie-Gadget.png",
+          "star_img_file": "File:Crow Buffie-Star.png",
+          "hyper_img_file": "File:Crow Buffie-Hyper.png"
         },
         {
           "name": "Bibi",
-          "gadget_img_file": "File:Bibi_Buffie-Gadget.png",
-          "star_img_file": "File:Bibi_Buffie-Star.png",
-          "hyper_img_file": "File:Bibi_Buffie-Hyper.png"
+          "gadget_img_file": "File:Bibi Buffie-Gadget.png",
+          "star_img_file": "File:Bibi Buffie-Star.png",
+          "hyper_img_file": "File:Bibi Buffie-Hyper.png"
         }
       ]
     },
@@ -96,75 +103,121 @@
       "brawlers": [
         {
           "name": "Nita",
-          "gadget_img_file": "File:Nita_Buffie-Gadget.png",
-          "star_img_file": "File:Nita_Buffie-Star.png",
-          "hyper_img_file": "File:Nita_Buffie-Hyper.png"
+          "gadget_img_file": "File:Nita Buffie-Gadget.png",
+          "star_img_file": "File:Nita Buffie-Star.png",
+          "hyper_img_file": "File:Nita Buffie-Hyper.png"
         },
         {
           "name": "Bo",
-          "gadget_img_file": "File:Bo_Buffie-Gadget.png",
-          "star_img_file": "File:Bo_Buffie-Star.png",
-          "hyper_img_file": "File:Bo_Buffie-Hyper.png"
+          "gadget_img_file": "File:Bo Buffie-Gadget.png",
+          "star_img_file": "File:Bo Buffie-Star.png",
+          "hyper_img_file": "File:Bo Buffie-Hyper.png"
         },
         {
           "name": "Leon",
-          "gadget_img_file": "File:Leon_Buffie-Gadget.png",
-          "star_img_file": "File:Leon_Buffie-Star.png",
-          "hyper_img_file": "File:Leon_Buffie-Hyper.png"
+          "gadget_img_file": "File:Leon Buffie-Gadget.png",
+          "star_img_file": "File:Leon Buffie-Star.png",
+          "hyper_img_file": "File:Leon Buffie-Hyper.png"
         },
         {
           "name": "Colette",
-          "gadget_img_file": "File:Colette_Buffie-Gadget.png",
-          "star_img_file": "File:Colette_Buffie-Star.png",
-          "hyper_img_file": "File:Colette_Buffie-Hyper.png"
+          "gadget_img_file": "File:Colette Buffie-Gadget.png",
+          "star_img_file": "File:Colette Buffie-Star.png",
+          "hyper_img_file": "File:Colette Buffie-Hyper.png"
         },
         {
           "name": "Edgar",
-          "gadget_img_file": "File:Edgar_Buffie-Gadget.png",
-          "star_img_file": "File:Edgar_Buffie-Star.png",
-          "hyper_img_file": "File:Edgar_Buffie-Hyper.png"
+          "gadget_img_file": "File:Edgar Buffie-Gadget.png",
+          "star_img_file": "File:Edgar Buffie-Star.png",
+          "hyper_img_file": "File:Edgar Buffie-Hyper.png"
         },
         {
           "name": "Griff",
-          "gadget_img_file": "File:Griff_Buffie-Gadget.png",
-          "star_img_file": "File:Griff_Buffie-Star.png",
-          "hyper_img_file": "File:Griff_Buffie-Hyper.png"
+          "gadget_img_file": "File:Griff Buffie-Gadget.png",
+          "star_img_file": "File:Griff Buffie-Star.png",
+          "hyper_img_file": "File:Griff Buffie-Hyper.png"
         },
         {
           "name": "Rico",
-          "gadget_img_file": "File:Rico_Buffie-Gadget.png",
-          "star_img_file": "File:Rico_Buffie-Star.png",
-          "hyper_img_file": "File:Rico_Buffie-Hyper.png"
+          "gadget_img_file": "File:Rico Buffie-Gadget.png",
+          "star_img_file": "File:Rico Buffie-Star.png",
+          "hyper_img_file": "File:Rico Buffie-Hyper.png"
         },
         {
           "name": "Brock",
-          "gadget_img_file": "File:Brock_Buffie-Gadget.png",
-          "star_img_file": "File:Brock_Buffie-Star.png",
-          "hyper_img_file": "File:Brock_Buffie-Hyper.png"
+          "gadget_img_file": "File:Brock Buffie-Gadget.png",
+          "star_img_file": "File:Brock Buffie-Star.png",
+          "hyper_img_file": "File:Brock Buffie-Hyper.png"
         },
         {
           "name": "8 Bit",
-          "gadget_img_file": "File:8-Bit_Buffie-Gadget.png",
-          "star_img_file": "File:8-Bit_Buffie-Star.png",
-          "hyper_img_file": "File:8-Bit_Buffie-Hyper.png"
+          "gadget_img_file": "File:8-Bit Buffie-Gadget.png",
+          "star_img_file": "File:8-Bit Buffie-Star.png",
+          "hyper_img_file": "File:8-Bit Buffie-Hyper.png"
         },
         {
           "name": "Max",
-          "gadget_img_file": "File:Max_Buffie-Gadget.png",
-          "star_img_file": "File:Max_Buffie-Star.png",
-          "hyper_img_file": "File:Max_Buffie-Hyper.png"
+          "gadget_img_file": "File:Max Buffie-Gadget.png",
+          "star_img_file": "File:Max Buffie-Star.png",
+          "hyper_img_file": "File:Max Buffie-Hyper.png"
         },
         {
           "name": "Surge",
-          "gadget_img_file": "File:Surge_Buffie-Gadget.png",
-          "star_img_file": "File:Surge_Buffie-Star.png",
-          "hyper_img_file": "File:Surge_Buffie-Hyper.png"
+          "gadget_img_file": "File:Surge Buffie-Gadget.png",
+          "star_img_file": "File:Surge Buffie-Star.png",
+          "hyper_img_file": "File:Surge Buffie-Hyper.png"
         },
         {
           "name": "Meg",
-          "gadget_img_file": "File:Meg_Buffie-Gadget.png",
-          "star_img_file": "File:Meg_Buffie-Star.png",
-          "hyper_img_file": "File:Meg_Buffie-Hyper.png"
+          "gadget_img_file": "File:Meg Buffie-Gadget.png",
+          "star_img_file": "File:Meg Buffie-Star.png",
+          "hyper_img_file": "File:Meg Buffie-Hyper.png"
+        }
+      ]
+    },
+    {
+      "trio": "Mexican Entertainers",
+      "brawlers": [
+        {
+          "name": "El Primo",
+          "gadget_img_file": "File:El Primo Buffie-Gadget.png",
+          "star_img_file": "File:El Primo Buffie-Star.png",
+          "hyper_img_file": "File:El Primo Buffie-Hyper.png"
+        },
+        {
+          "name": "Poco",
+          "gadget_img_file": "File:Poco Buffie-Gadget.png",
+          "star_img_file": "File:Poco Buffie-Star.png",
+          "hyper_img_file": "File:Poco Buffie-Hyper.png"
+        },
+        {
+          "name": "Amber",
+          "gadget_img_file": "File:Amber Buffie-Gadget.png",
+          "star_img_file": "File:Amber Buffie-Star.png",
+          "hyper_img_file": "File:Amber Buffie-Hyper.png"
+        }
+      ]
+    },
+    {
+      "trio": "Ghost Station",
+      "brawlers": [
+        {
+          "name": "Gus",
+          "gadget_img_file": "File:Gus Buffie-Gadget.png",
+          "star_img_file": "File:Gus Buffie-Star.png",
+          "hyper_img_file": "File:Gus Buffie-Hyper.png"
+        },
+        {
+          "name": "Chuck",
+          "gadget_img_file": "File:Chuck Buffie-Gadget.png",
+          "star_img_file": "File:Chuck Buffie-Star.png",
+          "hyper_img_file": "File:Chuck Buffie-Hyper.png"
+        },
+        {
+          "name": "Shade",
+          "gadget_img_file": "File:Shade Buffie-Gadget.png",
+          "star_img_file": "File:Shade Buffie-Star.png",
+          "hyper_img_file": "File:Shade Buffie-Hyper.png"
         }
       ]
     }
@@ -232,6 +285,24 @@
     "File:Rico Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/b/bd/Rico_Buffie-Star.png/revision/latest?cb=20260630174621",
     "File:Surge Buffie-Gadget.png": "https://static.wikia.nocookie.net/brawlstars/images/7/70/Surge_Buffie-Gadget.png/revision/latest?cb=20260630172755",
     "File:Surge Buffie-Hyper.png": "https://static.wikia.nocookie.net/brawlstars/images/e/e3/Surge_Buffie-Hyper.png/revision/latest?cb=20260630173049",
-    "File:Surge Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/e/e8/Surge_Buffie-Star.png/revision/latest?cb=20260630172906"
+    "File:Surge Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/e/e8/Surge_Buffie-Star.png/revision/latest?cb=20260630172906",
+    "File:El Primo Buffie-Gadget.png": "https://static.wikia.nocookie.net/brawlstars/images/c/cb/El_Primo_Buffie-Gadget.png/revision/latest?cb=20260901140226",
+    "File:El Primo Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/0/07/El_Primo_Buffie-Star.png/revision/latest?cb=20260901140303",
+    "File:El Primo Buffie-Hyper.png": "https://static.wikia.nocookie.net/brawlstars/images/a/ad/El_Primo_Buffie-Hyper.png/revision/latest?cb=20260901140327",
+    "File:Poco Buffie-Gadget.png": "https://static.wikia.nocookie.net/brawlstars/images/6/63/Poco_Buffie-Gadget.png/revision/latest?cb=20260901140021",
+    "File:Poco Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/c/cb/Poco_Buffie-Star.png/revision/latest?cb=20260901140049",
+    "File:Poco Buffie-Hyper.png": "https://static.wikia.nocookie.net/brawlstars/images/6/64/Poco_Buffie-Hyper.png/revision/latest?cb=20260901140113",
+    "File:Amber Buffie-Gadget.png": "https://static.wikia.nocookie.net/brawlstars/images/0/0b/Amber_Buffie-Gadget.png/revision/latest?cb=20260901140517",
+    "File:Amber Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/7/72/Amber_Buffie-Star.png/revision/latest?cb=20260901140545",
+    "File:Amber Buffie-Hyper.png": "https://static.wikia.nocookie.net/brawlstars/images/7/73/Amber_Buffie-Hyper.png/revision/latest?cb=20260901140620",
+    "File:Gus Buffie-Gadget.png": "https://static.wikia.nocookie.net/brawlstars/images/3/38/Gus_Buffie-Gadget.png/revision/latest?cb=20260901133339",
+    "File:Gus Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/3/34/Gus_Buffie-Star.png/revision/latest?cb=20260901133405",
+    "File:Gus Buffie-Hyper.png": "https://static.wikia.nocookie.net/brawlstars/images/8/80/Gus_Buffie-Hyper.png/revision/latest?cb=20260901133951",
+    "File:Chuck Buffie-Gadget.png": "https://static.wikia.nocookie.net/brawlstars/images/4/45/Chuck_Buffie-Gadget.png/revision/latest?cb=20260901132256",
+    "File:Chuck Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/4/4e/Chuck_Buffie-Star.png/revision/latest?cb=20260901132325",
+    "File:Chuck Buffie-Hyper.png": "https://static.wikia.nocookie.net/brawlstars/images/4/4d/Chuck_Buffie-Hyper.png/revision/latest?cb=20260901132722",
+    "File:Shade Buffie-Gadget.png": "https://static.wikia.nocookie.net/brawlstars/images/2/2f/Shade_Buffie-Gadget.png/revision/latest?cb=20260901134245",
+    "File:Shade Buffie-Star.png": "https://static.wikia.nocookie.net/brawlstars/images/c/cf/Shade_Buffie-Star.png/revision/latest?cb=20260901134305",
+    "File:Shade Buffie-Hyper.png": "https://static.wikia.nocookie.net/brawlstars/images/1/14/Shade_Buffie-Hyper.png/revision/latest?cb=20260901134326"
   }
 }

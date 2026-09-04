@@ -19,6 +19,7 @@ const state = {
   equipment: 'all',
   view: 'grid',
   dataSources: {},
+  visualAssets: {},
 };
 
 const ACCOUNT_CACHE_KEY = 'brawlbuddy_account_v4';
@@ -29,6 +30,37 @@ const format = (value) => new Intl.NumberFormat().format(value ?? 0);
 
 function normalizeKey(str) {
   return String(str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function getUiIconRecord(group, value) {
+  const normalized = normalizeKey(value);
+  const records = state.visualAssets?.ui_icons?.[group] || {};
+  return Object.values(records).find((record) => {
+    const aliases = [record.label, ...(record.aliases || [])];
+    return aliases.some((alias) => normalizeKey(alias) === normalized);
+  }) || null;
+}
+
+function uiIconMarkup(group, value, className, fallback = '★') {
+  const record = getUiIconRecord(group, value);
+  if (!record?.local_url) return `<span class="${className} ui-icon-fallback">${fallback}</span>`;
+  return `<img class="${className}" src="${record.local_url}" alt="" aria-hidden="true" onerror="this.onerror=null;this.replaceWith(document.createTextNode('${fallback}'))">`;
+}
+
+function modeLabel(value) {
+  const record = getUiIconRecord('modes', value);
+  if (record?.label) return record.label;
+  return String(value || 'Brawl').replace(/([a-z])([A-Z])/g, '$1 $2');
+}
+
+function renderContentUpdated(value) {
+  const target = $('content-last-updated');
+  if (!target || !value) return;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return;
+  target.textContent = `Content updated ${new Intl.DateTimeFormat(undefined, {
+    year: 'numeric', month: 'short', day: 'numeric'
+  }).format(parsed)}`;
 }
 
 function hasHypercharge(brawler, guide = null) {
@@ -94,11 +126,11 @@ function equipmentUseState(brawler, type, isOwned) {
   return { key: 'active', label: 'ACTIVE', className: 'owned-status', unlockLevel };
 }
 
-function buffieUseState(brawler, type) {
+function buffieUseState(brawler, type, abilityOwned = baseEquipmentOwned(brawler, type)) {
   const unlockLevel = EQUIPMENT_UNLOCK_LEVEL[type] || 1;
   if (!brawler?.owned) return { key: 'not-account', label: 'NOT IN ACCOUNT', className: 'missing-status', unlockLevel };
   if (!hasBuffie(brawler, type)) return { key: 'not-owned', label: 'NOT OWNED', className: 'missing-status', unlockLevel };
-  if (!baseEquipmentOwned(brawler, type)) {
+  if (!abilityOwned) {
     return { key: 'stored', label: 'STORED', className: 'hypercharge-stored-status', unlockLevel };
   }
   if ((brawler.power || 0) < unlockLevel) {
@@ -219,6 +251,7 @@ function hideNotice() {
 async function loadStatus() {
   try {
     const status = await request('/api/status');
+    renderContentUpdated(status.content_last_updated);
     const badge = $('api-status');
     if (badge) {
       badge.classList.add(status.live_api_configured ? 'live' : 'offline');
@@ -236,16 +269,18 @@ async function loadStatus() {
 
 async function loadCatalog() {
   try {
-    const [catPayload, equipPayload, buffiesPayload, sourcesPayload] = await Promise.all([
+    const [catPayload, equipPayload, buffiesPayload, sourcesPayload, visualAssetsPayload] = await Promise.all([
       request('/api/brawlers/catalog'),
       request('/api/equipment').catch(() => ({})),
       request('/api/buffies').catch(() => ({})),
-      request('/api/data-sources').catch(() => ({}))
+      request('/api/data-sources').catch(() => ({})),
+      request('/api/visual-assets').catch(() => ({}))
     ]);
     state.catalog = catPayload.list || [];
     state.equipmentDb = equipPayload || {};
     state.buffiesDb = buffiesPayload || {};
     state.dataSources = sourcesPayload || {};
+    state.visualAssets = visualAssetsPayload || {};
     state.brawlers = mergeCatalog(state.ownedBrawlers);
     if (state.page === 'brawlers') {
       renderBrawlers();
@@ -583,7 +618,7 @@ function renderFlagshipLoadouts(loadouts) {
     card.innerHTML = `
       <div class="flagship-head">
         <div class="flagship-visual">
-          <img src="/assets/brawlers/thumbs/${brawler.id}.webp" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png'" alt="${brawler.name}">
+          <img src="${brawlerImage(brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png'" alt="${brawler.name}">
           <span class="power-badge power-${brawler.power}">L${brawler.power}</span>
         </div>
         <div class="flagship-title">
@@ -849,8 +884,8 @@ function renderBattles() {
     const isDefeat = battle.result === 'defeat';
     card.className = `battle-log-card ${isVictory ? 'victory' : isDefeat ? 'defeat' : 'draw'}`;
 
-    const modeLabels = { brawlBall: '⚽ Brawl Ball', knockout: '☠ Knockout', gemGrab: '💎 Gem Grab', soloShowdown: '👑 Solo Showdown', wipeout: '⚔ Wipeout', hotZone: '🎯 Hot Zone' };
-    const modeLabel = modeLabels[battle.mode] || battle.mode;
+    const displayMode = modeLabel(battle.mode);
+    const displayModeMarkup = `${uiIconMarkup('modes', battle.mode, 'mode-icon-img')}<span>${displayMode}</span>`;
 
     const trophyDeltaHtml = battle.trophy_change != null
       ? `<span class="trophy-delta ${battle.trophy_change >= 0 ? 'pos' : 'neg'}">${battle.trophy_change >= 0 ? `+${battle.trophy_change}` : battle.trophy_change} ★</span>`
@@ -864,7 +899,7 @@ function renderBattles() {
             <span class="team-header">BLUE TEAM (Avg L${battle.team_a_avg_power})</span>
             ${battle.teams[0].map((p) => `
               <div class="player-roster-row ${p.is_star_player ? 'is-mvp' : ''}">
-                <img src="/assets/brawlers/thumbs/${p.brawler.id}.webp" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+                <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
                 <div class="roster-player-meta">
                   <strong>${p.name} ${p.is_star_player ? '⭐' : ''}</strong>
                   <small>${p.brawler.name} · L${p.brawler.power}</small>
@@ -877,7 +912,7 @@ function renderBattles() {
             <span class="team-header">RED TEAM (Avg L${battle.team_b_avg_power})</span>
             ${battle.teams[1].map((p) => `
               <div class="player-roster-row ${p.is_star_player ? 'is-mvp' : ''}">
-                <img src="/assets/brawlers/thumbs/${p.brawler.id}.webp" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+                <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
                 <div class="roster-player-meta">
                   <strong>${p.name} ${p.is_star_player ? '⭐' : ''}</strong>
                   <small>${p.brawler.name} · L${p.brawler.power}</small>
@@ -893,7 +928,7 @@ function renderBattles() {
           ${battle.players.slice(0, 5).map((p, pIdx) => `
             <div class="showdown-player-chip">
               <span>#${pIdx + 1}</span>
-              <img src="/assets/brawlers/thumbs/${p.brawler.id}.webp" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+              <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
               <strong>${p.name}</strong>
             </div>
           `).join('')}
@@ -904,7 +939,7 @@ function renderBattles() {
     card.innerHTML = `
       <div class="battle-card-top">
         <div class="battle-card-mode">
-          <span class="mode-badge">${modeLabel}</span>
+          <span class="mode-badge">${displayModeMarkup}</span>
           <strong>${battle.event?.map || 'Battle Arena'}</strong>
           <small>${battle.duration ? `${Math.floor(battle.duration / 60)}m ${battle.duration % 60}s` : 'Ranked Match'}</small>
         </div>
@@ -935,10 +970,10 @@ function openTacticalRecreator(battle) {
   const dialog = $('recreator-dialog');
   if (!dialog) return;
 
-  const modeIcons = { brawlBall: '⚽', gemGrab: '💎', knockout: '☠', soloShowdown: '👑', wipeout: '⚔', hotZone: '🎯' };
   setText('rec-match-mode', (battle.mode || '3v3').toUpperCase());
   setText('rec-match-map', battle.event?.map || 'Arena Map');
-  setText('arena-objective-icon', modeIcons[battle.mode] || '★');
+  const objectiveIcon = $('arena-objective-icon');
+  if (objectiveIcon) objectiveIcon.innerHTML = uiIconMarkup('modes', battle.mode, 'arena-mode-icon');
   setText('arena-objective-label', (battle.event?.map || 'CENTER ARENA').toUpperCase());
 
   // Render Blue spawns
@@ -950,7 +985,7 @@ function openTacticalRecreator(battle) {
       const node = document.createElement('div');
       node.className = `spawn-node blue-node ${p.is_star_player ? 'is-mvp' : ''}`;
       node.innerHTML = `
-        <img src="/assets/brawlers/thumbs/${p.brawler.id}.webp" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+        <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
         <strong>${p.name}</strong>
         <small>L${p.brawler.power}</small>
       `;
@@ -967,7 +1002,7 @@ function openTacticalRecreator(battle) {
       const node = document.createElement('div');
       node.className = `spawn-node red-node ${p.is_star_player ? 'is-mvp' : ''}`;
       node.innerHTML = `
-        <img src="/assets/brawlers/thumbs/${p.brawler.id}.webp" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+        <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
         <strong>${p.name}</strong>
         <small>L${p.brawler.power}</small>
       `;
@@ -1043,14 +1078,14 @@ function renderEvents() {
   state.events.forEach((slot) => {
     const card = document.createElement('article');
     card.className = 'event-card panel';
-    const modeIcons = { brawlBall: '⚽', knockout: '☠', gemGrab: '💎', soloShowdown: '👑', wipeout: '⚔', hotZone: '🎯' };
-    const icon = modeIcons[slot.event.mode] || '★';
+    const icon = uiIconMarkup('modes', slot.event.mode, 'mode-icon-img');
+    const displayMode = modeLabel(slot.event.mode);
 
     card.innerHTML = `
       <div class="event-card-banner">
         <img src="${slot.event.image_url || 'https://cdn.brawlify.com/maps/regular/15000001.png'}" onerror="this.src='/assets/player-mascot.png'" alt="${slot.event.map}">
         <div class="event-banner-overlay">
-          <span class="event-mode-tag">${icon} ${(slot.event.mode || 'BRAWL').toUpperCase()}</span>
+          <span class="event-mode-tag">${icon}<span>${displayMode.toUpperCase()}</span></span>
           <h3>${slot.event.map}</h3>
         </div>
       </div>
@@ -1430,7 +1465,9 @@ function renderOverviewMetrics() {
 
 function brawlerImage(brawler, thumbnail = false) {
   return thumbnail
-    ? `/assets/brawlers/thumbs/${brawler.id}.webp`
+    ? (brawler.id === 16000108
+      ? '/assets/brawlers/thumbs/16000108.png?v=2'
+      : `/assets/brawlers/thumbs/${brawler.id}.webp`)
     : `/assets/brawlers/${brawler.id}.png`;
 }
 
@@ -1447,7 +1484,7 @@ function addImageWithFallback(holder, brawler, className) {
   const image = document.createElement('img');
   image.className = className;
   const primarySrc = (brawler.id === 16000108)
-    ? '/assets/brawlers/thumbs/16000108.webp'
+    ? brawlerImage(brawler, true)
     : `https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png`;
   image.src = primarySrc;
   image.alt = `${brawler.name} official portrait`;
@@ -1457,7 +1494,7 @@ function addImageWithFallback(holder, brawler, className) {
   image.onerror = () => {
     step += 1;
     if (step === 1) {
-      image.src = `/assets/brawlers/thumbs/${brawler.id}.webp`;
+      image.src = brawlerImage(brawler, true);
     } else if (step === 2) {
       image.src = `/assets/brawlers/${brawler.id}.png`;
     } else if (step === 3) {
@@ -1774,7 +1811,7 @@ function prioritySteps(brawler, guide = {}) {
   return steps.slice(0, 4);
 }
 
-function renderGuideProfile(guide) {
+function renderGuideProfile(guide, brawler) {
   const panel = $('guide-profile-panel');
   if (!panel) return;
   const hasProfile = Array.isArray(guide.max_stats) && guide.max_stats.length > 0;
@@ -1784,6 +1821,12 @@ function renderGuideProfile(guide) {
   // Stats will be rendered by renderPowerLadder after it determines the default level.
   // But if guide-only (no brawler context), render at max (level 11) right away.
   renderCombatStats(guide.max_stats, 11);
+
+  const summaryIcon = document.querySelector('.hc-summary-emblem .hyper-icon-img');
+  if (summaryIcon) {
+    summaryIcon.alt = `${brawler?.name || 'Brawler'} Hypercharge`;
+    setAssetImageSources(summaryIcon, getHyperchargeImageSources(brawler), 'HC');
+  }
 
   if (!guide.hypercharge || guide.hypercharge.released === false || guide.hypercharge.name?.toLowerCase() === 'unreleased') {
     setText('hypercharge-name', 'Not Yet Released');
@@ -1797,24 +1840,56 @@ function renderGuideProfile(guide) {
   if (buildHolder) {
     buildHolder.replaceChildren();
     const build = guide.recommended_build || {};
-    
+    const gadget = (guide.gadgets || []).find((item) => normalizeKey(item.name) === normalizeKey(build.gadget)) || { name: build.gadget };
+    const starPower = (guide.star_powers || []).find((item) => normalizeKey(item.name) === normalizeKey(build.star_power)) || { name: build.star_power };
+
     const items = [
-      { label: 'Gadget', value: build.gadget, badgeClass: 'build-gadget' },
-      { label: 'Star Power', value: build.star_power, badgeClass: 'build-star-power' },
-      { label: 'Gears', value: build.gears?.join(' + '), badgeClass: 'build-gear' }
+      { label: 'Gadget', value: build.gadget, badgeClass: 'build-gadget', icons: [{ item: gadget, type: 'gadget' }] },
+      { label: 'Star Power', value: build.star_power, badgeClass: 'build-star-power', icons: [{ item: starPower, type: 'star_power' }] },
+      { label: 'Gears', value: build.gears?.join(' + '), badgeClass: 'build-gear', icons: (build.gears || []).map((name) => ({ item: { name }, type: 'gear' })) }
     ];
 
-    items.forEach(({ label, value, badgeClass }) => {
+    items.forEach(({ label, value, badgeClass, icons }) => {
       if (!value) return;
       const row = document.createElement('div');
       row.className = `build-spec-row ${badgeClass}`;
-      row.innerHTML = `
-        <div class="build-spec-label">
-          <span class="build-spec-dot"></span>
-          <span>${label}</span>
-        </div>
-        <strong class="build-spec-value">${value}</strong>
-      `;
+
+      const labelWrap = document.createElement('div');
+      labelWrap.className = 'build-spec-label';
+      const iconsWrap = document.createElement('span');
+      iconsWrap.className = 'build-spec-icons';
+      icons.forEach(({ item, type }) => {
+        const iconWrap = document.createElement('span');
+        iconWrap.className = 'build-spec-icon';
+        const fallback = document.createElement('span');
+        fallback.className = 'build-spec-icon-fallback';
+        fallback.textContent = type === 'gadget' ? 'G' : type === 'star_power' ? '★' : '◆';
+        const iconUrl = getEquipmentImageUrl(item, type, brawler);
+        if (iconUrl) {
+          const image = document.createElement('img');
+          image.alt = `${item.name} icon`;
+          image.loading = 'lazy';
+          const categoryFallback = type === 'gadget'
+            ? '/assets/section_gadget.png'
+            : type === 'star_power'
+              ? '/assets/section_star_power.png'
+              : '/assets/section_gear.png';
+          setAssetImageSources(image, [iconUrl, categoryFallback], fallback.textContent);
+          iconWrap.append(image);
+        } else {
+          iconWrap.append(fallback);
+        }
+        iconsWrap.append(iconWrap);
+      });
+      const labelText = document.createElement('span');
+      labelText.className = 'build-spec-label-text';
+      labelText.textContent = label;
+      labelWrap.append(iconsWrap, labelText);
+
+      const valueText = document.createElement('strong');
+      valueText.className = 'build-spec-value';
+      valueText.textContent = value;
+      row.append(labelWrap, valueText);
       buildHolder.append(row);
     });
 
@@ -1857,34 +1932,32 @@ function renderGuideProfile(guide) {
   const modes = $('mode-list');
   if (modes) {
     modes.replaceChildren();
-    const modeIcons = {
-      'heist': '🎯',
-      'gem grab': '💎',
-      'brawl ball': '⚽',
-      'showdown': '💀',
-      'solo showdown': '💀',
-      'duo showdown': '👥',
-      'bounty': '🌟',
-      'knockout': '🥊',
-      'hot zone': '🚩',
-      'wipeout': '💥',
-      'duels': '⚔️',
-      'siege': '⚙️',
-      'takedown': '🤖',
-      'lone star': '⭐',
-      'basket brawl': '🏀',
-      'volley brawl': '🏐',
-      'payload': '🚛'
-    };
     (guide.mode_fit || []).forEach((mode) => {
       const chip = document.createElement('span');
       chip.className = 'mode-chip';
-      const mNorm = mode.toLowerCase();
-      const icon = Object.entries(modeIcons).find(([k]) => mNorm.includes(k))?.[1] || '🏆';
-      chip.innerHTML = `<span class="mode-icon">${icon}</span> <span>${mode}</span>`;
+      chip.innerHTML = `${uiIconMarkup('modes', mode, 'mode-icon-img')}<span>${mode}</span>`;
       modes.append(chip);
     });
   }
+}
+
+function renderDetailArtwork(brawler) {
+  const stage = $('hero-art-stage');
+  if (!stage) return;
+  stage.replaceChildren();
+  const image = new Image();
+  image.alt = `${brawler.name} generated artwork`;
+  image.decoding = 'async';
+  image.src = brawler.id === 16000038 && !brawler.owned
+    ? '/assets/surge-guide-art.png'
+    : [16000107, 16000108].includes(brawler.id)
+      ? `/assets/brawlers/generated/${brawler.id}.png`
+      : `/assets/brawlers/${brawler.id}.png`;
+  image.onerror = () => {
+    image.remove();
+    stage.textContent = brawler.name;
+  };
+  stage.append(image);
 }
 
 async function renderDetail() {
@@ -1921,22 +1994,11 @@ async function renderDetail() {
     rarityEl.textContent = (guide.rarity || brawler.rarity || 'BRAWLER').toUpperCase();
   }
 
-  const roleIcons = {
-    'tank': '🛡',
-    'damage dealer': '⚔',
-    'damage_dealer': '⚔',
-    'assassin': '🗡',
-    'marksman': '🎯',
-    'support': '💖',
-    'controller': '🌀',
-    'artillery': '💣',
-  };
   const bClass = guide.class || brawler.class || (brawler.owned ? 'Damage Dealer' : 'Brawler');
-  const roleIcon = roleIcons[bClass.toLowerCase().trim()] || '★';
   const classEl = $('detail-class');
   if (classEl) {
     classEl.className = `class-badge ${bClass.toLowerCase().replace(/\s+/g, '_')}`;
-    classEl.innerHTML = `<i>${roleIcon}</i> ${bClass.toUpperCase()}`;
+    classEl.innerHTML = `${uiIconMarkup('classes', bClass, 'class-icon')}<span>${bClass.toUpperCase()}</span>`;
   }
 
   const statusEl = $('detail-account-status');
@@ -1960,25 +2022,15 @@ async function renderDetail() {
   const portraitEl = $('detail-portrait-icon');
   if (portraitEl) {
     portraitEl.src = (brawler.id === 16000108)
-      ? '/assets/brawlers/thumbs/16000108.webp'
+      ? brawlerImage(brawler, true)
       : `https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png`;
     portraitEl.alt = `${brawler.name} official portrait`;
     portraitEl.onerror = () => {
-      portraitEl.src = `/assets/brawlers/thumbs/${brawler.id}.webp`;
+      portraitEl.src = brawlerImage(brawler, true);
     };
   }
 
-  const imgEl = $('detail-image');
-  if (imgEl) {
-    imgEl.src = (brawler.id === 16000038 && !brawler.owned) ? '/assets/surge-guide-art.png' : `/assets/brawlers/${brawler.id}.png`;
-    imgEl.alt = `${brawler.name} official artwork`;
-    imgEl.onerror = () => {
-      imgEl.onerror = () => {
-        imgEl.src = `/assets/brawlers/thumbs/${brawler.id}.webp`;
-      };
-      imgEl.src = `https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png`;
-    };
-  }
+  renderDetailArtwork(brawler);
 
   const howTo = $('how-to-list');
   if (howTo) {
@@ -1997,7 +2049,7 @@ async function renderDetail() {
 
   updateDetailReadiness(brawler, guide);
 
-  renderGuideProfile(guide);
+  renderGuideProfile(guide, brawler);
   renderPowerLadder(brawler.owned ? brawler.power : 0, guide);
   renderEquipment('gadget-list', guide.gadgets || [], brawler.gadgets, brawler.owned ? 'No Gadget data recorded.' : 'Unlock this brawler to track Gadgets.', 'gadget', brawler, guide);
   renderEquipment('star-power-list', guide.star_powers || [], brawler.star_powers, brawler.owned ? 'No Star Power data recorded.' : 'Unlock this brawler to track Star Powers.', 'star_power', brawler, guide);
@@ -2054,12 +2106,11 @@ async function renderDetail() {
 }
 
 function updateDetailReadiness(brawler, guide) {
-  const gearSlots = brawler.owned ? (brawler.power >= 10 ? 2 : brawler.power >= 8 ? 1 : 0) : 0;
-  const usableGears = Math.min((brawler.gears || []).length, gearSlots);
+  const ownedGears = brawler.owned ? (brawler.gears || []).length : 0;
   setText('readiness-power-val', brawler.owned ? `LVL ${brawler.power}` : 'LOCKED');
   setText('readiness-gadget-val', brawler.owned ? `${brawler.gadgets.length}/${(guide.gadgets || []).length || 2}` : '0/2');
   setText('readiness-star-val', brawler.owned ? `${brawler.star_powers.length}/${(guide.star_powers || []).length || 2}` : '0/2');
-  setText('readiness-gear-val', `${usableGears}/${gearSlots} slots`);
+  setText('readiness-gear-val', ownedGears);
 
   const priorities = $('priority-list');
   if (priorities) {
@@ -2169,13 +2220,87 @@ function getHyperchargeIcon(brawlerName, hyperchargeName) {
 function createHyperchargeEmblem(brawler, hypercharge) {
   const emblemWrap = document.createElement('div');
   emblemWrap.className = 'ability-emblem-wrap hyper-wrap';
-  
-  emblemWrap.innerHTML = `
-    <div class="official-hypercharge-emblem" title="${hypercharge?.name || 'Hypercharge'}">
-      <img src="/assets/hypercharge_icon.png?v=12" alt="${hypercharge?.name || 'Hypercharge'}" class="ability-icon-img hyper-icon-img">
-    </div>
-  `;
+
+  const emblem = document.createElement('div');
+  emblem.className = 'official-hypercharge-emblem';
+  emblem.title = hypercharge?.name || 'Hypercharge';
+  const image = document.createElement('img');
+  image.alt = `${brawler?.name || 'Brawler'} Hypercharge`;
+  image.className = 'ability-icon-img hyper-icon-img';
+  setAssetImageSources(
+    image,
+    getHyperchargeImageSources(brawler),
+    'HC',
+  );
+  emblem.append(image);
+  emblemWrap.append(emblem);
   return emblemWrap;
+}
+
+function getVisualAssetEntry(brawlerOrName) {
+  const entries = state.visualAssets?.brawlers || {};
+  const id = typeof brawlerOrName === 'object' ? brawlerOrName?.id : null;
+  if (id != null && entries[String(id)]) return entries[String(id)];
+  const name = typeof brawlerOrName === 'object' ? brawlerOrName?.name : brawlerOrName;
+  const key = normalizeKey(name);
+  return Object.values(entries).find((entry) => normalizeKey(entry?.name) === key) || null;
+}
+
+function uniqueAssetSources(sources) {
+  return [...new Set((sources || []).filter(Boolean))];
+}
+
+function setAssetImageSources(image, sources, textFallback) {
+  const candidates = uniqueAssetSources(sources);
+  let index = 0;
+  image.onerror = () => {
+    index += 1;
+    if (index < candidates.length) {
+      image.src = candidates[index];
+      return;
+    }
+    image.onerror = null;
+    const placeholder = document.createElement('span');
+    placeholder.className = 'asset-text-placeholder';
+    placeholder.textContent = textFallback;
+    placeholder.setAttribute('role', 'img');
+    placeholder.setAttribute('aria-label', image.alt || textFallback);
+    image.replaceWith(placeholder);
+  };
+  if (candidates.length) {
+    image.src = candidates[0];
+  } else {
+    image.onerror();
+  }
+}
+
+function getHyperchargeImageSources(brawler) {
+  const entry = getVisualAssetEntry(brawler);
+  const fallbacks = state.visualAssets?.fallbacks?.hypercharge || [
+    '/assets/section_hypercharge.png',
+    '/assets/hypercharge_icon.webp',
+  ];
+  return uniqueAssetSources([entry?.hypercharge?.local_url, ...fallbacks]);
+}
+
+function getBuffieImageSources(brawler, abilityType) {
+  const entry = getVisualAssetEntry(brawler);
+  const unreleasedFallbacks = state.visualAssets?.fallbacks?.buffy_unreleased || [
+    '/assets/buffies/generic.png',
+    '/assets/buffie_icon.webp',
+  ];
+  if (entry?.buffies?.released !== true) {
+    return uniqueAssetSources(unreleasedFallbacks);
+  }
+  const fallbacks = state.visualAssets?.fallbacks?.buffy?.[abilityType] || [
+    abilityType === 'gadget'
+      ? '/assets/section_gadget.png'
+      : abilityType === 'star_power'
+        ? '/assets/section_star_power.png'
+        : '/assets/section_hypercharge.png',
+    '/assets/buffie_icon.webp',
+  ];
+  return uniqueAssetSources([entry?.buffies?.[abilityType]?.local_url, ...fallbacks]);
 }
 
 function getBuffieIcon(brawlerName, abilityName, type) {
@@ -2198,35 +2323,20 @@ function getBuffieIcon(brawlerName, abilityName, type) {
   return type === 'gadget' ? '🔧' : '⭐';
 }
 
-function isBuffieReleased(brawlerName) {
-  if (!brawlerName) return false;
+function isBuffieReleased(brawler) {
+  if (!brawler) return false;
+  const visualEntry = getVisualAssetEntry(brawler);
+  if (visualEntry?.buffies && typeof visualEntry.buffies.released === 'boolean') {
+    return visualEntry.buffies.released;
+  }
+  const brawlerName = typeof brawler === 'object' ? brawler.name : brawler;
   const bNorm = normalizeKey(brawlerName);
   const released = state.buffiesDb?.released_brawlers || [
     'SHELLY', 'COLT', 'SPIKE', 'MORTIS', 'FRANK', 'EMZ', 'BULL', 'CROW', 'BIBI', 
     'NITA', 'BO', 'LEON', 'COLETTE', 'EDGAR', 'GRIFF', 'RICO', 'BROCK', '8BIT', 
-    '8-BIT', '8 BIT', 'MAX', 'MEG'
+    '8-BIT', '8 BIT', 'MAX', 'MEG', 'SURGE'
   ];
   return released.some((r) => normalizeKey(r) === bNorm);
-}
-
-function getBuffieImageUrl(brawlerName, abilityType) {
-  if (!state.buffiesDb || !brawlerName) return null;
-  const bNorm = normalizeKey(brawlerName);
-  
-  for (const trio of (state.buffiesDb.trios || [])) {
-    for (const b of (trio.brawlers || [])) {
-      if (normalizeKey(b.name) === bNorm) {
-        let fileKey = b.gadget_img_file;
-        if (abilityType === 'star_power') fileKey = b.star_img_file;
-        else if (abilityType === 'hypercharge') fileKey = b.hyper_img_file;
-        
-        if (fileKey && state.buffiesDb.image_urls && state.buffiesDb.image_urls[fileKey]) {
-          return state.buffiesDb.image_urls[fileKey];
-        }
-      }
-    }
-  }
-  return null;
 }
 
 function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
@@ -2283,30 +2393,33 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
   description.textContent = hypercharge.description || 'Official Hypercharge ability for this brawler.';
 
   // Integrated Buffie Subfield for Hypercharge
-  const buffieReleased = isBuffieReleased(brawler.name);
-  const buffieImgUrl = getBuffieImageUrl(brawler.name, 'hypercharge');
+  const buffieReleased = isBuffieReleased(brawler);
   const buffieState = buffieUseState(brawler, 'hypercharge');
 
   const buffieBox = document.createElement('div');
-  const buffieIconHtml = `<img src="${buffieImgUrl || '/assets/buffie_icon.webp'}" alt="Buffie" class="buffie-fandom-icon" onerror="this.src='/assets/buffie_icon.webp';">`;
   const buffieVisualState = !buffieReleased ? 'disabled-buffie' : buffieState.key === 'active' ? 'active-buffie' : buffieState.key === 'stored' ? 'inventory-buffie' : 'inactive-buffie';
   const buffieIconClass = buffieReleased && buffieState.key === 'active' ? 'hypercharge-buffie-badge' : 'disabled-buffie-badge';
   const buffieStatus = buffieReleased ? buffieState.label : 'COMING SOON';
   const buffieStatusClass = buffieReleased ? buffieState.className : 'unreleased-rank-pill';
   const buffieDescription = buffieReleased
     ? (hypercharge.buffie_description || 'The exact Hypercharge Buffy effect is not available in the verified data snapshot.')
-    : `Buffies have not been released for ${brawler.name || 'this brawler'} in the loaded release catalog.`;
+    : `Buffies have not been released for ${brawler.name || 'this brawler'}.`;
   buffieBox.className = `buffie-subfield hypercharge-buffie ${buffieVisualState}`;
   buffieBox.innerHTML = `
     <div class="buffie-header-row">
       <div class="buffie-badge-wrap">
-        <div class="buffie-icon-badge ${buffieIconClass}">${buffieIconHtml}</div>
+        <div class="buffie-icon-badge ${buffieIconClass}"><img alt="${brawler.name} Hypercharge Buffy icon" class="buffie-fandom-icon"></div>
         <span class="buffie-tag">HYPERCHARGE BUFFIE</span>
       </div>
       <span class="buffie-rank-pill ${buffieStatusClass}">${buffieStatus}</span>
     </div>
     <p class="buffie-effect">${buffieDescription}</p>
   `;
+  setAssetImageSources(
+    buffieBox.querySelector('.buffie-fandom-icon'),
+    getBuffieImageSources(brawler, 'hypercharge'),
+    'HC',
+  );
 
   row.append(header, description, buffieBox);
 
@@ -2414,8 +2527,9 @@ function renderPowerLadder(current, guide) {
     // Special milestone tags for Brawl Stars
     let unlockBadge = '';
     if (level === 7) unlockBadge = '<small class="milestone-badge">GADGET</small>';
+    else if (level === 8) unlockBadge = '<small class="milestone-badge">GEAR SLOT 1</small>';
     else if (level === 9) unlockBadge = '<small class="milestone-badge">STAR ★</small>';
-    else if (level === 10) unlockBadge = '<small class="milestone-badge">GEAR ◆</small>';
+    else if (level === 10) unlockBadge = '<small class="milestone-badge">GEAR SLOT 2</small>';
     else if (level === 11) unlockBadge = '<small class="milestone-badge">HYPER ⚡</small>';
     
     item.innerHTML = `
@@ -2454,46 +2568,32 @@ function getEquipmentImageUrl(item, type, brawler) {
 
   // 2. If item has an id directly
   if (item.id) {
-    if (type === 'gadget') return `https://cdn.brawlify.com/gadgets/regular/${item.id}.png`;
-    if (type === 'star_power') return `https://cdn.brawlify.com/star-powers/regular/${item.id}.png`;
-    if (type === 'gear') return `https://cdn.brawlify.com/gears/regular/${item.id}.png`;
+    if (type === 'gadget') return `/assets/equipment/gadgets/${item.id}.png`;
+    if (type === 'star_power') return `/assets/equipment/star-powers/${item.id}.png`;
+    if (type === 'gear') return `/assets/equipment/gears/${item.id}.png`;
   }
 
-  // 3. Universal, Epic, and Mythic Gear mappings
+  // 3. Universal, Epic, and Mythic Gear mappings live in the audited manifest.
   if (type === 'gear') {
-    if (rawName.includes('DAMAGE')) return 'https://cdn.brawlify.com/gears/regular/62000000.png';
-    if (rawName.includes('HEALTH')) return 'https://cdn.brawlify.com/gears/regular/62000001.png';
-    if (rawName.includes('SHIELD')) return 'https://cdn.brawlify.com/gears/regular/62000002.png';
-    if (rawName.includes('SPEED') && !rawName.includes('RELOAD')) return 'https://cdn.brawlify.com/gears/regular/62000003.png';
-    if (rawName.includes('VISION')) return 'https://cdn.brawlify.com/gears/regular/62000004.png';
-    if (rawName.includes('GADGET') || rawName.includes('PLUS') || rawName.includes('CHARGE') && !rawName.includes('SUPER')) return 'https://cdn.brawlify.com/gears/regular/62000005.png';
-    if (rawName.includes('SUPER') && (rawName.includes('CHARGE') || rawName.includes('TURRET'))) return 'https://cdn.brawlify.com/gears/regular/62000006.png';
-    if (rawName.includes('RELOAD')) return 'https://cdn.brawlify.com/gears/regular/62000007.png';
-    if (rawName.includes('PET')) return 'https://cdn.brawlify.com/gears/regular/62000008.png';
-    if (rawName.includes('TALK') || rawName.includes('HAND')) return 'https://cdn.brawlify.com/gears/regular/62000009.png';
-    if (rawName.includes('HEAD') || rawName.includes('THICK')) return 'https://cdn.brawlify.com/gears/regular/62000010.png';
-    if (rawName.includes('STORM') && rawName.includes('EXHAUST')) return 'https://cdn.brawlify.com/gears/regular/62000013.png';
-    if (rawName.includes('TURRET')) return 'https://cdn.brawlify.com/gears/regular/62000015.png';
-    if (rawName.includes('QUAD') || rawName.includes('HATCH')) return 'https://cdn.brawlify.com/gears/regular/62000016.png';
-    if (rawName.includes('OIL')) return 'https://cdn.brawlify.com/gears/regular/62000017.png';
-    return 'https://cdn.brawlify.com/gears/regular/62000000.png';
+    const gear = Object.entries(state.visualAssets?.gears || {})
+      .find(([name]) => normalizeKey(name) === norm)?.[1];
+    return gear?.local_url || '/assets/section_gear.png';
   }
 
   return null;
 }
 
-function renderCategoryBuffie(holder, brawler, type, abilities) {
-  if (type !== 'gadget' && type !== 'star_power') return;
+function createAbilityBuffie(brawler, type, ability, abilityOwned) {
+  if (type !== 'gadget' && type !== 'star_power') return null;
 
   const brawlerName = brawler?.name || 'Brawler';
-  const released = isBuffieReleased(brawlerName);
-  const stateInfo = buffieUseState(brawler, type);
+  const released = isBuffieReleased(brawler);
+  const stateInfo = buffieUseState(brawler, type, abilityOwned);
   const label = type === 'gadget' ? 'GADGET BUFFIE' : 'STAR POWER BUFFIE';
-  const imageUrl = getBuffieImageUrl(brawlerName, type) || '/assets/buffie_icon.webp';
 
-  const card = document.createElement('aside');
+  const card = document.createElement('div');
   const visualState = !released ? 'disabled-buffie' : stateInfo.key === 'active' ? 'active-buffie' : stateInfo.key === 'stored' ? 'inventory-buffie' : 'inactive-buffie';
-  card.className = `buffie-subfield buffie-category-card ${type}-buffie ${visualState}`;
+  card.className = `buffie-subfield buffie-ability-card ${type}-buffie ${visualState}`;
 
   const header = document.createElement('div');
   header.className = 'buffie-header-row';
@@ -2502,10 +2602,13 @@ function renderCategoryBuffie(holder, brawler, type, abilities) {
   const iconBadge = document.createElement('div');
   iconBadge.className = `buffie-icon-badge ${stateInfo.key === 'active' ? `${type}-buffie-badge` : 'disabled-buffie-badge'}`;
   const image = document.createElement('img');
-  image.src = imageUrl;
   image.alt = `${label} icon`;
   image.className = 'buffie-fandom-icon';
-  image.onerror = () => { image.src = '/assets/buffie_icon.webp'; };
+  setAssetImageSources(
+    image,
+    getBuffieImageSources(brawler, type),
+    type === 'gadget' ? 'G' : 'SP',
+  );
   iconBadge.append(image);
   const title = document.createElement('span');
   title.className = 'buffie-tag';
@@ -2517,29 +2620,14 @@ function renderCategoryBuffie(holder, brawler, type, abilities) {
   status.textContent = released ? stateInfo.label : 'COMING SOON';
   header.append(badgeWrap, status);
 
-  card.append(header);
-  if (released) {
-    const effects = document.createElement('div');
-    effects.className = 'buffie-effect-list';
-    (abilities || []).forEach((ability) => {
-      const item = document.createElement('div');
-      item.className = 'buffie-effect-item';
-      const abilityName = document.createElement('strong');
-      abilityName.textContent = ability.name;
-      const effect = document.createElement('p');
-      effect.className = 'buffie-effect';
-      effect.textContent = ability.buffie_description || 'The exact Buffy effect is not available in the verified data snapshot.';
-      item.append(abilityName, effect);
-      effects.append(item);
-    });
-    card.append(effects);
-  } else {
-    const description = document.createElement('p');
-    description.className = 'buffie-effect';
-    description.textContent = `Buffies have not been released for ${brawlerName} in the loaded release catalog.`;
-    card.append(description);
-  }
-  holder.append(card);
+  const description = document.createElement('p');
+  description.className = 'buffie-effect';
+  description.textContent = released
+    ? (ability?.buffie_description || 'The exact Buffy effect is not available in the verified data snapshot.')
+    : `Buffies have not been released for ${brawlerName}.`;
+
+  card.append(header, description);
+  return card;
 }
 
 function renderEquipment(targetId, available, owned, emptyMessage, type, brawler, guide = null) {
@@ -2579,21 +2667,19 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
     if (imgUrl) {
       const iconImg = document.createElement('img');
       iconImg.className = 'ability-icon-img';
-      iconImg.src = imgUrl;
       iconImg.alt = item.name;
       iconImg.loading = 'lazy';
-      
-      const fallbackBadge = document.createElement('span');
-      fallbackBadge.className = `ability-emblem ${type}-emblem`;
-      fallbackBadge.textContent = type === 'gadget' ? 'G' : type === 'star_power' ? '★' : '◆';
-      fallbackBadge.style.display = 'none';
-
-      iconImg.onerror = () => {
-        iconImg.style.display = 'none';
-        fallbackBadge.style.display = 'grid';
-      };
-
-      emblemWrap.append(iconImg, fallbackBadge);
+      const categoryFallback = type === 'gadget'
+        ? '/assets/section_gadget.png'
+        : type === 'star_power'
+          ? '/assets/section_star_power.png'
+          : '/assets/section_gear.png';
+      setAssetImageSources(
+        iconImg,
+        [imgUrl, categoryFallback],
+        type === 'gadget' ? 'G' : type === 'star_power' ? 'SP' : 'GEAR',
+      );
+      emblemWrap.append(iconImg);
     } else {
       const emblem = document.createElement('span');
       emblem.className = `ability-emblem ${type}-emblem`;
@@ -2620,10 +2706,11 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
 
     row.append(header, description);
 
+    const abilityBuffie = createAbilityBuffie(brawler, type, item, isOwned);
+    if (abilityBuffie) row.append(abilityBuffie);
+
     holder.append(row);
   });
-
-  renderCategoryBuffie(holder, brawler, type, combined);
 }
 
 function bindEvents() {

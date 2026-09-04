@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=40">
+  <link rel="stylesheet" href="/assets/styles.css?v=47">
 </head>
 <body>
   <div class="app-shell">
@@ -358,9 +358,9 @@
               <option value="active_hypercharge">Has Hypercharge - Active (L11)</option>
               <option value="stored_hypercharge">Has Hypercharge - Stored (L7-10)</option>
               <option value="no_hypercharge">No Hypercharge (0)</option>
-              <option value="has_buffies_gadget">Gadget Buffy API Flag: Owned</option>
-              <option value="has_buffies_sp">Star Power Buffy API Flag: Owned</option>
-              <option value="has_buffies_hc">Hypercharge Buffy API Flag: Owned</option>
+              <option value="has_buffies_gadget">Gadget Buffy: Owned</option>
+              <option value="has_buffies_sp">Star Power Buffy: Owned</option>
+              <option value="has_buffies_hc">Hypercharge Buffy: Owned</option>
               <option value="max_out">Complete Loadout + All 3 Buffy Flags</option>
             </select>
             <div class="view-toggle"><button id="grid-view" class="active" type="button" aria-label="Card view">▦</button><button id="table-view" type="button" aria-label="Table view">☷</button></div>
@@ -598,12 +598,12 @@
         <div class="detail-hero panel">
           <div class="detail-art">
             <div class="detail-burst" aria-hidden="true"></div>
-            <img id="detail-image" src="/assets/brawlers/16000000.png" alt="Official brawler portrait artwork">
+            <div class="hero-art-stage" id="hero-art-stage"></div>
           </div>
           <div class="detail-copy">
             <div class="label-row">
               <span id="detail-rarity" class="rarity-badge epic">EPIC</span>
-              <span id="detail-class" class="class-badge">⚔ DAMAGE DEALER</span>
+              <span id="detail-class" class="class-badge"><img class="class-icon" src="/assets/classes/damage-dealer.png" alt="" aria-hidden="true"><span>DAMAGE DEALER</span></span>
               <span id="detail-account-status" class="data-label demo">OWNED IN ACCOUNT</span>
             </div>
             <div class="detail-title-row">
@@ -710,7 +710,12 @@
             <article class="guide-fact-card combined-hc-build-card">
               <div class="hc-build-hypercharge-block">
                 <span class="fact-kicker">⚡ HYPERCHARGE</span>
-                <h3 id="hypercharge-name">—</h3>
+                <div class="hc-summary-name-row">
+                  <div class="official-hypercharge-emblem hc-summary-emblem" aria-hidden="true">
+                    <img alt="Hypercharge" class="ability-icon-img hyper-icon-img">
+                  </div>
+                  <h3 id="hypercharge-name">—</h3>
+                </div>
                 <p id="hypercharge-description"></p>
               </div>
               <div class="hc-build-divider"></div>
@@ -750,7 +755,7 @@
               <p class="eyebrow">LOADOUT TRACKER & BUFFIES</p>
               <h2>Owned equipment & Buffie augmentations</h2>
             </div>
-            <span class="source-chip official-chip">PLAYER API OWNERSHIP + GUIDE SPECS</span>
+            <span class="source-chip official-chip">BRAWLER OWNERSHIP</span>
           </div>
 
           <div class="equipment-rule-strip" aria-label="Equipment activation rules">
@@ -813,7 +818,7 @@
         </div>
       </section>
 
-      <footer class="site-footer"><div><strong>BrawlBuddy</strong><span>Your unofficial progression companion. All rights reserved to BrawlBuddy.</span></div><p>This material is unofficial and is not endorsed by Supercell. For more information see <a href="https://supercell.com/en/fan-content-policy/" target="_blank" rel="noreferrer">Supercell’s Fan Content Policy</a>.</p></footer>
+      <footer class="site-footer"><div><strong>BrawlBuddy</strong><span>Your unofficial progression companion. All rights reserved to BrawlBuddy.</span><span id="content-last-updated">Content updated —</span></div><p>This material is unofficial and is not endorsed by Supercell. For more information see <a href="https://supercell.com/en/fan-content-policy/" target="_blank" rel="noreferrer">Supercell’s Fan Content Policy</a>.</p></footer>
     </main>
   </div>
 
@@ -847,7 +852,7 @@
           <!-- Neutral Objective Center -->
           <div class="arena-center">
             <div class="objective-core">
-              <span id="arena-objective-icon">⚽</span>
+              <span id="arena-objective-icon"><img class="arena-mode-icon" src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true"></span>
               <small id="arena-objective-label">CENTER ARENA</small>
             </div>
             <div class="advantage-pill" id="arena-advantage-pill">BALANCED MATCHUP</div>
@@ -938,6 +943,6 @@
       <small>Live lookup uses your server API token. Public brawler and club data is cached briefly.</small>
     </div>
   </dialog>
-  <script src="/assets/app.js?v=55" defer></script>
+  <script src="/assets/app.js?v=67" defer></script>
 </body>
 </html>
