@@ -8,6 +8,15 @@
   --pink: #ff4f9a;
   --green: #3ad389;
   --red: #ff5260;
+  /* Verified BrawlAPI rarity accents. Gradient stops elsewhere are derived from these values. */
+  --rarity-starting: #b9eaff;
+  --rarity-common: var(--rarity-starting);
+  --rarity-rare: #68fd58;
+  --rarity-super-rare: #5ab3ff;
+  --rarity-epic: #d850ff;
+  --rarity-mythic: #fe5e72;
+  --rarity-legendary: #fff11e;
+  --rarity-ultra: #e1fb2a;
   --ink: #0f2042;
   --muted: #64789d;
   --paper: #f0f6ff;
@@ -372,9 +381,16 @@ a { color: inherit; }
 .level-chip.active { color: var(--navy); background: var(--yellow); border-color: #fff; box-shadow: 0 4px 0 #bd8108; transform: translateY(-2px); font-weight: 900; }
 .level-chip.max.active { color: #fff; background: linear-gradient(135deg, #ff4f9a, #d41b6c); border-color: #fff; box-shadow: 0 4px 0 #930e46; }
 .brawler-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.brawler-card { min-width: 0; display: flex; flex-direction: column; overflow: hidden; color: inherit; border: 2px solid #e1ecf7; border-radius: 26px; background: #ffffff; text-decoration: none; box-shadow: 0 5px 0 #d3e1f0; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
-.brawler-card:hover { transform: translateY(-4px); border-color: #8ecdf8; box-shadow: 0 9px 0 #c4daf0, 0 16px 28px rgba(18,64,120,.14); }
-.brawler-visual { height: 180px; display: grid; place-items: center; position: relative; overflow: hidden; background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.18) 0deg 11.25deg, transparent 11.25deg 22.5deg), radial-gradient(circle at 50% 50%, #2cb2ff 0%, #0d7ce2 60%, #0257ad 100%); border-top-left-radius: 24px; border-top-right-radius: 24px; }
+.brawler-card { --rarity-color:var(--rarity-starting); --rarity-highlight:color-mix(in srgb,var(--rarity-color) 64%,white); --rarity-shadow:color-mix(in srgb,var(--rarity-color) 52%,#06183f); --rarity-edge:color-mix(in srgb,var(--rarity-color) 42%,#d3e1f0); min-width: 0; display: flex; flex-direction: column; overflow: hidden; color: inherit; border: 2px solid #e1ecf7; border-radius: 26px; background: #ffffff; text-decoration: none; box-shadow: 0 5px 0 #d3e1f0; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.brawler-card.rarity-common, .brawler-card.rarity-starting { --rarity-color:var(--rarity-starting); }
+.brawler-card.rarity-rare { --rarity-color:var(--rarity-rare); }
+.brawler-card.rarity-super-rare { --rarity-color:var(--rarity-super-rare); }
+.brawler-card.rarity-epic { --rarity-color:var(--rarity-epic); }
+.brawler-card.rarity-mythic { --rarity-color:var(--rarity-mythic); }
+.brawler-card.rarity-legendary { --rarity-color:var(--rarity-legendary); }
+.brawler-card.rarity-ultra-legendary { --rarity-color:var(--rarity-ultra); }
+.brawler-card:hover { transform: translateY(-4px); border-color: var(--rarity-color); box-shadow: 0 9px 0 var(--rarity-edge), 0 16px 28px rgba(18,64,120,.14); }
+.brawler-visual { height: 180px; display: grid; place-items: center; position: relative; overflow: hidden; background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.18) 0deg 11.25deg, transparent 11.25deg 22.5deg), radial-gradient(circle at 50% 46%, var(--rarity-highlight) 0%, var(--rarity-color) 60%, var(--rarity-shadow) 100%); border-top-left-radius: 24px; border-top-right-radius: 24px; }
 .brawler-frame-box { width: 114px; height: 114px; position: relative; display: grid; place-items: center; border: 4.5px solid #ffffff; border-radius: 26px; background: #000000; box-shadow: 0 8px 18px rgba(0, 18, 55, 0.35); overflow: hidden; z-index: 2; transition: transform .2s ease; }
 .brawler-card:hover .brawler-frame-box { transform: scale(1.05); }
 .brawler-image { width: 100%; height: 100%; max-width: 106px; max-height: 106px; z-index: 2; object-fit: contain; object-position: center; border-radius: 20px; filter: drop-shadow(0 4px 6px rgba(0, 15, 45, 0.35)); image-rendering: -webkit-optimize-contrast; image-rendering: auto; transform: translateZ(0); }
@@ -384,6 +400,9 @@ a { color: inherit; }
 .power-badge.power-11 { color: #081a38; background: #ffd32e; }
 .power-badge.locked { color: #62728f; background: #e5ebf3; border-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); }
 .power-badge:not(.power-11):not(.locked) { color: #ffffff; background: #ff4370; }
+.rarity-cover-label { position: absolute; z-index: 3; top: 12px; right: 12px; max-width: calc(100% - 86px); min-height: 26px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; color: #ffffff; border: 2px solid rgba(255,255,255,.9); border-radius: 9px; background: rgba(8,26,56,.72); box-shadow: 0 2px 6px rgba(0,20,60,.24), inset 0 1px 0 rgba(255,255,255,.2); backdrop-filter: blur(4px); font-size: 9px; font-weight: 900; letter-spacing: .65px; line-height: 1; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.rarity-legendary .rarity-cover-label { color:#4b2b00; background:rgba(255,255,255,.82); border-color:#fff7c2; text-shadow:0 1px 0 rgba(255,255,255,.7); }
+.rarity-ultra-legendary .rarity-cover-label { background:rgba(35,20,89,.76); }
 .brawler-card-copy { display: flex; flex-direction: column; flex: 1; padding: 15px 14px 14px; background: #ffffff; }
 .brawler-name-row { width: 72%; min-height: 38px; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-right: auto; padding: 7px 11px; border: 2px solid #dbe8f5; border-radius: 12px; background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%); box-shadow: 0 3px 0 #d7e4f1; text-align: center; }
 .brawler-name-row strong { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 400; color: #0f172a; line-height: 1; letter-spacing: .35px; text-align: center; text-transform: uppercase; font-family: "Lilita One", var(--font-heading), system-ui, sans-serif; }
@@ -508,12 +527,13 @@ a { color: inherit; }
 
 /* Rarity Badges (EPIC, LEGENDARY, MYTHIC, etc.) */
 .rarity-badge { display:inline-flex; align-items:center; gap:5px; padding:6px 13px; border-radius:10px; font-size:10px; font-weight:900; letter-spacing:.8px; text-transform:uppercase; border:2px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.7); text-shadow:0 1px 2px rgba(0,0,0,.4); }
-.rarity-badge.common, .rarity-badge.starting { color:#fff; background:linear-gradient(135deg,#3b82f6,#60a5fa 50%,#2563eb); border-color:#93c5fd; }
-.rarity-badge.rare { color:#fff; background:linear-gradient(135deg,#10b981,#34d399 50%,#059669); border-color:#a7f3d0; }
-.rarity-badge.super_rare, .rarity-badge.super-rare { color:#fff; background:linear-gradient(135deg,#2563eb,#38bdf8 50%,#1d4ed8); border-color:#bae6fd; }
-.rarity-badge.epic { color:#fff; background:linear-gradient(135deg,#9333ea,#c084fc 50%,#7e22ce); border-color:#e9d5ff; }
-.rarity-badge.mythic { color:#fff; background:linear-gradient(135deg,#dc2626,#f87171 50%,#b91c1c); border-color:#fecaca; }
-.rarity-badge.legendary { color:#3b2300; background:linear-gradient(135deg,#f59e0b,#fde047 50%,#d97706); border-color:#fff; text-shadow:0 1px 0 rgba(255,255,255,.6); }
+.rarity-badge.common, .rarity-badge.starting { color:#12325d; background:linear-gradient(135deg,color-mix(in srgb,var(--rarity-starting) 66%,white),var(--rarity-starting) 50%,color-mix(in srgb,var(--rarity-starting) 65%,#164e83)); border-color:color-mix(in srgb,var(--rarity-starting) 55%,white); text-shadow:none; }
+.rarity-badge.rare { color:#103d19; background:linear-gradient(135deg,color-mix(in srgb,var(--rarity-rare) 66%,white),var(--rarity-rare) 50%,color-mix(in srgb,var(--rarity-rare) 68%,#126126)); border-color:color-mix(in srgb,var(--rarity-rare) 55%,white); text-shadow:none; }
+.rarity-badge.super_rare, .rarity-badge.super-rare { color:#fff; background:linear-gradient(135deg,color-mix(in srgb,var(--rarity-super-rare) 66%,white),var(--rarity-super-rare) 50%,color-mix(in srgb,var(--rarity-super-rare) 62%,#174b91)); border-color:color-mix(in srgb,var(--rarity-super-rare) 55%,white); }
+.rarity-badge.epic { color:#fff; background:linear-gradient(135deg,color-mix(in srgb,var(--rarity-epic) 66%,white),var(--rarity-epic) 50%,color-mix(in srgb,var(--rarity-epic) 62%,#68228d)); border-color:color-mix(in srgb,var(--rarity-epic) 55%,white); }
+.rarity-badge.mythic { color:#fff; background:linear-gradient(135deg,color-mix(in srgb,var(--rarity-mythic) 66%,white),var(--rarity-mythic) 50%,color-mix(in srgb,var(--rarity-mythic) 62%,#8f2337)); border-color:color-mix(in srgb,var(--rarity-mythic) 55%,white); }
+.rarity-badge.legendary { color:#493d00; background:linear-gradient(135deg,color-mix(in srgb,var(--rarity-legendary) 66%,white),var(--rarity-legendary) 50%,color-mix(in srgb,var(--rarity-legendary) 70%,#b67700)); border-color:#fff; text-shadow:0 1px 0 rgba(255,255,255,.6); }
+.rarity-badge.ultra_legendary, .rarity-badge.ultra-legendary, .rarity-badge.ultra { color:#304000; background:linear-gradient(135deg,color-mix(in srgb,var(--rarity-ultra) 66%,white),var(--rarity-ultra) 50%,color-mix(in srgb,var(--rarity-ultra) 70%,#72a100)); border-color:#fff; text-shadow:0 1px 0 rgba(255,255,255,.6); }
 
 /* Class / Role Badges (Tank, Damage Dealer, Assassin, etc.) */
 .class-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 13px; border-radius:10px; font-size:10px; font-weight:900; letter-spacing:.8px; text-transform:uppercase; color:#fff; background:linear-gradient(135deg,rgba(8,30,80,.8),rgba(15,60,140,.9)); border:2px solid rgba(135,206,250,.65); box-shadow:0 4px 10px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.4); backdrop-filter:blur(6px); }
@@ -2428,6 +2448,168 @@ a { color: inherit; }
   .table-mode .brawler-card { grid-template-columns: 75px 1fr; }
   .table-mode .brawler-card-copy { grid-template-columns: 1fr; gap: 6px; }
   .table-mode .brawler-stats { display: none; }
+}
+
+/* Responsive stabilization layer
+   Shared rules keep every route fluid while preserving the desktop design. */
+html, body { max-width: 100%; overflow-x: clip; }
+.view, .view > *, .panel, .section-heading > *, .topbar > *, .collection-banner > *, .resource-hero > *,
+.player-hero > *, .detail-hero > *, .club-hero-banner > *, .battle-card-top > *, .leaderboard-toolbar > *,
+.match-teams-grid > *, .equipment-columns > *, .guide-profile-grid > *, .field-notes > * { min-width: 0; }
+img, picture, video, canvas, svg { max-width: 100%; }
+.roster-table-wrap { max-width: 100%; overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; scrollbar-gutter: stable; }
+.roster-table { min-width: 680px; }
+.leaderboard-panel .roster-table { min-width: 580px; }
+.connect-dialog, .recreator-dialog, .map-preview-dialog {
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: auto;
+}
+
+@media (max-width: 1100px) {
+  .flagship-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .events-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .matchups-columns-grid, .equipment-columns { gap: 14px; }
+}
+
+@media (max-width: 768px) {
+  .section-heading { flex-wrap: wrap; }
+  .section-heading > .source-chip, .section-heading > a { flex: 0 0 auto; }
+  .leaderboard-toolbar, .roster-toolbar { flex-wrap: wrap; align-items: stretch; }
+  .ranking-tab-group { flex: 1 1 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ranking-tab-group .level-chip { width: 100%; }
+  .region-select-label { flex: 1 1 100%; justify-content: space-between; }
+  .region-select-label select, .search-box-input { width: 100%; min-width: 0; }
+  .region-select-label select { flex: 1; }
+  .battle-filter-tabs { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .battle-filter-tabs .level-chip { width: 100%; min-width: 0; }
+  .battle-card-top { flex-wrap: wrap; gap: 10px; }
+  .battle-card-result { margin-left: auto; }
+  .readiness-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .detail-account-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+  .detail-account-stats div { width: 100%; }
+  .recreator-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .map-dialog-shell { grid-template-columns: 1fr; }
+  .map-dialog-img-frame { min-height: 220px; }
+  .map-dialog-img-frame img { height: min(280px, 38dvh); }
+  .brawler-grid.table-mode { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; overflow: visible; border: 0; border-radius: 0; }
+  .table-mode .brawler-card { display: flex; border: 2px solid #e1ecf7; border-radius: 18px; box-shadow: 0 5px 0 #d3e1f0; }
+  .table-mode .brawler-visual { height: 145px; border-radius: 16px 16px 0 0; }
+  .table-mode .brawler-card-copy { display: flex; gap: 0; }
+  .table-mode .equipment-row { display: flex; }
+  .table-mode .brawler-stats { display: flex; }
+  .table-mode .open-guide { display: flex; }
+  .brawler-grid.table-mode .brawler-card:last-child { border-bottom: 2px solid #e1ecf7; }
+}
+
+@media (max-width: 600px) {
+  .events-grid, .flagship-grid { grid-template-columns: 1fr; }
+  .match-teams-grid { grid-template-columns: 1fr; gap: 8px; }
+  .match-vs-divider { min-height: 28px; display: grid; place-items: center; }
+  .match-vs-divider::before, .match-vs-divider::after { content: ""; width: 35%; height: 1px; position: absolute; background: var(--line); }
+  .match-vs-divider::before { left: 5%; }
+  .match-vs-divider::after { right: 5%; }
+  .match-vs-divider { position: relative; }
+  .player-roster-row { min-width: 0; }
+  .roster-player-meta { min-width: 0; }
+  .roster-player-meta strong, .roster-player-meta small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .arena-board { grid-template-columns: 1fr; gap: 12px; padding: 14px; }
+  .arena-center { order: 2; }
+  .arena-zone.red-zone { order: 3; }
+  .team-spawns { flex-wrap: wrap; justify-content: center; }
+  .showdown-players-row { scroll-snap-type: x proximity; }
+  .showdown-player-chip { flex: 0 0 auto; scroll-snap-align: start; }
+  .table-mode .brawler-card { display: flex; border: 2px solid #e1ecf7; border-radius: 18px; box-shadow: 0 5px 0 #d3e1f0; }
+  .table-mode .brawler-visual { height: 125px; border-radius: 16px 16px 0 0; }
+  .table-mode .brawler-card-copy { display: flex; gap: 0; }
+  .table-mode .equipment-row { display: flex; }
+  .table-mode .brawler-stats { display: flex; }
+  .table-mode .open-guide { display: flex; }
+  .brawler-grid.table-mode { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; overflow: visible; border: 0; border-radius: 0; }
+  .brawler-grid.table-mode .brawler-card:last-child { border-bottom: 2px solid #e1ecf7; }
+}
+
+@media (max-width: 430px) {
+  .main-content { padding-inline: 10px; }
+  .header-container, .topbar { min-height: 0; }
+  .topbar-actions > .primary-button, .topbar-actions > .subtle-button { flex: 1 1 auto; min-width: 120px; }
+  .primary-button, .subtle-button { min-height: 44px; height: 44px; }
+  .dialog-close { width: 44px; height: 44px; }
+  .page-subtitle { display: block; font-size: 10px; line-height: 1.45; }
+  .collection-banner, .resource-hero { gap: 12px; }
+  .collection-banner > div:first-child, .resource-hero > div:first-child { flex: 1 1 auto; }
+  .collection-badge { flex: 0 0 auto; }
+  .collection-banner p, .resource-hero p { display: block; margin-top: 8px; font-size: 10px; line-height: 1.45; }
+  .resource-hero img { display: block; width: 96px; height: 112px; flex: 0 0 auto; }
+  .collection-toolbar { align-items: stretch; }
+  .collection-toolbar .search-box, .collection-toolbar select { min-height: 44px; }
+  .view-toggle button, .level-chip { min-height: 44px; }
+  .level-filter { scroll-snap-type: x proximity; }
+  .level-chip { flex: 0 0 44px; scroll-snap-align: start; }
+  .brawler-panel, .battles-panel, .events-panel, .meta-tier-panel, .leaderboard-panel,
+  .club-roster-panel, .season-reset-panel, .calc-roster-panel, .flagship-panel,
+  .archetype-summary-panel { padding: 16px 12px; border-radius: 16px; }
+  .battle-log-card { padding: 14px 12px; }
+  .battle-card-mode { min-width: 0; }
+  .battle-card-mode > div { min-width: 0; }
+  .battle-card-mode strong, .battle-card-mode small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .events-grid, .meta-tierlist-grid { gap: 12px; }
+  .tier-brawlers-chips { padding: 9px; gap: 5px; }
+  .recreator-shell, .dialog-shell, .map-dialog-body { padding: 22px 16px; }
+  .recreator-stats-grid, .reset-stats-grid { grid-template-columns: 1fr; }
+  .roster-table { min-width: 620px; }
+  .leaderboard-panel .roster-table { min-width: 540px; }
+  .roster-table th, .roster-row td { padding-inline: 12px; }
+  .detail-copy { padding: 18px 16px; }
+  .detail-copy h2 { font-size: clamp(28px, 10.5vw, 36px); overflow-wrap: anywhere; }
+  .detail-account-stats { gap: 7px; }
+  .detail-account-stats div { padding: 9px 8px; }
+  .prestige-progress-copy > p { overflow-wrap: anywhere; }
+  .equipment-rule-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .equipment-rule-item { min-width: 0; }
+  .useful-maps-grid { grid-template-columns: 1fr; }
+  .map-card { min-width: 0; }
+  .mobile-nav a { min-height: 44px; }
+}
+
+@media (max-width: 360px) {
+  .main-content { padding-inline: 8px; }
+  .topbar-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .topbar-actions > .primary-button, .topbar-actions > .subtle-button { width: 100%; min-width: 0; padding-inline: 8px; }
+  .collection-banner { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+  .resource-hero { display: grid; grid-template-columns: minmax(0, 1fr) 78px; }
+  .resource-hero img { width: 78px; height: 96px; }
+  .collection-badge { width: 66px; height: 66px; border-radius: 19px; }
+  .collection-badge strong { font-size: 22px; }
+  .collection-badge span { font-size: 7px; }
+  .collection-banner h2, .resource-hero h2 { font-size: 22px; letter-spacing: -1px; }
+  .brawler-grid, .brawler-grid.table-mode { grid-template-columns: 1fr; gap: 12px; }
+  .brawler-visual, .table-mode .brawler-visual { height: 170px; }
+  .brawler-frame-box { width: 108px; height: 108px; }
+  .brawler-image { max-width: 100px; max-height: 100px; }
+  .brawler-card-copy { padding: 12px 11px 10px; }
+  .open-guide { margin-inline: -11px; margin-bottom: -10px; padding: 12px; font-size: 10px; }
+  .prestige-card-emblem { width: 54px; height: 54px; right: 8px; bottom: 7px; }
+  .prestige-bar, .overview-metrics, .hero-stats, .detail-account-stats { grid-template-columns: 1fr; }
+  .hero-stats > div:last-child { grid-column: auto; }
+  .ranking-tab-group, .battle-filter-tabs { grid-template-columns: 1fr; }
+  .region-select-label { align-items: stretch; flex-direction: column; }
+  .readiness-summary-grid, .equipment-rule-strip { grid-template-columns: 1fr; }
+  .mobile-nav { padding-inline: 3px; }
+  .mobile-nav a { min-width: 47px; padding-inline: 3px; font-size: 8px; }
+  .mobile-nav a span { font-size: 14px; }
+  .dialog-demo-actions { flex-wrap: wrap; }
+}
+
+@media (max-width: 980px) and (orientation: landscape) and (max-height: 600px) {
+  .main-content { padding-top: 12px; }
+  .header-container, .topbar { flex-direction: row; align-items: center; min-height: 92px; padding-block: 12px; }
+  .topbar-brand-mobile { margin-bottom: 8px; }
+  .topbar-actions { width: auto; flex-wrap: nowrap; }
+  .mobile-nav { padding-top: 4px; }
+  .mobile-nav a { flex-direction: row; justify-content: center; min-height: 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
