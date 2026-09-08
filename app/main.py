@@ -334,7 +334,62 @@ async def get_resources(player_tag: str) -> PlayerResources:
 
 @app.get("/api/guides/{brawler_id}")
 async def get_brawler_guide(brawler_id: int) -> dict:
-    return brawler_guides.get(str(brawler_id), {})
+    guide = brawler_guides.get(str(brawler_id))
+    if not guide:
+        return {}
+
+    guide_copy = dict(guide)
+    useful_maps = [dict(m) for m in guide_copy.get("useful_maps", [])]
+
+    try:
+        events, _ = await events_service.get_events()
+        brawler_name = guide.get("name", "").strip().upper()
+        active_by_map = {e.event.map.strip().lower(): e for e in events}
+
+        meta_active_maps = []
+        for e in events:
+            top_picks = [p.strip().upper() for p in e.top_meta_picks]
+            map_name_norm = e.event.map.strip().lower()
+            if brawler_name in top_picks and map_name_norm not in [m["name"].strip().lower() for m in useful_maps]:
+                meta_active_maps.append({
+                    "id": e.event.id,
+                    "name": e.event.map,
+                    "mode": e.event.mode,
+                    "image_url": e.event.image_url or f"https://cdn.brawlify.com/maps/regular/{e.event.id}.png",
+                    "is_active": True,
+                    "slot_id": e.slot_id,
+                    "time_remaining_label": e.time_remaining_label,
+                    "time_remaining_seconds": e.time_remaining_seconds,
+                    "modifiers": e.modifiers,
+                })
+
+        for m in useful_maps:
+            active_event = active_by_map.get(m["name"].strip().lower())
+            if active_event:
+                m["is_active"] = True
+                m["slot_id"] = active_event.slot_id
+                m["time_remaining_label"] = active_event.time_remaining_label
+                m["time_remaining_seconds"] = active_event.time_remaining_seconds
+                m["modifiers"] = active_event.modifiers
+            else:
+                m["is_active"] = False
+
+        combined_maps = meta_active_maps + useful_maps
+        seen = set()
+        deduped = []
+        for item in combined_maps:
+            norm = item["name"].strip().lower()
+            if norm not in seen:
+                seen.add(norm)
+                deduped.append(item)
+
+        # Dynamic priority: active maps in live rotation first, followed by top all-time picks
+        deduped.sort(key=lambda x: (0 if x.get("is_active") else 1))
+        guide_copy["useful_maps"] = deduped[:4]
+    except Exception as exc:
+        logger.warning(f"Could not dynamically enrich useful_maps for brawler {brawler_id}: {exc}")
+
+    return guide_copy
 
 
 @app.get("/api/equipment")

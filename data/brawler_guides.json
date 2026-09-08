@@ -139,7 +139,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000010,
+        "name": "Gem Fort",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000010.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      }
+    ]
   },
   "16000017": {
     "id": 16000017,
@@ -281,7 +307,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      }
+    ]
   },
   "16000020": {
     "id": 16000020,
@@ -427,7 +479,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000021": {
     "id": 16000021,
@@ -569,7 +647,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      }
+    ]
   },
   "16000022": {
     "id": 16000022,
@@ -711,7 +815,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15000292,
+        "name": "Open Business",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000292.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000023": {
     "id": 16000023,
@@ -857,7 +987,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      }
+    ]
   },
   "16000024": {
     "id": 16000024,
@@ -998,7 +1154,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000025": {
     "id": 16000025,
@@ -1139,7 +1321,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000026": {
     "id": 16000026,
@@ -1285,7 +1493,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      }
+    ]
   },
   "16000027": {
     "id": 16000027,
@@ -1431,7 +1665,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000028": {
     "id": 16000028,
@@ -1573,7 +1833,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      }
+    ]
   },
   "16000029": {
     "id": 16000029,
@@ -1714,7 +2000,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000051,
+        "name": "Super Beach",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000051.png"
+      }
+    ]
   },
   "16000030": {
     "id": 16000030,
@@ -1860,7 +2172,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      }
+    ]
   },
   "16000031": {
     "id": 16000031,
@@ -2002,7 +2340,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      }
+    ]
   },
   "16000032": {
     "id": 16000032,
@@ -2148,7 +2512,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      }
+    ]
   },
   "16000034": {
     "id": 16000034,
@@ -2290,7 +2680,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000035": {
     "id": 16000035,
@@ -2431,7 +2847,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      }
+    ]
   },
   "16000036": {
     "id": 16000036,
@@ -2573,7 +3015,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000037": {
     "id": 16000037,
@@ -2715,7 +3183,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15000292,
+        "name": "Open Business",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000292.png"
+      },
+      {
+        "id": 15001317,
+        "name": "Belles Rock",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001317.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000039": {
     "id": 16000039,
@@ -2861,7 +3355,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000040": {
     "id": 16000040,
@@ -3009,7 +3529,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      }
+    ]
   },
   "16000041": {
     "id": 16000041,
@@ -3151,7 +3697,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000038": {
     "id": 16000038,
@@ -3297,7 +3869,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000000": {
     "id": 16000000,
@@ -3443,7 +4041,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15000950,
+        "name": "Feast or Famine",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000950.png"
+      }
+    ]
   },
   "16000001": {
     "id": 16000001,
@@ -3588,7 +4212,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      },
+      {
+        "id": 15000118,
+        "name": "Pinball Dreams",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000118.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      }
+    ]
   },
   "16000002": {
     "id": 16000002,
@@ -3734,7 +4384,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15000137,
+        "name": "Pit Stop",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000137.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000003": {
     "id": 16000003,
@@ -3879,7 +4555,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      }
+    ]
   },
   "16000004": {
     "id": 16000004,
@@ -4024,7 +4726,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000118,
+        "name": "Pinball Dreams",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000118.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      }
+    ]
   },
   "16000005": {
     "id": 16000005,
@@ -4170,7 +4898,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000006": {
     "id": 16000006,
@@ -4311,7 +5065,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000292,
+        "name": "Open Business",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000292.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      }
+    ]
   },
   "16000007": {
     "id": 16000007,
@@ -4453,7 +5233,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15000010,
+        "name": "Gem Fort",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000010.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      }
+    ]
   },
   "16000008": {
     "id": 16000008,
@@ -4598,7 +5404,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000009": {
     "id": 16000009,
@@ -4739,7 +5571,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000292,
+        "name": "Open Business",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000292.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15000137,
+        "name": "Pit Stop",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000137.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000010": {
     "id": 16000010,
@@ -4886,7 +5744,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000011": {
     "id": 16000011,
@@ -5032,7 +5916,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000118,
+        "name": "Pinball Dreams",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000118.png"
+      }
+    ]
   },
   "16000012": {
     "id": 16000012,
@@ -5178,7 +6088,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000013": {
     "id": 16000013,
@@ -5324,7 +6260,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      }
+    ]
   },
   "16000014": {
     "id": 16000014,
@@ -5469,7 +6431,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000015": {
     "id": 16000015,
@@ -5610,7 +6598,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000016": {
     "id": 16000016,
@@ -5752,7 +6766,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      }
+    ]
   },
   "16000018": {
     "id": 16000018,
@@ -5893,7 +6933,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15000137,
+        "name": "Pit Stop",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000137.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      }
+    ]
   },
   "16000042": {
     "id": 16000042,
@@ -6034,7 +7100,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000043": {
     "id": 16000043,
@@ -6180,7 +7272,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      }
+    ]
   },
   "16000044": {
     "id": 16000044,
@@ -6321,7 +7439,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000045": {
     "id": 16000045,
@@ -6462,7 +7606,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000046": {
     "id": 16000046,
@@ -6603,7 +7773,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001317,
+        "name": "Belles Rock",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001317.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      }
+    ]
   },
   "16000047": {
     "id": 16000047,
@@ -6744,7 +7940,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      }
+    ]
   },
   "16000048": {
     "id": 16000048,
@@ -6885,7 +8107,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000292,
+        "name": "Open Business",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000292.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001317,
+        "name": "Belles Rock",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001317.png"
+      }
+    ]
   },
   "16000049": {
     "id": 16000049,
@@ -7026,7 +8274,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15000950,
+        "name": "Feast or Famine",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000950.png"
+      }
+    ]
   },
   "16000050": {
     "id": 16000050,
@@ -7171,7 +8445,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      }
+    ]
   },
   "16000051": {
     "id": 16000051,
@@ -7313,7 +8613,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      }
+    ]
   },
   "16000052": {
     "id": 16000052,
@@ -7459,7 +8785,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      }
+    ]
   },
   "16000053": {
     "id": 16000053,
@@ -7600,7 +8952,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000054": {
     "id": 16000054,
@@ -7741,7 +9119,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000118,
+        "name": "Pinball Dreams",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000118.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      }
+    ]
   },
   "16000056": {
     "id": 16000056,
@@ -7883,7 +9287,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      }
+    ]
   },
   "16000057": {
     "id": 16000057,
@@ -8024,7 +9454,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      }
+    ]
   },
   "16000058": {
     "id": 16000058,
@@ -8166,7 +9622,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000059": {
     "id": 16000059,
@@ -8307,7 +9789,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000060": {
     "id": 16000060,
@@ -8448,7 +9956,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000061": {
     "id": 16000061,
@@ -8594,7 +10128,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000062": {
     "id": 16000062,
@@ -8735,7 +10295,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      }
+    ]
   },
   "16000063": {
     "id": 16000063,
@@ -8876,7 +10462,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000064": {
     "id": 16000064,
@@ -9017,7 +10629,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      }
+    ]
   },
   "16000065": {
     "id": 16000065,
@@ -9158,7 +10796,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000703,
+        "name": "New Horizons",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000703.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000066": {
     "id": 16000066,
@@ -9299,7 +10963,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      }
+    ]
   },
   "16000067": {
     "id": 16000067,
@@ -9440,7 +11130,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000068": {
     "id": 16000068,
@@ -9580,7 +11296,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000051,
+        "name": "Super Beach",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000051.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      }
+    ]
   },
   "16000069": {
     "id": 16000069,
@@ -9721,7 +11463,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      }
+    ]
   },
   "16000070": {
     "id": 16000070,
@@ -9862,7 +11630,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15000950,
+        "name": "Feast or Famine",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000950.png"
+      }
+    ]
   },
   "16000071": {
     "id": 16000071,
@@ -10003,7 +11797,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000072": {
     "id": 16000072,
@@ -10144,7 +11964,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      }
+    ]
   },
   "16000073": {
     "id": 16000073,
@@ -10290,7 +12136,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15000137,
+        "name": "Pit Stop",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000137.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      }
+    ]
   },
   "16000074": {
     "id": 16000074,
@@ -10431,7 +12303,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000075": {
     "id": 16000075,
@@ -10572,7 +12470,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      }
+    ]
   },
   "16000076": {
     "id": 16000076,
@@ -10713,7 +12637,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000077": {
     "id": 16000077,
@@ -10854,7 +12804,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000292,
+        "name": "Open Business",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000292.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      }
+    ]
   },
   "16000078": {
     "id": 16000078,
@@ -10995,7 +12971,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      }
+    ]
   },
   "16000079": {
     "id": 16000079,
@@ -11136,7 +13138,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000080": {
     "id": 16000080,
@@ -11277,7 +13305,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000081": {
     "id": 16000081,
@@ -11418,7 +13472,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      }
+    ]
   },
   "16000082": {
     "id": 16000082,
@@ -11559,7 +13639,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      }
+    ]
   },
   "16000083": {
     "id": 16000083,
@@ -11700,7 +13806,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      }
+    ]
   },
   "16000084": {
     "id": 16000084,
@@ -11841,7 +13973,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000085": {
     "id": 16000085,
@@ -11982,7 +14140,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      }
+    ]
   },
   "16000086": {
     "id": 16000086,
@@ -12128,7 +14312,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      }
+    ]
   },
   "16000087": {
     "id": 16000087,
@@ -12269,7 +14479,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000292,
+        "name": "Open Business",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000292.png"
+      },
+      {
+        "id": 15001317,
+        "name": "Belles Rock",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001317.png"
+      },
+      {
+        "id": 15000010,
+        "name": "Gem Fort",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000010.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      }
+    ]
   },
   "16000089": {
     "id": 16000089,
@@ -12410,7 +14646,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000090": {
     "id": 16000090,
@@ -12551,7 +14813,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000293,
+        "name": "Parallel Plays",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+      }
+    ]
   },
   "16000091": {
     "id": 16000091,
@@ -12692,7 +14980,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      }
+    ]
   },
   "16000092": {
     "id": 16000092,
@@ -12833,7 +15147,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000093": {
     "id": 16000093,
@@ -12974,7 +15314,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      }
+    ]
   },
   "16000094": {
     "id": 16000094,
@@ -13115,7 +15481,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000095": {
     "id": 16000095,
@@ -13256,7 +15648,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      }
+    ]
   },
   "16000096": {
     "id": 16000096,
@@ -13397,7 +15815,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15000053,
+        "name": "Hot Potato",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+      }
+    ]
   },
   "16000097": {
     "id": 16000097,
@@ -13538,7 +15982,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000098": {
     "id": 16000098,
@@ -13679,7 +16149,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000018,
+        "name": "Kaboom Canyon",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+      }
+    ]
   },
   "16000099": {
     "id": 16000099,
@@ -13819,7 +16315,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000100": {
     "id": 16000100,
@@ -13960,7 +16482,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000101": {
     "id": 16000101,
@@ -14101,7 +16649,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      }
+    ]
   },
   "16000102": {
     "id": 16000102,
@@ -14242,7 +16816,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000103": {
     "id": 16000103,
@@ -14383,7 +16983,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001239,
+        "name": "Skull Creek",
+        "mode": "Showdown",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      }
+    ]
   },
   "16000104": {
     "id": 16000104,
@@ -14524,7 +17150,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000019,
+        "name": "Safe Zone",
+        "mode": "Heist",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+      }
+    ]
   },
   "16000105": {
     "id": 16000105,
@@ -14665,7 +17317,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   },
   "16000106": {
     "id": 16000106,
@@ -14805,7 +17483,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15000051,
+        "name": "Super Beach",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000051.png"
+      },
+      {
+        "id": 15000440,
+        "name": "Flaring Phoenix",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+      }
+    ]
   },
   "16000107": {
     "id": 16000107,
@@ -14946,7 +17650,33 @@
         "url": "https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000082,
+        "name": "Layer Cake",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      },
+      {
+        "id": 15001320,
+        "name": "Double Swoosh",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+      },
+      {
+        "id": 15001311,
+        "name": "Sneaky Fields",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+      }
+    ]
   },
   "16000108": {
     "id": 16000108,
@@ -15087,6 +17817,32 @@
         "url": "https://brawlify.com/brawlers/detail/Wendy"
       }
     ],
-    "verified_at": "2026-08-31"
+    "verified_at": "2026-08-31",
+    "useful_maps": [
+      {
+        "id": 15000132,
+        "name": "Center Stage",
+        "mode": "Brawl Ball",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15001319,
+        "name": "Hard Rock Mine",
+        "mode": "Gem Grab",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+      },
+      {
+        "id": 15001316,
+        "name": "Goldarm Gulch",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+      }
+    ]
   }
 }

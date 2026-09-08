@@ -1,0 +1,164 @@
+{
+  "15001311": {
+    "id": 15001311,
+    "name": "Sneaky Fields",
+    "mode": "Brawl Ball",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001311.png"
+  },
+  "15001320": {
+    "id": 15001320,
+    "name": "Double Swoosh",
+    "mode": "Gem Grab",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001320.png"
+  },
+  "15000132": {
+    "id": 15000132,
+    "name": "Center Stage",
+    "mode": "Brawl Ball",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000132.png"
+  },
+  "15001319": {
+    "id": 15001319,
+    "name": "Hard Rock Mine",
+    "mode": "Gem Grab",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001319.png"
+  },
+  "15001316": {
+    "id": 15001316,
+    "name": "Goldarm Gulch",
+    "mode": "Knockout",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
+  },
+  "15001317": {
+    "id": 15001317,
+    "name": "Belles Rock",
+    "mode": "Knockout",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001317.png"
+  },
+  "15001318": {
+    "id": 15001318,
+    "name": "Out In The Open",
+    "mode": "Knockout",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+  },
+  "15000440": {
+    "id": 15000440,
+    "name": "Flaring Phoenix",
+    "mode": "Knockout",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000440.png"
+  },
+  "15000703": {
+    "id": 15000703,
+    "name": "New Horizons",
+    "mode": "Knockout",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000703.png"
+  },
+  "15000306": {
+    "id": 15000306,
+    "name": "Dueling Beetles",
+    "mode": "Hot Zone",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+  },
+  "15000300": {
+    "id": 15000300,
+    "name": "Ring of Fire",
+    "mode": "Hot Zone",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+  },
+  "15000292": {
+    "id": 15000292,
+    "name": "Open Business",
+    "mode": "Hot Zone",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000292.png"
+  },
+  "15000293": {
+    "id": 15000293,
+    "name": "Parallel Plays",
+    "mode": "Hot Zone",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000293.png"
+  },
+  "15000005": {
+    "id": 15000005,
+    "name": "Shooting Star",
+    "mode": "Bounty",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+  },
+  "15000082": {
+    "id": 15000082,
+    "name": "Layer Cake",
+    "mode": "Bounty",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000082.png"
+  },
+  "15000019": {
+    "id": 15000019,
+    "name": "Safe Zone",
+    "mode": "Heist",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000019.png"
+  },
+  "15000053": {
+    "id": 15000053,
+    "name": "Hot Potato",
+    "mode": "Heist",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000053.png"
+  },
+  "15000018": {
+    "id": 15000018,
+    "name": "Kaboom Canyon",
+    "mode": "Heist",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000018.png"
+  },
+  "15000137": {
+    "id": 15000137,
+    "name": "Pit Stop",
+    "mode": "Heist",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000137.png"
+  },
+  "15000118": {
+    "id": 15000118,
+    "name": "Pinball Dreams",
+    "mode": "Brawl Ball",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000118.png"
+  },
+  "15001312": {
+    "id": 15001312,
+    "name": "Triple Dribble",
+    "mode": "Brawl Ball",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001312.png"
+  },
+  "15000051": {
+    "id": 15000051,
+    "name": "Super Beach",
+    "mode": "Brawl Ball",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000051.png"
+  },
+  "15000144": {
+    "id": 15000144,
+    "name": "Sunny Soccer",
+    "mode": "Brawl Ball",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000144.png"
+  },
+  "15000010": {
+    "id": 15000010,
+    "name": "Gem Fort",
+    "mode": "Gem Grab",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000010.png"
+  },
+  "15001321": {
+    "id": 15001321,
+    "name": "Undermine",
+    "mode": "Gem Grab",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001321.png"
+  },
+  "15001239": {
+    "id": 15001239,
+    "name": "Skull Creek",
+    "mode": "Showdown",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15001239.png"
+  },
+  "15000950": {
+    "id": 15000950,
+    "name": "Feast or Famine",
+    "mode": "Showdown",
+    "image_url": "https://cdn.brawlify.com/maps/regular/15000950.png"
+  }
+}

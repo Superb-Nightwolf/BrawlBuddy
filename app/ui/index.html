@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=62">
+  <link rel="stylesheet" href="/assets/styles.css?v=68">
 </head>
 <body>
   <div class="app-shell">
@@ -44,12 +44,11 @@
             </a>
           </div>
           <p id="page-eyebrow" class="eyebrow">BRAWL COMMAND CENTER</p>
-          <h1 id="page-title">Command HQ: <span id="welcome-name">Brawler</span></h1>
+          <h1 id="page-title">Command HQ</h1>
           <p id="page-subtitle" class="page-subtitle">Track live trophy milestones, max out your brawlers, and dominate the arena with smart upgrades.</p>
         </div>
         <div class="topbar-actions">
-          <span id="api-status" class="status-pill"><i></i><span>Checking API</span></span>
-          <button id="share-card-btn" class="subtle-button" type="button"><span>🎴</span> Share Card</button>
+          <button id="header-back-btn" class="subtle-button header-back-btn" type="button" aria-label="Go back"><span>←</span> Back</button>
           <button id="connect-button" class="primary-button" type="button"><span>＋</span> Connect tag</button>
         </div>
       </header>
@@ -673,7 +672,6 @@
       </section>
 
       <section id="detail-view" class="view hidden">
-        <a class="back-link" href="/brawlers">← Back to all brawlers</a>
         <div class="detail-hero panel">
           <div class="detail-art">
             <div class="detail-burst" aria-hidden="true"></div>
@@ -825,6 +823,16 @@
                 </div>
                 <div id="mode-list" class="mode-list"></div>
               </div>
+            </article>
+            <article class="guide-fact-card useful-maps-panel">
+              <div class="useful-maps-header">
+                <div class="field-notes-header header-maps">
+                  <span class="field-header-accent"></span>
+                  <h3>Useful maps</h3>
+                </div>
+                <span class="recommended-arenas-badge">RECOMMENDED ARENAS</span>
+              </div>
+              <div id="useful-maps-grid" class="useful-maps-grid"></div>
             </article>
           </div>
         </section>
@@ -997,46 +1005,6 @@
     </div>
   </dialog>
 
-  <!-- Shareable Brawler Card Dialog -->
-  <dialog id="share-dialog" class="share-dialog">
-    <div class="share-shell">
-      <button id="share-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
-      <p class="eyebrow">COMMAND CARD EXPORT</p>
-      <h2>Brawl Stars Brawler Card</h2>
-      <div id="share-card-canvas-wrap" class="share-card-preview">
-        <div class="share-card-inner">
-          <div class="share-hero-burst"></div>
-          <div class="share-top">
-            <div class="share-avatar-frame">
-              <img id="share-avatar-img" src="/assets/brawlers/16000000.png" alt="Avatar">
-            </div>
-            <div class="share-player-info">
-              <span id="share-tier-pill" class="prestige-tier-badge">⚡ MYTHIC CHAMPION</span>
-              <h3 id="share-player-name">Nova</h3>
-              <p><span id="share-player-tag">#2PP</span> • <strong id="share-club-name">Starrbound</strong></p>
-            </div>
-          </div>
-          <div class="share-stats-row">
-            <div><small>CURRENT</small><strong id="share-trophies">28,476 ★</strong></div>
-            <div><small>PEAK</small><strong id="share-highest">29,120 ★</strong></div>
-            <div><small>VICTORIES</small><strong id="share-victories">10,093 ⚔</strong></div>
-            <div><small>BRAWLERS</small><strong id="share-brawlers">13 / 106</strong></div>
-          </div>
-          <div class="share-footer-brand">
-            <div class="share-brand-lockup">
-              <img src="/assets/app-logo.png" alt="" class="share-brand-icon">
-              <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="share-brand-text">
-            </div>
-            <small>brawlbuddy.app</small>
-          </div>
-        </div>
-      </div>
-      <div class="share-actions">
-        <button id="copy-share-btn" class="primary-button" type="button">📋 Copy Brawler Summary</button>
-      </div>
-    </div>
-  </dialog>
-
   <dialog id="connect-dialog" class="connect-dialog">
     <div class="dialog-shell">
       <button id="dialog-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
@@ -1056,9 +1024,35 @@
         <span>•</span>
         <button id="load-demo-club" class="text-button" type="button">Explore Demo Club</button>
       </div>
-      <small>Live lookup uses your server API token. Public brawler and club data is cached briefly.</small>
+      <small>Public brawler and club data is cached briefly.</small>
     </div>
   </dialog>
-  <script src="/assets/app.js?v=75" defer></script>
+
+  <!-- Desktop Map Hover Preview -->
+  <div id="map-hover-preview" class="map-hover-preview hidden" aria-hidden="true">
+    <div class="map-hover-img-wrap">
+      <img id="map-hover-img" src="" alt="Map preview">
+    </div>
+    <div class="map-hover-footer">
+      <span id="map-hover-title" class="map-hover-title"></span>
+    </div>
+  </div>
+
+  <!-- Mobile Map Preview Dialog -->
+  <dialog id="map-preview-dialog" class="map-preview-dialog" aria-label="Map Details">
+    <div class="dialog-shell map-dialog-shell">
+      <button id="map-dialog-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
+      <div class="map-dialog-img-frame">
+        <img id="map-dialog-img" src="" alt="Enlarged map">
+      </div>
+      <div class="map-dialog-body">
+        <span id="map-dialog-mode" class="map-card-mode"></span>
+        <h2 id="map-dialog-name"></h2>
+        <a id="map-dialog-events-btn" class="primary-button wide" href="/events">VIEW IN ROTATION <span>→</span></a>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="/assets/app.js?v=82" defer></script>
 </body>
 </html>

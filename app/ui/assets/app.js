@@ -176,24 +176,21 @@ function pageFromPath() {
 function configurePage() {
   state.page = pageFromPath();
   const copy = {
-    overview: ['BRAWL COMMAND CENTER', `Command HQ: <span id="welcome-name">${state.player?.name || 'Brawler'}</span>`, `Holding ${format(state.player?.trophies)} trophies across ${state.player?.brawlers?.length || 0} brawlers • ${format(state.analytics?.total_victories || 0)} victories • Next tier: ${format(state.analytics?.next_trophy_milestone || 0)} ★`],
+    overview: ['BRAWL COMMAND CENTER', 'Command HQ', `Holding ${format(state.player?.trophies)} trophies across ${state.player?.brawlers?.length || 0} brawlers • ${format(state.analytics?.total_victories || 0)} victories • Next tier: ${format(state.analytics?.next_trophy_milestone || 0)} ★`],
     battles: ['ARENA TELEMETRY', 'Battle Log & Recreator', 'Inspect your 25 recent arena encounters with interactive 2D tactical breakdowns.'],
     events: ['LIVE ROTATION & MAPS', 'Event Rotation', 'Active modes, countdown timers, modifiers, and curated meta brawler picks.'],
     leaderboards: ['HALL OF CHAMPIONS', 'Leaderboards', 'Top 200 global & regional players and clubs with 1-click inspection.'],
     brawlers: ['ROSTER LAB', 'Brawlers', 'Filter every exact power level and inspect your owned loadouts.'],
     club: ['🛡 ALLIANCE COMMAND CENTER', `Club Hub: ${state.club?.name || 'Alliance'}`, 'Inspect club roster, roles, trophy requirements, and syndicate power.'],
-    detail: ['BRAWLER GUIDE', 'Brawler Details', 'Combat guidance, power journey, and account readiness.'],
+    detail: ['BRAWLER GUIDE', '', 'Combat guidance, power journey, and account readiness.'],
     error: ['⚠️ ARENA OUTPOST', 'Lost in the Arena', 'Page or tag not found in the Brawl Stars database.'],
   }[state.page] || ['⚡ BRAWL COMMAND CENTER', 'Overview', 'Progression companion.'];
 
   setText('page-eyebrow', copy[0]);
   const title = $('page-title');
   if (title) {
-    if (state.page === 'overview') {
-      title.innerHTML = copy[1];
-    } else {
-      title.textContent = copy[1];
-    }
+    title.textContent = copy[1];
+    title.classList.toggle('hidden', !copy[1]);
   }
   setText('page-subtitle', copy[2]);
 
@@ -252,18 +249,8 @@ async function loadStatus() {
   try {
     const status = await request('/api/status');
     renderContentUpdated(status.content_last_updated);
-    const badge = $('api-status');
-    if (badge) {
-      badge.classList.add(status.live_api_configured ? 'live' : 'offline');
-      const span = badge.querySelector('span');
-      if (span) span.textContent = status.live_api_configured ? 'API token configured' : 'Demo mode';
-    }
   } catch {
-    const badge = $('api-status');
-    if (badge) {
-      const span = badge.querySelector('span');
-      if (span) span.textContent = 'Service offline';
-    }
+    // Service status handled gracefully
   }
 }
 
@@ -495,7 +482,7 @@ function renderAccount(payload) {
   if (state.page === 'overview') {
     const title = $('page-title');
     if (title) {
-      title.innerHTML = `Command HQ: <span id="welcome-name">${payload.player.name}</span>`;
+      title.textContent = 'Command HQ';
     }
     setText('page-subtitle', `Holding ${format(payload.player.trophies)} trophies across ${payload.player.brawlers.length} brawlers • ${format(state.analytics.total_victories)} victories • Next tier: ${format(state.analytics.next_trophy_milestone)} ★`);
   }
@@ -545,15 +532,6 @@ function renderAccount(payload) {
     prestigeBadge.textContent = `⚡ ${(state.analytics.prestige_tier || 'CHAMPION').toUpperCase()}`;
   }
 
-  // Update share dialog data
-  setText('share-player-name', payload.player.name);
-  setText('share-player-tag', payload.player.tag);
-  setText('share-club-name', payload.player.club?.name || 'No Club');
-  setText('share-trophies', `${format(payload.player.trophies)} ★`);
-  setText('share-highest', `${format(payload.player.highest_trophies)} ★`);
-  setText('share-victories', `${format(state.analytics.total_victories)} ⚔`);
-  setText('share-brawlers', `${payload.player.brawlers.length} / ${state.catalog.length || 106}`);
-  setImgSrc('share-avatar-img', brawlerMascotSrc, iconSrc);
 
   // Visual modules
   renderArchetypeStrip(state.analytics, payload.player);
@@ -1082,6 +1060,7 @@ function renderEvents() {
   state.events.forEach((slot) => {
     const card = document.createElement('article');
     card.className = 'event-card panel';
+    card.dataset.mapName = slot.event.map;
     const icon = uiIconMarkup('modes', slot.event.mode, 'mode-icon-img');
     const displayMode = modeLabel(slot.event.mode);
 
@@ -1113,6 +1092,27 @@ function renderEvents() {
     `;
     holder.append(card);
   });
+
+  const urlParams = new URLSearchParams(location.search);
+  const targetMap = urlParams.get('map');
+  if (targetMap) {
+    const normTarget = targetMap.trim().toLowerCase();
+    const cards = holder.querySelectorAll('.event-card');
+    let matchedCard = null;
+    cards.forEach((c) => {
+      if ((c.dataset.mapName || '').toLowerCase() === normTarget) {
+        matchedCard = c;
+      }
+    });
+
+    if (matchedCard) {
+      setTimeout(() => {
+        matchedCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        matchedCard.classList.add('event-card-highlighted');
+        setTimeout(() => matchedCard.classList.remove('event-card-highlighted'), 3000);
+      }, 150);
+    }
+  }
 }
 
 function renderMetaTierlist() {
@@ -1228,7 +1228,7 @@ function renderClub(payload) {
 
   const title = $('page-title');
   if (title) {
-    title.innerHTML = `🛡 Alliance HQ: <span id="welcome-club-name">${payload.club.name}</span> <span id="welcome-club-tier" class="topbar-tier-pill">⚡ ${(state.clubAnalytics.prestige_tier || 'ALLIANCE').toUpperCase()}</span>`;
+    title.textContent = 'Club Hub';
   }
   setText('page-subtitle', `${payload.club.name} (${payload.club.tag}) • ${payload.club.members.length}/30 Members • ${format(payload.club.trophies)} Total Club Trophies • Min ${format(payload.club.required_trophies)} ★`);
 
@@ -2402,7 +2402,195 @@ function renderGuideProfile(guide, brawler) {
       modes.append(chip);
     });
   }
+
+  renderUsefulMaps(guide);
 }
+
+function renderUsefulMaps(guide) {
+  const grid = $('useful-maps-grid');
+  if (!grid) return;
+  grid.replaceChildren();
+
+  const maps = guide?.useful_maps || [];
+  const panel = grid.closest('.useful-maps-panel');
+  if (!maps.length) {
+    if (panel) panel.style.display = 'none';
+    return;
+  }
+  if (panel) panel.style.display = '';
+
+  const hoverPreview = $('map-hover-preview');
+  const hoverImg = $('map-hover-img');
+  const hoverTitle = $('map-hover-title');
+
+  const dialog = $('map-preview-dialog');
+  const dialogImg = $('map-dialog-img');
+  const dialogName = $('map-dialog-name');
+  const dialogMode = $('map-dialog-mode');
+  const dialogEventsBtn = $('map-dialog-events-btn');
+  const dialogCloseBtn = $('map-dialog-close-btn');
+
+  if (dialogCloseBtn && dialog && !dialogCloseBtn.dataset.bound) {
+    dialogCloseBtn.dataset.bound = 'true';
+    dialogCloseBtn.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  }
+
+  const hideHoverPreview = () => {
+    if (hoverPreview) {
+      hoverPreview.classList.add('hidden');
+      hoverPreview.setAttribute('aria-hidden', 'true');
+    }
+  };
+
+  // Ensure hover preview hides on page scroll
+  window.removeEventListener('scroll', hideHoverPreview, { passive: true });
+  window.addEventListener('scroll', hideHoverPreview, { passive: true });
+
+  maps.forEach((m) => {
+    const card = document.createElement('a');
+    card.className = 'useful-map-card';
+    card.href = `/events?map=${encodeURIComponent(m.name)}`;
+    card.setAttribute('aria-label', `${m.name} in ${m.mode}`);
+    card.dataset.mapName = m.name;
+    card.dataset.mapMode = m.mode;
+    card.dataset.mapUrl = m.image_url;
+
+    const thumbFrame = document.createElement('div');
+    thumbFrame.className = 'map-thumb-frame';
+    thumbFrame.title = 'Tap to enlarge map';
+
+    const thumbImg = document.createElement('img');
+    thumbImg.className = 'map-thumb-img';
+    thumbImg.src = m.image_url;
+    thumbImg.alt = `${m.name} preview`;
+    thumbImg.loading = 'lazy';
+    thumbImg.onerror = () => {
+      thumbImg.src = '/assets/player-mascot.png';
+    };
+    thumbFrame.append(thumbImg);
+
+    if (m.is_active) {
+      card.classList.add('useful-map-card-active');
+    }
+
+    const info = document.createElement('div');
+    info.className = 'map-card-info';
+
+    const nameEl = document.createElement('span');
+    nameEl.className = 'map-card-name';
+    nameEl.textContent = m.name;
+
+    const modeRow = document.createElement('div');
+    modeRow.className = 'map-card-mode-row';
+
+    const modeEl = document.createElement('span');
+    modeEl.className = 'map-card-mode';
+    modeEl.textContent = m.mode;
+    modeRow.append(modeEl);
+
+    if (m.is_active) {
+      const liveBadge = document.createElement('span');
+      liveBadge.className = 'map-live-status';
+      liveBadge.innerHTML = `<span class="live-dot-green"></span><span>LIVE${m.time_remaining_label ? ` (${m.time_remaining_label})` : ''}</span>`;
+      modeRow.append(liveBadge);
+    }
+
+    info.append(nameEl, modeRow);
+    card.append(thumbFrame, info);
+
+    const updatePreviewPosition = () => {
+      if (!hoverPreview || !hoverImg || !hoverTitle) return;
+      hoverImg.src = m.image_url;
+      hoverTitle.innerHTML = `${m.name}${m.is_active ? `<span class="map-hover-live-tag"><span class="live-dot-green"></span>Active Slot #${m.slot_id} • ${m.time_remaining_label || 'Live'}</span>` : ''}`;
+
+      const rect = card.getBoundingClientRect();
+      const previewWidth = 210;
+      const previewHeight = 315;
+
+      let left = rect.left + (rect.width / 2) - (previewWidth / 2);
+      let top = rect.top - previewHeight - 12; // float above by default
+
+      // Viewport boundary detection: flip below if clipped at top
+      if (top < 12) {
+        top = rect.bottom + 12;
+      }
+
+      // Horizontal clamp within viewport
+      if (left < 12) {
+        left = 12;
+      } else if (left + previewWidth > window.innerWidth - 12) {
+        left = window.innerWidth - previewWidth - 12;
+      }
+
+      hoverPreview.style.left = `${Math.round(left)}px`;
+      hoverPreview.style.top = `${Math.round(top)}px`;
+      hoverPreview.classList.remove('hidden');
+      hoverPreview.setAttribute('aria-hidden', 'false');
+    };
+
+    // Desktop hover events
+    card.addEventListener('mouseenter', updatePreviewPosition);
+    card.addEventListener('mousemove', updatePreviewPosition);
+    card.addEventListener('mouseleave', hideHoverPreview);
+    card.addEventListener('click', hideHoverPreview);
+
+    // Mobile / touch interactions: tap on thumbnail opens preview dialog without breaking navigation
+    thumbFrame.addEventListener('click', (e) => {
+      const isTouch = window.matchMedia('(hover: none)').matches || ('ontouchstart' in window);
+      if (isTouch && dialog) {
+        e.preventDefault();
+        e.stopPropagation();
+        hideHoverPreview();
+        if (dialogImg) dialogImg.src = m.image_url;
+        if (dialogName) dialogName.textContent = m.name;
+        if (dialogMode) {
+          dialogMode.innerHTML = `${m.mode}${m.is_active ? ` • <span class="map-live-status"><span class="live-dot-green"></span>LIVE NOW (${m.time_remaining_label || 'Active'})</span>` : ''}`;
+        }
+        if (dialogEventsBtn) dialogEventsBtn.href = `/events?map=${encodeURIComponent(m.name)}`;
+        dialog.showModal();
+      }
+    });
+
+    grid.append(card);
+  });
+}
+
+let detailRefreshTimer = null;
+function setupDetailAutoRefresh(id) {
+  if (detailRefreshTimer) clearInterval(detailRefreshTimer);
+  detailRefreshTimer = setInterval(async () => {
+    if (state.page !== 'detail') {
+      clearInterval(detailRefreshTimer);
+      detailRefreshTimer = null;
+      return;
+    }
+    try {
+      const refreshedGuide = await request(`/api/guides/${id}`);
+      if (refreshedGuide && refreshedGuide.useful_maps) {
+        renderUsefulMaps(refreshedGuide);
+      }
+    } catch {
+      // quiet background refresh
+    }
+  }, 45000);
+}
+
+document.addEventListener('visibilitychange', async () => {
+  if (document.visibilityState === 'visible' && state.page === 'detail') {
+    const id = Number(location.pathname.split('/').filter(Boolean).pop());
+    if (id) {
+      try {
+        const refreshedGuide = await request(`/api/guides/${id}`);
+        if (refreshedGuide && refreshedGuide.useful_maps) {
+          renderUsefulMaps(refreshedGuide);
+        }
+      } catch {}
+    }
+  }
+});
 
 function renderDetailArtwork(brawler) {
   const stage = $('hero-art-stage');
@@ -2447,7 +2635,8 @@ async function renderDetail() {
   hideNotice();
   let guide = {};
   try { guide = await request(`/api/guides/${id}`); } catch { guide = {}; }
-  setText('page-title', `${brawler.name} guide`);
+  setText('page-title', '');
+  $('page-title')?.classList.add('hidden');
   setText('detail-name', brawler.name);
   
   const rawRarity = (guide.rarity || brawler.rarity || 'common').toLowerCase().replace(/\s+/g, '_');
@@ -2568,6 +2757,8 @@ async function renderDetail() {
       sources.append(link);
     });
   }
+
+  setupDetailAutoRefresh(id);
 }
 
 function updateDetailReadiness(brawler, guide) {
@@ -3216,18 +3407,24 @@ function bindEvents() {
 
   $('dialog-close-btn')?.addEventListener('click', () => $('connect-dialog')?.close());
   $('recreator-close-btn')?.addEventListener('click', () => $('recreator-dialog')?.close());
-  $('share-close-btn')?.addEventListener('click', () => $('share-dialog')?.close());
-
-  $('share-card-btn')?.addEventListener('click', () => $('share-dialog')?.showModal());
-
-  $('copy-share-btn')?.addEventListener('click', (e) => {
-    const p = state.player;
-    if (!p) return;
-    const text = `🏆 BrawlBuddy Brawler Summary: ${p.name} (${p.tag})\n★ Trophies: ${format(p.trophies)} (Peak: ${format(p.highest_trophies)})\n⚔ Victories: ${format(state.analytics?.total_victories || 0)}\n🛡 Club: ${p.club?.name || 'None'}\n⚡ Tier: ${state.analytics?.prestige_tier || 'Mythic Champion'}`;
-    navigator.clipboard.writeText(text);
-    const btn = e.currentTarget;
-    btn.textContent = 'Summary Copied to Clipboard! ✓';
-    setTimeout(() => { btn.textContent = '📋 Copy Brawler Summary'; }, 1800);
+  $('header-back-btn')?.addEventListener('click', () => {
+    if (state.page === 'detail') {
+      history.pushState({ path: '/brawlers' }, '', '/brawlers');
+      window.scrollTo(0, 0);
+      handleRoute({ isPop: false });
+      return;
+    }
+    if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
+      window.history.back();
+      return;
+    }
+    if (state.page !== 'overview') {
+      history.pushState({ path: '/' }, '', '/');
+      window.scrollTo(0, 0);
+      handleRoute({ isPop: false });
+      return;
+    }
+    window.history.back();
   });
 
   // Battle filters
