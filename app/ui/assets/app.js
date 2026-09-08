@@ -1976,7 +1976,7 @@ function cardFor(brawler) {
     prestigeWrap.append(emblemImage);
 
     const levelChip = document.createElement('div'); levelChip.className = 'brawler-stat-chip level-chip'; levelChip.title = `${brawler.name}: Level ${brawler.power}`;
-    levelChip.innerHTML = `<div class="level-chip-row"><span class="level-chip-tag">LVL</span><span class="level-chip-val">${brawler.power}</span></div><span class="level-chip-lbl">LEVEL</span>`;
+    levelChip.innerHTML = `<span class="level-chip-val">${brawler.power}</span><span class="level-chip-lbl">LEVEL</span>`;
 
     progRow.append(trophyChip, prestigeWrap, levelChip);
     nameBlock.append(progRow);
