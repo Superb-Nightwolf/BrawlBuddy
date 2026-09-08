@@ -698,7 +698,7 @@ function renderFlagshipLoadouts(loadouts) {
       <div class="flagship-head">
         <div class="flagship-visual">
           <img src="${brawlerImage(brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png'" alt="${brawler.name}">
-          <span class="power-badge power-${brawler.power}">L${brawler.power}</span>
+          <span class="power-badge power-${brawler.power}">LVL${brawler.power}</span>
         </div>
         <div class="flagship-title">
           <strong>${brawler.name}</strong>
@@ -1953,7 +1953,7 @@ function cardFor(brawler) {
   const frameBox = document.createElement('div'); frameBox.className = 'brawler-frame-box';
   addImageWithFallback(frameBox, brawler, 'brawler-image');
   visual.append(frameBox);
-  const badge = document.createElement('span'); badge.className = `power-badge ${brawler.owned ? `power-${brawler.power}` : 'locked'}`; badge.textContent = brawler.owned ? `L${brawler.power}` : 'LOCKED'; visual.append(badge);
+  const badge = document.createElement('span'); badge.className = `power-badge ${brawler.owned ? `power-${brawler.power}` : 'locked'} rarity-${rarityClass || 'common'}`; badge.textContent = brawler.owned ? `LVL${brawler.power}` : 'LOCKED'; visual.append(badge);
   if (brawler.owned) {
     const prestige = getPrestigeState(brawler);
     const emblem = document.createElement('span'); emblem.className = 'prestige-card-emblem'; emblem.title = `${brawler.name}: ${prestige.label}`;
