@@ -1859,7 +1859,6 @@ a { color: inherit; }
 .matchups-toggle-btn[aria-expanded="true"] .matchups-toggle-chevron {
   transform: rotate(180deg);
 }
-}
 
 .footer-container, .site-footer { display: flex; align-items: center; margin-top: 36px; margin-bottom: 20px; padding: 24px 28px; border: 1.5px solid rgba(255, 255, 255, 0.16); border-radius: 20px; background: linear-gradient(135deg, rgba(8, 25, 66, 0.94) 0%, rgba(12, 38, 92, 0.9) 100%); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(2, 10, 32, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.16); box-sizing: border-box; color: #c4d8f2; position: relative; }
 .footer-layout { display: flex; align-items: center; width: 100%; box-sizing: border-box; }
