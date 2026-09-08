@@ -1953,11 +1953,8 @@ function cardFor(brawler) {
   const frameBox = document.createElement('div'); frameBox.className = 'brawler-frame-box';
   addImageWithFallback(frameBox, brawler, 'brawler-image');
   visual.append(frameBox);
-  const badge = document.createElement('span'); badge.className = `power-badge level-card-badge ${brawler.owned ? `power-${brawler.power}` : 'locked'} rarity-${rarityClass || 'common'}`; badge.textContent = brawler.owned ? `LVL${brawler.power}` : 'LOCKED'; visual.append(badge);
-  if (brawler.owned) {
-    const trophyEmblem = document.createElement('span'); trophyEmblem.className = `trophy-card-emblem power-badge rarity-${rarityClass || 'common'}`; trophyEmblem.title = `${brawler.name}: ${format(brawler.trophies)} Trophies`;
-    trophyEmblem.innerHTML = `<div class="trophy-badge-row"><img class="trophy-badge-img" src="/assets/icon_trophy.png" alt="Trophy" /><span class="trophy-badge-val">${format(brawler.trophies)}</span></div><span class="trophy-badge-lbl">TROPHIES</span>`;
-    visual.append(trophyEmblem);
+  if (!brawler.owned) {
+    const badge = document.createElement('span'); badge.className = 'power-badge locked'; badge.textContent = 'LOCKED'; visual.append(badge);
   }
   const copy = document.createElement('div'); copy.className = 'brawler-card-copy';
   const nameBlock = document.createElement('div'); nameBlock.className = 'brawler-name-block';
@@ -1969,10 +1966,20 @@ function cardFor(brawler) {
 
   if (brawler.owned) {
     const prestige = getPrestigeState(brawler);
-    const emblem = document.createElement('div'); emblem.className = 'brawler-prestige-center-wrap'; emblem.title = `${brawler.name}: ${prestige.label}`;
+    const progRow = document.createElement('div'); progRow.className = 'brawler-progression-row';
+
+    const trophyChip = document.createElement('div'); trophyChip.className = 'brawler-stat-chip trophies-chip'; trophyChip.title = `${brawler.name}: ${format(brawler.trophies)} Trophies`;
+    trophyChip.innerHTML = `<div class="trophy-chip-row"><img class="trophy-chip-img" src="/assets/icon_trophy.png" alt="Trophy" /><span class="trophy-chip-val">${format(brawler.trophies)}</span></div><span class="trophy-chip-lbl">TROPHIES</span>`;
+
+    const prestigeWrap = document.createElement('div'); prestigeWrap.className = 'brawler-prestige-center-wrap'; prestigeWrap.title = `${brawler.name}: ${prestige.label}`;
     const emblemImage = document.createElement('img'); emblemImage.className = 'prestige-card-emblem-img'; emblemImage.alt = `${brawler.name} ${prestige.label} emblem`; applyPrestigeImage(emblemImage, brawler);
-    emblem.append(emblemImage);
-    nameBlock.append(emblem);
+    prestigeWrap.append(emblemImage);
+
+    const levelChip = document.createElement('div'); levelChip.className = 'brawler-stat-chip level-chip'; levelChip.title = `${brawler.name}: Level ${brawler.power}`;
+    levelChip.innerHTML = `<div class="level-chip-row"><span class="level-chip-tag">LVL</span><span class="level-chip-val">${brawler.power}</span></div><span class="level-chip-lbl">LEVEL</span>`;
+
+    progRow.append(trophyChip, prestigeWrap, levelChip);
+    nameBlock.append(progRow);
   }
 
   const equipment = document.createElement('div'); equipment.className = 'equipment-row equipment-lab-wrap'; renderRosterEquipmentLab(equipment, brawler);
