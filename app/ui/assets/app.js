@@ -1953,25 +1953,31 @@ function cardFor(brawler) {
   const frameBox = document.createElement('div'); frameBox.className = 'brawler-frame-box';
   addImageWithFallback(frameBox, brawler, 'brawler-image');
   visual.append(frameBox);
-  const badge = document.createElement('span'); badge.className = `power-badge ${brawler.owned ? `power-${brawler.power}` : 'locked'} rarity-${rarityClass || 'common'}`; badge.textContent = brawler.owned ? `LVL${brawler.power}` : 'LOCKED'; visual.append(badge);
+  const badge = document.createElement('span'); badge.className = `power-badge level-card-badge ${brawler.owned ? `power-${brawler.power}` : 'locked'} rarity-${rarityClass || 'common'}`; badge.textContent = brawler.owned ? `LVL${brawler.power}` : 'LOCKED'; visual.append(badge);
   if (brawler.owned) {
-    const prestige = getPrestigeState(brawler);
-    const emblem = document.createElement('span'); emblem.className = 'prestige-card-emblem'; emblem.title = `${brawler.name}: ${prestige.label}`;
-    const emblemImage = document.createElement('img'); emblemImage.alt = `${brawler.name} ${prestige.label} emblem`; applyPrestigeImage(emblemImage, brawler);
-    emblem.append(emblemImage); visual.append(emblem);
-
     const trophyEmblem = document.createElement('span'); trophyEmblem.className = `trophy-card-emblem power-badge rarity-${rarityClass || 'common'}`; trophyEmblem.title = `${brawler.name}: ${format(brawler.trophies)} Trophies`;
     trophyEmblem.innerHTML = `<div class="trophy-badge-row"><img class="trophy-badge-img" src="/assets/icon_trophy.png" alt="Trophy" /><span class="trophy-badge-val">${format(brawler.trophies)}</span></div><span class="trophy-badge-lbl">TROPHIES</span>`;
     visual.append(trophyEmblem);
   }
   const copy = document.createElement('div'); copy.className = 'brawler-card-copy';
+  const nameBlock = document.createElement('div'); nameBlock.className = 'brawler-name-block';
   const top = document.createElement('div'); top.className = 'brawler-name-row'; 
   const name = document.createElement('strong'); name.textContent = brawler.name; name.title = brawler.name; 
   const rarityTag = document.createElement('span'); rarityTag.className = `brawler-rarity-tag rarity-${rarityClass || 'common'}`; rarityTag.textContent = rarityLabel;
   top.append(name, rarityTag);
+  nameBlock.append(top);
+
+  if (brawler.owned) {
+    const prestige = getPrestigeState(brawler);
+    const emblem = document.createElement('div'); emblem.className = 'brawler-prestige-center-wrap'; emblem.title = `${brawler.name}: ${prestige.label}`;
+    const emblemImage = document.createElement('img'); emblemImage.className = 'prestige-card-emblem-img'; emblemImage.alt = `${brawler.name} ${prestige.label} emblem`; applyPrestigeImage(emblemImage, brawler);
+    emblem.append(emblemImage);
+    nameBlock.append(emblem);
+  }
+
   const equipment = document.createElement('div'); equipment.className = 'equipment-row equipment-lab-wrap'; renderRosterEquipmentLab(equipment, brawler);
   const open = document.createElement('div'); open.className = 'open-guide'; open.innerHTML = '<span>VIEW GUIDE</span><b>→</b>';
-  copy.append(top, equipment, open); link.append(visual, copy); return link;
+  copy.append(nameBlock, equipment, open); link.append(visual, copy); return link;
 }
 
 let brawlerNameFitFrame = 0;

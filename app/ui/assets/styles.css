@@ -419,13 +419,23 @@ a { color: inherit; }
 .rarity-legendary .brawler-rarity-tag, .brawler-rarity-tag.rarity-legendary { background: linear-gradient(135deg, #f59e0b, #d97706 50%, #b45309); border-color: #fde047; text-shadow: 0 1px 2px rgba(90, 40, 0, 0.55); }
 .rarity-ultra-legendary .brawler-rarity-tag, .rarity-ultra_legendary .brawler-rarity-tag, .rarity-ultra .brawler-rarity-tag, .brawler-rarity-tag.rarity-ultra-legendary, .brawler-rarity-tag.rarity-ultra_legendary, .brawler-rarity-tag.rarity-ultra { background: linear-gradient(90deg, #e11d48 0%, #9333ea 28%, #2563eb 55%, #059669 80%, #d97706 100%); border-color: #fef08a; box-shadow: 0 2px 8px rgba(147, 51, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
 
-/* Brawler Card Trophy Badge (Exact styling and container as LVL Power-Badge, +10% size) */
-.trophy-card-emblem.power-badge { top: auto; bottom: 8px; left: 10px; min-width: 49px; height: auto; min-height: 28px; padding: 2.5px 7.5px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; cursor: pointer; }
+/* Brawler Card Badges: Left side Trophies, Right side LVL */
+.brawler-card .level-card-badge { position: absolute; z-index: 3; top: 10px; right: 10px; left: auto; bottom: auto; transition: transform .15s ease, box-shadow .15s ease; }
+.brawler-card:hover .level-card-badge { transform: translateY(-1px) scale(1.04); box-shadow: 0 3px 6px rgba(0, 20, 60, 0.35); }
+
+/* Brawler Card Trophy Badge (Left side: exact container style as LVL, +10% size) */
+.trophy-card-emblem.power-badge { top: 10px; left: 10px; right: auto; bottom: auto; min-width: 49px; height: auto; min-height: 28px; padding: 2.5px 7.5px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; cursor: pointer; }
 .trophy-badge-row { display: inline-flex; align-items: center; justify-content: center; gap: 4.5px; line-height: 1; }
 .trophy-badge-img { width: 14px; height: 14px; object-fit: contain; filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.45)); flex-shrink: 0; }
 .trophy-badge-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 11px; font-weight: 500; color: #ffffff; line-height: 1; letter-spacing: 0.2px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); }
 .trophy-badge-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6px; font-weight: 500; letter-spacing: 0.65px; color: #fff7b8; text-transform: uppercase; margin-top: 1px; line-height: 1; text-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.6); }
 .brawler-card:hover .trophy-card-emblem.power-badge { transform: translateY(-1px) scale(1.04); box-shadow: 0 3px 6px rgba(0, 20, 60, 0.35); }
+
+/* Brawler Name & Centered Prestige Emblem below Name and Rarity Tag */
+.brawler-name-block { display: flex; flex-direction: column; align-items: center; width: 100%; }
+.brawler-prestige-center-wrap { display: flex; justify-content: center; align-items: center; margin: 6px auto 6px; position: relative; z-index: 4; }
+.prestige-card-emblem-img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(0, 18, 55, 0.32)); transition: transform .18s ease; }
+.brawler-card:hover .prestige-card-emblem-img { transform: scale(1.12); }
 
 .prestige-card-emblem { position:absolute; right:10px; bottom:calc(8px + 5%); z-index:4; width:49px; height:49px; display:grid; place-items:center; filter:drop-shadow(0 5px 5px rgba(0,18,55,.42)); }
 .prestige-card-emblem img { max-width:100%; max-height:100%; object-fit:contain; }
@@ -511,7 +521,14 @@ a { color: inherit; }
 .table-mode .brawler-frame-box { width: 88px; height: 88px; border-radius: 18px; }
 .table-mode .brawler-image { max-width: 78px; max-height: 78px; }
 .table-mode .brawler-card-copy { display: grid; grid-template-columns: 1fr 2fr 130px; align-items: center; gap: 15px; }
-.table-mode .trophy-card-emblem.power-badge { left: 6px; bottom: 6px; min-width: 42px; min-height: 24px; padding: 2px 5.5px; }
+.table-mode .brawler-name-block { display: flex; flex-direction: row; align-items: center; gap: 8px; width: 100%; min-width: 0; }
+.table-mode .brawler-name-row { margin: 0; width: auto; flex: 1; min-height: 32px; padding: 4px 8px; }
+.table-mode .brawler-name-row strong { font-size: 14px; }
+.table-mode .brawler-rarity-tag { height: 17px; min-height: 17px; max-height: 17px; min-width: 60px; font-size: 7.5px; padding: 0 6px; }
+.table-mode .brawler-prestige-center-wrap { margin: 0; flex-shrink: 0; }
+.table-mode .prestige-card-emblem-img { width: 26px; height: 26px; }
+.table-mode .brawler-card .level-card-badge { top: 6px; right: 6px; left: auto; bottom: auto; min-width: 32px; height: 18px; font-size: 7.5px; }
+.table-mode .trophy-card-emblem.power-badge { top: 6px; left: 6px; right: auto; bottom: auto; min-width: 42px; min-height: 24px; padding: 2px 5.5px; }
 .table-mode .trophy-badge-img { width: 11px; height: 11px; }
 .table-mode .trophy-badge-val { font-size: 9.5px; }
 .table-mode .trophy-badge-lbl { font-size: 5px; }
@@ -2443,11 +2460,14 @@ a { color: inherit; }
   .detail-account-stats { gap: 6px; }
   .detail-account-stats div { min-width: 0; flex: 1; padding: 8px; }
   .detail-account-stats strong { font-size: 16px; }
+  .brawler-card .level-card-badge { top: 6px; right: 6px; left: auto; bottom: auto; min-width: 32px; height: 18px; font-size: 7.5px; border-width: 1px; border-radius: 5px; padding: 0 3.5px; }
   .prestige-card-emblem { width:37px; height:37px; right:5px; bottom:calc(5px + 5%); }
-  .trophy-card-emblem.power-badge { left: 5px; bottom: 5px; min-width: 44px; min-height: 25px; padding: 2px 6px; }
+  .trophy-card-emblem.power-badge { top: 6px; left: 5px; right: auto; bottom: auto; min-width: 44px; min-height: 25px; padding: 2px 6px; }
   .trophy-badge-img { width: 12px; height: 12px; }
   .trophy-badge-val { font-size: 10px; }
   .trophy-badge-lbl { font-size: 5px; }
+  .prestige-card-emblem-img { width: 26px; height: 26px; }
+  .brawler-prestige-center-wrap { margin: 5px auto 4px; }
   .prestige-progress-panel { grid-template-columns:1fr; padding:16px 12px; text-align:center; }
   .prestige-progress-emblem-wrap { min-height:105px; }
   .detail-prestige-emblem { width:104px; height:104px; }
@@ -2615,11 +2635,13 @@ img, picture, video, canvas, svg { max-width: 100%; }
   .brawler-image { max-width: 100px; max-height: 100px; }
   .brawler-card-copy { padding: 12px 11px 10px; }
   .open-guide { margin-inline: -11px; margin-bottom: -10px; padding: 12px; font-size: 10px; }
-  .prestige-card-emblem { width: 54px; height: 54px; right: 8px; bottom: 7px; }
-  .trophy-card-emblem.power-badge { left: 8px; bottom: 7px; min-width: 53px; min-height: 30px; padding: 2.5px 8px; }
+  .brawler-card .level-card-badge { top: 8px; right: 8px; left: auto; bottom: auto; }
+  .trophy-card-emblem.power-badge { top: 8px; left: 8px; right: auto; bottom: auto; min-width: 53px; min-height: 30px; padding: 2.5px 8px; }
   .trophy-badge-img { width: 15.5px; height: 15.5px; }
   .trophy-badge-val { font-size: 12.5px; }
   .trophy-badge-lbl { font-size: 6px; }
+  .prestige-card-emblem { width: 54px; height: 54px; right: 8px; bottom: 7px; }
+  .prestige-card-emblem-img { width: 28px; height: 28px; }
   .prestige-bar, .overview-metrics, .hero-stats, .detail-account-stats { grid-template-columns: 1fr; }
   .hero-stats > div:last-child { grid-column: auto; }
   .ranking-tab-group, .battle-filter-tabs { grid-template-columns: 1fr; }
