@@ -90,6 +90,11 @@ data_sources_path = PROJECT_ROOT / "data" / "game_data_sources.json"
 if data_sources_path.exists():
     with data_sources_path.open("r", encoding="utf-8") as handle:
         data_sources = json.load(handle)
+prestige_assets = {}
+prestige_assets_path = PROJECT_ROOT / "data" / "prestige_assets.json"
+if prestige_assets_path.exists():
+    with prestige_assets_path.open("r", encoding="utf-8") as handle:
+        prestige_assets = json.load(handle)
 
 
 @asynccontextmanager
@@ -196,11 +201,16 @@ def _player_analytics(player) -> dict:
         "brawlers_unlocked": len(player.brawlers),
         "average_power": player.average_power,
         "power_11_count": player.power_11_count,
-        "rank_35_count": player.rank_35_count,
-        "rank_30_plus_count": player.rank_30_plus_count,
-        "rank_25_plus_count": player.rank_25_plus_count,
-        "rank_20_plus_count": player.rank_20_plus_count,
-        "rank_15_plus_count": player.rank_15_plus_count,
+        "total_prestige_level": player.brawler_prestige_level,
+        "total_prestige_source": player.total_prestige_source,
+        "prestige_brawler_count": sum(b.prestige_level >= 1 for b in player.brawlers),
+        "prestige_1_count": sum(b.prestige_level == 1 for b in player.brawlers),
+        "prestige_2_count": sum(b.prestige_level == 2 for b in player.brawlers),
+        "prestige_3_plus_count": sum(b.prestige_level >= 3 for b in player.brawlers),
+        "wood_count": sum(b.prestige_level == 0 and b.trophies < 250 for b in player.brawlers),
+        "bronze_count": sum(b.prestige_level == 0 and 250 <= b.trophies < 500 for b in player.brawlers),
+        "silver_count": sum(b.prestige_level == 0 and 500 <= b.trophies < 750 for b in player.brawlers),
+        "gold_count": sum(b.prestige_level == 0 and 750 <= b.trophies for b in player.brawlers),
         "total_gadgets_count": player.total_gadgets_count,
         "total_star_powers_count": player.total_star_powers_count,
         "total_gears_count": player.total_gears_count,
@@ -422,6 +432,11 @@ async def get_buffies_catalog() -> dict:
 @app.get("/api/visual-assets")
 async def get_visual_asset_manifest() -> dict:
     return visual_asset_manifest
+
+
+@app.get("/api/prestige/assets")
+async def get_prestige_assets() -> dict:
+    return prestige_assets
 
 
 @app.get("/api/data-sources")

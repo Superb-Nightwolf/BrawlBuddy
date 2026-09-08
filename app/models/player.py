@@ -44,6 +44,19 @@ class PlayerBrawler(BaseModel):
     name: str
     power: int = Field(ge=1)
     rank: int = Field(default=1, ge=1)
+    prestige_level: int = Field(default=0, ge=0)
+    prestige_level_source: DataSource = DataSource.INFERRED
+    prestige_trophies: int = Field(default=0, ge=0)
+    prestige_floor_trophies: int = Field(default=0, ge=0)
+    next_prestige_level: int = Field(default=1, ge=1)
+    next_prestige_trophy_milestone: int = Field(default=1_000, ge=1_000)
+    trophies_to_next_prestige: int = Field(default=1_000, ge=0)
+    prestige_progress_percent: float = Field(default=0, ge=0, le=100)
+    prestige_label: str = "Wood"
+    prestige_asset_id: int = Field(default=0, ge=0, le=13)
+    prestige_visual_level: int | None = Field(default=None, ge=1, le=10)
+    prestige_visual_is_fallback: bool = False
+    next_prestige_reward: str | None = None
     trophies: int = Field(default=0, ge=0)
     highest_trophies: int = Field(default=0, ge=0)
     gadgets: list[EquipmentItem] = Field(default_factory=list)
@@ -90,6 +103,8 @@ class PlayerProfile(BaseModel):
     highest_power_play_points: int | None = None
     club: ClubSummary | None = None
     brawlers: list[PlayerBrawler] = Field(default_factory=list)
+    total_prestige_level: int | None = Field(default=None, ge=0)
+    total_prestige_source: DataSource = DataSource.INFERRED
     source: DataSource = DataSource.OFFICIAL_API
     fetched_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
@@ -182,8 +197,10 @@ class PlayerProfile(BaseModel):
 
     @property
     def brawler_prestige_level(self) -> int:
-        """Calculate player prestige: each 1000 trophies (current or highest peak record) on any brawler equals 1 prestige point."""
-        return sum(max(item.trophies, item.highest_trophies) // 1000 for item in self.brawlers)
+        """Compatibility alias for account-wide Total Prestige."""
+        if self.total_prestige_level is not None:
+            return self.total_prestige_level
+        return sum(item.prestige_level for item in self.brawlers)
 
     @property
     def prestige_tier(self) -> str:
@@ -236,6 +253,10 @@ class PlayerProfile(BaseModel):
                 "name": b.name,
                 "power": b.power,
                 "rank": b.rank,
+                "prestige_level": b.prestige_level,
+                "prestige_label": b.prestige_label,
+                "prestige_asset_id": b.prestige_asset_id,
+                "prestige_trophies": b.prestige_trophies,
                 "trophies": b.trophies,
                 "highest_trophies": b.highest_trophies,
                 "gadget": b.gadgets[0].name if b.gadgets else None,

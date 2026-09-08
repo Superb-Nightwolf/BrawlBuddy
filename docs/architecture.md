@@ -48,7 +48,7 @@ The parser consumes only fields present in the player response:
 - experience level/points when present;
 - 3v3, solo, and duo victories;
 - club summary when present;
-- unlocked brawlers, power, rank, trophies, highest trophies, and equipment arrays when returned.
+- unlocked brawlers, power, trophies, highest trophies, authoritative `prestigeLevel`, and equipment arrays when returned. The legacy `rank` value is retained internally but is not current-facing progression.
 
 Unknown response fields are ignored. Optional fields default safely; they are not synthesized.
 
@@ -71,6 +71,8 @@ Official API tokens are created through the developer portal and are IP-restrict
 - `DEMO`
 
 Player profiles and brawler rows carry their provenance. Resource rows are user input. Derived analytics are returned in a separate `analytics` object. Demo data is explicitly marked `DEMO` in both the model and UI.
+
+Prestige uses the official per-Brawler `prestigeLevel` and account-wide `totalPrestigeLevel` fields. BrawlBuddy separates cumulative API Trophies from progress within the current 1,000-Trophy Prestige step. Brawler-specific badge artwork resolves by stable numeric ID through Brawlify, with generic tier and higher-level visual fallbacks documented in [prestige.md](prestige.md).
 
 ## Domain model
 

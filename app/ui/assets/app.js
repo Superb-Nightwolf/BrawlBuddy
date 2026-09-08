@@ -20,6 +20,7 @@ const state = {
   view: 'grid',
   dataSources: {},
   visualAssets: {},
+  prestigeAssets: {},
 };
 
 const ACCOUNT_CACHE_KEY = 'brawlbuddy_account_v4';
@@ -51,6 +52,99 @@ function modeLabel(value) {
   const record = getUiIconRecord('modes', value);
   if (record?.label) return record.label;
   return String(value || 'Brawl').replace(/([a-z])([A-Z])/g, '$1 $2');
+}
+
+const PRESTIGE_STEP = 1000;
+const MAX_PRESTIGE_VISUAL_LEVEL = 10;
+
+function getPrestigeLevel(brawler) {
+  if (Number.isInteger(brawler?.prestige_level) && brawler.prestige_level >= 0) {
+    return brawler.prestige_level;
+  }
+  const peak = Math.max(brawler?.trophies || 0, brawler?.highest_trophies || brawler?.highestTrophies || 0);
+  return Math.floor(peak / PRESTIGE_STEP);
+}
+
+function getPrestigeState(brawler) {
+  const total = Math.max(0, Number(brawler?.trophies || 0));
+  const level = getPrestigeLevel(brawler);
+  if (level > 0) {
+    const inLevel = Number.isFinite(brawler?.prestige_trophies)
+      ? Math.max(0, brawler.prestige_trophies)
+      : Math.max(0, total - (level * PRESTIGE_STEP));
+    const remaining = Number.isFinite(brawler?.trophies_to_next_prestige)
+      ? Math.max(0, brawler.trophies_to_next_prestige)
+      : Math.max(0, PRESTIGE_STEP - inLevel);
+    const visualLevel = Math.min(level, MAX_PRESTIGE_VISUAL_LEVEL);
+    return {
+      level,
+      label: brawler?.prestige_label || `Prestige ${level}`,
+      assetId: Number.isInteger(brawler?.prestige_asset_id) ? brawler.prestige_asset_id : 3 + visualLevel,
+      trophiesInLevel: inLevel,
+      remaining,
+      nextLevel: brawler?.next_prestige_level || level + 1,
+      nextTotal: brawler?.next_prestige_trophy_milestone || (level + 1) * PRESTIGE_STEP,
+      progress: Number.isFinite(brawler?.prestige_progress_percent) ? brawler.prestige_progress_percent : Math.min(100, inLevel / 10),
+      nextReward: brawler?.next_prestige_reward || null,
+      visualFallback: brawler?.prestige_visual_is_fallback === true || level > MAX_PRESTIGE_VISUAL_LEVEL,
+      authoritative: brawler?.prestige_level_source === 'OFFICIAL_API' || brawler?.prestige_level_source === 'DEMO',
+    };
+  }
+
+  const milestones = [
+    { min: 0, next: 250, label: 'Wood', assetId: 0, reward: 'Player icon and spray' },
+    { min: 250, next: 500, label: 'Bronze', assetId: 1, reward: 'Pins' },
+    { min: 500, next: 750, label: 'Silver', assetId: 2, reward: 'Rare skin or 1,000 Bling' },
+    { min: 750, next: 1000, label: 'Gold', assetId: 3, reward: 'Gold Brawler Title' },
+  ];
+  const milestone = [...milestones].reverse().find((item) => total >= item.min) || milestones[0];
+  const span = milestone.next - milestone.min;
+  return {
+    level: 0,
+    label: brawler?.prestige_label || milestone.label,
+    assetId: Number.isInteger(brawler?.prestige_asset_id) ? brawler.prestige_asset_id : milestone.assetId,
+    trophiesInLevel: total,
+    remaining: Number.isFinite(brawler?.trophies_to_next_prestige) ? brawler.trophies_to_next_prestige : Math.max(0, milestone.next - total),
+    nextLevel: 1,
+    nextTotal: milestone.next,
+    progress: Number.isFinite(brawler?.prestige_progress_percent) ? brawler.prestige_progress_percent : Math.min(100, Math.max(0, total - milestone.min) / span * 100),
+    nextReward: brawler?.next_prestige_reward || milestone.reward,
+    visualFallback: false,
+    authoritative: brawler?.prestige_level_source === 'OFFICIAL_API' || brawler?.prestige_level_source === 'DEMO',
+  };
+}
+
+function prestigeAssetSources(brawler) {
+  const prestige = getPrestigeState(brawler);
+  const base = state.prestigeAssets?.cdn_base_url || 'https://cdn.brawlify.com/prestiges';
+  const available = state.prestigeAssets?.available?.brawler_ids || [];
+  const hasSpecific = available.length === 0 || available.includes(Number(brawler?.id));
+  const sources = [];
+  if (hasSpecific && Number.isInteger(Number(brawler?.id))) {
+    sources.push(`${base}/brawlers/${Number(brawler.id)}/${prestige.assetId}.png`);
+  }
+  sources.push(`${base}/tiered/${prestige.assetId}.png`);
+  if (prestige.level === 0) sources.push(`${base}/regular/${prestige.assetId}.png`);
+  return [...new Set(sources)];
+}
+
+function applyPrestigeImage(image, brawler) {
+  const sources = prestigeAssetSources(brawler);
+  let index = 0;
+  image.src = sources[index] || '';
+  image.onerror = () => {
+    index += 1;
+    if (sources[index]) image.src = sources[index];
+    else image.classList.add('hidden');
+  };
+}
+
+function prestigeBadgeMarkup(brawler, className = 'prestige-inline-badge') {
+  const prestige = getPrestigeState(brawler);
+  const sources = prestigeAssetSources(brawler);
+  const label = prestige.level > 0 ? `Prestige ${prestige.level}` : prestige.label;
+  const fallback = sources[1] || sources[0] || '';
+  return `<span class="${className}"><img src="${sources[0] || ''}" data-fallback="${fallback}" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback}else{this.style.display='none'}" alt=""><b>${label}</b></span>`;
 }
 
 function renderContentUpdated(value) {
@@ -256,18 +350,20 @@ async function loadStatus() {
 
 async function loadCatalog() {
   try {
-    const [catPayload, equipPayload, buffiesPayload, sourcesPayload, visualAssetsPayload] = await Promise.all([
+    const [catPayload, equipPayload, buffiesPayload, sourcesPayload, visualAssetsPayload, prestigeAssetsPayload] = await Promise.all([
       request('/api/brawlers/catalog'),
       request('/api/equipment').catch(() => ({})),
       request('/api/buffies').catch(() => ({})),
       request('/api/data-sources').catch(() => ({})),
-      request('/api/visual-assets').catch(() => ({}))
+      request('/api/visual-assets').catch(() => ({})),
+      request('/api/prestige/assets').catch(() => ({}))
     ]);
     state.catalog = catPayload.list || [];
     state.equipmentDb = equipPayload || {};
     state.buffiesDb = buffiesPayload || {};
     state.dataSources = sourcesPayload || {};
     state.visualAssets = visualAssetsPayload || {};
+    state.prestigeAssets = prestigeAssetsPayload || {};
     state.brawlers = mergeCatalog(state.ownedBrawlers);
     if (state.page === 'brawlers') {
       renderBrawlers();
@@ -299,6 +395,7 @@ function mergeCatalog(ownedBrawlers) {
       owned: false,
       power: 0,
       rank: 0,
+      prestige_level: 0,
       trophies: 0,
       highest_trophies: 0,
       gadgets: [],
@@ -472,10 +569,9 @@ function renderAccount(payload) {
 
   const expPoints = payload.player.exp_points ?? 143200;
   const expLevel = payload.player.exp_level ?? Math.max(1, Math.round(payload.player.trophies / 350));
-  const brawlerPrestige = state.analytics.brawler_prestige_level ?? (payload.player.brawlers || []).reduce((acc, b) => {
-    const peak = Math.max(b.trophies || 0, b.highest_trophies || b.highestTrophies || 0);
-    return acc + Math.floor(peak / 1000);
-  }, 0);
+  const brawlerPrestige = payload.player.total_prestige_level
+    ?? state.analytics.total_prestige_level
+    ?? (payload.player.brawlers || []).reduce((acc, b) => acc + getPrestigeLevel(b), 0);
   const isChamp = Boolean(payload.player.is_qualified_from_championship_challenge);
 
   // Dynamic Epic Topbar for Player (only when on overview)
@@ -529,7 +625,8 @@ function renderAccount(payload) {
 
   const prestigeBadge = $('prestige-tier-badge');
   if (prestigeBadge) {
-    prestigeBadge.textContent = `⚡ ${(state.analytics.prestige_tier || 'CHAMPION').toUpperCase()}`;
+    const source = payload.player.total_prestige_source === 'OFFICIAL_API' ? 'OFFICIAL API' : 'DERIVED FALLBACK';
+    prestigeBadge.textContent = `✦ PRESTIGE BATTLE CARD · ${source}`;
   }
 
 
@@ -539,7 +636,7 @@ function renderAccount(payload) {
   renderTrophyRoad(payload.player.trophies, payload.player.highest_trophies, state.analytics.next_trophy_milestone);
   renderRoleDonut(payload.player.brawlers);
   renderEquipmentVault(payload.player.brawlers);
-  renderRankTiers(state.analytics, payload.player.brawlers.length);
+  renderPrestigeTiers(state.analytics, payload.player.brawlers.length);
   renderSpecialEvents(payload.player);
   renderBattleRecords(payload.player);
   renderClubCard(payload.player.club);
@@ -605,7 +702,7 @@ function renderFlagshipLoadouts(loadouts) {
         </div>
         <div class="flagship-title">
           <strong>${brawler.name}</strong>
-          <span>★ ${format(brawler.trophies)} trophies · Rank ${brawler.rank}</span>
+          <span>★ ${format(brawler.trophies)} total · ${getPrestigeState(brawler).label}</span>
         </div>
       </div>
       <div class="flagship-equipment">
@@ -738,14 +835,14 @@ function renderEquipmentVault(brawlers) {
   setText('avg-equipment-count', avg);
 }
 
-function renderRankTiers(analytics, totalBrawlers) {
+function renderPrestigeTiers(analytics, totalBrawlers) {
   const total = totalBrawlers || 1;
   const tiers = [
-    { label: 'Rank 35 (God Tier)', count: analytics.rank_35_count || 0, color: 'linear-gradient(90deg, #ff0077, #ff5964)' },
-    { label: 'Rank 30–34 (Master)', count: analytics.rank_30_plus_count || 0, color: 'linear-gradient(90deg, #be8209, #ffd32e)' },
-    { label: 'Rank 25–29 (Elite)', count: analytics.rank_25_plus_count || 0, color: 'linear-gradient(90deg, #168cf0, #00d5ff)' },
-    { label: 'Rank 20–24 (Gold)', count: analytics.rank_20_plus_count || 0, color: 'linear-gradient(90deg, #2b9348, #55a630)' },
-    { label: 'Rank 15–19 (Silver)', count: analytics.rank_15_plus_count || 0, color: 'linear-gradient(90deg, #5d7297, #8da4c4)' },
+    { label: 'Prestige 3+', count: analytics.prestige_3_plus_count || 0, color: 'linear-gradient(90deg, #ff0077, #ff5964)' },
+    { label: 'Prestige 2', count: analytics.prestige_2_count || 0, color: 'linear-gradient(90deg, #7b2cbf, #c77dff)' },
+    { label: 'Prestige 1', count: analytics.prestige_1_count || 0, color: 'linear-gradient(90deg, #168cf0, #00d5ff)' },
+    { label: 'Gold path (750–999)', count: analytics.gold_count || 0, color: 'linear-gradient(90deg, #be8209, #ffd32e)' },
+    { label: 'Wood–Silver path', count: (analytics.wood_count || 0) + (analytics.bronze_count || 0) + (analytics.silver_count || 0), color: 'linear-gradient(90deg, #64748b, #a8b3c7)' },
   ];
 
   const holder = $('rank-tier-bars');
@@ -1450,7 +1547,7 @@ function renderOverviewMetrics() {
   const metrics = [
     { label: 'AVERAGE POWER', value: state.analytics?.average_power ?? '—', desc: 'Roster combat level' },
     { label: 'MAX POWER 11', value: state.analytics?.power_11_count ?? 0, desc: 'Peak hypercharge ready' },
-    { label: 'RANK 20+ BRAWLERS', value: state.analytics?.rank_20_plus_count ?? 0, desc: 'Ranked battle ready' },
+    { label: 'PRESTIGED BRAWLERS', value: state.analytics?.prestige_brawler_count ?? 0, desc: 'Permanent Brawler Prestige' },
     { label: 'TOTAL SHOWDOWN', value: format(state.analytics?.total_showdown_victories ?? 0), desc: 'Solo & duo survivor wins' },
   ];
   const holder = $('overview-metrics');
@@ -1855,12 +1952,45 @@ function cardFor(brawler) {
   addImageWithFallback(frameBox, brawler, 'brawler-image');
   visual.append(frameBox);
   const badge = document.createElement('span'); badge.className = `power-badge ${brawler.owned ? `power-${brawler.power}` : 'locked'}`; badge.textContent = brawler.owned ? `L${brawler.power}` : 'LOCKED'; visual.append(badge);
+  if (brawler.owned) {
+    const prestige = getPrestigeState(brawler);
+    const emblem = document.createElement('span'); emblem.className = 'prestige-card-emblem'; emblem.title = `${brawler.name}: ${prestige.label}`;
+    const emblemImage = document.createElement('img'); emblemImage.alt = `${brawler.name} ${prestige.label} emblem`; applyPrestigeImage(emblemImage, brawler);
+    emblem.append(emblemImage); visual.append(emblem);
+  }
   const copy = document.createElement('div'); copy.className = 'brawler-card-copy';
-  const top = document.createElement('div'); top.className = 'brawler-name-row'; const name = document.createElement('strong'); name.textContent = brawler.name; const rank = document.createElement('span'); rank.textContent = brawler.owned ? `RANK ${brawler.rank}` : (brawler.rarity || 'Brawler').toUpperCase(); top.append(name, rank);
+  const top = document.createElement('div'); top.className = 'brawler-name-row'; const name = document.createElement('strong'); name.textContent = brawler.name; name.title = brawler.name; top.append(name);
   const stats = document.createElement('div'); stats.className = 'brawler-stats'; const trophies = document.createElement('span'); trophies.className = 'brawler-trophies'; trophies.innerHTML = brawler.owned ? `<span class="trophy-star">★</span> ${format(brawler.trophies)}` : '<span class="trophy-star">★</span> —'; const best = document.createElement('span'); best.className = 'brawler-best'; best.textContent = brawler.owned ? `Best ${format(brawler.highest_trophies || brawler.highestTrophies || brawler.trophies)}` : 'Not owned'; stats.append(trophies, best);
   const equipment = document.createElement('div'); equipment.className = 'equipment-row equipment-lab-wrap'; renderRosterEquipmentLab(equipment, brawler);
   const open = document.createElement('div'); open.className = 'open-guide'; open.innerHTML = '<span>VIEW GUIDE</span><b>→</b>';
   copy.append(top, stats, equipment, open); link.append(visual, copy); return link;
+}
+
+let brawlerNameFitFrame = 0;
+
+function fitBrawlerNames(root = document) {
+  cancelAnimationFrame(brawlerNameFitFrame);
+  brawlerNameFitFrame = requestAnimationFrame(() => {
+    root.querySelectorAll('.brawler-name-row strong').forEach((label) => {
+      label.style.fontSize = '';
+      const baseSize = Number.parseFloat(getComputedStyle(label).fontSize) || 18;
+      if (label.scrollWidth <= label.clientWidth) return;
+
+      for (let reduction = 5; reduction <= 65; reduction += 5) {
+        const size = baseSize * (1 - (reduction / 100));
+        label.style.fontSize = `${size}px`;
+        if (label.scrollWidth <= label.clientWidth) break;
+      }
+    });
+  });
+}
+
+function scheduleBrawlerNameFit(root = document) {
+  fitBrawlerNames(root);
+  window.setTimeout(() => fitBrawlerNames(root), 150);
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => fitBrawlerNames(root));
+  }
 }
 
 const BRAWLER_CLASSES_BY_NAME = {
@@ -1970,8 +2100,7 @@ function matchesEquipment(brawler, filter = state.equipment) {
   const hasAnyBuffy = buffieCount > 0;
 
   const trophies = brawler.trophies || 0;
-  const brawlerPeak = Math.max(trophies, brawler.highest_trophies || 0);
-  const brawlerPrestige = Math.floor(brawlerPeak / 1000);
+  const brawlerPrestige = getPrestigeLevel(brawler);
 
   switch (filter) {
     // GADGETS
@@ -2134,6 +2263,12 @@ function renderBrawlers() {
   brawlers.sort((a, b) => {
     if (sort === 'name') return (a.name || '').localeCompare(b.name || '');
     if (sort === 'trophies') return (b.trophies || 0) - (a.trophies || 0) || (a.name || '').localeCompare(b.name || '');
+    if (sort === 'prestige_desc') return getPrestigeLevel(b) - getPrestigeLevel(a) || (b.trophies || 0) - (a.trophies || 0) || (a.name || '').localeCompare(b.name || '');
+    if (sort === 'prestige_asc') return getPrestigeLevel(a) - getPrestigeLevel(b) || (a.trophies || 0) - (b.trophies || 0) || (a.name || '').localeCompare(b.name || '');
+    if (sort === 'prestige_next') {
+      if (a.owned !== b.owned) return a.owned ? -1 : 1;
+      return getPrestigeState(a).remaining - getPrestigeState(b).remaining || (b.trophies || 0) - (a.trophies || 0);
+    }
     if (sort === 'power_desc') {
       if (a.owned !== b.owned) return a.owned ? -1 : 1;
       return (b.power || 0) - (a.power || 0) || (b.trophies || 0) - (a.trophies || 0) || (a.name || '').localeCompare(b.name || '');
@@ -2150,6 +2285,7 @@ function renderBrawlers() {
     holder.replaceChildren();
     holder.classList.toggle('table-mode', state.view === 'table');
     brawlers.forEach((brawler) => holder.append(cardFor(brawler)));
+    scheduleBrawlerNameFit(holder);
   }
   const empty = $('brawler-empty');
   if (empty) empty.classList.toggle('hidden', brawlers.length > 0);
@@ -2804,6 +2940,49 @@ function renderDetailArtwork(brawler) {
   stage.append(image);
 }
 
+function renderPrestigeProgress(brawler) {
+  const panel = $('prestige-progress-panel');
+  if (!panel) return;
+  const owned = Boolean(brawler?.owned);
+  const prestige = getPrestigeState(brawler);
+  panel.classList.toggle('catalog-preview', !owned);
+
+  const emblem = $('detail-prestige-emblem');
+  if (emblem) {
+    emblem.classList.remove('hidden');
+    emblem.alt = `${brawler?.name || 'Brawler'} ${prestige.label} Prestige emblem`;
+    applyPrestigeImage(emblem, brawler);
+  }
+
+  setText('detail-prestige-label', owned ? prestige.label : 'Path to Prestige');
+  setText('detail-prestige-source', owned ? (prestige.authoritative ? 'OFFICIAL API' : 'DERIVED FALLBACK') : 'CATALOG PREVIEW');
+  setText('detail-prestige-current', owned
+    ? (prestige.level > 0 ? `${format(prestige.trophiesInLevel)} / 1,000 Prestige Trophies` : `${format(brawler.trophies)} total Trophies`)
+    : 'Connect a player to view progress');
+  setText('detail-prestige-remaining', owned
+    ? (prestige.remaining === 0 ? 'Milestone reached' : `${format(prestige.remaining)} to ${prestige.level > 0 ? `Prestige ${prestige.nextLevel}` : prestige.nextTotal}`)
+    : 'Progress is player-specific');
+  setText('detail-prestige-reward', owned && prestige.nextReward
+    ? `Milestone reward: ${prestige.nextReward} (availability only; ownership is not exposed by the API)`
+    : 'No confirmed cosmetic reward at the next level; reward ownership is not exposed by the API.');
+  setText('detail-prestige-summary', owned
+    ? (prestige.level > 0
+      ? `${format(brawler.trophies)} cumulative API Trophies; ${format(prestige.trophiesInLevel)} earned since Prestige ${prestige.level}. Prestige progress is permanent.`
+      : `${prestige.label} milestone on the permanent path to Prestige 1 at 1,000 Trophies.`)
+    : 'Prestige is permanent and begins after this Brawler reaches the 1,000-Trophy milestone.');
+
+  const bar = $('detail-prestige-bar');
+  if (bar) bar.style.width = `${owned ? Math.max(0, Math.min(100, prestige.progress)) : 0}%`;
+  const track = bar?.parentElement;
+  if (track) track.setAttribute('aria-valuenow', String(owned ? Math.round(prestige.progress) : 0));
+
+  const visualNote = $('detail-prestige-visual-note');
+  if (visualNote) {
+    visualNote.classList.toggle('hidden', !owned || !prestige.visualFallback);
+    visualNote.textContent = prestige.visualFallback ? `Prestige ${prestige.level} · P10 frame fallback` : '';
+  }
+}
+
 async function renderDetail() {
   const id = Number(location.pathname.split('/').filter(Boolean).pop());
   if (!state.catalog || state.catalog.length === 0) {
@@ -2819,11 +2998,11 @@ async function renderDetail() {
   if (!brawler && (state.catalog || []).length > 0) {
     const cat = state.catalog.find((item) => item.id === id);
     if (cat) {
-      brawler = { ...cat, owned: false, power: 0, rank: 0, trophies: 0, highest_trophies: 0, gadgets: [], star_powers: [], gears: [], hypercharges: [], buffies: { gadget: false, star_power: false, hypercharge: false } };
+      brawler = { ...cat, owned: false, power: 0, rank: 0, prestige_level: 0, trophies: 0, highest_trophies: 0, gadgets: [], star_powers: [], gears: [], hypercharges: [], buffies: { gadget: false, star_power: false, hypercharge: false } };
     }
   }
   if (!brawler) {
-    brawler = { id, name: 'Brawler', rarity: 'common', owned: false, power: 0, rank: 0, trophies: 0, highest_trophies: 0, gadgets: [], star_powers: [], gears: [], hypercharges: [], buffies: { gadget: false, star_power: false, hypercharge: false } };
+    brawler = { id, name: 'Brawler', rarity: 'common', owned: false, power: 0, rank: 0, prestige_level: 0, trophies: 0, highest_trophies: 0, gadgets: [], star_powers: [], gears: [], hypercharges: [], buffies: { gadget: false, star_power: false, hypercharge: false } };
   }
   hideNotice();
   let guide = {};
@@ -2853,12 +3032,12 @@ async function renderDetail() {
   }
 
   setText('detail-intro', guide.intro || (brawler.owned ? `${brawler.name} is Power ${brawler.power} on this account. Progression and owned equipment below come from the loaded player data.` : `${brawler.name} is part of the 106-brawler catalog but is not present in this account. Use the level journey below to preview future progression.`));
-  const brawlerPeak = Math.max(brawler.trophies || 0, brawler.highest_trophies || brawler.highestTrophies || 0);
-  const brawlerPrestige = brawler.owned ? Math.floor(brawlerPeak / 1000) : 0;
+  const prestige = getPrestigeState(brawler);
   setText('detail-power', brawler.owned ? brawler.power : '—');
   setText('detail-trophies', brawler.owned ? format(brawler.trophies) : '—');
-  setText('detail-prestige', brawler.owned ? brawlerPrestige : '—');
-  setText('detail-rank', brawler.owned ? (brawler.rank || '—') : '—');
+  setText('detail-prestige', brawler.owned ? (prestige.level > 0 ? prestige.level : prestige.label) : '—');
+  setText('detail-prestige-progress', brawler.owned ? `${format(prestige.trophiesInLevel)} / 1,000` : '—');
+  renderPrestigeProgress(brawler);
   setText('attack-name', guide.attack?.name || 'Main attack');
   setText('attack-description', guide.attack?.description || 'Detailed combat notes are not curated yet.');
   setText('super-name', guide.super?.name || 'Super');
@@ -3706,6 +3885,7 @@ function bindEvents() {
   });
   $('grid-view')?.addEventListener('click', () => setView('grid'));
   $('table-view')?.addEventListener('click', () => setView('table'));
+  window.addEventListener('resize', () => scheduleBrawlerNameFit($('brawler-grid') || document));
 
   $('copy-club-hero-tag')?.addEventListener('click', (e) => {
     e.preventDefault();

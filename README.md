@@ -10,6 +10,7 @@ It intentionally does **not** show fabricated meta tiers, upgrade prices, afford
 - local original profile and Surge guide artwork with remote fan-kit/CDN images where available;
 - official player-tag lookup and conservative response parsing;
 - brawler cards and compact table mode with search, exact Power 1–11 filters, equipment ownership filters, and sorting;
+- official API-backed permanent Brawler Prestige, Total Prestige, progression filters, and Brawler-specific Prestige emblems;
 - a Surge guide with official-release-note sources, combat usage, power ladder, equipment ownership, and a rule-based readiness plan;
 - manual coin, Power Point, gem, credit, and bling inventory stored in SQLite;
 - explicit `OFFICIAL_API`, `USER_INPUT`, `CALCULATED`, and `DEMO` provenance;
@@ -76,6 +77,14 @@ Not implemented in this milestone. The planned deterministic engine will score i
 ## Updating metadata
 
 There is no production upgrade-cost metadata in this milestone. Do not add costs from memory. The next phase should add versioned source files, effective dates/game version, provenance, schema validation, duplicate/reference checks, and tests before exposing cost or recommendation UI.
+
+Refresh the lightweight Brawlify Prestige availability manifest without downloading duplicate artwork:
+
+```powershell
+python scripts/sync_prestige_assets.py
+```
+
+See [docs/prestige.md](docs/prestige.md) for the official rules, API semantics, fallback behavior, and exact CDN mapping.
 
 ## Testing
 

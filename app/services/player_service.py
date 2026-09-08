@@ -9,6 +9,7 @@ from typing import Any
 
 from app.clients.brawl_stars import BrawlStarsClient
 from app.core.errors import InvalidPlayerTag, MissingApiToken
+from app.core.prestige import resolve_prestige_state
 from app.models.player import (
     BuffieFlags,
     ClubSummary,
@@ -141,6 +142,12 @@ def parse_player(
             elif not buffies_raw:
                 buffies_raw = override_buffies
         buffies = _buffie_flags(buffies_raw)
+        official_prestige = item.get("prestigeLevel")
+        prestige = resolve_prestige_state(
+            item.get("trophies", 0),
+            official_prestige,
+            highest_trophies=item.get("highestTrophies", 0),
+        )
 
         brawlers.append(
             PlayerBrawler(
@@ -148,6 +155,21 @@ def parse_player(
                 name=item["name"],
                 power=item["power"],
                 rank=item.get("rank", 1),
+                prestige_level=prestige.level,
+                prestige_level_source=(
+                    source if official_prestige is not None else DataSource.INFERRED
+                ),
+                prestige_trophies=prestige.trophies_in_level,
+                prestige_floor_trophies=prestige.floor_trophies,
+                next_prestige_level=prestige.next_level,
+                next_prestige_trophy_milestone=prestige.next_total_trophies,
+                trophies_to_next_prestige=prestige.trophies_remaining,
+                prestige_progress_percent=prestige.progress_percent,
+                prestige_label=prestige.label,
+                prestige_asset_id=prestige.asset_id,
+                prestige_visual_level=prestige.visual_level,
+                prestige_visual_is_fallback=prestige.visual_is_fallback,
+                next_prestige_reward=prestige.next_reward,
                 trophies=item.get("trophies", 0),
                 highest_trophies=item.get("highestTrophies", 0),
                 gadgets=gadgets,
@@ -177,6 +199,10 @@ def parse_player(
         highest_power_play_points=payload.get("highestPowerPlayPoints"),
         club=ClubSummary.model_validate(club_data) if club_data else None,
         brawlers=brawlers,
+        total_prestige_level=payload.get("totalPrestigeLevel"),
+        total_prestige_source=(
+            source if payload.get("totalPrestigeLevel") is not None else DataSource.INFERRED
+        ),
         source=source,
     )
 
