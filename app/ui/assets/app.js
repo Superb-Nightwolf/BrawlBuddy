@@ -1698,10 +1698,12 @@ function renderRosterEquipmentLab(holder, brawler) {
   const ownedSpIds = new Set((brawler.star_powers || brawler.starPowers || []).map((sp) => Number(sp.id)));
   const ownedSpNames = new Set((brawler.star_powers || brawler.starPowers || []).map((sp) => normalizeKey(sp.name)));
 
+  const buffiesReleased = isBuffieReleased(brawler);
   const hasGadgetBuffy = Boolean(brawler.owned) && hasBuffie(brawler, 'gadget');
   const hasSpBuffy = Boolean(brawler.owned) && hasBuffie(brawler, 'star_power');
   const hasHcBuffy = Boolean(brawler.owned) && hasBuffie(brawler, 'hypercharge');
   const isHcOwned = Boolean(brawler.owned) && hasHypercharge(brawler);
+  const isHcActive = isHcOwned && ((brawler.power || 0) >= 11);
 
   const gadgetBuffieUrl = state.visualAssets?.brawlers?.[bId]?.buffies?.gadget?.local_url || `/assets/equipment/buffies/${bId}-gadget.png`;
   const spBuffieUrl = state.visualAssets?.brawlers?.[bId]?.buffies?.star_power?.local_url || `/assets/equipment/buffies/${bId}-star-power.png`;
@@ -1716,7 +1718,10 @@ function renderRosterEquipmentLab(holder, brawler) {
       (g.id > 0 && ownedGadgetIds.has(Number(g.id))) ||
       (Boolean(g.name) && ownedGadgetNames.has(normalizeKey(g.name)))
     );
-    const isCapsuleActive = isOwned || hasGadgetBuffy;
+    // Condition 1 & 2:
+    const isCapsuleActive = buffiesReleased
+      ? (isOwned && hasGadgetBuffy)
+      : isOwned;
     const capsule = document.createElement('div');
     capsule.className = `lab-capsule gadget-capsule ${isCapsuleActive ? 'owned' : 'unowned'}`;
     capsule.title = `${g.name || 'Gadget'} (${isOwned ? 'Owned' : 'Not owned'})`;
@@ -1752,7 +1757,10 @@ function renderRosterEquipmentLab(holder, brawler) {
       (sp.id > 0 && ownedSpIds.has(Number(sp.id))) ||
       (Boolean(sp.name) && ownedSpNames.has(normalizeKey(sp.name)))
     );
-    const isCapsuleActive = isOwned || hasSpBuffy;
+    // Condition 1 & 2:
+    const isCapsuleActive = buffiesReleased
+      ? (isOwned && hasSpBuffy)
+      : isOwned;
     const capsule = document.createElement('div');
     capsule.className = `lab-capsule sp-capsule ${isCapsuleActive ? 'owned' : 'unowned'}`;
     capsule.title = `${sp.name || 'Star Power'} (${isOwned ? 'Owned' : 'Not owned'})`;
@@ -1781,10 +1789,13 @@ function renderRosterEquipmentLab(holder, brawler) {
   });
 
   // Hypercharge Capsule
-  const isCapsuleActive = isHcOwned || hasHcBuffy;
+  // Condition 1 & 2 (if stored, don't do it!):
+  const isCapsuleActive = buffiesReleased
+    ? (isHcActive && hasHcBuffy)
+    : isHcActive;
   const hcCapsule = document.createElement('div');
   hcCapsule.className = `lab-capsule hc-capsule ${isCapsuleActive ? 'owned' : 'unowned'}`;
-  hcCapsule.title = `Hypercharge (${isHcOwned ? 'Owned' : 'Not owned'})`;
+  hcCapsule.title = `Hypercharge (${isHcActive ? 'Active' : isHcOwned ? 'Stored (Lvl 11 Required)' : 'Not owned'})`;
 
   const hcSlot = document.createElement('div');
   hcSlot.className = `equip-slot ${isHcOwned ? 'owned' : 'unowned'}`;
@@ -2537,21 +2548,23 @@ async function renderDetail() {
   const sources = $('guide-sources');
   if (sources) {
     sources.replaceChildren();
-    const note = document.createElement('p');
-    const checkedAt = state.dataSources?.checked_at || guide.verified_at || 'not recorded';
-    note.textContent = `Rules and releases: Supercell. Ability text and current per-brawler Gear availability: Brawl Stars Wiki. Verified ${checkedAt}.`;
-    sources.append(note);
+    const brawlerName = guide?.name || brawler?.name || 'this brawler';
 
-    const combinedSources = [...(guide.sources || []).slice(0, 1), ...(state.dataSources?.sources || [])];
-    const seenUrls = new Set();
-    combinedSources.forEach((source) => {
-      if (!source?.url || seenUrls.has(source.url)) return;
-      seenUrls.add(source.url);
+    const sourceItems = [
+      { label: 'Brawl Stars Gears', url: 'https://support.supercell.com/brawl-stars/en/articles/gears-8.html' },
+      { label: 'Brawl Stars Gadgets', url: 'https://support.supercell.com/brawl-stars/en/articles/gadgets-4.html' },
+      { label: 'Brawl Stars Star Powers', url: 'https://support.supercell.com/brawl-stars/en/articles/star-powers-3.html' },
+      { label: 'Brawl Stars Hypercharge', url: 'https://support.supercell.com/brawl-stars/en/articles/hypercharge-5.html' },
+      { label: 'Brawl Stars Release Notes', url: 'https://supercell.com/en/games/brawlstars/blog/' },
+      { label: 'Brawl Stars Balance Changes & Meta', url: 'https://supercell.com/en/games/brawlstars/blog/release-notes/release-notes-august-2026/' },
+    ];
+
+    sourceItems.forEach((source) => {
       const link = document.createElement('a');
       link.href = source.url;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      link.textContent = source.label || 'Source';
+      link.textContent = source.label;
       sources.append(link);
     });
   }
@@ -2816,8 +2829,19 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
     return;
   }
 
+  const buffiesReleased = isBuffieReleased(brawler);
+  const hasHcBuffie = Boolean(brawler?.owned) && hasBuffie(brawler, 'hypercharge');
+  const isOwned = Boolean(brawler?.owned) && hasHypercharge(brawler, guide);
+  const isHcActive = isOwned && ((brawler?.power || 0) >= 11);
+  const useState = equipmentUseState(brawler, 'hypercharge', isOwned);
+
+  // Condition 1 & 2 (if stored, don't light up!):
+  const isLitUp = buffiesReleased
+    ? (isHcActive && hasHcBuffie)
+    : isHcActive;
+
   const row = document.createElement('article');
-  row.className = 'equipment-card hypercharge-card';
+  row.className = `equipment-card hypercharge-card ${isOwned ? 'owned' : 'unowned'} ${isLitUp ? 'lit-up' : 'not-lit'} ${useState.key}`;
 
   // Header row with integrated Hypercharge emblem
   const header = document.createElement('div');
@@ -2832,8 +2856,6 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
 
   titleWrap.append(emblemWrap, name);
 
-  const isOwned = brawler.owned && hasHypercharge(brawler, guide);
-  const useState = equipmentUseState(brawler, 'hypercharge', isOwned);
   const statusPill = document.createElement('span');
   statusPill.className = useState.key === 'active' ? 'hypercharge-owned-status' : useState.className;
   statusPill.textContent = useState.label;
@@ -2850,7 +2872,7 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
 
   const buffieBox = document.createElement('div');
   const buffieVisualState = !buffieReleased ? 'disabled-buffie' : buffieState.key === 'active' ? 'active-buffie' : buffieState.key === 'stored' ? 'inventory-buffie' : 'inactive-buffie';
-  const buffieIconClass = buffieReleased && buffieState.key === 'active' ? 'hypercharge-buffie-badge' : 'disabled-buffie-badge';
+  const buffieIconClass = buffieReleased && (buffieState.key === 'active' || buffieState.key === 'stored') ? 'hypercharge-buffie-badge' : 'disabled-buffie-badge';
   const buffieStatus = buffieReleased ? buffieState.label : 'COMING SOON';
   const buffieStatusClass = buffieReleased ? buffieState.className : 'unreleased-rank-pill';
   const buffieDescription = buffieReleased
@@ -3052,7 +3074,10 @@ function createAbilityBuffie(brawler, type, ability, abilityOwned) {
   const badgeWrap = document.createElement('div');
   badgeWrap.className = 'buffie-badge-wrap';
   const iconBadge = document.createElement('div');
-  iconBadge.className = `buffie-icon-badge ${stateInfo.key === 'active' ? `${type}-buffie-badge` : 'disabled-buffie-badge'}`;
+  const isStored = stateInfo.key === 'stored';
+  const isActive = stateInfo.key === 'active';
+  const iconBadgeClass = (isActive || isStored) ? `${type}-buffie-badge` : 'disabled-buffie-badge';
+  iconBadge.className = `buffie-icon-badge ${iconBadgeClass}`;
   const image = document.createElement('img');
   image.alt = `${label} icon`;
   image.className = 'buffie-fandom-icon';
@@ -3101,8 +3126,28 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
     return;
   }
 
+  const buffiesReleased = isBuffieReleased(brawler);
+  const hasBuffieForType = Boolean(brawler?.owned) && hasBuffie(brawler, type);
+
   combined.forEach((item) => {
+    const isOwned = Boolean(brawler?.owned) && (
+      ownedKeys.has(normalizeKey(item.name)) ||
+      (item.id != null && ownedIds.has(String(item.id)))
+    );
+    const useState = equipmentUseState(brawler, type, isOwned);
+
+    // Condition 1 & 2:
+    let isLitUp = false;
+    if (type === 'gear') {
+      isLitUp = isOwned;
+    } else {
+      isLitUp = buffiesReleased
+        ? (isOwned && hasBuffieForType)
+        : isOwned;
+    }
+
     const row = document.createElement('article');
+    row.className = `equipment-card ${type}-card ${isOwned ? 'owned' : 'unowned'} ${isLitUp ? 'lit-up' : 'not-lit'} ${useState.key}`;
 
     // Header row with integrated emblem and status pill
     const header = document.createElement('div');
@@ -3144,8 +3189,6 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
 
     titleWrap.append(emblemWrap, name);
 
-    const isOwned = ownedKeys.has(normalizeKey(item.name)) || (item.id && ownedIds.has(String(item.id)));
-    const useState = equipmentUseState(brawler, type, isOwned);
     const status = document.createElement('span');
     status.className = useState.className;
     status.textContent = useState.label;

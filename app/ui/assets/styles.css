@@ -402,22 +402,22 @@ a { color: inherit; }
 .lab-capsule:hover { transform: translateY(-1px); }
 
 /* Gadgets */
-.gadget-capsule.owned, .gadget-capsule:has(.buffie-slot.owned) { background: #eafbf1; border: 1.5px solid #86efac; }
-.gadget-capsule.unowned:not(:has(.buffie-slot.owned)) { background: #f8fafc; border: 1.5px dashed #cbd5e1; }
+.gadget-capsule.owned { background: #eafbf1; border: 1.5px solid #86efac; }
+.gadget-capsule.unowned { background: #f8fafc; border: 1.5px dashed #cbd5e1; }
 .gadget-capsule .equip-slot.owned,
 .gadget-capsule .buffie-slot.owned,
 .buffie-slot.buffie-gadget.owned { background: #00c853; border: 2px solid #ffffff; box-shadow: 0 1.5px 3px rgba(0, 200, 83, 0.35); }
 
 /* Star Powers */
-.sp-capsule.owned, .sp-capsule:has(.buffie-slot.owned) { background: #fef9e7; border: 1.5px solid #fcd34d; }
-.sp-capsule.unowned:not(:has(.buffie-slot.owned)) { background: #f8fafc; border: 1.5px dashed #cbd5e1; }
+.sp-capsule.owned { background: #fef9e7; border: 1.5px solid #fcd34d; }
+.sp-capsule.unowned { background: #f8fafc; border: 1.5px dashed #cbd5e1; }
 .sp-capsule .equip-slot.owned,
 .sp-capsule .buffie-slot.owned,
 .buffie-slot.buffie-sp.owned { background: #ff9100; border: 2px solid #ffffff; box-shadow: 0 1.5px 3px rgba(255, 145, 0, 0.35); }
 
 /* Hypercharge */
-.hc-capsule.owned, .hc-capsule:has(.buffie-slot.owned) { background: #fdf2f8; border: 1.5px solid #f472b6; box-shadow: 0 0 8px rgba(244, 114, 182, 0.25); }
-.hc-capsule.unowned:not(:has(.buffie-slot.owned)) { background: #f8fafc; border: 1.5px dashed #cbd5e1; }
+.hc-capsule.owned { background: #fdf2f8; border: 1.5px solid #f472b6; box-shadow: 0 0 8px rgba(244, 114, 182, 0.25); }
+.hc-capsule.unowned { background: #f8fafc; border: 1.5px dashed #cbd5e1; box-shadow: none; }
 .hc-capsule .equip-slot.owned,
 .hc-capsule .buffie-slot.owned,
 .buffie-slot.buffie-hc.owned { background: #a855f7; border: 2px solid #ffffff; box-shadow: 0 1.5px 4px rgba(168, 85, 247, 0.4); }
@@ -700,10 +700,99 @@ a { color: inherit; }
   border:2px solid var(--line); 
   border-radius:15px; 
   background:#fff;
-  transition: transform .15s ease, border-color .15s ease;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, opacity .15s ease;
 }
 .equipment-list article:hover {
   border-color: #b0c9ea;
+}
+
+/* Active / Owned Equipment Cards */
+.equipment-list article.owned {
+  background: #ffffff;
+  border: 2px solid var(--line);
+  box-shadow: 0 2px 8px rgba(0, 20, 60, 0.04);
+}
+.equipment-list article.owned:hover {
+  transform: translateY(-2px);
+  border-color: #94b8e6;
+  box-shadow: 0 4px 14px rgba(0, 20, 60, 0.08);
+}
+
+/* Thin colored line lights up when conditions 1 & 2 are met */
+.equipment-list article.gadget-card.lit-up {
+  border-color: #86efac;
+}
+.equipment-list article.star_power-card.lit-up {
+  border-color: #fde047;
+}
+.equipment-list article.gear-card.lit-up {
+  border-color: #93c5fd;
+}
+.equipment-list article.hypercharge-card.lit-up {
+  border-color: #d8b4fe;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+}
+
+/* If owned but not lit up (e.g. missing buffie on buffie brawler or stored hypercharge) */
+.equipment-list article.owned:not(.lit-up) {
+  border: 2px dashed #cbd5e1;
+  box-shadow: none;
+}
+
+/* Greyed Out / Unowned Equipment (Light & Subtle) */
+.equipment-list article.unowned {
+  background: #fafbfd;
+  border: 2px dashed #cbd5e1;
+  box-shadow: none;
+  opacity: 0.88;
+}
+.equipment-list article.unowned:hover {
+  transform: none;
+  border-color: #94a3b8;
+  opacity: 1;
+}
+.equipment-list article.unowned strong {
+  color: #475569;
+}
+.equipment-list article.unowned p {
+  color: #64748b;
+}
+.equipment-list article.unowned .ability-icon-img {
+  filter: grayscale(60%) contrast(0.95);
+  opacity: 0.72;
+}
+.equipment-list article.unowned .ability-icon-img:hover {
+  transform: none;
+}
+.equipment-list article.unowned .ability-emblem {
+  background: #94a3b8 !important;
+  box-shadow: none !important;
+  opacity: 0.70;
+}
+.equipment-list article.unowned .official-hypercharge-emblem {
+  filter: grayscale(60%);
+  opacity: 0.72;
+}
+.equipment-list article.unowned .official-hypercharge-emblem:hover {
+  transform: none;
+}
+.equipment-list article.unowned .ability-icon-img.hyper-icon-img {
+  filter: grayscale(60%) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
+  opacity: 0.72;
+}
+
+/* Inactive Buffie inside unowned utility card */
+.equipment-list article.unowned .buffie-subfield.inactive-buffie {
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  opacity: 0.85;
+}
+.equipment-list article.unowned .buffie-subfield.inactive-buffie .buffie-tag {
+  color: #64748b !important;
+}
+.equipment-list article.unowned .buffie-subfield.inactive-buffie .buffie-icon-badge {
+  filter: grayscale(60%);
+  opacity: 0.7;
 }
 .ability-header-row {
   display: flex;
@@ -872,24 +961,58 @@ a { color: inherit; }
   box-shadow: none !important;
   filter: grayscale(1);
 }
-/* Buffie Owned in Inventory but Base Equipment Not Owned */
+/* Buffie Owned in Inventory but Base Equipment Not Owned / Power < Unlock Level (STORED) */
 .buffie-subfield.inventory-buffie {
-  background: #f8fafc !important;
-  border: 1.5px dashed #cbd5e1 !important;
-  opacity: 0.82;
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
 }
-.buffie-subfield.inventory-buffie .buffie-tag { color: #64748b !important; }
-.buffie-rank-pill.inventory-rank-pill {
-  color: #64748b !important;
-  background: #e2e8f0 !important;
-  border: 1px solid #cbd5e1 !important;
-  font-weight: 700;
+.equipment-list article.unowned .buffie-subfield.inventory-buffie {
+  opacity: 1 !important;
+  filter: none !important;
 }
-.buffie-effect.inventory-effect {
-  color: #64748b !important;
-  font-style: italic;
+.equipment-list article.unowned .buffie-subfield.inventory-buffie * {
+  filter: none;
+}
+.buffie-subfield.inventory-buffie .buffie-icon-badge {
+  filter: none !important;
+  opacity: 1 !important;
+}
+.buffie-subfield.inventory-buffie .buffie-fandom-icon {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35)) !important;
+  opacity: 1 !important;
+}
+.buffie-subfield.inventory-buffie.gadget-buffie .buffie-tag { 
+  color: #15803d !important; 
+  font-weight: 800 !important; 
+}
+.buffie-subfield.inventory-buffie.star_power-buffie .buffie-tag { 
+  color: #b45309 !important; 
+  font-weight: 800 !important; 
+}
+.buffie-subfield.inventory-buffie.hypercharge-buffie .buffie-tag { 
+  color: #7e22ce !important; 
+  font-weight: 800 !important; 
+}
+.buffie-subfield.inventory-buffie .buffie-tag {
+  font-weight: 800 !important;
+}
+.buffie-subfield.inventory-buffie .buffie-effect,
+.equipment-list article.unowned .buffie-subfield.inventory-buffie p.buffie-effect {
+  color: #1e293b !important;
+  font-style: normal !important;
   font-weight: 500 !important;
   line-height: 1.45;
+  opacity: 1 !important;
+}
+.buffie-rank-pill.hypercharge-stored-status {
+  color: #854d0e !important;
+  background: linear-gradient(135deg, #fef08a, #facc15) !important;
+  box-shadow: 0 2px 5px rgba(234,179,8,0.3) !important;
+  border: 1px solid #eab308 !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
 }
 .buffie-fandom-icon {
   width: 18px;
@@ -1015,9 +1138,10 @@ a { color: inherit; }
 .hc-eligible-banner { background:#faf5ff; border:1.5px solid #d8b4fe; color:#581c87; }
 .hc-locked-banner { background:#f8fafc; border:1.5px solid #e2e8f0; color:#475569; }
 .equipment-empty { color: var(--muted); font-size: 11px; }
-.guide-sources { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-top:19px; padding-top:16px; border-top:2px solid var(--line); }
-.guide-sources p { flex:1 1 100%; margin:0; color:var(--muted); font-size:10px; line-height:1.5; }
-.guide-sources a { color:var(--blue-dark); font-size:10px; font-weight:700; text-decoration:none; }
+.guide-sources { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px 10px; margin-top:19px; padding-top:16px; border-top:2px solid var(--line); text-align:center; }
+.guide-sources p { flex:1 1 100%; margin:0 0 8px; color:var(--muted); font-size:10px; line-height:1.45; font-weight:600; text-align:center; }
+.guide-sources a { display:inline-flex; align-items:center; padding:3px 8px; border-radius:6px; background:#f1f5f9; border:1px solid #cbd5e1; color:var(--blue-dark); font-size:9.5px; font-weight:700; text-decoration:none; transition:all .15s ease; }
+.guide-sources a:hover { background:var(--blue-dark); color:#fff; border-color:var(--blue-dark); transform:translateY(-1px); }
 
 .guide-profile-panel { margin-top:20px; padding:25px; }
 .guide-profile-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:16px; margin-top:14px; }

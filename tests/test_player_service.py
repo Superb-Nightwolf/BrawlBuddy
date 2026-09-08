@@ -179,3 +179,50 @@ def test_official_hypercharge_and_buffie_fields_remain_independent() -> None:
     }
 
 
+def test_parse_player_applies_overrides() -> None:
+    payload = {
+        "tag": "#9Q889JCR0",
+        "name": "Supercellian",
+        "brawlers": [
+            {
+                "id": 16000107,
+                "name": "NORI",
+                "power": 11,
+                "hyperCharges": [],
+            },
+            {
+                "id": 16000108,
+                "name": "WENDY",
+                "power": 11,
+                "hyperCharges": [],
+            },
+        ],
+    }
+
+    overrides = {
+        "brawlers": {
+            "16000107": {
+                "hypercharges": [{"id": 23001299, "name": "MASTER FISHERMAN"}]
+            },
+            "WENDY": {
+                "hypercharges": [{"id": 23001322, "name": "GREEN ENERGY"}]
+            },
+        }
+    }
+
+    player = parse_player(payload, overrides=overrides)
+    nori, wendy = player.brawlers
+
+    assert nori.has_hypercharge is True
+    assert nori.hypercharges[0].name == "MASTER FISHERMAN"
+    assert nori.is_hypercharge_active is True
+
+    assert wendy.has_hypercharge is True
+    assert wendy.hypercharges[0].name == "GREEN ENERGY"
+    assert wendy.is_hypercharge_active is True
+
+    assert player.total_hypercharges_count == 2
+    assert player.active_hypercharges_count == 2
+
+
+

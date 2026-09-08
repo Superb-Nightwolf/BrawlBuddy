@@ -1,0 +1,22 @@
+{
+  "#9Q889JCR0": {
+    "brawlers": {
+      "16000107": {
+        "hypercharges": [
+          {
+            "id": 23001299,
+            "name": "MASTER FISHERMAN"
+          }
+        ]
+      },
+      "16000108": {
+        "hypercharges": [
+          {
+            "id": 23001322,
+            "name": "GREEN ENERGY"
+          }
+        ]
+      }
+    }
+  }
+}

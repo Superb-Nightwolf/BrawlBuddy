@@ -40,6 +40,7 @@ player_service = PlayerService(
     client=client,
     demo_file=PROJECT_ROOT / "data" / "demo_player.json",
     cache_seconds=settings.cache.player_seconds,
+    overrides_file=PROJECT_ROOT / "data" / "player_overrides.json",
 )
 club_service = ClubService(
     client=client,
