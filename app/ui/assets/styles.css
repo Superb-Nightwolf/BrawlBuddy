@@ -443,58 +443,78 @@ a { color: inherit; }
 .brawler-stat-chip { flex: 0 0 calc((100% - 12px) / 3); width: calc((100% - 12px) / 3); max-width: 86px; height: 40px; border-radius: 11px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 4px; box-sizing: border-box; min-width: 0; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; cursor: default; }
 .brawler-stat-chip:hover { transform: translateY(-1px); }
 
-/* Trophies Chip Typography (Universal Trophy Gold) */
-.brawler-stat-chip.trophies-chip { background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%); border: 1.5px solid #fde68a; box-shadow: 0 2.5px 0 #fcd34d; }
-.brawler-card:hover .brawler-stat-chip.trophies-chip { box-shadow: 0 3px 0 #fcd34d, 0 3px 6px rgba(245, 158, 11, 0.18); }
+/* Trophies & Level Chips Base Typography & Soft Tinted Themes */
+.brawler-stat-chip.trophies-chip, .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border: 1.5px solid #bfdbfe; box-shadow: 0 2.5px 0 #93c5fd; }
 .trophy-chip-row { display: inline-flex; align-items: center; justify-content: center; gap: 3.5px; line-height: 1; }
-.trophy-chip-img { width: 13.5px; height: 13.5px; object-fit: contain; filter: drop-shadow(0 1px 1.5px rgba(180, 83, 9, 0.25)); flex-shrink: 0; }
-.trophy-chip-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 12.5px; font-weight: 800; color: #78350f; line-height: 1; letter-spacing: -0.2px; }
-.trophy-chip-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6.5px; font-weight: 800; letter-spacing: 0.65px; color: #b45309; text-transform: uppercase; margin-top: 1.5px; line-height: 1; }
+.trophy-chip-img { width: 13.5px; height: 13.5px; object-fit: contain; filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.2)); flex-shrink: 0; }
+.trophy-chip-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 12.5px; font-weight: 800; color: #1e40af; line-height: 1; letter-spacing: -0.2px; }
+.trophy-chip-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6.5px; font-weight: 800; letter-spacing: 0.65px; color: #2563eb; text-transform: uppercase; margin-top: 1.5px; line-height: 1; }
 
 /* Prestige Center Wrap (exact same slot size as lab-capsule: 86px max, 40px height) */
 .brawler-prestige-center-wrap { flex: 0 0 calc((100% - 12px) / 3); width: calc((100% - 12px) / 3); max-width: 86px; height: 40px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 4; margin: 0; }
 .prestige-card-emblem-img { width: 41px; height: 41px; object-fit: contain; filter: drop-shadow(0 3px 5px rgba(0, 18, 55, 0.35)); transition: transform .18s ease; }
 .brawler-card:hover .prestige-card-emblem-img { transform: scale(1.14); }
 
-/* Level Chip Typography & Soft Tinted Themes */
-.brawler-stat-chip.level-chip { background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border: 1.5px solid #bfdbfe; box-shadow: 0 2.5px 0 #93c5fd; }
+/* Level Chip Typography */
 .level-chip-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 15px; font-weight: 800; color: #1e40af; line-height: 1; }
 .level-chip-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6.5px; font-weight: 800; letter-spacing: 0.65px; color: #2563eb; text-transform: uppercase; margin-top: 1.5px; line-height: 1; }
 
+/* Soft Tinted Rarity Themes for Both Trophies & Level Chips */
+.rarity-common .brawler-stat-chip.trophies-chip, .rarity-starting .brawler-stat-chip.trophies-chip,
 .rarity-common .brawler-stat-chip.level-chip, .rarity-starting .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border-color: #bfdbfe; box-shadow: 0 2.5px 0 #93c5fd; }
+.rarity-common .brawler-stat-chip.trophies-chip .trophy-chip-val, .rarity-starting .brawler-stat-chip.trophies-chip .trophy-chip-val,
 .rarity-common .brawler-stat-chip.level-chip .level-chip-val, .rarity-starting .brawler-stat-chip.level-chip .level-chip-val { color: #1e40af; }
+.rarity-common .brawler-stat-chip.trophies-chip .trophy-chip-lbl, .rarity-starting .brawler-stat-chip.trophies-chip .trophy-chip-lbl,
 .rarity-common .brawler-stat-chip.level-chip .level-chip-lbl, .rarity-starting .brawler-stat-chip.level-chip .level-chip-lbl { color: #2563eb; }
-.rarity-common .brawler-card:hover .brawler-stat-chip.level-chip, .rarity-starting .brawler-card:hover .brawler-stat-chip.level-chip { box-shadow: 0 3px 0 #93c5fd, 0 3px 6px rgba(37, 99, 235, 0.18); }
+.rarity-common .brawler-card:hover .brawler-stat-chip, .rarity-starting .brawler-card:hover .brawler-stat-chip { box-shadow: 0 3px 0 #93c5fd, 0 3px 6px rgba(37, 99, 235, 0.18); }
 
+.rarity-rare .brawler-stat-chip.trophies-chip,
 .rarity-rare .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); border-color: #bbf7d0; box-shadow: 0 2.5px 0 #86efac; }
+.rarity-rare .brawler-stat-chip.trophies-chip .trophy-chip-val,
 .rarity-rare .brawler-stat-chip.level-chip .level-chip-val { color: #166534; }
+.rarity-rare .brawler-stat-chip.trophies-chip .trophy-chip-lbl,
 .rarity-rare .brawler-stat-chip.level-chip .level-chip-lbl { color: #15803d; }
-.rarity-rare .brawler-card:hover .brawler-stat-chip.level-chip { box-shadow: 0 3px 0 #86efac, 0 3px 6px rgba(22, 163, 74, 0.18); }
+.rarity-rare .brawler-card:hover .brawler-stat-chip { box-shadow: 0 3px 0 #86efac, 0 3px 6px rgba(22, 163, 74, 0.18); }
 
+.rarity-super-rare .brawler-stat-chip.trophies-chip, .rarity-super_rare .brawler-stat-chip.trophies-chip,
 .rarity-super-rare .brawler-stat-chip.level-chip, .rarity-super_rare .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%); border-color: #bae6fd; box-shadow: 0 2.5px 0 #7dd3fc; }
+.rarity-super-rare .brawler-stat-chip.trophies-chip .trophy-chip-val, .rarity-super_rare .brawler-stat-chip.trophies-chip .trophy-chip-val,
 .rarity-super-rare .brawler-stat-chip.level-chip .level-chip-val, .rarity-super_rare .brawler-stat-chip.level-chip .level-chip-val { color: #075985; }
+.rarity-super-rare .brawler-stat-chip.trophies-chip .trophy-chip-lbl, .rarity-super_rare .brawler-stat-chip.trophies-chip .trophy-chip-lbl,
 .rarity-super-rare .brawler-stat-chip.level-chip .level-chip-lbl, .rarity-super_rare .brawler-stat-chip.level-chip .level-chip-lbl { color: #0284c7; }
-.rarity-super-rare .brawler-card:hover .brawler-stat-chip.level-chip, .rarity-super_rare .brawler-card:hover .brawler-stat-chip.level-chip { box-shadow: 0 3px 0 #7dd3fc, 0 3px 6px rgba(2, 132, 199, 0.18); }
+.rarity-super-rare .brawler-card:hover .brawler-stat-chip, .rarity-super_rare .brawler-card:hover .brawler-stat-chip { box-shadow: 0 3px 0 #7dd3fc, 0 3px 6px rgba(2, 132, 199, 0.18); }
 
+.rarity-epic .brawler-stat-chip.trophies-chip,
 .rarity-epic .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 100%); border-color: #e9d5ff; box-shadow: 0 2.5px 0 #d8b4fe; }
+.rarity-epic .brawler-stat-chip.trophies-chip .trophy-chip-val,
 .rarity-epic .brawler-stat-chip.level-chip .level-chip-val { color: #581c87; }
+.rarity-epic .brawler-stat-chip.trophies-chip .trophy-chip-lbl,
 .rarity-epic .brawler-stat-chip.level-chip .level-chip-lbl { color: #7e22ce; }
-.rarity-epic .brawler-card:hover .brawler-stat-chip.level-chip { box-shadow: 0 3px 0 #d8b4fe, 0 3px 6px rgba(147, 51, 234, 0.18); }
+.rarity-epic .brawler-card:hover .brawler-stat-chip { box-shadow: 0 3px 0 #d8b4fe, 0 3px 6px rgba(147, 51, 234, 0.18); }
 
+.rarity-mythic .brawler-stat-chip.trophies-chip,
 .rarity-mythic .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%); border-color: #fecdd3; box-shadow: 0 2.5px 0 #fda4af; }
+.rarity-mythic .brawler-stat-chip.trophies-chip .trophy-chip-val,
 .rarity-mythic .brawler-stat-chip.level-chip .level-chip-val { color: #9f1239; }
+.rarity-mythic .brawler-stat-chip.trophies-chip .trophy-chip-lbl,
 .rarity-mythic .brawler-stat-chip.level-chip .level-chip-lbl { color: #e11d48; }
-.rarity-mythic .brawler-card:hover .brawler-stat-chip.level-chip { box-shadow: 0 3px 0 #fda4af, 0 3px 6px rgba(225, 29, 72, 0.18); }
+.rarity-mythic .brawler-card:hover .brawler-stat-chip { box-shadow: 0 3px 0 #fda4af, 0 3px 6px rgba(225, 29, 72, 0.18); }
 
+.rarity-legendary .brawler-stat-chip.trophies-chip,
 .rarity-legendary .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%); border-color: #fef08a; box-shadow: 0 2.5px 0 #fde047; }
+.rarity-legendary .brawler-stat-chip.trophies-chip .trophy-chip-val,
 .rarity-legendary .brawler-stat-chip.level-chip .level-chip-val { color: #78350f; }
+.rarity-legendary .brawler-stat-chip.trophies-chip .trophy-chip-lbl,
 .rarity-legendary .brawler-stat-chip.level-chip .level-chip-lbl { color: #b45309; }
-.rarity-legendary .brawler-card:hover .brawler-stat-chip.level-chip { box-shadow: 0 3px 0 #fde047, 0 3px 6px rgba(245, 158, 11, 0.18); }
+.rarity-legendary .brawler-card:hover .brawler-stat-chip { box-shadow: 0 3px 0 #fde047, 0 3px 6px rgba(245, 158, 11, 0.18); }
 
+.rarity-ultra-legendary .brawler-stat-chip.trophies-chip, .rarity-ultra_legendary .brawler-stat-chip.trophies-chip, .rarity-ultra .brawler-stat-chip.trophies-chip,
 .rarity-ultra-legendary .brawler-stat-chip.level-chip, .rarity-ultra_legendary .brawler-stat-chip.level-chip, .rarity-ultra .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #faf5ff 0%, #ede9fe 100%); border-color: #e9d5ff; box-shadow: 0 2.5px 0 #c084fc; }
+.rarity-ultra-legendary .brawler-stat-chip.trophies-chip .trophy-chip-val, .rarity-ultra_legendary .brawler-stat-chip.trophies-chip .trophy-chip-val, .rarity-ultra .brawler-stat-chip.trophies-chip .trophy-chip-val,
 .rarity-ultra-legendary .brawler-stat-chip.level-chip .level-chip-val, .rarity-ultra_legendary .brawler-stat-chip.level-chip .level-chip-val, .rarity-ultra .brawler-stat-chip.level-chip .level-chip-val { color: #581c87; }
+.rarity-ultra-legendary .brawler-stat-chip.trophies-chip .trophy-chip-lbl, .rarity-ultra_legendary .brawler-stat-chip.trophies-chip .trophy-chip-lbl, .rarity-ultra .brawler-stat-chip.trophies-chip .trophy-chip-lbl,
 .rarity-ultra-legendary .brawler-stat-chip.level-chip .level-chip-lbl, .rarity-ultra_legendary .brawler-stat-chip.level-chip .level-chip-lbl, .rarity-ultra .brawler-stat-chip.level-chip .level-chip-lbl { color: #7c3aed; }
-.rarity-ultra-legendary .brawler-card:hover .brawler-stat-chip.level-chip, .rarity-ultra_legendary .brawler-card:hover .brawler-stat-chip.level-chip, .rarity-ultra .brawler-card:hover .brawler-stat-chip.level-chip { box-shadow: 0 3px 0 #c084fc, 0 3px 6px rgba(168, 85, 247, 0.22); }
+.rarity-ultra-legendary .brawler-card:hover .brawler-stat-chip, .rarity-ultra_legendary .brawler-card:hover .brawler-stat-chip, .rarity-ultra .brawler-card:hover .brawler-stat-chip { box-shadow: 0 3px 0 #c084fc, 0 3px 6px rgba(168, 85, 247, 0.22); }
 
 .prestige-card-emblem { position:absolute; right:10px; bottom:calc(8px + 5%); z-index:4; width:49px; height:49px; display:grid; place-items:center; filter:drop-shadow(0 5px 5px rgba(0,18,55,.42)); }
 .prestige-card-emblem img { max-width:100%; max-height:100%; object-fit:contain; }
