@@ -422,7 +422,7 @@ a { color: inherit; }
 /* Brawler Card Trophy Badge (Exact styling and container as LVL Power-Badge, +10% size) */
 .trophy-card-emblem.power-badge { top: auto; bottom: 8px; left: 10px; min-width: 49px; height: auto; min-height: 28px; padding: 2.5px 7.5px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; cursor: pointer; }
 .trophy-badge-row { display: inline-flex; align-items: center; justify-content: center; gap: 4.5px; line-height: 1; }
-.trophy-badge-svg { width: 13.5px; height: 13.5px; fill: #ffd32e; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4)); flex-shrink: 0; }
+.trophy-badge-img { width: 14px; height: 14px; object-fit: contain; filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.45)); flex-shrink: 0; }
 .trophy-badge-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 11px; font-weight: 500; color: #ffffff; line-height: 1; letter-spacing: 0.2px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); }
 .trophy-badge-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6px; font-weight: 500; letter-spacing: 0.65px; color: #fff7b8; text-transform: uppercase; margin-top: 1px; line-height: 1; text-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.6); }
 .brawler-card:hover .trophy-card-emblem.power-badge { transform: translateY(-1px) scale(1.04); box-shadow: 0 3px 6px rgba(0, 20, 60, 0.35); }
@@ -512,7 +512,7 @@ a { color: inherit; }
 .table-mode .brawler-image { max-width: 78px; max-height: 78px; }
 .table-mode .brawler-card-copy { display: grid; grid-template-columns: 1fr 2fr 130px; align-items: center; gap: 15px; }
 .table-mode .trophy-card-emblem.power-badge { left: 6px; bottom: 6px; min-width: 42px; min-height: 24px; padding: 2px 5.5px; }
-.table-mode .trophy-badge-svg { width: 11px; height: 11px; }
+.table-mode .trophy-badge-img { width: 11px; height: 11px; }
 .table-mode .trophy-badge-val { font-size: 9.5px; }
 .table-mode .trophy-badge-lbl { font-size: 5px; }
 .table-mode .prestige-card-emblem { width: 38px; height: 38px; right: 6px; bottom: 6px; }
@@ -2445,7 +2445,7 @@ a { color: inherit; }
   .detail-account-stats strong { font-size: 16px; }
   .prestige-card-emblem { width:37px; height:37px; right:5px; bottom:calc(5px + 5%); }
   .trophy-card-emblem.power-badge { left: 5px; bottom: 5px; min-width: 44px; min-height: 25px; padding: 2px 6px; }
-  .trophy-badge-svg { width: 12px; height: 12px; }
+  .trophy-badge-img { width: 12px; height: 12px; }
   .trophy-badge-val { font-size: 10px; }
   .trophy-badge-lbl { font-size: 5px; }
   .prestige-progress-panel { grid-template-columns:1fr; padding:16px 12px; text-align:center; }
@@ -2617,7 +2617,7 @@ img, picture, video, canvas, svg { max-width: 100%; }
   .open-guide { margin-inline: -11px; margin-bottom: -10px; padding: 12px; font-size: 10px; }
   .prestige-card-emblem { width: 54px; height: 54px; right: 8px; bottom: 7px; }
   .trophy-card-emblem.power-badge { left: 8px; bottom: 7px; min-width: 53px; min-height: 30px; padding: 2.5px 8px; }
-  .trophy-badge-svg { width: 15.5px; height: 15.5px; }
+  .trophy-badge-img { width: 15.5px; height: 15.5px; }
   .trophy-badge-val { font-size: 12.5px; }
   .trophy-badge-lbl { font-size: 6px; }
   .prestige-bar, .overview-metrics, .hero-stats, .detail-account-stats { grid-template-columns: 1fr; }
