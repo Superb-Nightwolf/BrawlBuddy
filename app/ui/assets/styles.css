@@ -420,13 +420,15 @@ a { color: inherit; }
 .rarity-ultra-legendary .brawler-rarity-tag, .rarity-ultra_legendary .brawler-rarity-tag, .rarity-ultra .brawler-rarity-tag, .brawler-rarity-tag.rarity-ultra-legendary, .brawler-rarity-tag.rarity-ultra_legendary, .brawler-rarity-tag.rarity-ultra { background: linear-gradient(90deg, #e11d48 0%, #9333ea 28%, #2563eb 55%, #059669 80%, #d97706 100%); border-color: #fef08a; box-shadow: 0 2px 8px rgba(147, 51, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
 
 /* Brawler Card Trophy Emblem (Parallel to Prestige Emblem on bottom-left) */
-.trophy-card-emblem { position: absolute; left: 10px; bottom: calc(8px + 5%); z-index: 4; width: 49px; height: 49px; display: grid; place-items: center; filter: drop-shadow(0 5px 5px rgba(0, 18, 55, 0.42)); text-decoration: none; }
-.trophy-emblem-box { width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #ffffff; border-radius: 12px; background: linear-gradient(180deg, #ffea55 0%, #f59e0b 52%, #d97706 100%); box-shadow: 0 3.5px 0 #92400e, 0 6px 12px rgba(0, 18, 55, 0.35), inset 0 1.5px 0 rgba(255, 255, 255, 0.65); overflow: hidden; box-sizing: border-box; }
-.trophy-emblem-bg { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0.48; z-index: 1; pointer-events: none; user-select: none; }
-.trophy-emblem-svg { width: 32px; height: 32px; fill: #78350f; filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.25)); }
+.trophy-card-emblem { position: absolute; left: 10px; bottom: calc(8px + 5%); z-index: 4; width: 49px; height: 49px; display: grid; place-items: center; filter: drop-shadow(0 5px 5px rgba(0, 18, 55, 0.42)); text-decoration: none; transition: transform .15s ease; }
+.trophy-emblem-box { width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1.5px solid #facc15; border-radius: 12px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 60%, #090d16 100%); box-shadow: 0 3.5px 0 #78350f, 0 6px 12px rgba(0, 10, 30, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25); overflow: hidden; box-sizing: border-box; transition: border-color .15s ease, box-shadow .15s ease; }
+.trophy-emblem-bg { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0.40; z-index: 1; pointer-events: none; user-select: none; }
+.trophy-emblem-svg { width: 32px; height: 32px; fill: #facc15; filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6)); transition: filter .15s ease; }
 .trophy-emblem-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; pointer-events: none; }
-.trophy-emblem-val { font-family: "Lilita One", var(--font-heading), system-ui, sans-serif; font-size: 13.5px; font-weight: 900; color: #ffffff; line-height: 1; letter-spacing: -0.2px; text-align: center; text-shadow: 0 1.5px 0 #78350f, 0 2px 4px rgba(0, 0, 0, 0.45); }
-.trophy-emblem-sub { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6.5px; font-weight: 900; letter-spacing: 0.6px; color: #fff8db; text-transform: uppercase; margin-top: 1px; line-height: 1; text-shadow: 0 1px 2px rgba(120, 53, 15, 0.85); }
+.trophy-emblem-val { font-family: "Lilita One", var(--font-heading), system-ui, sans-serif; font-size: 14px; font-weight: 900; color: #ffffff; line-height: 1; letter-spacing: -0.2px; text-align: center; text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.95); }
+.trophy-emblem-sub { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6.5px; font-weight: 900; letter-spacing: 0.7px; color: #fde047; text-transform: uppercase; margin-top: 1px; line-height: 1; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9); }
+.brawler-card:hover .trophy-emblem-box { border-color: #fde047; box-shadow: 0 4px 0 #78350f, 0 8px 16px rgba(0, 10, 30, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+.brawler-card:hover .trophy-emblem-svg { filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.85)); }
 
 .prestige-card-emblem { position:absolute; right:10px; bottom:calc(8px + 5%); z-index:4; width:49px; height:49px; display:grid; place-items:center; filter:drop-shadow(0 5px 5px rgba(0,18,55,.42)); }
 .prestige-card-emblem img { max-width:100%; max-height:100%; object-fit:contain; }
@@ -2445,10 +2447,10 @@ a { color: inherit; }
   .detail-account-stats strong { font-size: 16px; }
   .prestige-card-emblem { width:37px; height:37px; right:5px; bottom:calc(5px + 5%); }
   .trophy-card-emblem { width: 37px; height: 37px; left: 5px; bottom: calc(5px + 5%); }
-  .trophy-emblem-box { border-width: 1.5px; border-radius: 9px; box-shadow: 0 2.5px 0 #92400e, 0 4px 8px rgba(0, 18, 55, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.6); }
-  .trophy-emblem-svg { width: 23px; height: 23px; }
-  .trophy-emblem-val { font-size: 10px; }
-  .trophy-emblem-sub { font-size: 5px; letter-spacing: 0.4px; }
+  .trophy-emblem-box { border-width: 1.25px; border-radius: 9px; box-shadow: 0 2.5px 0 #78350f, 0 4px 8px rgba(0, 10, 30, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+  .trophy-emblem-svg { width: 24px; height: 24px; }
+  .trophy-emblem-val { font-size: 10.5px; }
+  .trophy-emblem-sub { font-size: 5px; letter-spacing: 0.5px; }
   .prestige-progress-panel { grid-template-columns:1fr; padding:16px 12px; text-align:center; }
   .prestige-progress-emblem-wrap { min-height:105px; }
   .detail-prestige-emblem { width:104px; height:104px; }
