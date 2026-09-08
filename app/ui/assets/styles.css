@@ -408,7 +408,7 @@ a { color: inherit; }
 .rarity-legendary .power-badge:not(.locked), .power-badge.rarity-legendary:not(.locked) { background: linear-gradient(135deg, #f59e0b, #d97706 50%, #b45309); }
 .rarity-ultra-legendary .power-badge:not(.locked), .rarity-ultra_legendary .power-badge:not(.locked), .rarity-ultra .power-badge:not(.locked), .power-badge.rarity-ultra-legendary:not(.locked), .power-badge.rarity-ultra_legendary:not(.locked), .power-badge.rarity-ultra:not(.locked) { background: linear-gradient(90deg, #e11d48 0%, #9333ea 28%, #2563eb 55%, #059669 80%, #d97706 100%); border-color: #fef08a; box-shadow: 0 2px 8px rgba(147, 51, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
 .brawler-card-copy { display: flex; flex-direction: column; flex: 1; padding: 15px 14px 14px; background: #ffffff; }
-.brawler-name-row { position: relative; width: 78%; min-height: 38px; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; padding: 6px 11px; border-radius: 12px; text-align: center; box-sizing: border-box; background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border: 2px solid #bfdbfe; box-shadow: 0 3px 0 #93c5fd; transition: transform .15s ease; }
+.brawler-name-row { position: relative; width: 78%; min-height: 34px; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; padding: 4.5px 11px; border-radius: 12px; text-align: center; box-sizing: border-box; background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border: 2px solid #bfdbfe; box-shadow: 0 3px 0 #93c5fd; transition: transform .15s ease; }
 .brawler-name-row strong { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 400; color: #1e40af; line-height: 1; letter-spacing: .4px; text-align: center; text-transform: uppercase; font-family: "Lilita One", var(--font-heading), system-ui, sans-serif; }
 .brawler-rarity-tag { position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 88%); z-index: 5; display: inline-flex; align-items: center; justify-content: center; height: 22px; min-height: 22px; max-height: 22px; min-width: 78px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; font-size: 9.5px; font-weight: 900; letter-spacing: .8px; line-height: 1; text-transform: uppercase; white-space: nowrap; overflow: hidden; border: 1.4px solid #ffffff; box-shadow: 0 2px 6px rgba(0, 15, 45, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.45); pointer-events: none; color: #ffffff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
 .rarity-common .brawler-name-row, .rarity-starting .brawler-name-row { background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border-color: #bfdbfe; box-shadow: 0 3px 0 #93c5fd; }
@@ -439,25 +439,29 @@ a { color: inherit; }
 /* Redesigned Lower Progression Row: Trophies (Left) + Prestige (+10%) + Level (Right) */
 .brawler-progression-row { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; margin: 4px 0 12px; box-sizing: border-box; }
 
-/* Tactile Stat Chip Base (matching exact lab-capsule sizing: 86px max, 40px height, 11px radius) */
-.brawler-stat-chip { flex: 0 0 calc((100% - 12px) / 3); width: calc((100% - 12px) / 3); max-width: 86px; height: 40px; border-radius: 11px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 4px; box-sizing: border-box; min-width: 0; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; cursor: default; }
+/* Tactile Stat Chip Base (reduced by 10% height to 36px, 11px radius) */
+.brawler-stat-chip { flex: 0 0 calc((100% - 12px) / 3); width: calc((100% - 12px) / 3); max-width: 86px; height: 36px; border-radius: 11px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px 4px; box-sizing: border-box; min-width: 0; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; cursor: default; }
 .brawler-stat-chip:hover { transform: translateY(-1px); }
+
+/* Inward 5% shifts for Trophies and Level chips */
+.brawler-stat-chip.trophies-chip { position: relative; left: 5%; }
+.brawler-stat-chip.level-chip { position: relative; right: 5%; }
 
 /* Trophies & Level Chips Base Typography & Soft Tinted Themes */
 .brawler-stat-chip.trophies-chip, .brawler-stat-chip.level-chip { background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border: 1.5px solid #bfdbfe; box-shadow: 0 2.5px 0 #93c5fd; }
 .trophy-chip-row { display: inline-flex; align-items: center; justify-content: center; gap: 3.5px; line-height: 1; }
-.trophy-chip-img { width: 13.5px; height: 13.5px; object-fit: contain; filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.2)); flex-shrink: 0; }
-.trophy-chip-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 12.5px; font-weight: 800; color: #1e40af; line-height: 1; letter-spacing: -0.2px; }
-.trophy-chip-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6.5px; font-weight: 800; letter-spacing: 0.65px; color: #2563eb; text-transform: uppercase; margin-top: 1.5px; line-height: 1; }
+.trophy-chip-img { width: 12.5px; height: 12.5px; object-fit: contain; filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.2)); flex-shrink: 0; }
+.trophy-chip-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 12px; font-weight: 800; color: #1e40af; line-height: 1; letter-spacing: -0.2px; }
+.trophy-chip-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6px; font-weight: 800; letter-spacing: 0.6px; color: #2563eb; text-transform: uppercase; margin-top: 1px; line-height: 1; }
 
-/* Prestige Center Wrap (exact same slot size as lab-capsule: 86px max, 40px height) */
-.brawler-prestige-center-wrap { flex: 0 0 calc((100% - 12px) / 3); width: calc((100% - 12px) / 3); max-width: 86px; height: 40px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 4; margin: 0; }
-.prestige-card-emblem-img { width: 41px; height: 41px; object-fit: contain; filter: drop-shadow(0 3px 5px rgba(0, 18, 55, 0.35)); transition: transform .18s ease; }
+/* Prestige Center Wrap (matching 36px height) */
+.brawler-prestige-center-wrap { flex: 0 0 calc((100% - 12px) / 3); width: calc((100% - 12px) / 3); max-width: 86px; height: 36px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 4; margin: 0; }
+.prestige-card-emblem-img { width: 38px; height: 38px; object-fit: contain; filter: drop-shadow(0 3px 5px rgba(0, 18, 55, 0.35)); transition: transform .18s ease; }
 .brawler-card:hover .prestige-card-emblem-img { transform: scale(1.14); }
 
 /* Level Chip Typography */
-.level-chip-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 15px; font-weight: 800; color: #1e40af; line-height: 1; }
-.level-chip-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6.5px; font-weight: 800; letter-spacing: 0.65px; color: #2563eb; text-transform: uppercase; margin-top: 1.5px; line-height: 1; }
+.level-chip-val { font-family: var(--font-heading), system-ui, sans-serif; font-size: 14px; font-weight: 800; color: #1e40af; line-height: 1; }
+.level-chip-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 6px; font-weight: 800; letter-spacing: 0.6px; color: #2563eb; text-transform: uppercase; margin-top: 1px; line-height: 1; }
 
 /* Soft Tinted Rarity Themes for Both Trophies & Level Chips */
 .rarity-common .brawler-stat-chip.trophies-chip, .rarity-starting .brawler-stat-chip.trophies-chip,
@@ -606,6 +610,8 @@ a { color: inherit; }
 .table-mode .brawler-rarity-tag { height: 17px; min-height: 17px; max-height: 17px; min-width: 60px; font-size: 7.5px; padding: 0 6px; }
 .table-mode .brawler-progression-row { margin: 0; gap: 4px; width: 100%; }
 .table-mode .brawler-stat-chip { height: 28px; border-radius: 8px; padding: 2px 4px; max-width: 68px; min-width: 52px; flex: 0 0 calc((100% - 8px) / 3); width: calc((100% - 8px) / 3); }
+.table-mode .brawler-stat-chip.trophies-chip { left: 0; }
+.table-mode .brawler-stat-chip.level-chip { right: 0; }
 .table-mode .trophy-chip-img { width: 10px; height: 10px; }
 .table-mode .trophy-chip-val { font-size: 9.5px; }
 .table-mode .trophy-chip-lbl { font-size: 5px; }
