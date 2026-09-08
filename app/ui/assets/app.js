@@ -2606,7 +2606,19 @@ function createMatchupCard(item, category) {
 
   const pill = document.createElement('div');
   pill.className = `matchup-rate-pill pill-${category}`;
-  pill.innerHTML = `<span>${Number(item.win_rate).toFixed(1)}%</span>`;
+  const rateStr = `${Number(item.win_rate).toFixed(1)}%`;
+  pill.innerHTML = `<span>${rateStr}</span>`;
+
+  if (category === 'counters') {
+    pill.title = `${rateStr} win rate when facing ${item.name} (${(100 - Number(item.win_rate)).toFixed(1)}% loss rate)`;
+    card.title = `Facing ${item.name}: ${rateStr} win rate across ${format(item.total_battles)} battles`;
+  } else if (category === 'favorable') {
+    pill.title = `${rateStr} win rate against ${item.name}`;
+    card.title = `Against ${item.name}: ${rateStr} win rate across ${format(item.total_battles)} battles`;
+  } else {
+    pill.title = `${rateStr} team win rate alongside ${item.name}`;
+    card.title = `Paired with ${item.name}: ${rateStr} team win rate across ${format(item.total_battles)} battles`;
+  }
 
   card.append(avatar, meta, pill);
 
