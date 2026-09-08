@@ -2725,6 +2725,20 @@ async function renderMatchups(brawler, matchupsData = null, resetExpanded = true
       }
     });
   }
+
+  // Bind info button click toggle for mobile / click interactions
+  const infoBtn = $('matchups-info-btn');
+  const infoWrap = infoBtn?.closest('.matchups-info-wrap');
+  if (infoBtn && infoWrap && !infoBtn.dataset.bound) {
+    infoBtn.dataset.bound = 'true';
+    infoBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      infoWrap.classList.toggle('is-open');
+    });
+    document.addEventListener('click', () => {
+      infoWrap.classList.remove('is-open');
+    });
+  }
 }
 
 let detailRefreshTimer = null;
