@@ -300,12 +300,15 @@ function mergeCatalog(ownedBrawlers) {
       return {
         ...entry,
         ...owned,
-        rarity: entry.rarity || 'common',
+        class: entry.class || owned.class || getBrawlerClass(entry),
+        rarity: entry.rarity || owned.rarity || 'common',
         owned: true,
       };
     }
     return {
       ...entry,
+      class: entry.class || getBrawlerClass(entry),
+      rarity: entry.rarity || 'common',
       owned: false,
       power: 0,
       rank: 0,
@@ -325,7 +328,8 @@ function mergeCatalog(ownedBrawlers) {
       catalogMerged.push({
         id: owned.id,
         name: owned.name,
-        rarity: 'common',
+        rarity: owned.rarity || 'common',
+        class: owned.class || getBrawlerClass(owned),
         ...owned,
         owned: true,
       });
@@ -1557,6 +1561,282 @@ function compactEquipmentSummary(holder, brawler) {
   });
 }
 
+const ALL_GEARS = {
+  'SPEED': { id: 62000000, name: 'SPEED', icon: '/assets/equipment/gears/62000000.png' },
+  'HEALTH': { id: 62000001, name: 'HEALTH', icon: '/assets/equipment/gears/62000001.png' },
+  'DAMAGE': { id: 62000002, name: 'DAMAGE', icon: '/assets/equipment/gears/62000002.png' },
+  'VISION': { id: 62000003, name: 'VISION', icon: '/assets/equipment/gears/62000003.png' },
+  'SHIELD': { id: 62000004, name: 'SHIELD', icon: '/assets/equipment/gears/62000004.png' },
+  'GADGET COOLDOWN': { id: 62000017, name: 'GADGET COOLDOWN', icon: '/assets/equipment/gears/62000017.png' },
+  'RELOAD SPEED': { id: 62000005, name: 'RELOAD SPEED', icon: '/assets/equipment/gears/62000005.png' },
+  'SUPER CHARGE': { id: 62000006, name: 'SUPER CHARGE', icon: '/assets/equipment/gears/62000006.png' },
+  'THICC HEAD': { id: 62000007, name: 'THICC HEAD', icon: '/assets/equipment/gears/62000007.png' },
+  'TALK TO THE HAND': { id: 62000008, name: 'TALK TO THE HAND', icon: '/assets/equipment/gears/62000008.png' },
+  'EXHAUSTING STORM': { id: 62000012, name: 'EXHAUSTING STORM', icon: '/assets/equipment/gears/62000012.png' },
+  'STICKY OIL': { id: 62000013, name: 'STICKY OIL', icon: '/assets/equipment/gears/62000013.png' },
+  'PET POWER': { id: 62000014, name: 'PET POWER', icon: '/assets/equipment/gears/62000014.png' },
+  'QUADRUPLETS': { id: 62000015, name: 'QUADRUPLETS', icon: '/assets/equipment/gears/62000015.png' },
+  'SUPER TURRET': { id: 62000016, name: 'SUPER TURRET', icon: '/assets/equipment/gears/62000016.png' },
+};
+
+const BASE_GEAR_NAMES = ['SPEED', 'HEALTH', 'DAMAGE', 'VISION', 'SHIELD', 'GADGET COOLDOWN'];
+
+const SPECIAL_GEARS_BY_BRAWLER = {
+  'AMBER': ['RELOAD SPEED', 'STICKY OIL'],
+  'ASH': ['SUPER CHARGE'],
+  'BELLE': ['RELOAD SPEED'],
+  'BONNIE': ['SUPER CHARGE'],
+  'EL PRIMO': ['SUPER CHARGE'],
+  'ELPRIMO': ['SUPER CHARGE'],
+  'EVE': ['RELOAD SPEED', 'QUADRUPLETS'],
+  'GENE': ['TALK TO THE HAND'],
+  'JACKY': ['SUPER CHARGE'],
+  'JESSIE': ['PET POWER'],
+  'LOLA': ['RELOAD SPEED'],
+  'LOU': ['SUPER CHARGE'],
+  'MR. P': ['PET POWER'],
+  'MRP': ['PET POWER'],
+  'NANI': ['SUPER CHARGE'],
+  'OTIS': ['SUPER CHARGE'],
+  'PAM': ['SUPER TURRET'],
+  'PENNY': ['PET POWER'],
+  'SANDY': ['EXHAUSTING STORM'],
+  'SPROUT': ['SUPER CHARGE'],
+  'TARA': ['PET POWER'],
+  'TICK': ['THICC HEAD'],
+};
+
+function getBrawlerGearRoster(brawler) {
+  const normName = (brawler.name || '').toUpperCase().trim();
+  const special = SPECIAL_GEARS_BY_BRAWLER[normName] || [];
+  const gearNames = [...BASE_GEAR_NAMES, ...special];
+
+  const ownedGears = brawler.gears || [];
+  ownedGears.forEach((g) => {
+    const gNameUpper = (g.name || '').toUpperCase().trim();
+    if (gNameUpper && !gearNames.includes(gNameUpper)) {
+      gearNames.push(gNameUpper);
+    }
+  });
+
+  return gearNames.map((name) => {
+    if (ALL_GEARS[name]) return ALL_GEARS[name];
+    const matched = ownedGears.find((g) => (g.name || '').toUpperCase().trim() === name);
+    const id = matched?.id || 0;
+    return {
+      id,
+      name,
+      icon: `/assets/equipment/gears/${id}.png`,
+    };
+  });
+}
+
+function getBrawlerCatalogEquipment(brawlerId) {
+  const bId = String(brawlerId);
+  const allEquip = Object.entries(state.equipmentDb || {}).map(([key, item]) => ({
+    name: item.name || key,
+    ...item,
+  }));
+  const brawlerEquip = allEquip.filter((item) => String(item.brawler_id) === bId);
+  let gadgets = brawlerEquip.filter((item) => item.type === 'gadget').sort((a, b) => a.id - b.id);
+  let starPowers = brawlerEquip.filter((item) => item.type === 'star_power').sort((a, b) => a.id - b.id);
+
+  const guide = state.guides?.[bId];
+  if ((!gadgets || gadgets.length === 0) && guide?.gadgets) {
+    gadgets = (guide.gadgets || []).map((g) => ({
+      id: g.id,
+      name: g.name,
+      type: 'gadget',
+      image_url: g.image_url || `/assets/equipment/gadgets/${g.id}.png`,
+    }));
+  }
+  if ((!starPowers || starPowers.length === 0) && guide?.star_powers) {
+    starPowers = (guide.star_powers || []).map((sp) => ({
+      id: sp.id,
+      name: sp.name,
+      type: 'star_power',
+      image_url: sp.image_url || `/assets/equipment/star-powers/${sp.id}.png`,
+    }));
+  }
+
+  return { gadgets, starPowers };
+}
+
+function renderRosterEquipmentLab(holder, brawler) {
+  holder.replaceChildren();
+  const bId = String(brawler.id);
+  const catalogEquip = getBrawlerCatalogEquipment(bId);
+
+  // 1. Resolve Gadgets
+  let gadgets = catalogEquip.gadgets;
+  if (!gadgets || gadgets.length === 0) {
+    gadgets = (brawler.gadgets || []).map((g) => ({
+      id: g.id,
+      name: g.name,
+      image_url: `/assets/equipment/gadgets/${g.id}.png`,
+    }));
+  }
+  while (gadgets.length < 2) {
+    gadgets.push({ id: 0, name: 'Gadget', image_url: '/assets/section_gadget.png' });
+  }
+
+  // 2. Resolve Star Powers
+  let starPowers = catalogEquip.starPowers;
+  if (!starPowers || starPowers.length === 0) {
+    starPowers = (brawler.star_powers || brawler.starPowers || []).map((sp) => ({
+      id: sp.id,
+      name: sp.name,
+      image_url: `/assets/equipment/star-powers/${sp.id}.png`,
+    }));
+  }
+  while (starPowers.length < 2) {
+    starPowers.push({ id: 0, name: 'Star Power', image_url: '/assets/section_star_power.png' });
+  }
+
+  const ownedGadgetIds = new Set((brawler.gadgets || []).map((g) => Number(g.id)));
+  const ownedGadgetNames = new Set((brawler.gadgets || []).map((g) => normalizeKey(g.name)));
+  const ownedSpIds = new Set((brawler.star_powers || brawler.starPowers || []).map((sp) => Number(sp.id)));
+  const ownedSpNames = new Set((brawler.star_powers || brawler.starPowers || []).map((sp) => normalizeKey(sp.name)));
+
+  const hasGadgetBuffy = Boolean(brawler.owned) && hasBuffie(brawler, 'gadget');
+  const hasSpBuffy = Boolean(brawler.owned) && hasBuffie(brawler, 'star_power');
+  const hasHcBuffy = Boolean(brawler.owned) && hasBuffie(brawler, 'hypercharge');
+  const isHcOwned = Boolean(brawler.owned) && hasHypercharge(brawler);
+
+  const gadgetBuffieUrl = state.visualAssets?.brawlers?.[bId]?.buffies?.gadget?.local_url || `/assets/equipment/buffies/${bId}-gadget.png`;
+  const spBuffieUrl = state.visualAssets?.brawlers?.[bId]?.buffies?.star_power?.local_url || `/assets/equipment/buffies/${bId}-star-power.png`;
+  const hcBuffieUrl = state.visualAssets?.brawlers?.[bId]?.buffies?.hypercharge?.local_url || `/assets/equipment/buffies/${bId}-hypercharge.png`;
+  const hcIconUrl = state.visualAssets?.brawlers?.[bId]?.hypercharge?.local_url || `/assets/equipment/hypercharges/${bId}.png`;
+
+  // Row 1: Gadgets (centered, consistent capsule width)
+  const rowGadgets = document.createElement('div');
+  rowGadgets.className = 'lab-row lab-row-gadgets';
+  gadgets.slice(0, 2).forEach((g) => {
+    const isOwned = Boolean(brawler.owned) && (
+      (g.id > 0 && ownedGadgetIds.has(Number(g.id))) ||
+      (Boolean(g.name) && ownedGadgetNames.has(normalizeKey(g.name)))
+    );
+    const isCapsuleActive = isOwned || hasGadgetBuffy;
+    const capsule = document.createElement('div');
+    capsule.className = `lab-capsule gadget-capsule ${isCapsuleActive ? 'owned' : 'unowned'}`;
+    capsule.title = `${g.name || 'Gadget'} (${isOwned ? 'Owned' : 'Not owned'})`;
+
+    const equipSlot = document.createElement('div');
+    equipSlot.className = `equip-slot ${isOwned ? 'owned' : 'unowned'}`;
+    const equipImg = document.createElement('img');
+    equipImg.className = 'equip-icon';
+    equipImg.src = g.image_url || `/assets/equipment/gadgets/${g.id}.png`;
+    equipImg.alt = g.name || 'Gadget';
+    equipImg.onerror = () => { equipImg.src = '/assets/section_gadget.png'; };
+    equipSlot.append(equipImg);
+
+    const buffieSlot = document.createElement('div');
+    buffieSlot.className = `buffie-slot buffie-gadget ${hasGadgetBuffy ? 'owned' : 'unowned'}`;
+    buffieSlot.title = `Gadget Buffie (${hasGadgetBuffy ? 'Owned' : 'Not owned'})`;
+    const buffieImg = document.createElement('img');
+    buffieImg.className = 'buffie-icon';
+    buffieImg.src = gadgetBuffieUrl;
+    buffieImg.alt = 'Gadget Buffie';
+    buffieImg.onerror = () => { buffieImg.src = '/assets/buffies/generic.png'; };
+    buffieSlot.append(buffieImg);
+
+    capsule.append(equipSlot, buffieSlot);
+    rowGadgets.append(capsule);
+  });
+
+  // Row 2: Star Powers & Hypercharge (centered, identical capsule width)
+  const rowSpHc = document.createElement('div');
+  rowSpHc.className = 'lab-row lab-row-sp-hc';
+  starPowers.slice(0, 2).forEach((sp) => {
+    const isOwned = Boolean(brawler.owned) && (
+      (sp.id > 0 && ownedSpIds.has(Number(sp.id))) ||
+      (Boolean(sp.name) && ownedSpNames.has(normalizeKey(sp.name)))
+    );
+    const isCapsuleActive = isOwned || hasSpBuffy;
+    const capsule = document.createElement('div');
+    capsule.className = `lab-capsule sp-capsule ${isCapsuleActive ? 'owned' : 'unowned'}`;
+    capsule.title = `${sp.name || 'Star Power'} (${isOwned ? 'Owned' : 'Not owned'})`;
+
+    const equipSlot = document.createElement('div');
+    equipSlot.className = `equip-slot ${isOwned ? 'owned' : 'unowned'}`;
+    const equipImg = document.createElement('img');
+    equipImg.className = 'equip-icon';
+    equipImg.src = sp.image_url || `/assets/equipment/star-powers/${sp.id}.png`;
+    equipImg.alt = sp.name || 'Star Power';
+    equipImg.onerror = () => { equipImg.src = '/assets/section_star_power.png'; };
+    equipSlot.append(equipImg);
+
+    const buffieSlot = document.createElement('div');
+    buffieSlot.className = `buffie-slot buffie-sp ${hasSpBuffy ? 'owned' : 'unowned'}`;
+    buffieSlot.title = `Star Power Buffie (${hasSpBuffy ? 'Owned' : 'Not owned'})`;
+    const buffieImg = document.createElement('img');
+    buffieImg.className = 'buffie-icon';
+    buffieImg.src = spBuffieUrl;
+    buffieImg.alt = 'Star Power Buffie';
+    buffieImg.onerror = () => { buffieImg.src = '/assets/buffies/generic.png'; };
+    buffieSlot.append(buffieImg);
+
+    capsule.append(equipSlot, buffieSlot);
+    rowSpHc.append(capsule);
+  });
+
+  // Hypercharge Capsule
+  const isCapsuleActive = isHcOwned || hasHcBuffy;
+  const hcCapsule = document.createElement('div');
+  hcCapsule.className = `lab-capsule hc-capsule ${isCapsuleActive ? 'owned' : 'unowned'}`;
+  hcCapsule.title = `Hypercharge (${isHcOwned ? 'Owned' : 'Not owned'})`;
+
+  const hcSlot = document.createElement('div');
+  hcSlot.className = `equip-slot ${isHcOwned ? 'owned' : 'unowned'}`;
+  const hcImg = document.createElement('img');
+  hcImg.className = 'equip-icon hc-icon';
+  hcImg.src = hcIconUrl;
+  hcImg.alt = 'Hypercharge';
+  hcImg.onerror = () => { hcImg.src = '/assets/section_hypercharge.png'; };
+  hcSlot.append(hcImg);
+
+  const hcBuffieSlot = document.createElement('div');
+  hcBuffieSlot.className = `buffie-slot buffie-hc ${hasHcBuffy ? 'owned' : 'unowned'}`;
+  hcBuffieSlot.title = `Hypercharge Buffie (${hasHcBuffy ? 'Owned' : 'Not owned'})`;
+  const hcBuffieImg = document.createElement('img');
+  hcBuffieImg.className = 'buffie-icon';
+  hcBuffieImg.src = hcBuffieUrl;
+  hcBuffieImg.alt = 'Hypercharge Buffie';
+  hcBuffieImg.onerror = () => { hcBuffieImg.src = '/assets/buffies/generic.png'; };
+  hcBuffieSlot.append(hcBuffieImg);
+
+  hcCapsule.append(hcSlot, hcBuffieSlot);
+  rowSpHc.append(hcCapsule);
+
+  // Row 3: Gears Strip (supporting 6 to 8 gears per brawler)
+  const rowGears = document.createElement('div');
+  rowGears.className = 'lab-row lab-row-gears';
+  const gearsPill = document.createElement('div');
+  gearsPill.className = 'gears-strip-pill';
+
+  const brawlerGears = getBrawlerGearRoster(brawler);
+  const ownedGearIds = new Set((brawler.gears || []).map((g) => Number(g.id)));
+  const ownedGearNames = new Set((brawler.gears || []).map((g) => normalizeKey(g.name)));
+
+  brawlerGears.forEach((gear) => {
+    const isOwned = Boolean(brawler.owned) && (ownedGearIds.has(gear.id) || ownedGearNames.has(normalizeKey(gear.name)));
+    const gearSlot = document.createElement('div');
+    gearSlot.className = `gear-slot ${isOwned ? 'owned' : 'unowned'}`;
+    gearSlot.title = `${gear.name} Gear (${isOwned ? 'Owned' : 'Not owned'})`;
+
+    const gearImg = document.createElement('img');
+    gearImg.className = 'gear-icon';
+    gearImg.src = gear.icon;
+    gearImg.alt = gear.name;
+    gearImg.onerror = () => { gearImg.src = '/assets/section_gear.png'; };
+    gearSlot.append(gearImg);
+    gearsPill.append(gearSlot);
+  });
+  rowGears.append(gearsPill);
+
+  holder.append(rowGadgets, rowSpHc, rowGears);
+}
+
 function cardFor(brawler) {
   const link = document.createElement('a'); link.className = 'brawler-card'; link.href = `/brawlers/${brawler.id}`;
   const visual = document.createElement('div'); visual.className = 'brawler-visual';
@@ -1566,10 +1846,50 @@ function cardFor(brawler) {
   const badge = document.createElement('span'); badge.className = `power-badge ${brawler.owned ? `power-${brawler.power}` : 'locked'}`; badge.textContent = brawler.owned ? `L${brawler.power}` : 'LOCKED'; visual.append(badge);
   const copy = document.createElement('div'); copy.className = 'brawler-card-copy';
   const top = document.createElement('div'); top.className = 'brawler-name-row'; const name = document.createElement('strong'); name.textContent = brawler.name; const rank = document.createElement('span'); rank.textContent = brawler.owned ? `RANK ${brawler.rank}` : (brawler.rarity || 'Brawler').toUpperCase(); top.append(name, rank);
-  const stats = document.createElement('div'); stats.className = 'brawler-stats'; const trophies = document.createElement('span'); trophies.textContent = brawler.owned ? `★ ${format(brawler.trophies)}` : 'Catalog brawler'; const best = document.createElement('span'); best.textContent = brawler.owned ? `Best ${format(brawler.highest_trophies)}` : 'Not owned'; stats.append(trophies, best);
-  const equipment = document.createElement('div'); equipment.className = 'equipment-row'; compactEquipmentSummary(equipment, brawler);
+  const stats = document.createElement('div'); stats.className = 'brawler-stats'; const trophies = document.createElement('span'); trophies.className = 'brawler-trophies'; trophies.innerHTML = brawler.owned ? `<span class="trophy-star">★</span> ${format(brawler.trophies)}` : '<span class="trophy-star">★</span> —'; const best = document.createElement('span'); best.className = 'brawler-best'; best.textContent = brawler.owned ? `Best ${format(brawler.highest_trophies || brawler.highestTrophies || brawler.trophies)}` : 'Not owned'; stats.append(trophies, best);
+  const equipment = document.createElement('div'); equipment.className = 'equipment-row equipment-lab-wrap'; renderRosterEquipmentLab(equipment, brawler);
   const open = document.createElement('div'); open.className = 'open-guide'; open.innerHTML = '<span>VIEW GUIDE</span><b>→</b>';
   copy.append(top, stats, equipment, open); link.append(visual, copy); return link;
+}
+
+const BRAWLER_CLASSES_BY_NAME = {
+  "PENNY": "Controller", "TARA": "Damage Dealer", "FRANK": "Tank", "GENE": "Controller", "TICK": "Artillery", "LEON": "Assassin", "ROSA": "Tank", "CARL": "Damage Dealer", "BIBI": "Tank", "8-BIT": "Damage Dealer", "SANDY": "Controller", "BEA": "Marksman", "EMZ": "Controller", "MR. P": "Controller", "MAX": "Support", "JACKY": "Tank", "GALE": "Controller", "NANI": "Marksman", "SPROUT": "Artillery", "COLETTE": "Damage Dealer", "AMBER": "Controller", "LOU": "Controller", "SURGE": "Damage Dealer", "SHELLY": "Damage Dealer", "COLT": "Damage Dealer", "BULL": "Tank", "BROCK": "Marksman", "RICO": "Damage Dealer", "SPIKE": "Damage Dealer", "BARLEY": "Artillery", "JESSIE": "Controller", "NITA": "Damage Dealer", "DYNAMIKE": "Artillery", "EL PRIMO": "Tank", "MORTIS": "Assassin", "CROW": "Assassin", "POCO": "Support", "BO": "Controller", "PIPER": "Marksman", "PAM": "Support", "DARRYL": "Tank", "BYRON": "Support", "EDGAR": "Assassin", "RUFFS": "Support", "STU": "Assassin", "BELLE": "Marksman", "SQUEAK": "Controller", "GROM": "Artillery", "BUZZ": "Assassin", "GRIFF": "Controller", "ASH": "Tank", "MEG": "Tank", "LOLA": "Damage Dealer", "FANG": "Assassin", "EVE": "Damage Dealer", "JANET": "Marksman", "BONNIE": "Marksman", "OTIS": "Controller", "SAM": "Tank", "GUS": "Support", "BUSTER": "Tank", "CHESTER": "Damage Dealer", "GRAY": "Support", "MANDY": "Marksman", "R-T": "Damage Dealer", "WILLOW": "Controller", "MAISIE": "Marksman", "HANK": "Tank", "CORDELIUS": "Assassin", "DOUG": "Support", "PEARL": "Damage Dealer", "CHUCK": "Damage Dealer", "CHARLIE": "Controller", "MICO": "Assassin", "KIT": "Support", "LARRY & LAWRIE": "Artillery", "MELODIE": "Assassin", "ANGELO": "Marksman", "DRACO": "Tank", "LILY": "Assassin", "BERRY": "Support", "CLANCY": "Damage Dealer", "MOE": "Damage Dealer", "KENJI": "Assassin", "SHADE": "Assassin", "JUJU": "Artillery", "MEEPLE": "Controller", "OLLIE": "Assassin", "LUMI": "Support", "FINX": "Controller", "JAE-YONG": "Assassin", "KAZE": "Assassin", "ALLI": "Tank", "TRUNK": "Tank", "MINA": "Marksman", "ZIGGY": "Controller", "PIERCE": "Marksman", "GIGI": "Support", "GLOWY": "Controller", "SIRIUS": "Damage Dealer", "NAJIA": "Assassin", "DAMIAN": "Damage Dealer", "STARR NOVA": "Controller", "BOLT": "Marksman", "NORI": "Assassin", "WENDY": "Damage Dealer"
+};
+
+const BRAWLER_RARITIES_BY_NAME = {
+  "SHELLY": "Common", "COLT": "Rare", "BULL": "Rare", "BROCK": "Rare", "RICO": "Super Rare", "SPIKE": "Legendary", "BARLEY": "Rare", "JESSIE": "Super Rare", "NITA": "Rare", "DYNAMIKE": "Super Rare", "EL PRIMO": "Rare", "MORTIS": "Mythic", "CROW": "Legendary", "POCO": "Rare", "BO": "Epic", "PIPER": "Epic", "PAM": "Epic", "TARA": "Mythic", "DARRYL": "Super Rare", "PENNY": "Super Rare", "FRANK": "Epic", "GENE": "Mythic", "TICK": "Super Rare", "LEON": "Legendary", "ROSA": "Rare", "CARL": "Super Rare", "BIBI": "Epic", "8-BIT": "Super Rare", "SANDY": "Legendary", "BEA": "Epic", "EMZ": "Epic", "MR. P": "Mythic", "MAX": "Mythic", "JACKY": "Super Rare", "GALE": "Epic", "NANI": "Epic", "SPROUT": "Mythic", "SURGE": "Legendary", "COLETTE": "Epic", "AMBER": "Legendary", "LOU": "Mythic", "BYRON": "Mythic", "EDGAR": "Epic", "RUFFS": "Mythic", "STU": "Epic", "BELLE": "Epic", "SQUEAK": "Mythic", "GROM": "Epic", "BUZZ": "Mythic", "GRIFF": "Epic", "ASH": "Epic", "MEG": "Legendary", "LOLA": "Epic", "FANG": "Mythic", "EVE": "Mythic", "JANET": "Mythic", "BONNIE": "Epic", "OTIS": "Mythic", "SAM": "Epic", "GUS": "Super Rare", "BUSTER": "Mythic", "CHESTER": "Legendary", "GRAY": "Mythic", "MANDY": "Epic", "R-T": "Mythic", "WILLOW": "Mythic", "MAISIE": "Epic", "HANK": "Epic", "CORDELIUS": "Legendary", "DOUG": "Mythic", "PEARL": "Epic", "CHUCK": "Mythic", "CHARLIE": "Mythic", "MICO": "Mythic", "KIT": "Legendary", "LARRY & LAWRIE": "Epic", "MELODIE": "Mythic", "ANGELO": "Epic", "DRACO": "Legendary", "LILY": "Mythic", "BERRY": "Epic", "CLANCY": "Mythic", "MOE": "Mythic", "KENJI": "Legendary", "SHADE": "Epic", "JUJU": "Mythic", "MEEPLE": "Epic", "OLLIE": "Mythic", "LUMI": "Mythic", "FINX": "Mythic", "JAE-YONG": "Mythic", "KAZE": "Ultra Legendary", "ALLI": "Mythic", "TRUNK": "Epic", "MINA": "Mythic", "ZIGGY": "Mythic", "PIERCE": "Legendary", "GIGI": "Mythic", "GLOWY": "Mythic", "SIRIUS": "Ultra Legendary", "NAJIA": "Mythic", "DAMIAN": "Mythic", "STARR NOVA": "Mythic", "BOLT": "Epic", "NORI": "Legendary", "WENDY": "Legendary"
+};
+
+function getBrawlerClass(brawler) {
+  if (!brawler) return '';
+  if (brawler.class) return brawler.class;
+  const bId = String(brawler.id || '');
+  const guide = state.guides?.[bId];
+  if (guide?.class) return guide.class;
+  const cat = (state.catalog || []).find((c) => String(c.id) === bId || (c.name || '').toUpperCase() === (brawler.name || '').toUpperCase());
+  if (cat?.class) return cat.class;
+  return BRAWLER_CLASSES_BY_NAME[(brawler.name || '').toUpperCase()] || '';
+}
+
+function getBrawlerRarity(brawler) {
+  if (!brawler) return '';
+  if (brawler.rarity) return brawler.rarity;
+  const bId = String(brawler.id || '');
+  const cat = (state.catalog || []).find((c) => String(c.id) === bId || (c.name || '').toUpperCase() === (brawler.name || '').toUpperCase());
+  if (cat?.rarity) return cat.rarity;
+  return BRAWLER_RARITIES_BY_NAME[(brawler.name || '').toUpperCase()] || 'Common';
+}
+
+function isHyperchargeReleasedForBrawler(brawler) {
+  if (!brawler) return false;
+  const bId = String(brawler.id || '');
+  const visual = state.visualAssets?.brawlers?.[bId]?.hypercharge;
+  if (visual && visual.released === false) return false;
+  const guide = state.guides?.[bId];
+  if (guide?.hypercharge && (guide.hypercharge.released === false || guide.hypercharge.name?.toLowerCase() === 'unreleased')) {
+    return false;
+  }
+  return true;
 }
 
 function matchesEquipment(brawler, filter = state.equipment) {
@@ -1577,67 +1897,199 @@ function matchesEquipment(brawler, filter = state.equipment) {
   if (!filter || filter === 'all') return true;
 
   const isOwned = Boolean(brawler.owned);
-  if (!isOwned) return false; // all specific filters only evaluate owned player brawlers
+
+  // CLASS (evaluates catalog: matches both owned and unowned brawlers)
+  const bClass = (getBrawlerClass(brawler) || '').toLowerCase().trim();
+  switch (filter) {
+    case 'class_damage_dealer':
+      return bClass === 'damage dealer';
+    case 'class_assassin':
+      return bClass === 'assassin';
+    case 'class_marksman':
+      return bClass === 'marksman';
+    case 'class_artillery':
+      return bClass === 'artillery';
+    case 'class_tank':
+      return bClass === 'tank';
+    case 'class_support':
+      return bClass === 'support';
+    case 'class_controller':
+      return bClass === 'controller';
+  }
+
+  // RARITY (evaluates catalog: matches both owned and unowned brawlers)
+  const bRarity = (getBrawlerRarity(brawler) || '').toLowerCase().trim();
+  switch (filter) {
+    case 'rarity_rare':
+      return bRarity === 'rare';
+    case 'rarity_super_rare':
+      return bRarity === 'super rare';
+    case 'rarity_epic':
+      return bRarity === 'epic';
+    case 'rarity_mythic':
+      return bRarity === 'mythic';
+    case 'rarity_legendary':
+      return bRarity.includes('legendary');
+  }
+
+  // BUFFIE AVAILABILITY (evaluates catalog: matches brawlers with buffies released)
+  if (filter === 'buffies_available') {
+    return isBuffieReleased(brawler);
+  }
+  if (filter === 'buffies_not_available') {
+    return !isBuffieReleased(brawler);
+  }
+
+  // HYPERCHARGE NOT AVAILABLE (evaluates catalog)
+  if (filter === 'hc_not_available') {
+    return !isHyperchargeReleasedForBrawler(brawler);
+  }
+
+  // Progression & ownership filters require the player to own the brawler
+  if (!isOwned) return false;
 
   const gadgetCount = (brawler.gadgets || []).length;
-  const spCount = (brawler.star_powers || []).length;
+  const spCount = (brawler.star_powers || brawler.starPowers || []).length;
   const gearCount = (brawler.gears || []).length;
   const isHcOwned = hasHypercharge(brawler);
   const hasGadgetBuffy = hasBuffie(brawler, 'gadget');
   const hasSpBuffy = hasBuffie(brawler, 'star_power');
   const hasHcBuffy = hasBuffie(brawler, 'hypercharge');
-  const hasAnyBuffy = hasGadgetBuffy || hasSpBuffy || hasHcBuffy;
+  const buffieCount = (hasGadgetBuffy ? 1 : 0) + (hasSpBuffy ? 1 : 0) + (hasHcBuffy ? 1 : 0);
+  const hasAnyBuffy = buffieCount > 0;
+
+  const trophies = brawler.trophies || 0;
+  const brawlerPeak = Math.max(trophies, brawler.highest_trophies || 0);
+  const brawlerPrestige = Math.floor(brawlerPeak / 1000);
 
   switch (filter) {
+    // GADGETS
+    case 'gadgets_0':
+    case 'no_gadget':
+      return gadgetCount === 0;
+    case 'gadgets_1':
     case 'has_gadget_1':
       return gadgetCount === 1;
+    case 'gadgets_2':
     case 'has_gadget_2':
-      return gadgetCount === 2;
+      return gadgetCount >= 2;
     case 'has_gadget_1_or_more':
     case 'has_gadget':
       return gadgetCount >= 1;
-    case 'no_gadget':
-      return gadgetCount === 0;
 
+    // STAR POWERS
+    case 'sp_0':
+    case 'no_sp':
+      return spCount === 0;
+    case 'sp_1':
     case 'has_sp_1':
       return spCount === 1;
+    case 'sp_2':
     case 'has_sp_2':
-      return spCount === 2;
+      return spCount >= 2;
     case 'has_sp_1_or_more':
     case 'has_sp':
       return spCount >= 1;
-    case 'no_sp':
-      return spCount === 0;
 
-    case 'has_gear_1':
-      return gearCount === 1;
-    case 'has_gears_2_or_more':
-    case 'has_2_gears':
-      return gearCount >= 2;
-    case 'has_gear_1_or_more':
-    case 'has_1_gear':
-      return gearCount >= 1;
+    // GEARS
+    case 'gears_0':
     case 'no_gear':
       return gearCount === 0;
+    case 'gears_1':
+    case 'has_gear_1':
+    case 'has_1_gear':
+      return gearCount === 1;
+    case 'gears_2_plus':
+    case 'has_gears_2_or_more':
+    case 'has_2_gears':
+    case 'has_gear_1_or_more':
+      return gearCount >= 2;
+    case 'all_gears':
+      return gearCount >= getBrawlerGearRoster(brawler).length;
 
-    case 'has_hypercharge':
-      return isHcOwned;
-    case 'active_hypercharge':
-      return isHcOwned && brawler.power === 11;
+    // HYPERCHARGE
+    case 'hc_available_unowned':
+      return isHyperchargeReleasedForBrawler(brawler) && !isHcOwned;
+    case 'hc_stored':
     case 'stored_hypercharge':
       return isHcOwned && brawler.power < 11;
+    case 'hc_active':
+    case 'active_hypercharge':
+      return isHcOwned && brawler.power === 11;
+    case 'has_hypercharge':
+      return isHcOwned;
     case 'no_hypercharge':
       return !isHcOwned;
 
+    // BUFFIE OWNERSHIP
+    case 'buffies_owned_0':
+      return buffieCount === 0;
+    case 'buffies_owned_at_least_1':
+    case 'has_buffies':
+      return buffieCount >= 1;
+    case 'buffies_owned_at_least_2':
+      return buffieCount >= 2;
+    case 'buffies_owned_3':
+      return buffieCount === 3;
+
+    // BUFFIE COMBINATIONS
+    case 'buffie_combo_0':
+      return isBuffieReleased(brawler) && buffieCount === 0;
+    case 'buffie_combo_gadget':
+      return hasGadgetBuffy && !hasSpBuffy && !hasHcBuffy;
+    case 'buffie_combo_sp':
+      return !hasGadgetBuffy && hasSpBuffy && !hasHcBuffy;
+    case 'buffie_combo_hc':
+      return !hasGadgetBuffy && !hasSpBuffy && hasHcBuffy;
+    case 'buffie_combo_gadget_sp':
+      return hasGadgetBuffy && hasSpBuffy && !hasHcBuffy;
+    case 'buffie_combo_gadget_hc':
+      return hasGadgetBuffy && !hasSpBuffy && hasHcBuffy;
+    case 'buffie_combo_sp_hc':
+      return !hasGadgetBuffy && hasSpBuffy && hasHcBuffy;
+    case 'buffie_combo_complete':
+      return hasGadgetBuffy && hasSpBuffy && hasHcBuffy;
+
+    // INDIVIDUAL BUFFIES
+    case 'buffie_ind_gadget_owned':
     case 'has_buffies_gadget':
       return hasGadgetBuffy;
+    case 'buffie_ind_gadget_unowned':
+      return isBuffieReleased(brawler) && !hasGadgetBuffy;
+    case 'buffie_ind_sp_owned':
     case 'has_buffies_sp':
       return hasSpBuffy;
+    case 'buffie_ind_sp_unowned':
+      return isBuffieReleased(brawler) && !hasSpBuffy;
+    case 'buffie_ind_hc_owned':
     case 'has_buffies_hc':
       return hasHcBuffy;
-    case 'has_buffies':
-      return hasAnyBuffy;
+    case 'buffie_ind_hc_unowned':
+      return isBuffieReleased(brawler) && !hasHcBuffy;
 
+    // TROPHIES
+    case 'trophies_0_249':
+      return trophies >= 0 && trophies <= 249;
+    case 'trophies_250_499':
+      return trophies >= 250 && trophies <= 499;
+    case 'trophies_500_749':
+      return trophies >= 500 && trophies <= 749;
+    case 'trophies_750_999':
+      return trophies >= 750 && trophies <= 999;
+    case 'trophies_1000_plus':
+      return trophies >= 1000;
+
+    // PRESTIGE
+    case 'prestige_0':
+      return brawlerPrestige === 0;
+    case 'prestige_1':
+      return brawlerPrestige === 1;
+    case 'prestige_2':
+      return brawlerPrestige === 2;
+    case 'prestige_3_plus':
+      return brawlerPrestige >= 3;
+
+    // MAX OUT
     case 'max_out':
       return brawler.power === 11 && gadgetCount >= 1 && spCount >= 1 && gearCount >= 2 && isHcOwned && hasGadgetBuffy && hasSpBuffy && hasHcBuffy;
 
@@ -2332,9 +2784,9 @@ function isBuffieReleased(brawler) {
   const brawlerName = typeof brawler === 'object' ? brawler.name : brawler;
   const bNorm = normalizeKey(brawlerName);
   const released = state.buffiesDb?.released_brawlers || [
-    'SHELLY', 'COLT', 'SPIKE', 'MORTIS', 'FRANK', 'EMZ', 'BULL', 'CROW', 'BIBI', 
-    'NITA', 'BO', 'LEON', 'COLETTE', 'EDGAR', 'GRIFF', 'RICO', 'BROCK', '8BIT', 
-    '8-BIT', '8 BIT', 'MAX', 'MEG', 'SURGE'
+    '8-BIT', '8BIT', '8 BIT', 'AMBER', 'BIBI', 'BO', 'BROCK', 'BULL', 'CHUCK', 'COLETTE',
+    'COLT', 'CROW', 'EDGAR', 'EL PRIMO', 'ELPRIMO', 'EMZ', 'FRANK', 'GRIFF', 'GUS',
+    'LEON', 'MAX', 'MEG', 'MORTIS', 'NITA', 'POCO', 'RICO', 'SHADE', 'SHELLY', 'SPIKE', 'SURGE'
   ];
   return released.some((r) => normalizeKey(r) === bNorm);
 }

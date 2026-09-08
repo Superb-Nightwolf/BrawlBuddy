@@ -6,18 +6,21 @@
   <meta name="theme-color" content="#123a78">
   <meta name="description" content="BrawlBuddy — your personal Brawl Stars progression companion.">
   <title>BrawlBuddy</title>
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/app-logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/app-logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=47">
+  <link rel="stylesheet" href="/assets/styles.css?v=54">
 </head>
 <body>
   <div class="app-shell">
     <aside class="sidebar" aria-label="Primary navigation">
       <a class="brand" href="/" aria-label="BrawlBuddy home">
-        <span class="brand-mark"><b>★</b></span>
-        <span class="brand-copy"><strong>BrawlBuddy</strong><small>POWER UP SMARTER</small></span>
+        <span class="brand-mark"><img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="brand-logo-img"></span>
+        <span class="brand-copy">
+          <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="brand-text-logo-img">
+        </span>
       </a>
       <nav class="nav-list">
         <a class="nav-item" data-nav="overview" href="/"><span class="nav-icon">⌂</span><span>Overview</span></a>
@@ -30,8 +33,16 @@
     </aside>
 
     <main class="main-content">
-      <header class="topbar">
+      <header class="topbar header-container">
         <div class="topbar-header-copy">
+          <div class="topbar-brand-mobile">
+            <a href="/" class="mobile-brand-link" aria-label="BrawlBuddy home">
+              <img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="mobile-brand-logo">
+              <div class="mobile-brand-text-wrap">
+                <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="mobile-brand-text">
+              </div>
+            </a>
+          </div>
           <p id="page-eyebrow" class="eyebrow">BRAWL COMMAND CENTER</p>
           <h1 id="page-title">Command HQ: <span id="welcome-name">Brawler</span></h1>
           <p id="page-subtitle" class="page-subtitle">Track live trophy milestones, max out your brawlers, and dominate the arena with smart upgrades.</p>
@@ -44,7 +55,13 @@
       </header>
 
       <div id="notice" class="notice hidden" role="status"></div>
-      <div id="loading-state" class="loading-state"><div class="loading-star">★</div><strong>Loading your BrawlBuddy HQ…</strong></div>
+      <div id="loading-state" class="loading-state">
+        <div class="loading-logo-box">
+          <img src="/assets/app-logo.png" alt="Loading" class="loading-logo-img">
+        </div>
+        <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="loading-logo-text">
+        <strong>Loading your BrawlBuddy HQ…</strong>
+      </div>
 
       <section id="overview-view" class="view hidden">
         <article class="player-hero">
@@ -341,27 +358,89 @@
           <div class="collection-toolbar">
             <label class="search-box"><span>⌕</span><input id="brawler-search" type="search" placeholder="Search all 106 brawlers" aria-label="Search brawlers"></label>
             <select id="brawler-sort" aria-label="Sort brawlers"><option value="power_asc">Power 1 → 11</option><option value="power_desc">Power 11 → 1</option><option value="trophies">Most trophies</option><option value="name">Name A–Z</option></select>
-            <select id="equipment-filter" aria-label="Filter equipment ownership">
-              <option value="all">All Brawlers</option>
-              <option value="has_gadget_1">Has Gadget One (1)</option>
-              <option value="has_gadget_2">Has Gadget Two (2)</option>
-              <option value="has_gadget_1_or_more">Has Gadget One or More (1+)</option>
-              <option value="no_gadget">No Gadget / Zero Gadget (0)</option>
-              <option value="has_sp_1">Has Star Power One (1)</option>
-              <option value="has_sp_2">Has Star Power Two (2)</option>
-              <option value="has_sp_1_or_more">Has Star Power One or More (1+)</option>
-              <option value="no_sp">No Star Power / Zero Star Power (0)</option>
-              <option value="has_gear_1">Has Gear One (1)</option>
-              <option value="has_gears_2_or_more">Has Gears Two or More (2+)</option>
-              <option value="no_gear">No Gear / Zero Gear (0)</option>
-              <option value="has_hypercharge">Has Hypercharge (Active/Stored)</option>
-              <option value="active_hypercharge">Has Hypercharge - Active (L11)</option>
-              <option value="stored_hypercharge">Has Hypercharge - Stored (L7-10)</option>
-              <option value="no_hypercharge">No Hypercharge (0)</option>
-              <option value="has_buffies_gadget">Gadget Buffy: Owned</option>
-              <option value="has_buffies_sp">Star Power Buffy: Owned</option>
-              <option value="has_buffies_hc">Hypercharge Buffy: Owned</option>
-              <option value="max_out">Complete Loadout + All 3 Buffy Flags</option>
+            <select id="equipment-filter" aria-label="Filter equipment and roster categories">
+              <optgroup label="ALL">
+                <option value="all">All Brawlers</option>
+              </optgroup>
+              <optgroup label="GADGETS">
+                <option value="gadgets_0">0 / 2 Gadgets</option>
+                <option value="gadgets_1">1 / 2 Gadgets</option>
+                <option value="gadgets_2">2 / 2 Gadgets · Complete</option>
+              </optgroup>
+              <optgroup label="STAR POWERS">
+                <option value="sp_0">0 / 2 Star Powers</option>
+                <option value="sp_1">1 / 2 Star Powers</option>
+                <option value="sp_2">2 / 2 Star Powers · Complete</option>
+              </optgroup>
+              <optgroup label="GEARS">
+                <option value="gears_0">0 Gears</option>
+                <option value="gears_1">1 Gear</option>
+                <option value="gears_2_plus">2+ Gears</option>
+                <option value="all_gears">All Available Gears</option>
+              </optgroup>
+              <optgroup label="HYPERCHARGE">
+                <option value="hc_not_available">Hypercharge Not Available</option>
+                <option value="hc_available_unowned">Hypercharge Available · Not Owned</option>
+                <option value="hc_stored">Hypercharge Owned · Stored</option>
+                <option value="hc_active">Hypercharge Owned · Active</option>
+              </optgroup>
+              <optgroup label="BUFFIE AVAILABILITY">
+                <option value="buffies_available">Brawlers With Buffies</option>
+                <option value="buffies_not_available">Brawlers Without Buffies</option>
+              </optgroup>
+              <optgroup label="BUFFIE OWNERSHIP">
+                <option value="buffies_owned_0">No Buffies Owned</option>
+                <option value="buffies_owned_at_least_1">Has At Least 1 Buffie</option>
+                <option value="buffies_owned_at_least_2">Has At Least 2 Buffies</option>
+                <option value="buffies_owned_3">All 3 Buffies Owned</option>
+              </optgroup>
+              <optgroup label="BUFFIE COMBINATIONS">
+                <option value="buffie_combo_0">0 / 3 Buffies</option>
+                <option value="buffie_combo_gadget">Gadget Buffie Only</option>
+                <option value="buffie_combo_sp">Star Buffie Only</option>
+                <option value="buffie_combo_hc">Hyper Buffie Only</option>
+                <option value="buffie_combo_gadget_sp">Gadget + Star Buffies</option>
+                <option value="buffie_combo_gadget_hc">Gadget + Hyper Buffies</option>
+                <option value="buffie_combo_sp_hc">Star + Hyper Buffies</option>
+                <option value="buffie_combo_complete">3 / 3 Buffies · Complete</option>
+              </optgroup>
+              <optgroup label="INDIVIDUAL BUFFIES">
+                <option value="buffie_ind_gadget_owned">Gadget Buffie · Owned</option>
+                <option value="buffie_ind_gadget_unowned">Gadget Buffie · Not Owned</option>
+                <option value="buffie_ind_sp_owned">Star Buffie · Owned</option>
+                <option value="buffie_ind_sp_unowned">Star Buffie · Not Owned</option>
+                <option value="buffie_ind_hc_owned">Hyper Buffie · Owned</option>
+                <option value="buffie_ind_hc_unowned">Hyper Buffie · Not Owned</option>
+              </optgroup>
+              <optgroup label="CLASS">
+                <option value="class_damage_dealer">Damage Dealer</option>
+                <option value="class_assassin">Assassin</option>
+                <option value="class_marksman">Marksman</option>
+                <option value="class_artillery">Artillery</option>
+                <option value="class_tank">Tank</option>
+                <option value="class_support">Support</option>
+                <option value="class_controller">Controller</option>
+              </optgroup>
+              <optgroup label="TROPHIES">
+                <option value="trophies_0_249">0 – 249</option>
+                <option value="trophies_250_499">250 – 499</option>
+                <option value="trophies_500_749">500 – 749</option>
+                <option value="trophies_750_999">750 – 999</option>
+                <option value="trophies_1000_plus">1000+</option>
+              </optgroup>
+              <optgroup label="PRESTIGE">
+                <option value="prestige_0">No Prestige</option>
+                <option value="prestige_1">Prestige 1</option>
+                <option value="prestige_2">Prestige 2</option>
+                <option value="prestige_3_plus">Prestige 3+</option>
+              </optgroup>
+              <optgroup label="RARITY">
+                <option value="rarity_rare">Rare</option>
+                <option value="rarity_super_rare">Super Rare</option>
+                <option value="rarity_epic">Epic</option>
+                <option value="rarity_mythic">Mythic</option>
+                <option value="rarity_legendary">Legendary</option>
+              </optgroup>
             </select>
             <div class="view-toggle"><button id="grid-view" class="active" type="button" aria-label="Card view">▦</button><button id="table-view" type="button" aria-label="Table view">☷</button></div>
           </div>
@@ -818,7 +897,39 @@
         </div>
       </section>
 
-      <footer class="site-footer"><div><strong>BrawlBuddy</strong><span>Your unofficial progression companion. All rights reserved to BrawlBuddy.</span><span id="content-last-updated">Content updated —</span></div><p>This material is unofficial and is not endorsed by Supercell. For more information see <a href="https://supercell.com/en/fan-content-policy/" target="_blank" rel="noreferrer">Supercell’s Fan Content Policy</a>.</p></footer>
+      <footer class="site-footer footer-container">
+        <div class="footer-layout">
+          <!-- LEFT — 25% BrawlBuddy Branding -->
+          <div class="footer-brand-col">
+            <a href="/" class="footer-brand-link" aria-label="BrawlBuddy Home">
+              <img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="footer-brand-logo">
+              <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="footer-brand-wordmark">
+            </a>
+          </div>
+
+          <!-- Vertical separator -->
+          <div class="footer-col-divider" aria-hidden="true"></div>
+
+          <!-- RIGHT — 75% Legal & Creator Credit -->
+          <div class="footer-legal-col">
+            <p class="footer-disclaimer">
+              BrawlBuddy is an independent fan site and is not affiliated with, endorsed, sponsored, or specifically approved by Supercell. Supercell is not responsible for this content. Game content and materials are trademarks and copyrights of Supercell.
+            </p>
+            <div class="footer-links-row">
+              <a href="https://supercell.com/en/fan-content-policy/" target="_blank" rel="noopener noreferrer" class="footer-legal-link">Supercell Fan Content Policy</a>
+              <span class="footer-link-separator" aria-hidden="true">·</span>
+              <a href="https://supercell.com/en/terms-of-service/" target="_blank" rel="noopener noreferrer" class="footer-legal-link">Terms of Service</a>
+            </div>
+            <div class="footer-bottom-row">
+              <span class="footer-creator-credit">
+                Crafted by <a href="https://bhalchandra-ai-dev.web.app/" target="_blank" rel="noopener noreferrer" class="creator-link">Bhalchandra <span class="creator-arrow" aria-hidden="true">↗</span></a>
+              </span>
+              <span class="footer-link-separator" aria-hidden="true">·</span>
+              <span id="content-last-updated" class="footer-last-updated">Content updated —</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   </div>
 
@@ -912,7 +1023,10 @@
             <div><small>BRAWLERS</small><strong id="share-brawlers">13 / 106</strong></div>
           </div>
           <div class="share-footer-brand">
-            <span>Powered by <strong>BrawlBuddy</strong></span>
+            <div class="share-brand-lockup">
+              <img src="/assets/app-logo.png" alt="" class="share-brand-icon">
+              <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="share-brand-text">
+            </div>
             <small>brawlbuddy.app</small>
           </div>
         </div>
@@ -926,7 +1040,9 @@
   <dialog id="connect-dialog" class="connect-dialog">
     <div class="dialog-shell">
       <button id="dialog-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
-      <div class="dialog-icon">★</div>
+      <div class="dialog-icon brand-dialog-icon">
+        <img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="dialog-brand-logo">
+      </div>
       <p class="eyebrow">OFFICIAL BRAWL STARS DATA</p>
       <h2>Connect Brawler or Club</h2>
       <p>Enter any <strong>Brawler Tag</strong> (e.g. <code>#9Q889JCR0</code>) or <strong>Club Tag</strong> (e.g. <code>#PQL20</code>). BrawlBuddy will auto-detect and load the full dashboard.</p>
@@ -943,6 +1059,6 @@
       <small>Live lookup uses your server API token. Public brawler and club data is cached briefly.</small>
     </div>
   </dialog>
-  <script src="/assets/app.js?v=67" defer></script>
+  <script src="/assets/app.js?v=68" defer></script>
 </body>
 </html>
