@@ -236,3 +236,38 @@ This document tracks all identified UI, calculation, and data integration discre
   3. Added an explicit, transparent Supercell API disclaimer note directly on Hypercharge and Buffie sections:
      *"Supercell API Notice: The official Supercell Brawl Stars API does not provide or share private Hypercharge or Buffie inventory data. Details shown represent official game specifications and compatibility mechanics."*
   4. Scoped roster equipment summary chips (`SP`, `Gadget`, `Gear`), readiness grid metrics (Power, Gadgets, Star Powers, Gears), and collection vault meters to the 3 equipment items verified by Supercell's public API.
+
+---
+
+### Issue 30: Brawler Card Power Level Badge (`.power-badge`) Container Proportions
+- **Root Cause**: The `.power-badge` container in brawler grid cards was sized at `min-width: 46px; height: 26px; font-size: 10.5px; padding: 0 7px;` with `12px` offsets, making it visually dominant and bulky relative to the `114px` brawler character artwork frame.
+- **Fix**: Adjusted `.power-badge` dimensions to `min-width: 38px; height: 21px; padding: 0 5.5px; font-size: 9px; border-radius: 7px; border: 1.25px solid #ffffff; top: 10px; left: 10px;`, alongside responsive mobile scaling (`min-width: 32px; height: 18px; font-size: 7.5px;`) and flagship loadout constraints (`height: 14px;`), yielding a sleeker, more refined visual proportion while preserving full contrast and readability.
+
+---
+
+### Issue 31: Brawler Card Trophy Showcase (`.brawler-stats`) Redesign
+- **Root Cause**: The brawler card trophy display previously consisted of bare, unboxed text (`★ 532` and `Best 532`) floating loosely on the white card body, breaking the tactile 3D container hierarchy shared by the nameplate, equipment capsules, and action footer.
+- **Fix**: Rebuilt `.brawler-stats` into an integrated **Unified 3D Plate** (`min-height: 36px`, `border: 1.5px solid #dbe8f5`, `border-radius: 11px`, `box-shadow: 0 2.5px 0 #d7e4f1`, gradient background).
+
+---
+
+### Issue 32: Brawler Card Trophies Relocation to Visual Banner (`.trophy-card-emblem`)
+- **Root Cause**: Displaying both current and best trophies inside the card copy body cluttered the equipment lab section and broke the visual symmetry with the visual banner's prestige emblem on the bottom right.
+- **Fix**:
+  1. Removed `.brawler-stats` completely from the card body copy, keeping only current trophies (`brawler.trophies`) and dropping best trophies from roster lab cards.
+  2. Created `.trophy-card-emblem` positioned at the bottom-left of `.brawler-visual` (`position: absolute; left: 10px; bottom: calc(8px + 5%); width: 49px; height: 49px;`), perfectly parallel to `.prestige-card-emblem` on the bottom right.
+  3. Styled `.trophy-emblem-box` as an angular container (`border: 2.5px solid #ffffff; border-radius: 13px; background: linear-gradient(145deg, #182c58 0%, #0c1833 65%, #050b16 100%); box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 0 4px 10px rgba(0, 18, 55, 0.45); filter: drop-shadow(0 5px 5px rgba(0, 18, 55, 0.42));`).
+  4. Placed a golden trophy SVG icon in the background at 50% opacity (`.trophy-emblem-bg`, `opacity: 0.50`), and the crisp current trophies count on front (`.trophy-emblem-val`, `"Lilita One"`, `13px`, `color: #ffffff`, text shadow).
+  5. Implemented responsive scaling for mobile (`37px × 37px; left: 5px; bottom: calc(5px + 5%); font-size: 10.5px;`) and compact breakpoints (`54px × 54px; left: 8px; bottom: 7px; font-size: 14px;`).
+  6. Balanced card copy vertical rhythm by setting `.brawler-name-row { margin-bottom: 20px; }` and `.equipment-lab-wrap { margin: 8px 0 14px; }`.
+
+---
+
+### Issue 33: Trophy Emblem Visual Harmony & Sibling Integration with Prestige Badge
+- **Root Cause**: The dark navy container (`#182c58`) felt separated and alien on the vibrant rarity sunburst, lacking the signature Supercell 3D arcade tactile bottom bevel (`box-shadow: 0 3.5px 0 ...`) present on all other progression elements.
+- **Fix**:
+  1. Refined `.trophy-emblem-box` into the **3D Trophy Gold Plaque** (`background: linear-gradient(180deg, #ffea55 0%, #f59e0b 52%, #d97706 100%); border: 2px solid #ffffff; box-shadow: 0 3.5px 0 #92400e, 0 6px 12px rgba(0, 18, 55, 0.35), inset 0 1.5px 0 rgba(255, 255, 255, 0.65);`).
+  2. Transformed the background trophy SVG into an embossed/minted medal watermark (`opacity: 0.48; fill: #78350f; filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.25));`).
+  3. Added the `.trophy-emblem-sub` micro-label (`"TROPHIES"`, 6.5px, uppercase, `#fff8db`, deep text-shadow) underneath the bold white trophy count (`"Lilita One"`, 13.5px, `#ffffff`, text-shadow `0 1.5px 0 #78350f`), elevating functional clarity and visual balance as a twin progression medal directly opposite the silver Prestige emblem.
+  4. Preserved responsive scaling across desktop (`49px × 49px`), mobile (`37px × 37px`), compact (`54px × 54px`), and table view.
+  5. Kept all other card elements, copy sections, equipment rows, and pages strictly untouched.

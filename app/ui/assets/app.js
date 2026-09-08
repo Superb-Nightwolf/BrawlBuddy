@@ -1959,16 +1959,19 @@ function cardFor(brawler) {
     const emblem = document.createElement('span'); emblem.className = 'prestige-card-emblem'; emblem.title = `${brawler.name}: ${prestige.label}`;
     const emblemImage = document.createElement('img'); emblemImage.alt = `${brawler.name} ${prestige.label} emblem`; applyPrestigeImage(emblemImage, brawler);
     emblem.append(emblemImage); visual.append(emblem);
+
+    const trophyEmblem = document.createElement('span'); trophyEmblem.className = 'trophy-card-emblem'; trophyEmblem.title = `${brawler.name}: ${format(brawler.trophies)} Trophies`;
+    trophyEmblem.innerHTML = `<div class="trophy-emblem-box"><span class="trophy-emblem-bg" aria-hidden="true"><svg class="trophy-emblem-svg" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H7v2h10v-2h-4v-3.1a5.01 5.01 0 0 0 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg></span><div class="trophy-emblem-content"><span class="trophy-emblem-val">${format(brawler.trophies)}</span><span class="trophy-emblem-sub">TROPHIES</span></div></div>`;
+    visual.append(trophyEmblem);
   }
   const copy = document.createElement('div'); copy.className = 'brawler-card-copy';
   const top = document.createElement('div'); top.className = 'brawler-name-row'; 
   const name = document.createElement('strong'); name.textContent = brawler.name; name.title = brawler.name; 
   const rarityTag = document.createElement('span'); rarityTag.className = `brawler-rarity-tag rarity-${rarityClass || 'common'}`; rarityTag.textContent = rarityLabel;
   top.append(name, rarityTag);
-  const stats = document.createElement('div'); stats.className = 'brawler-stats'; const trophies = document.createElement('span'); trophies.className = 'brawler-trophies'; trophies.innerHTML = brawler.owned ? `<span class="trophy-star">★</span> ${format(brawler.trophies)}` : '<span class="trophy-star">★</span> —'; const best = document.createElement('span'); best.className = 'brawler-best'; best.textContent = brawler.owned ? `Best ${format(brawler.highest_trophies || brawler.highestTrophies || brawler.trophies)}` : 'Not owned'; stats.append(trophies, best);
   const equipment = document.createElement('div'); equipment.className = 'equipment-row equipment-lab-wrap'; renderRosterEquipmentLab(equipment, brawler);
   const open = document.createElement('div'); open.className = 'open-guide'; open.innerHTML = '<span>VIEW GUIDE</span><b>→</b>';
-  copy.append(top, stats, equipment, open); link.append(visual, copy); return link;
+  copy.append(top, equipment, open); link.append(visual, copy); return link;
 }
 
 let brawlerNameFitFrame = 0;

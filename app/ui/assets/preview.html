@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrawlBuddy - Trophy Showcase Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    .font-heading {
+      font-family: 'Outfit', sans-serif;
+    }
+    .sunburst {
+      background: radial-gradient(circle at 50% 50%, transparent 35%, rgba(0, 0, 0, 0.3) 100%),
+                  repeating-conic-gradient(from -5.625deg at 50% 50%, rgba(255, 255, 255, 0.22) 0deg 11.25deg, rgba(0, 15, 45, 0.10) 11.25deg 22.5deg),
+                  radial-gradient(circle at 50% 50%, #fb7185 0%, #e11d48 52%, #881337 100%);
+    }
+    .brawler-shadow {
+      box-shadow: 0 10px 0 rgba(11, 35, 78, 0.06), 0 18px 32px rgba(16, 52, 105, 0.14);
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8">
+
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <span class="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold tracking-wider uppercase mb-2">
+        Design Proposals
+      </span>
+      <h1 class="font-heading text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+        Trophies Showcase Comparison
+      </h1>
+      <p class="text-slate-400 text-sm md:text-base mt-2 max-w-xl mx-auto">
+        Select a design to preview how each option looks directly inside the Buzz brawler card, matching the 3D Supercell arcade aesthetic.
+      </p>
+
+      <!-- View Selector Filter Pills -->
+      <div class="flex flex-wrap justify-center gap-2 mt-6">
+        <button onclick="setView('gold')" id="btn-gold" class="view-btn px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/30 border border-amber-300">
+          ⭐ Proposal 1: 3D Trophy Gold Plaque (Recommended)
+        </button>
+        <button onclick="setView('glass')" id="btn-glass" class="view-btn px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">
+          🔮 Proposal 2: Frosted Sunburst Glass
+        </button>
+        <button onclick="setView('chamber')" id="btn-chamber" class="view-btn px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">
+          🛡️ Proposal 3: Dark Arcade Chamber with Gold Rim
+        </button>
+        <button onclick="setView('compare')" id="btn-compare" class="view-btn px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">
+          🔄 Compare All Side-by-Side (with Previous)
+        </button>
+      </div>
+    </header>
+
+    <!-- Cards Grid -->
+    <div id="cards-container" class="flex justify-center">
+
+      <!-- ================= PROPOSAL 1: 3D TROPHY GOLD PLAQUE (RECOMMENDED) ================= -->
+      <div id="card-gold" class="card-item w-full max-w-[310px] bg-white rounded-[24px] brawler-shadow overflow-hidden border-2 border-amber-400/50 transition-transform duration-200 hover:-translate-y-1">
+        <!-- Badge Banner Header -->
+        <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 text-center py-1.5 px-3 text-[11px] font-black tracking-wider uppercase flex items-center justify-center gap-1.5">
+          <span>⭐ PROPOSAL 1</span> · <span>3D Trophy Gold Plaque</span>
+        </div>
+
+        <!-- Visual Half -->
+        <div class="sunburst h-[175px] relative flex items-center justify-center border-b-2 border-slate-100">
+          <!-- Power Badge -->
+          <div class="absolute top-[10px] left-[10px] z-10 px-2 py-0.5 bg-gradient-to-br from-rose-600 to-rose-900 border-[1.25px] border-white rounded-[7px] text-white text-[9px] font-black tracking-wider shadow-md">
+            LVL7
+          </div>
+
+          <!-- Center Frame Box -->
+          <div class="w-[102px] h-[102px] rounded-[22px] border-[4px] border-white bg-slate-950 shadow-xl flex items-center justify-center relative overflow-hidden">
+            <div class="w-full h-full bg-[#1e293b] flex items-center justify-center relative">
+              <div class="w-20 h-20 rounded-full bg-emerald-400 relative overflow-hidden border-2 border-slate-900">
+                <div class="absolute top-0 inset-x-0 h-10 bg-slate-900 flex items-center justify-center">
+                  <div class="w-6 h-1.5 bg-cyan-400 rounded-full"></div>
+                </div>
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-12 h-6 bg-amber-200 rounded-full border border-slate-800"></div>
+                <div class="absolute top-0 right-1 w-3 h-5 bg-pink-500 rounded-sm rotate-12"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- >>> PROPOSAL 1: 3D TROPHY GOLD PLAQUE (TWIN TO PRESTIGE EMBLEM) <<< -->
+          <div class="absolute bottom-[calc(8px+5%)] left-[10px] z-10 w-[49px] h-[49px] drop-shadow-[0_5px_5px_rgba(0,18,55,0.42)] flex items-center justify-center">
+            <div class="w-full h-full relative flex flex-col items-center justify-center rounded-[12px] border-[2px] border-white bg-gradient-to-b from-[#ffea55] via-[#f59e0b] to-[#d97706] shadow-[0_3.5px_0_#92400e,0_6px_12px_rgba(0,18,55,0.35),inset_0_1.5px_0_rgba(255,255,255,0.65)] overflow-hidden">
+              <!-- 50% Opacity Background Trophy Silhouette -->
+              <span class="absolute inset-0 flex items-center justify-center opacity-[0.48] z-[1] pointer-events-none">
+                <svg class="w-[32px] h-[32px] fill-[#78350f] drop-shadow-[0_1px_1px_rgba(255,255,255,0.25)]" viewBox="0 0 24 24">
+                  <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H7v2h10v-2h-4v-3.1a5.01 5.01 0 0 0 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
+                </svg>
+              </span>
+              <!-- Crisp Foreground Value & Micro-Label -->
+              <div class="relative z-[2] flex flex-col items-center justify-center leading-none pointer-events-none">
+                <span class="font-heading font-black text-[13.5px] text-white tracking-[-0.2px] drop-shadow-[0_1.5px_0_#78350f]">
+                  532
+                </span>
+                <span class="font-heading font-black text-[6.5px] text-[#fff8db] tracking-[0.6px] uppercase drop-shadow-[0_1px_2px_rgba(120,53,15,0.85)] mt-0.5">
+                  TROPHIES
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prestige Emblem (Bottom-Right, 49px) -->
+          <div class="absolute bottom-[calc(8px+5%)] right-[10px] z-10 w-[49px] h-[49px] flex items-center justify-center drop-shadow-[0_5px_5px_rgba(0,18,55,0.42)]">
+            <div class="w-10 h-10 bg-slate-300 border-2 border-white rounded-lg shadow rotate-45 flex items-center justify-center">
+              <div class="-rotate-45 text-sm font-black text-slate-700">🛡️</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Copy Half -->
+        <div class="p-3.5 bg-white flex flex-col">
+          <div class="relative w-[76%] mx-auto mb-5 px-3 py-1.5 border-2 border-blue-100 rounded-xl bg-gradient-to-b from-white to-blue-50/70 shadow-[0_3px_0_#d7e4f1] text-center">
+            <strong class="font-heading text-lg font-black text-slate-900 tracking-wide uppercase">BUZZ</strong>
+            <span class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-gradient-to-r from-rose-600 to-rose-800 text-white text-[9px] font-black tracking-widest uppercase rounded-md border-[1.2px] border-white shadow-sm">
+              MYTHIC
+            </span>
+          </div>
+
+          <!-- Equipment Capsules -->
+          <div class="flex flex-col gap-1.5 my-2">
+            <div class="flex gap-1.5 justify-center">
+              <div class="flex-1 max-w-[84px] h-[34px] rounded-[10px] bg-emerald-50 border-[1.5px] border-emerald-300 p-1 flex items-center justify-center gap-1">
+                <div class="w-6 h-6 rounded-md bg-emerald-500 border border-white flex items-center justify-center text-[10px] shadow-sm">🎯</div>
+                <div class="w-6 h-6 rounded-md border-[1.2px] border-dashed border-slate-300 flex items-center justify-center text-[10px] opacity-40">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[34px] rounded-[10px] bg-emerald-50 border-[1.5px] border-emerald-300 p-1 flex items-center justify-center gap-1">
+                <div class="w-6 h-6 rounded-md bg-emerald-500 border border-white flex items-center justify-center text-[10px] shadow-sm">👁️</div>
+                <div class="w-6 h-6 rounded-md border-[1.2px] border-dashed border-slate-300 flex items-center justify-center text-[10px] opacity-40">💀</div>
+              </div>
+            </div>
+            <div class="flex gap-1.5 justify-center">
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">⭐</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">🕶️</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">🔥</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+            </div>
+            <div class="w-full h-[32px] rounded-[10px] bg-sky-50 border-[1.5px] border-sky-200 p-1 flex items-center justify-around opacity-60">
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">⏩</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">❤️</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">✊</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">👁️</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">🛡️</div>
+            </div>
+          </div>
+
+          <div class="mt-3 -mx-3.5 -mb-3.5 bg-blue-600 hover:bg-blue-500 transition-colors text-white py-2.5 px-4 flex items-center justify-between text-xs font-black tracking-wider uppercase">
+            <span>VIEW GUIDE</span>
+            <span class="text-sm">→</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-amber-50 border-t border-amber-200 text-xs text-amber-900">
+          <strong class="text-amber-950 font-bold block mb-1">Why this blends perfectly:</strong>
+          Authentic Supercell Trophy Gold matches the prestige rank badge on the right as a twin 3D progression medal.
+        </div>
+      </div>
+
+      <!-- ================= PROPOSAL 2: FROSTED SUNBURST GLASS ================= -->
+      <div id="card-glass" class="card-item w-full max-w-[310px] bg-white rounded-[24px] brawler-shadow overflow-hidden border-2 border-cyan-400/40 transition-transform duration-200 hover:-translate-y-1">
+        <div class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-center py-1.5 px-3 text-[11px] font-black tracking-wider uppercase flex items-center justify-center gap-1.5">
+          <span>🔮 PROPOSAL 2</span> · <span>Frosted Sunburst Glass</span>
+        </div>
+
+        <div class="sunburst h-[175px] relative flex items-center justify-center border-b-2 border-slate-100">
+          <div class="absolute top-[10px] left-[10px] z-10 px-2 py-0.5 bg-gradient-to-br from-rose-600 to-rose-900 border-[1.25px] border-white rounded-[7px] text-white text-[9px] font-black tracking-wider shadow-md">
+            LVL7
+          </div>
+
+          <div class="w-[102px] h-[102px] rounded-[22px] border-[4px] border-white bg-slate-950 shadow-xl flex items-center justify-center relative overflow-hidden">
+            <div class="w-full h-full bg-[#1e293b] flex items-center justify-center relative">
+              <div class="w-20 h-20 rounded-full bg-emerald-400 relative overflow-hidden border-2 border-slate-900">
+                <div class="absolute top-0 inset-x-0 h-10 bg-slate-900 flex items-center justify-center">
+                  <div class="w-6 h-1.5 bg-cyan-400 rounded-full"></div>
+                </div>
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-12 h-6 bg-amber-200 rounded-full border border-slate-800"></div>
+                <div class="absolute top-0 right-1 w-3 h-5 bg-pink-500 rounded-sm rotate-12"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Frosted Glass Trophy Box -->
+          <div class="absolute bottom-[calc(8px+5%)] left-[10px] z-10 w-[49px] h-[49px] drop-shadow-[0_5px_5px_rgba(0,18,55,0.42)] flex items-center justify-center">
+            <div class="w-full h-full relative flex flex-col items-center justify-center rounded-[12px] border-[2px] border-white/80 bg-slate-900/60 backdrop-blur-md shadow-[0_3.5px_0_rgba(0,15,45,0.45),inset_0_1px_0_rgba(255,255,255,0.45)] overflow-hidden">
+              <span class="absolute inset-0 flex items-center justify-center opacity-50 z-[1] pointer-events-none">
+                <svg class="w-[32px] h-[32px] fill-[#ffd32e] drop-shadow-[0_0_6px_rgba(255,211,46,0.5)]" viewBox="0 0 24 24">
+                  <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H7v2h10v-2h-4v-3.1a5.01 5.01 0 0 0 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
+                </svg>
+              </span>
+              <div class="relative z-[2] flex flex-col items-center justify-center leading-none pointer-events-none">
+                <span class="font-heading font-black text-[13.5px] text-white drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.95)]">
+                  532
+                </span>
+                <span class="font-heading font-black text-[6.5px] text-[#ffd32e] tracking-[0.6px] uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] mt-0.5">
+                  TROPHIES
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute bottom-[calc(8px+5%)] right-[10px] z-10 w-[49px] h-[49px] flex items-center justify-center drop-shadow-[0_5px_5px_rgba(0,18,55,0.42)]">
+            <div class="w-10 h-10 bg-slate-300 border-2 border-white rounded-lg shadow rotate-45 flex items-center justify-center">
+              <div class="-rotate-45 text-sm font-black text-slate-700">🛡️</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-white flex flex-col">
+          <div class="relative w-[76%] mx-auto mb-5 px-3 py-1.5 border-2 border-blue-100 rounded-xl bg-gradient-to-b from-white to-blue-50/70 shadow-[0_3px_0_#d7e4f1] text-center">
+            <strong class="font-heading text-lg font-black text-slate-900 tracking-wide uppercase">BUZZ</strong>
+            <span class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-gradient-to-r from-rose-600 to-rose-800 text-white text-[9px] font-black tracking-widest uppercase rounded-md border-[1.2px] border-white shadow-sm">
+              MYTHIC
+            </span>
+          </div>
+
+          <div class="flex flex-col gap-1.5 my-2">
+            <div class="flex gap-1.5 justify-center">
+              <div class="flex-1 max-w-[84px] h-[34px] rounded-[10px] bg-emerald-50 border-[1.5px] border-emerald-300 p-1 flex items-center justify-center gap-1">
+                <div class="w-6 h-6 rounded-md bg-emerald-500 border border-white flex items-center justify-center text-[10px] shadow-sm">🎯</div>
+                <div class="w-6 h-6 rounded-md border-[1.2px] border-dashed border-slate-300 flex items-center justify-center text-[10px] opacity-40">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[34px] rounded-[10px] bg-emerald-50 border-[1.5px] border-emerald-300 p-1 flex items-center justify-center gap-1">
+                <div class="w-6 h-6 rounded-md bg-emerald-500 border border-white flex items-center justify-center text-[10px] shadow-sm">👁️</div>
+                <div class="w-6 h-6 rounded-md border-[1.2px] border-dashed border-slate-300 flex items-center justify-center text-[10px] opacity-40">💀</div>
+              </div>
+            </div>
+            <div class="flex gap-1.5 justify-center">
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">⭐</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">🕶️</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">🔥</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+            </div>
+            <div class="w-full h-[32px] rounded-[10px] bg-sky-50 border-[1.5px] border-sky-200 p-1 flex items-center justify-around opacity-60">
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">⏩</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">❤️</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">✊</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">👁️</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">🛡️</div>
+            </div>
+          </div>
+
+          <div class="mt-3 -mx-3.5 -mb-3.5 bg-blue-600 hover:bg-blue-500 transition-colors text-white py-2.5 px-4 flex items-center justify-between text-xs font-black tracking-wider uppercase">
+            <span>VIEW GUIDE</span>
+            <span class="text-sm">→</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-cyan-50 border-t border-cyan-200 text-xs text-cyan-900">
+          <strong class="text-cyan-950 font-bold block mb-1">Why this blends:</strong>
+          Translucent acrylic lets the brawler's rarity sunburst tint through behind a glowing gold trophy.
+        </div>
+      </div>
+
+      <!-- ================= PROPOSAL 3: DARK ARCADE CHAMBER WITH GOLD RIM ================= -->
+      <div id="card-chamber" class="card-item w-full max-w-[310px] bg-white rounded-[24px] brawler-shadow overflow-hidden border-2 border-indigo-400/40 transition-transform duration-200 hover:-translate-y-1">
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-900 to-slate-900 text-amber-300 text-center py-1.5 px-3 text-[11px] font-black tracking-wider uppercase flex items-center justify-center gap-1.5">
+          <span>🛡️ PROPOSAL 3</span> · <span>Dark Chamber + Gold Rim</span>
+        </div>
+
+        <div class="sunburst h-[175px] relative flex items-center justify-center border-b-2 border-slate-100">
+          <div class="absolute top-[10px] left-[10px] z-10 px-2 py-0.5 bg-gradient-to-br from-rose-600 to-rose-900 border-[1.25px] border-white rounded-[7px] text-white text-[9px] font-black tracking-wider shadow-md">
+            LVL7
+          </div>
+
+          <div class="w-[102px] h-[102px] rounded-[22px] border-[4px] border-white bg-slate-950 shadow-xl flex items-center justify-center relative overflow-hidden">
+            <div class="w-full h-full bg-[#1e293b] flex items-center justify-center relative">
+              <div class="w-20 h-20 rounded-full bg-emerald-400 relative overflow-hidden border-2 border-slate-900">
+                <div class="absolute top-0 inset-x-0 h-10 bg-slate-900 flex items-center justify-center">
+                  <div class="w-6 h-1.5 bg-cyan-400 rounded-full"></div>
+                </div>
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-12 h-6 bg-amber-200 rounded-full border border-slate-800"></div>
+                <div class="absolute top-0 right-1 w-3 h-5 bg-pink-500 rounded-sm rotate-12"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chamber Box -->
+          <div class="absolute bottom-[calc(8px+5%)] left-[10px] z-10 w-[49px] h-[49px] drop-shadow-[0_5px_5px_rgba(0,18,55,0.42)] flex items-center justify-center">
+            <div class="w-full h-full relative flex flex-col items-center justify-center rounded-[12px] border-[2px] border-[#ffd32e] bg-gradient-to-b from-[#1e293b] to-[#0f172a] shadow-[0_3.5px_0_#92400e,inset_0_1px_0_rgba(255,255,255,0.35)] overflow-hidden">
+              <span class="absolute inset-0 flex items-center justify-center opacity-50 z-[1] pointer-events-none">
+                <svg class="w-[32px] h-[32px] fill-[#ffd32e] drop-shadow-[0_0_5px_rgba(255,211,46,0.45)]" viewBox="0 0 24 24">
+                  <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H7v2h10v-2h-4v-3.1a5.01 5.01 0 0 0 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
+                </svg>
+              </span>
+              <div class="relative z-[2] flex flex-col items-center justify-center leading-none pointer-events-none">
+                <span class="font-heading font-black text-[13.5px] text-white drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.95)]">
+                  532
+                </span>
+                <span class="font-heading font-black text-[6.5px] text-[#ffd32e] tracking-[0.6px] uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] mt-0.5">
+                  TROPHIES
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute bottom-[calc(8px+5%)] right-[10px] z-10 w-[49px] h-[49px] flex items-center justify-center drop-shadow-[0_5px_5px_rgba(0,18,55,0.42)]">
+            <div class="w-10 h-10 bg-slate-300 border-2 border-white rounded-lg shadow rotate-45 flex items-center justify-center">
+              <div class="-rotate-45 text-sm font-black text-slate-700">🛡️</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-white flex flex-col">
+          <div class="relative w-[76%] mx-auto mb-5 px-3 py-1.5 border-2 border-blue-100 rounded-xl bg-gradient-to-b from-white to-blue-50/70 shadow-[0_3px_0_#d7e4f1] text-center">
+            <strong class="font-heading text-lg font-black text-slate-900 tracking-wide uppercase">BUZZ</strong>
+            <span class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-gradient-to-r from-rose-600 to-rose-800 text-white text-[9px] font-black tracking-widest uppercase rounded-md border-[1.2px] border-white shadow-sm">
+              MYTHIC
+            </span>
+          </div>
+
+          <div class="flex flex-col gap-1.5 my-2">
+            <div class="flex gap-1.5 justify-center">
+              <div class="flex-1 max-w-[84px] h-[34px] rounded-[10px] bg-emerald-50 border-[1.5px] border-emerald-300 p-1 flex items-center justify-center gap-1">
+                <div class="w-6 h-6 rounded-md bg-emerald-500 border border-white flex items-center justify-center text-[10px] shadow-sm">🎯</div>
+                <div class="w-6 h-6 rounded-md border-[1.2px] border-dashed border-slate-300 flex items-center justify-center text-[10px] opacity-40">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[34px] rounded-[10px] bg-emerald-50 border-[1.5px] border-emerald-300 p-1 flex items-center justify-center gap-1">
+                <div class="w-6 h-6 rounded-md bg-emerald-500 border border-white flex items-center justify-center text-[10px] shadow-sm">👁️</div>
+                <div class="w-6 h-6 rounded-md border-[1.2px] border-dashed border-slate-300 flex items-center justify-center text-[10px] opacity-40">💀</div>
+              </div>
+            </div>
+            <div class="flex gap-1.5 justify-center">
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">⭐</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">🕶️</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">🔥</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+            </div>
+            <div class="w-full h-[32px] rounded-[10px] bg-sky-50 border-[1.5px] border-sky-200 p-1 flex items-center justify-around opacity-60">
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">⏩</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">❤️</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">✊</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">👁️</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">🛡️</div>
+            </div>
+          </div>
+
+          <div class="mt-3 -mx-3.5 -mb-3.5 bg-blue-600 hover:bg-blue-500 transition-colors text-white py-2.5 px-4 flex items-center justify-between text-xs font-black tracking-wider uppercase">
+            <span>VIEW GUIDE</span>
+            <span class="text-sm">→</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-indigo-50 border-t border-indigo-200 text-xs text-indigo-900">
+      <!-- ================= PREVIOUS ATTEMPT (DARK NAVY BOX) ================= -->
+      <div id="card-previous" class="card-item w-full max-w-[310px] bg-white rounded-[24px] brawler-shadow overflow-hidden border-2 border-slate-600/50 transition-transform duration-200 hover:-translate-y-1">
+        <div class="bg-slate-700 text-slate-300 text-center py-1.5 px-3 text-[11px] font-black tracking-wider uppercase flex items-center justify-center gap-1.5">
+          <span>❌ PREVIOUS ATTEMPT</span> · <span>Separated Dark Box</span>
+        </div>
+
+        <div class="sunburst h-[175px] relative flex items-center justify-center border-b-2 border-slate-100">
+          <div class="absolute top-[10px] left-[10px] z-10 px-2 py-0.5 bg-gradient-to-br from-rose-600 to-rose-900 border-[1.25px] border-white rounded-[7px] text-white text-[9px] font-black tracking-wider shadow-md">
+            LVL7
+          </div>
+
+          <div class="w-[102px] h-[102px] rounded-[22px] border-[4px] border-white bg-slate-950 shadow-xl flex items-center justify-center relative overflow-hidden">
+            <div class="w-full h-full bg-[#1e293b] flex items-center justify-center relative">
+              <div class="w-20 h-20 rounded-full bg-emerald-400 relative overflow-hidden border-2 border-slate-900">
+                <div class="absolute top-0 inset-x-0 h-10 bg-slate-900 flex items-center justify-center">
+                  <div class="w-6 h-1.5 bg-cyan-400 rounded-full"></div>
+                </div>
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-12 h-6 bg-amber-200 rounded-full border border-slate-800"></div>
+                <div class="absolute top-0 right-1 w-3 h-5 bg-pink-500 rounded-sm rotate-12"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Previous Attempt: Flat Dark Navy Box (#182c58) -->
+          <div class="absolute bottom-[calc(8px+5%)] left-[10px] z-10 w-[49px] h-[49px] drop-shadow-[0_5px_5px_rgba(0,18,55,0.42)] flex items-center justify-center">
+            <div class="w-full h-full relative flex items-center justify-center rounded-[12px] border-2 border-[#3b5998] bg-[#182c58] overflow-hidden">
+              <span class="absolute inset-0 flex items-center justify-center opacity-50 z-[1] pointer-events-none">
+                <svg class="w-[28px] h-[28px] fill-[#ffd32e]" viewBox="0 0 24 24">
+                  <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H7v2h10v-2h-4v-3.1a5.01 5.01 0 0 0 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
+                </svg>
+              </span>
+              <span class="relative z-[2] font-heading font-black text-[14px] text-white">532</span>
+            </div>
+          </div>
+
+          <div class="absolute bottom-[calc(8px+5%)] right-[10px] z-10 w-[49px] h-[49px] flex items-center justify-center drop-shadow-[0_5px_5px_rgba(0,18,55,0.42)]">
+            <div class="w-10 h-10 bg-slate-300 border-2 border-white rounded-lg shadow rotate-45 flex items-center justify-center">
+              <div class="-rotate-45 text-sm font-black text-slate-700">🛡️</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-white flex flex-col">
+          <div class="relative w-[76%] mx-auto mb-5 px-3 py-1.5 border-2 border-blue-100 rounded-xl bg-gradient-to-b from-white to-blue-50/70 shadow-[0_3px_0_#d7e4f1] text-center">
+            <strong class="font-heading text-lg font-black text-slate-900 tracking-wide uppercase">BUZZ</strong>
+            <span class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-gradient-to-r from-rose-600 to-rose-800 text-white text-[9px] font-black tracking-widest uppercase rounded-md border-[1.2px] border-white shadow-sm">
+              MYTHIC
+            </span>
+          </div>
+
+          <div class="flex flex-col gap-1.5 my-2">
+            <div class="flex gap-1.5 justify-center">
+              <div class="flex-1 max-w-[84px] h-[34px] rounded-[10px] bg-emerald-50 border-[1.5px] border-emerald-300 p-1 flex items-center justify-center gap-1">
+                <div class="w-6 h-6 rounded-md bg-emerald-500 border border-white flex items-center justify-center text-[10px] shadow-sm">🎯</div>
+                <div class="w-6 h-6 rounded-md border-[1.2px] border-dashed border-slate-300 flex items-center justify-center text-[10px] opacity-40">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[34px] rounded-[10px] bg-emerald-50 border-[1.5px] border-emerald-300 p-1 flex items-center justify-center gap-1">
+                <div class="w-6 h-6 rounded-md bg-emerald-500 border border-white flex items-center justify-center text-[10px] shadow-sm">👁️</div>
+                <div class="w-6 h-6 rounded-md border-[1.2px] border-dashed border-slate-300 flex items-center justify-center text-[10px] opacity-40">💀</div>
+              </div>
+            </div>
+            <div class="flex gap-1.5 justify-center">
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">⭐</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">🕶️</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+              <div class="flex-1 max-w-[84px] h-[32px] rounded-[10px] bg-slate-50 border-[1.2px] border-dashed border-slate-300 p-1 flex items-center justify-center gap-1 opacity-60">
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">🔥</div>
+                <div class="w-5 h-5 rounded border border-dashed border-slate-400 flex items-center justify-center text-[9px]">💀</div>
+              </div>
+            </div>
+            <div class="w-full h-[32px] rounded-[10px] bg-sky-50 border-[1.5px] border-sky-200 p-1 flex items-center justify-around opacity-60">
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">⏩</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">❤️</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">✊</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">👁️</div>
+              <div class="w-5 h-5 rounded bg-sky-100 border border-sky-300 flex items-center justify-center text-[8px]">🛡️</div>
+            </div>
+          </div>
+
+          <div class="mt-3 -mx-3.5 -mb-3.5 bg-blue-600 hover:bg-blue-500 transition-colors text-white py-2.5 px-4 flex items-center justify-between text-xs font-black tracking-wider uppercase">
+            <span>VIEW GUIDE</span>
+            <span class="text-sm">→</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-rose-50 border-t border-rose-200 text-xs text-rose-800">
+          <strong class="text-rose-950 font-bold block mb-1">Why it felt disconnected:</strong>
+          Dark navy background lacked the 3D bottom bevel, white border, and twin balance with the prestige badge.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Interactive Decision Helper -->
+    <div class="mt-10 p-6 bg-slate-800/80 backdrop-blur border border-slate-700 rounded-2xl text-center max-w-3xl mx-auto shadow-xl">
+      <h3 class="font-heading text-xl font-bold text-white mb-2">Refinement Options</h3>
+      <p class="text-slate-300 text-sm mb-5">
+        Proposal 1 is currently active in the live application. You can compare it with the other proposals or request any adjustments.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <button onclick="copyChoice('Proposal 1 (3D Trophy Gold Plaque - Active)')" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-md transition-all active:scale-95 border border-amber-300">
+          ⭐ Proposal 1: 3D Trophy Gold Plaque (Active)
+        </button>
+        <button onclick="copyChoice('Proposal 2 (Frosted Sunburst Glass)')" class="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-black text-sm shadow-md transition-all active:scale-95">
+          🔮 Proposal 2: Frosted Sunburst Glass
+        </button>
+        <button onclick="copyChoice('Proposal 3 (Dark Arcade Chamber)')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-sm shadow-md transition-all active:scale-95">
+          🛡️ Proposal 3: Dark Arcade Chamber
+        </button>
+      </div>
+      <div id="selection-feedback" class="mt-3 text-xs text-amber-300 font-bold min-h-[18px]"></div>
+    </div>
+  </div>
+
+  <script>
+    function setView(view) {
+      const allCards = document.querySelectorAll('.card-item');
+      const buttons = document.querySelectorAll('.view-btn');
+      
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-slate-950', 'shadow-amber-500/30', 'border-amber-300', 'bg-blue-600', 'text-white', 'shadow-blue-600/30', 'border-blue-400');
+        btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
+      });
+
+      const activeBtn = document.getElementById('btn-' + view);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        activeBtn.classList.add('bg-amber-500', 'text-slate-950', 'shadow-lg', 'shadow-amber-500/30', 'border-amber-300');
+      }
+
+      const container = document.getElementById('cards-container');
+      const gold = document.getElementById('card-gold');
+      const glass = document.getElementById('card-glass');
+      const chamber = document.getElementById('card-chamber');
+      const previous = document.getElementById('card-previous');
+
+      allCards.forEach(c => c.classList.add('hidden'));
+
+      if (view === 'gold') {
+        container.className = 'flex justify-center';
+        gold.classList.remove('hidden');
+      } else if (view === 'glass') {
+        container.className = 'flex justify-center';
+        glass.classList.remove('hidden');
+      } else if (view === 'chamber') {
+        container.className = 'flex justify-center';
+        chamber.classList.remove('hidden');
+      } else if (view === 'compare') {
+        container.className = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 justify-items-center max-w-7xl mx-auto';
+        previous.classList.remove('hidden');
+        gold.classList.remove('hidden');
+        glass.classList.remove('hidden');
+        chamber.classList.remove('hidden');
+      }
+    }
+
+    function copyChoice(name) {
+      const fb = document.getElementById('selection-feedback');
+      fb.textContent = 'Selected: ' + name + ' — you can let me know if you would like this option!';
+      setTimeout(() => {
+        fb.textContent = '';
+      }, 4000);
+    }
+
+    // Default to Proposal 1 (3D Gold Plaque)
+    setView('gold');
+  </script>
+</body>
+</html>
