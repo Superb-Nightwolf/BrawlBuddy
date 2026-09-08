@@ -22,6 +22,7 @@ from app.models.player import PlayerResources
 from app.services.battlelog_service import BattleLogService
 from app.services.club_service import ClubService
 from app.services.events_service import EventsService
+from app.services.matchup_service import MatchupService
 from app.services.player_service import PlayerService
 from app.services.rankings_service import RankingsService
 from app.services.resource_service import ResourceService
@@ -58,6 +59,11 @@ events_service = EventsService(
 rankings_service = RankingsService(
     client=client,
     demo_path=PROJECT_ROOT / "data" / "demo_rankings.json"
+)
+matchup_service = MatchupService(
+    data_path=PROJECT_ROOT / "data" / "brawler_matchups.json",
+    catalog_path=PROJECT_ROOT / "data" / "brawler_catalog.json",
+    battlelog_service=battlelog_service,
 )
 resource_service = ResourceService(PROJECT_ROOT / "data" / "brawl_advisor.db")
 with (PROJECT_ROOT / "data" / "brawler_guides.json").open("r", encoding="utf-8") as handle:
@@ -389,7 +395,18 @@ async def get_brawler_guide(brawler_id: int) -> dict:
     except Exception as exc:
         logger.warning(f"Could not dynamically enrich useful_maps for brawler {brawler_id}: {exc}")
 
+    guide_copy["matchups"] = matchup_service.get_matchups(brawler_id)
     return guide_copy
+
+
+@app.get("/api/brawlers/{brawler_id}/matchups")
+async def get_brawler_matchups(brawler_id: int) -> dict:
+    return matchup_service.get_matchups(brawler_id)
+
+
+@app.post("/api/brawlers/{brawler_id}/matchups/refresh")
+async def refresh_brawler_matchups(brawler_id: int) -> dict:
+    return matchup_service.refresh_matchups(brawler_id)
 
 
 @app.get("/api/equipment")

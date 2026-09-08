@@ -2404,6 +2404,7 @@ function renderGuideProfile(guide, brawler) {
   }
 
   renderUsefulMaps(guide);
+  renderMatchups(brawler, guide.matchups);
 }
 
 function renderUsefulMaps(guide) {
@@ -2494,7 +2495,7 @@ function renderUsefulMaps(guide) {
     if (m.is_active) {
       const liveBadge = document.createElement('span');
       liveBadge.className = 'map-live-status';
-      liveBadge.innerHTML = `<span class="live-dot-green"></span><span>LIVE${m.time_remaining_label ? ` (${m.time_remaining_label})` : ''}</span>`;
+      liveBadge.innerHTML = `<span class="live-dot-green"></span><span>LIVE</span>`;
       modeRow.append(liveBadge);
     }
 
@@ -2504,7 +2505,7 @@ function renderUsefulMaps(guide) {
     const updatePreviewPosition = () => {
       if (!hoverPreview || !hoverImg || !hoverTitle) return;
       hoverImg.src = m.image_url;
-      hoverTitle.innerHTML = `${m.name}${m.is_active ? `<span class="map-hover-live-tag"><span class="live-dot-green"></span>Active Slot #${m.slot_id} • ${m.time_remaining_label || 'Live'}</span>` : ''}`;
+      hoverTitle.innerHTML = `${m.name}${m.is_active ? `<span class="map-hover-live-tag"><span class="live-dot-green"></span>LIVE</span>` : ''}`;
 
       const rect = card.getBoundingClientRect();
       const previewWidth = 210;
@@ -2547,7 +2548,7 @@ function renderUsefulMaps(guide) {
         if (dialogImg) dialogImg.src = m.image_url;
         if (dialogName) dialogName.textContent = m.name;
         if (dialogMode) {
-          dialogMode.innerHTML = `${m.mode}${m.is_active ? ` • <span class="map-live-status"><span class="live-dot-green"></span>LIVE NOW (${m.time_remaining_label || 'Active'})</span>` : ''}`;
+          dialogMode.innerHTML = `${m.mode}${m.is_active ? ` • <span class="map-live-status"><span class="live-dot-green"></span>LIVE</span>` : ''}`;
         }
         if (dialogEventsBtn) dialogEventsBtn.href = `/events?map=${encodeURIComponent(m.name)}`;
         dialog.showModal();
@@ -2556,6 +2557,162 @@ function renderUsefulMaps(guide) {
 
     grid.append(card);
   });
+}
+
+let matchupsExpanded = false;
+
+function createMatchupCard(item, category) {
+  const card = document.createElement('a');
+  card.className = `matchup-card matchup-card-${category}`;
+  card.href = `/brawlers/${item.id}`;
+  card.setAttribute('aria-label', `${item.name}: ${item.win_rate}% win rate over ${format(item.total_battles)} matches`);
+  card.dataset.brawlerId = item.id;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'matchup-brawler-avatar';
+
+  const img = document.createElement('img');
+  img.className = 'matchup-avatar-img';
+  img.loading = 'lazy';
+  img.alt = item.name;
+  img.src = (item.id === 16000108)
+    ? '/assets/brawlers/thumbs/16000108.png?v=2'
+    : `https://cdn.brawlify.com/brawlers/borders/${item.id}.png`;
+  let fallbackStep = 0;
+  img.onerror = () => {
+    fallbackStep += 1;
+    if (fallbackStep === 1) {
+      img.src = `/assets/brawlers/thumbs/${item.id}.webp`;
+    } else if (fallbackStep === 2) {
+      img.src = `/assets/brawlers/${item.id}.png`;
+    } else {
+      avatar.innerHTML = `<span class="brawler-fallback">${initials(item.name)}</span>`;
+    }
+  };
+  avatar.append(img);
+
+  const meta = document.createElement('div');
+  meta.className = 'matchup-card-meta';
+
+  const name = document.createElement('strong');
+  name.className = 'matchup-brawler-name';
+  name.textContent = item.name;
+
+  const count = document.createElement('span');
+  count.className = 'matchup-match-count';
+  count.textContent = `${format(item.total_battles)} matches`;
+
+  meta.append(name, count);
+
+  const pill = document.createElement('div');
+  pill.className = `matchup-rate-pill pill-${category}`;
+  pill.innerHTML = `<span>${Number(item.win_rate).toFixed(1)}%</span>`;
+
+  card.append(avatar, meta, pill);
+
+  card.addEventListener('click', (e) => {
+    e.preventDefault();
+    history.pushState({ path: `/brawlers/${item.id}` }, '', `/brawlers/${item.id}`);
+    window.scrollTo(0, 0);
+    handleRoute({ isPop: false });
+  });
+
+  return card;
+}
+
+async function renderMatchups(brawler, matchupsData = null, resetExpanded = true) {
+  const panel = $('matchups-teammates-panel');
+  if (!panel) return;
+
+  const toggleBtn = $('matchups-toggle-btn');
+  const toggleLabel = $('matchups-toggle-label');
+  if (resetExpanded) {
+    matchupsExpanded = false;
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+    if (toggleLabel) toggleLabel.textContent = 'View All Matchups';
+  }
+
+  let data = matchupsData;
+  if (!data || !data.strong_against) {
+    try {
+      data = await request(`/api/brawlers/${brawler.id}/matchups`);
+    } catch {
+      data = null;
+    }
+  }
+
+  if (!data || (!data.strong_against?.length && !data.struggles_against?.length && !data.best_alongside?.length)) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = '';
+
+  const favTitle = $('favorable-col-title');
+  if (favTitle) {
+    favTitle.textContent = `${brawler.name || 'Brawler'} beats`;
+  }
+
+  const favList = $('matchup-favorable-list');
+  const cntList = $('matchup-counters-list');
+  const synList = $('matchup-synergy-list');
+
+  const populateLists = (expanded) => {
+    const limit = expanded ? 12 : 6;
+
+    if (favList) {
+      favList.replaceChildren();
+      (data.strong_against || []).slice(0, limit).forEach((item) => {
+        favList.append(createMatchupCard(item, 'favorable'));
+      });
+    }
+
+    if (cntList) {
+      cntList.replaceChildren();
+      (data.struggles_against || []).slice(0, limit).forEach((item) => {
+        cntList.append(createMatchupCard(item, 'counters'));
+      });
+    }
+
+    if (synList) {
+      synList.replaceChildren();
+      (data.best_alongside || []).slice(0, limit).forEach((item) => {
+        synList.append(createMatchupCard(item, 'synergy'));
+      });
+    }
+  };
+
+  populateLists(matchupsExpanded);
+
+  if (toggleBtn && !toggleBtn.dataset.bound) {
+    toggleBtn.dataset.bound = 'true';
+    toggleBtn.addEventListener('click', () => {
+      matchupsExpanded = !matchupsExpanded;
+      toggleBtn.setAttribute('aria-expanded', String(matchupsExpanded));
+      if (toggleLabel) {
+        toggleLabel.textContent = matchupsExpanded ? 'Show Less Matchups' : 'View All Matchups';
+      }
+      populateLists(matchupsExpanded);
+    });
+  }
+
+  // Bind manual sync trigger
+  const syncBtn = $('matchups-sync-btn');
+  if (syncBtn && !syncBtn.dataset.bound) {
+    syncBtn.dataset.bound = 'true';
+    syncBtn.addEventListener('click', async () => {
+      syncBtn.classList.add('spinning');
+      try {
+        const freshData = await request(`/api/brawlers/${brawler.id}/matchups/refresh`, { method: 'POST' });
+        if (freshData) {
+          renderMatchups(brawler, freshData, false);
+        }
+      } catch {
+        // quiet fallback
+      } finally {
+        setTimeout(() => syncBtn.classList.remove('spinning'), 600);
+      }
+    });
+  }
 }
 
 let detailRefreshTimer = null;
@@ -2569,8 +2726,13 @@ function setupDetailAutoRefresh(id) {
     }
     try {
       const refreshedGuide = await request(`/api/guides/${id}`);
-      if (refreshedGuide && refreshedGuide.useful_maps) {
-        renderUsefulMaps(refreshedGuide);
+      if (refreshedGuide) {
+        if (refreshedGuide.useful_maps) {
+          renderUsefulMaps(refreshedGuide);
+        }
+        if (refreshedGuide.matchups) {
+          renderMatchups({ id: refreshedGuide.id || id, name: refreshedGuide.name }, refreshedGuide.matchups, false);
+        }
       }
     } catch {
       // quiet background refresh
@@ -2584,8 +2746,13 @@ document.addEventListener('visibilitychange', async () => {
     if (id) {
       try {
         const refreshedGuide = await request(`/api/guides/${id}`);
-        if (refreshedGuide && refreshedGuide.useful_maps) {
-          renderUsefulMaps(refreshedGuide);
+        if (refreshedGuide) {
+          if (refreshedGuide.useful_maps) {
+            renderUsefulMaps(refreshedGuide);
+          }
+          if (refreshedGuide.matchups) {
+            renderMatchups({ id: refreshedGuide.id || id, name: refreshedGuide.name }, refreshedGuide.matchups, false);
+          }
         }
       } catch {}
     }

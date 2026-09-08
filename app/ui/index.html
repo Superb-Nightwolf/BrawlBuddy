@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=68">
+  <link rel="stylesheet" href="/assets/styles.css?v=70">
 </head>
 <body>
   <div class="app-shell">
@@ -834,6 +834,54 @@
               </div>
               <div id="useful-maps-grid" class="useful-maps-grid"></div>
             </article>
+            <article class="guide-fact-card matchups-teammates-panel" id="matchups-teammates-panel">
+              <div class="matchups-panel-header">
+                <div class="field-notes-header header-matchups">
+                  <span class="field-header-accent"></span>
+                  <h3>Matchups &amp; Teammates</h3>
+                </div>
+                <div class="matchups-header-right">
+                  <span class="matchups-source-badge">COMMUNITY WIN-RATE METRICS</span>
+                  <button type="button" class="matchups-sync-btn" id="matchups-sync-btn" title="Refresh matchups data" aria-label="Refresh matchups">
+                    <span class="sync-icon">↻</span>
+                  </button>
+                </div>
+              </div>
+              <div class="matchups-columns-grid">
+                <!-- Column 1: Favorable (Strong Against) -->
+                <div class="matchup-col favorable-col">
+                  <div class="matchup-col-header">
+                    <span class="matchup-status-badge badge-favorable">FAVORABLE</span>
+                    <h4 class="matchup-col-title" id="favorable-col-title">Strong against</h4>
+                  </div>
+                  <div class="matchup-cards-list" id="matchup-favorable-list"></div>
+                </div>
+
+                <!-- Column 2: Counters (Struggles Against) -->
+                <div class="matchup-col counters-col">
+                  <div class="matchup-col-header">
+                    <span class="matchup-status-badge badge-counters">COUNTERS</span>
+                    <h4 class="matchup-col-title">Struggles against</h4>
+                  </div>
+                  <div class="matchup-cards-list" id="matchup-counters-list"></div>
+                </div>
+
+                <!-- Column 3: Synergy (Best Alongside) -->
+                <div class="matchup-col synergy-col">
+                  <div class="matchup-col-header">
+                    <span class="matchup-status-badge badge-synergy">SYNERGY</span>
+                    <h4 class="matchup-col-title">Best alongside</h4>
+                  </div>
+                  <div class="matchup-cards-list" id="matchup-synergy-list"></div>
+                </div>
+              </div>
+              <div class="matchups-panel-footer">
+                <button type="button" class="matchups-toggle-btn" id="matchups-toggle-btn" aria-expanded="false">
+                  <span id="matchups-toggle-label">View All Matchups</span>
+                  <span class="matchups-toggle-chevron">▼</span>
+                </button>
+              </div>
+            </article>
           </div>
         </section>
         <section class="panel equipment-panel">
@@ -1053,6 +1101,6 @@
     </div>
   </dialog>
 
-  <script src="/assets/app.js?v=82" defer></script>
+  <script src="/assets/app.js?v=84" defer></script>
 </body>
 </html>
