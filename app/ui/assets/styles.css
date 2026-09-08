@@ -419,13 +419,14 @@ a { color: inherit; }
 .rarity-legendary .brawler-rarity-tag, .brawler-rarity-tag.rarity-legendary { background: linear-gradient(135deg, #f59e0b, #d97706 50%, #b45309); border-color: #fde047; text-shadow: 0 1px 2px rgba(90, 40, 0, 0.55); }
 .rarity-ultra-legendary .brawler-rarity-tag, .rarity-ultra_legendary .brawler-rarity-tag, .rarity-ultra .brawler-rarity-tag, .brawler-rarity-tag.rarity-ultra-legendary, .brawler-rarity-tag.rarity-ultra_legendary, .brawler-rarity-tag.rarity-ultra { background: linear-gradient(90deg, #e11d48 0%, #9333ea 28%, #2563eb 55%, #059669 80%, #d97706 100%); border-color: #fef08a; box-shadow: 0 2px 8px rgba(147, 51, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
 
-/* Brawler Card Trophy Shield Emblem (Twin to Prestige Shield on bottom-right) */
-.trophy-card-emblem { position: absolute; left: 10px; bottom: calc(8px + 5%); z-index: 4; width: 48px; height: 49px; display: grid; place-items: center; filter: drop-shadow(0 5px 6px rgba(0, 18, 55, 0.45)); text-decoration: none; transition: transform .15s ease, filter .15s ease; }
-.trophy-emblem-box { width: 44px; height: 48px; clip-path: polygon(50% 0%, 100% 22%, 100% 75%, 50% 100%, 0% 75%, 0% 22%); background: linear-gradient(180deg, #ffffff 0%, #ffea55 22%, #f59e0b 58%, #78350f 100%); padding: 2px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; filter: drop-shadow(0 3.5px 0 #78350f); transition: transform .15s ease; }
-.trophy-shield-inner { width: 100%; height: 100%; clip-path: polygon(50% 0%, 100% 22%, 100% 75%, 50% 100%, 0% 75%, 0% 22%); background: linear-gradient(180deg, #ffd32e 0%, #d97706 60%, #854d0e 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 1px; box-sizing: border-box; }
-.trophy-emblem-svg { width: 17px; height: 17px; fill: #fffbeb; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.55)); margin-bottom: 0.5px; }
-.trophy-emblem-val { font-family: "Lilita One", var(--font-heading), system-ui, sans-serif; font-size: 12.5px; font-weight: 900; color: #ffffff; line-height: 1; letter-spacing: -0.2px; text-align: center; text-shadow: 0 1.5px 0 #78350f, 0 2px 4px rgba(0, 0, 0, 0.5); }
-.brawler-card:hover .trophy-card-emblem { transform: translateY(-1px) scale(1.05); filter: drop-shadow(0 7px 8px rgba(0, 18, 55, 0.55)); }
+/* Brawler Card Trophy Pill Emblem (Sleek Horizontal Arcade Base Pill) */
+.trophy-card-emblem { position: absolute; left: 10px; bottom: calc(8px + 5%); z-index: 4; text-decoration: none; transition: transform .15s ease, filter .15s ease; filter: drop-shadow(0 4px 6px rgba(0, 18, 55, 0.4)); }
+.trophy-pill-box { display: inline-flex; align-items: center; gap: 5.5px; height: 28px; padding: 0 9px 0 7.5px; border-radius: 9px; border: 1.5px solid #ffffff; background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%); box-shadow: 0 2.5px 0 #94a3b8, inset 0 1px 0 #ffffff; box-sizing: border-box; }
+.trophy-pill-svg { width: 14px; height: 14px; fill: #f59e0b; filter: drop-shadow(0 1px 1px rgba(180, 83, 9, 0.4)); flex-shrink: 0; }
+.trophy-pill-text { display: flex; flex-direction: column; line-height: 1; align-items: flex-start; justify-content: center; }
+.trophy-pill-val { font-family: "Lilita One", var(--font-heading), system-ui, sans-serif; font-size: 12px; font-weight: 900; color: #0f172a; line-height: 1; letter-spacing: -0.2px; }
+.trophy-pill-lbl { font-family: var(--font-heading), system-ui, sans-serif; font-size: 5.5px; font-weight: 900; letter-spacing: 0.6px; color: #b45309; text-transform: uppercase; margin-top: 1px; line-height: 1; }
+.brawler-card:hover .trophy-card-emblem { transform: translateY(-1px) scale(1.04); filter: drop-shadow(0 6px 8px rgba(0, 18, 55, 0.48)); }
 
 .prestige-card-emblem { position:absolute; right:10px; bottom:calc(8px + 5%); z-index:4; width:49px; height:49px; display:grid; place-items:center; filter:drop-shadow(0 5px 5px rgba(0,18,55,.42)); }
 .prestige-card-emblem img { max-width:100%; max-height:100%; object-fit:contain; }
@@ -511,10 +512,11 @@ a { color: inherit; }
 .table-mode .brawler-frame-box { width: 88px; height: 88px; border-radius: 18px; }
 .table-mode .brawler-image { max-width: 78px; max-height: 78px; }
 .table-mode .brawler-card-copy { display: grid; grid-template-columns: 1fr 2fr 130px; align-items: center; gap: 15px; }
-.table-mode .trophy-card-emblem { width: 38px; height: 38px; left: 6px; bottom: 6px; }
-.table-mode .trophy-emblem-box { width: 34px; height: 36px; padding: 1.5px; filter: drop-shadow(0 2px 0 #78350f); }
-.table-mode .trophy-emblem-svg { width: 13px; height: 13px; margin-bottom: 0px; }
-.table-mode .trophy-emblem-val { font-size: 9.5px; text-shadow: 0 1px 0 #78350f; }
+.table-mode .trophy-card-emblem { left: 6px; bottom: 6px; }
+.table-mode .trophy-pill-box { height: 24px; padding: 0 7px 0 6px; gap: 4.5px; border-radius: 8px; }
+.table-mode .trophy-pill-svg { width: 12px; height: 12px; }
+.table-mode .trophy-pill-val { font-size: 10px; }
+.table-mode .trophy-pill-lbl { font-size: 4.5px; }
 .table-mode .prestige-card-emblem { width: 38px; height: 38px; right: 6px; bottom: 6px; }
 .table-mode .equipment-lab-wrap { display: flex; flex-direction: row; gap: 6px; margin: 0; align-items: center; }
 .table-mode .lab-row { display: flex; gap: 4px; width: auto; }
@@ -2444,10 +2446,11 @@ a { color: inherit; }
   .detail-account-stats div { min-width: 0; flex: 1; padding: 8px; }
   .detail-account-stats strong { font-size: 16px; }
   .prestige-card-emblem { width:37px; height:37px; right:5px; bottom:calc(5px + 5%); }
-  .trophy-card-emblem { width: 37px; height: 37px; left: 5px; bottom: calc(5px + 5%); }
-  .trophy-emblem-box { width: 35px; height: 38px; padding: 1.5px; filter: drop-shadow(0 2.5px 0 #78350f); }
-  .trophy-emblem-svg { width: 13px; height: 13px; margin-bottom: 0px; }
-  .trophy-emblem-val { font-size: 10px; text-shadow: 0 1px 0 #78350f; }
+  .trophy-card-emblem { left: 5px; bottom: calc(5px + 5%); }
+  .trophy-pill-box { height: 25px; padding: 0 7px 0 6px; gap: 4.5px; border-radius: 8px; }
+  .trophy-pill-svg { width: 12px; height: 12px; }
+  .trophy-pill-val { font-size: 10.5px; }
+  .trophy-pill-lbl { font-size: 5px; }
   .prestige-progress-panel { grid-template-columns:1fr; padding:16px 12px; text-align:center; }
   .prestige-progress-emblem-wrap { min-height:105px; }
   .detail-prestige-emblem { width:104px; height:104px; }
@@ -2616,10 +2619,11 @@ img, picture, video, canvas, svg { max-width: 100%; }
   .brawler-card-copy { padding: 12px 11px 10px; }
   .open-guide { margin-inline: -11px; margin-bottom: -10px; padding: 12px; font-size: 10px; }
   .prestige-card-emblem { width: 54px; height: 54px; right: 8px; bottom: 7px; }
-  .trophy-card-emblem { width: 54px; height: 54px; left: 8px; bottom: 7px; }
-  .trophy-emblem-box { width: 48px; height: 52px; padding: 2.5px; filter: drop-shadow(0 4px 0 #78350f); }
-  .trophy-emblem-svg { width: 19px; height: 19px; }
-  .trophy-emblem-val { font-size: 13.5px; text-shadow: 0 1.5px 0 #78350f; }
+  .trophy-card-emblem { left: 8px; bottom: 7px; }
+  .trophy-pill-box { height: 30px; padding: 0 10px 0 8px; gap: 6px; border-radius: 9px; }
+  .trophy-pill-svg { width: 16px; height: 16px; }
+  .trophy-pill-val { font-size: 13px; }
+  .trophy-pill-lbl { font-size: 6px; }
   .prestige-bar, .overview-metrics, .hero-stats, .detail-account-stats { grid-template-columns: 1fr; }
   .hero-stats > div:last-child { grid-column: auto; }
   .ranking-tab-group, .battle-filter-tabs { grid-template-columns: 1fr; }
