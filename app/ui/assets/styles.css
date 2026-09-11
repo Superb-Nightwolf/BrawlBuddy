@@ -368,6 +368,80 @@ a { color: inherit; }
 .collection-toolbar select:active { transform: translateY(2px); box-shadow: 0 1px 0 #d9e5f2; }
 .collection-toolbar select optgroup { font-weight: 900; color: #1e3a63; background: #edf4fc; font-style: normal; padding: 6px 4px 4px; }
 .collection-toolbar select option { font-weight: 700; color: #3b506d; background: #ffffff; padding: 5px 12px; }
+.filter-results-pill {
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 2px solid var(--line);
+  border-radius: 13px;
+  background: #f8fbff;
+  box-shadow: 0 3px 0 #d9e5f2;
+  white-space: nowrap;
+  user-select: none;
+  flex-shrink: 0;
+  transition: transform .12s ease, border-color .12s ease, background-color .12s ease, box-shadow .12s ease;
+}
+.filter-results-pill.is-filtered {
+  border-color: #8ecdf8;
+  background-color: #ffffff;
+  box-shadow: 0 5px 0 #c8dcf0;
+}
+.results-count-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 800;
+  color: #556c92;
+  line-height: 1;
+}
+.results-count-value span {
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 800;
+  color: #556c92;
+  line-height: 1;
+}
+.filter-results-pill.is-filtered .results-count-value,
+.filter-results-pill.is-filtered .results-count-value span {
+  color: #0284c7;
+}
+.clear-filters-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+  padding: 0;
+  border: 1px solid #bae6fd;
+  border-radius: 50%;
+  background: #f0f9ff;
+  color: #0284c7;
+  font-family: var(--font-main);
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #bae6fd;
+  transition: transform .12s ease, background-color .12s ease, box-shadow .12s ease, color .12s ease;
+}
+.clear-filters-btn:hover {
+  transform: translateY(-1px) scale(1.08);
+  background: #ef4444;
+  border-color: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 2px 0 #991b1b;
+}
+.clear-filters-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #991b1b;
+}
+.clear-filters-btn.hidden {
+  display: none !important;
+}
 .view-toggle { display: flex; border: 2px solid var(--line); border-radius: 13px; overflow: hidden; background: #f8fbff; }
 .view-toggle button { width: 42px; height: 40px; border: 0; background: transparent; color: #6a82a6; font-size: 17px; cursor: pointer; display: grid; place-items: center; transition: .15s ease; }
 .view-toggle button.active { color: var(--navy); background: var(--yellow); font-weight: 800; }
@@ -2454,6 +2528,7 @@ a { color: inherit; }
   .collection-toolbar { flex-wrap: wrap; }
   .search-box { flex-basis: 100%; }
   .collection-toolbar select { flex: 1; }
+  .filter-results-pill { flex: 0 0 auto; }
   .brawler-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .brawler-visual { height: 145px; }
   .brawler-frame-box { width: 100px; height: 100px; }
@@ -2534,6 +2609,7 @@ a { color: inherit; }
   .collection-badge strong { font-size: 24px; }
   .collection-banner p { display: none; }
   .collection-toolbar select { width: 100%; flex-basis: 100%; }
+  .filter-results-pill { flex: 1; justify-content: center; }
   
   .resource-hero { min-height: 0; padding: 20px 16px; }
   .resource-hero img { display: none; }
@@ -2675,7 +2751,7 @@ img, picture, video, canvas, svg { max-width: 100%; }
   .collection-banner p, .resource-hero p { display: block; margin-top: 8px; font-size: 10px; line-height: 1.45; }
   .resource-hero img { display: block; width: 96px; height: 112px; flex: 0 0 auto; }
   .collection-toolbar { align-items: stretch; }
-  .collection-toolbar .search-box, .collection-toolbar select { min-height: 44px; }
+  .collection-toolbar .search-box, .collection-toolbar select, .filter-results-pill { min-height: 44px; }
   .view-toggle button, .level-filter .level-chip { min-height: 44px; }
   .level-filter { scroll-snap-type: x proximity; }
   .level-filter .level-chip { flex: 0 0 44px; scroll-snap-align: start; }

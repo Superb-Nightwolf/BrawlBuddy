@@ -434,13 +434,19 @@
                 <option value="prestige_3_plus">Prestige 3+</option>
               </optgroup>
               <optgroup label="RARITY">
+                <option value="rarity_common">Common / Starter</option>
                 <option value="rarity_rare">Rare</option>
                 <option value="rarity_super_rare">Super Rare</option>
                 <option value="rarity_epic">Epic</option>
                 <option value="rarity_mythic">Mythic</option>
                 <option value="rarity_legendary">Legendary</option>
+                <option value="rarity_ultra_legendary">Ultra Legendary</option>
               </optgroup>
             </select>
+            <div id="filter-results-counter" class="filter-results-pill" aria-live="polite">
+              <span class="results-count-value"><span id="results-count-num">107</span><span class="results-count-sep"> / </span><span id="results-count-total">107</span></span>
+              <button id="clear-filters-btn" class="clear-filters-btn hidden" type="button" title="Clear all filters" aria-label="Clear all filters">✕</button>
+            </div>
             <div class="view-toggle"><button id="grid-view" class="active" type="button" aria-label="Card view">▦</button><button id="table-view" type="button" aria-label="Table view">☷</button></div>
           </div>
           <div class="level-filter-label"><span>POWER LEVEL</span><small>Select one exact level</small></div>

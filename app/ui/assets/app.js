@@ -2087,16 +2087,22 @@ function matchesEquipment(brawler, filter = state.equipment) {
   // RARITY (evaluates catalog: matches both owned and unowned brawlers)
   const bRarity = (getBrawlerRarity(brawler) || '').toLowerCase().trim();
   switch (filter) {
+    case 'rarity_common':
+    case 'rarity_starter':
+      return bRarity === 'common' || bRarity === 'starter' || bRarity === 'starting';
     case 'rarity_rare':
       return bRarity === 'rare';
     case 'rarity_super_rare':
-      return bRarity === 'super rare';
+      return bRarity === 'super rare' || bRarity === 'super_rare';
     case 'rarity_epic':
       return bRarity === 'epic';
     case 'rarity_mythic':
       return bRarity === 'mythic';
     case 'rarity_legendary':
-      return bRarity.includes('legendary');
+      return bRarity === 'legendary';
+    case 'rarity_ultra_legendary':
+    case 'rarity_ultra':
+      return bRarity.includes('ultra');
   }
 
   // BUFFIE AVAILABILITY (evaluates catalog: matches brawlers with buffies released)
@@ -2189,47 +2195,47 @@ function matchesEquipment(brawler, filter = state.equipment) {
 
     // BUFFIE OWNERSHIP
     case 'buffies_owned_0':
-      return buffieCount === 0;
+      return isBuffieReleased(brawler) && buffieCount === 0;
     case 'buffies_owned_at_least_1':
     case 'has_buffies':
-      return buffieCount >= 1;
+      return isBuffieReleased(brawler) && buffieCount >= 1;
     case 'buffies_owned_at_least_2':
-      return buffieCount >= 2;
+      return isBuffieReleased(brawler) && buffieCount >= 2;
     case 'buffies_owned_3':
-      return buffieCount === 3;
+      return isBuffieReleased(brawler) && buffieCount === 3;
 
     // BUFFIE COMBINATIONS
     case 'buffie_combo_0':
       return isBuffieReleased(brawler) && buffieCount === 0;
     case 'buffie_combo_gadget':
-      return hasGadgetBuffy && !hasSpBuffy && !hasHcBuffy;
+      return isBuffieReleased(brawler) && hasGadgetBuffy && !hasSpBuffy && !hasHcBuffy;
     case 'buffie_combo_sp':
-      return !hasGadgetBuffy && hasSpBuffy && !hasHcBuffy;
+      return isBuffieReleased(brawler) && !hasGadgetBuffy && hasSpBuffy && !hasHcBuffy;
     case 'buffie_combo_hc':
-      return !hasGadgetBuffy && !hasSpBuffy && hasHcBuffy;
+      return isBuffieReleased(brawler) && !hasGadgetBuffy && !hasSpBuffy && hasHcBuffy;
     case 'buffie_combo_gadget_sp':
-      return hasGadgetBuffy && hasSpBuffy && !hasHcBuffy;
+      return isBuffieReleased(brawler) && hasGadgetBuffy && hasSpBuffy && !hasHcBuffy;
     case 'buffie_combo_gadget_hc':
-      return hasGadgetBuffy && !hasSpBuffy && hasHcBuffy;
+      return isBuffieReleased(brawler) && hasGadgetBuffy && !hasSpBuffy && hasHcBuffy;
     case 'buffie_combo_sp_hc':
-      return !hasGadgetBuffy && hasSpBuffy && hasHcBuffy;
+      return isBuffieReleased(brawler) && !hasGadgetBuffy && hasSpBuffy && hasHcBuffy;
     case 'buffie_combo_complete':
-      return hasGadgetBuffy && hasSpBuffy && hasHcBuffy;
+      return isBuffieReleased(brawler) && hasGadgetBuffy && hasSpBuffy && hasHcBuffy;
 
     // INDIVIDUAL BUFFIES
     case 'buffie_ind_gadget_owned':
     case 'has_buffies_gadget':
-      return hasGadgetBuffy;
+      return isBuffieReleased(brawler) && hasGadgetBuffy;
     case 'buffie_ind_gadget_unowned':
       return isBuffieReleased(brawler) && !hasGadgetBuffy;
     case 'buffie_ind_sp_owned':
     case 'has_buffies_sp':
-      return hasSpBuffy;
+      return isBuffieReleased(brawler) && hasSpBuffy;
     case 'buffie_ind_sp_unowned':
       return isBuffieReleased(brawler) && !hasSpBuffy;
     case 'buffie_ind_hc_owned':
     case 'has_buffies_hc':
-      return hasHcBuffy;
+      return isBuffieReleased(brawler) && hasHcBuffy;
     case 'buffie_ind_hc_unowned':
       return isBuffieReleased(brawler) && !hasHcBuffy;
 
@@ -2274,16 +2280,43 @@ function renderBrawlers() {
   const equipmentFilter = $('equipment-filter')?.value || state.equipment || 'all';
   state.equipment = equipmentFilter;
 
-  let brawlers = (state.brawlers || []).filter((brawler) => {
-    const matchesQuery = !query || (brawler.name && brawler.name.toLowerCase().includes(query));
+  const totalCatalogCount = (state.brawlers || []).length || 107;
+
+  // Determine category-scoped brawlers (level & equipment filter, before search query)
+  const categoryScopedBrawlers = (state.brawlers || []).filter((brawler) => {
     let matchesLevel = true;
     if (state.level && state.level !== 'all') {
       const targetLevel = Number(state.level);
       matchesLevel = brawler.owned && (brawler.power === targetLevel);
     }
     const matchesEquip = matchesEquipment(brawler, equipmentFilter);
+    return matchesLevel && matchesEquip;
+  });
 
-    return matchesQuery && matchesLevel && matchesEquip;
+  // Calculate denominator for active category context (e.g. 27 for Buffies)
+  let contextTotal = totalCatalogCount;
+  const isBuffieFilter = equipmentFilter.startsWith('buffie');
+  if (isBuffieFilter) {
+    if (equipmentFilter === 'buffies_not_available') {
+      contextTotal = (state.brawlers || []).filter((b) => !isBuffieReleased(b)).length;
+    } else {
+      contextTotal = (state.brawlers || []).filter((b) => isBuffieReleased(b)).length;
+    }
+  }
+
+  // Dynamically update search input placeholder based on current filter scope
+  if (searchInput) {
+    const isCategoryFiltered = Boolean((state.level && state.level !== 'all') || (equipmentFilter && equipmentFilter !== 'all'));
+    if (isCategoryFiltered) {
+      const scopeCount = categoryScopedBrawlers.length;
+      searchInput.placeholder = scopeCount === 1 ? 'Search 1 brawler' : `Search ${scopeCount} brawlers`;
+    } else {
+      searchInput.placeholder = `Search all ${totalCatalogCount} brawlers`;
+    }
+  }
+
+  let brawlers = categoryScopedBrawlers.filter((brawler) => {
+    return !query || (brawler.name && brawler.name.toLowerCase().includes(query));
   });
 
   brawlers.sort((a, b) => {
@@ -2315,6 +2348,29 @@ function renderBrawlers() {
   }
   const empty = $('brawler-empty');
   if (empty) empty.classList.toggle('hidden', brawlers.length > 0);
+
+  const filteredCount = brawlers.length;
+  const isFiltered = Boolean(query || (state.level && state.level !== 'all') || (equipmentFilter && equipmentFilter !== 'all'));
+
+  const countNum = $('results-count-num');
+  const countTotal = $('results-count-total');
+  const pill = $('filter-results-counter');
+  const clearBtn = $('clear-filters-btn');
+
+  if (countNum) countNum.textContent = filteredCount;
+  if (countTotal) countTotal.textContent = contextTotal;
+  if (pill) {
+    pill.classList.toggle('is-filtered', isFiltered);
+    pill.setAttribute('title', isFiltered ? `${filteredCount} / ${contextTotal}` : `${totalCatalogCount} total catalog`);
+  }
+  if (clearBtn) {
+    clearBtn.classList.toggle('hidden', !isFiltered);
+  }
+
+  const levelLabelSmall = document.querySelector('.level-filter-label small');
+  if (levelLabelSmall) {
+    levelLabelSmall.textContent = isFiltered ? `Showing ${filteredCount} / ${contextTotal}` : 'Select one exact level';
+  }
 }
 
 function prioritySteps(brawler, guide = {}) {
@@ -3910,6 +3966,18 @@ function bindEvents() {
     document.querySelectorAll('.level-chip').forEach((chip) => chip.classList.remove('active'));
     button.classList.add('active');
     state.level = button.dataset.level;
+    renderBrawlers();
+  });
+  $('clear-filters-btn')?.addEventListener('click', () => {
+    const searchInput = $('brawler-search');
+    if (searchInput) searchInput.value = '';
+    const equipSelect = $('equipment-filter');
+    if (equipSelect) equipSelect.value = 'all';
+    state.equipment = 'all';
+    state.level = 'all';
+    document.querySelectorAll('.level-chip').forEach((chip) => {
+      chip.classList.toggle('active', chip.dataset.level === 'all');
+    });
     renderBrawlers();
   });
   $('grid-view')?.addEventListener('click', () => setView('grid'));
