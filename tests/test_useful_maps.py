@@ -25,7 +25,7 @@ def test_brawler_guides_have_useful_maps():
     with guides_path.open("r", encoding="utf-8") as f:
         guides = json.load(f)
 
-    assert len(guides) == 106, "All 106 brawlers must be represented"
+    assert len(guides) == 107, "All 107 brawlers must be represented"
 
     for brawler_id, guide in guides.items():
         assert "useful_maps" in guide, f"Brawler {guide.get('name', brawler_id)} must have useful_maps"

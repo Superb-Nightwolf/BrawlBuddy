@@ -33,6 +33,12 @@ GEARS = {
     "SUPER TURRET": 62000016,
     "GADGET COOLDOWN": 62000017,
 }
+FANKIT_EQUIPMENT_SOURCES = {
+    23001442: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_1",
+    23001443: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2",
+    23001444: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1",
+    23001445: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_2",
+}
 
 
 def load_json(path: Path) -> Any:
@@ -94,6 +100,19 @@ def download(source_url: str, destination: Path) -> dict[str, Any]:
     }
 
 
+def local_metadata(source_url: str, destination: Path) -> dict[str, Any]:
+    payload = destination.read_bytes()
+    width, height = png_dimensions(payload)
+    return {
+        "local_url": "/" + destination.relative_to(UI_DIR).as_posix(),
+        "source_url": source_url,
+        "local_sha256": hashlib.sha256(payload).hexdigest(),
+        "width": width,
+        "height": height,
+        "mime": "image/png",
+    }
+
+
 def main() -> None:
     guides_path = DATA_DIR / "brawler_guides.json"
     equipment_path = DATA_DIR / "equipment_ids.json"
@@ -142,9 +161,15 @@ def main() -> None:
                         guide["recommended_build"][build_key] = new_name
                     indexed = equipment.pop(old_name)
                     equipment[new_name] = indexed
-                source_url = f"https://cdn.brawlify.com/{folder}/regular/{item['id']}.png"
-                metadata = download(
-                    source_url, ASSET_DIR / local_folder / f"{item['id']}.png"
+                destination = ASSET_DIR / local_folder / f"{item['id']}.png"
+                source_url = FANKIT_EQUIPMENT_SOURCES.get(
+                    item["id"],
+                    f"https://cdn.brawlify.com/{folder}/regular/{item['id']}.png",
+                )
+                metadata = (
+                    local_metadata(source_url, destination)
+                    if item["id"] in FANKIT_EQUIPMENT_SOURCES
+                    else download(source_url, destination)
                 )
                 digest = metadata["local_sha256"]
                 label = f"{guide['name']} / {item['name']}"
@@ -167,6 +192,10 @@ def main() -> None:
 
     manifest["equipment"] = {
         "source": "https://github.com/Brawlify/CDN",
+        "official_overrides": {
+            "source": "https://fankit.supercell.com/",
+            "equipment_ids": sorted(FANKIT_EQUIPMENT_SOURCES),
+        },
         "cross_validation": "https://api.brawlapi.com/v1/brawlers",
         "gadgets": sum(len(guide["gadgets"]) for guide in guides.values()),
         "star_powers": sum(len(guide["star_powers"]) for guide in guides.values()),

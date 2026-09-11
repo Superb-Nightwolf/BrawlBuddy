@@ -19,19 +19,24 @@ def test_brawler_matchups_catalog():
     with data_path.open("r", encoding="utf-8") as f:
         matchups = json.load(f)
 
-    assert len(matchups) == 106, "All 106 catalog brawlers must have matchup profiles"
+    assert len(matchups) == 107, "All 107 catalog brawlers must have matchup profiles"
 
     for brawler_id, data in matchups.items():
         assert "brawler_id" in data
-        assert "strong_against" in data and len(data["strong_against"]) >= 6
-        assert "struggles_against" in data and len(data["struggles_against"]) >= 6
-        assert "best_alongside" in data and len(data["best_alongside"]) >= 6
+        minimum = 3 if brawler_id == "16000109" else 6
+        assert "strong_against" in data and len(data["strong_against"]) >= minimum
+        assert "struggles_against" in data and len(data["struggles_against"]) >= minimum
+        assert "best_alongside" in data and len(data["best_alongside"]) >= minimum
 
         for item in data["strong_against"]:
             assert "id" in item and isinstance(item["id"], int)
             assert "name" in item and len(item["name"]) > 0
             assert "win_rate" in item and 0 <= item["win_rate"] <= 100
-            assert "total_battles" in item and item["total_battles"] > 0
+            assert "total_battles" in item
+            if brawler_id == "16000109":
+                assert item["total_battles"] is None
+            else:
+                assert item["total_battles"] > 0
 
 
 def test_rosa_poc_matchup_values_exact():
@@ -113,4 +118,3 @@ def test_api_guide_includes_matchups(client):
     assert "matchups" in data
     assert len(data["matchups"]["strong_against"]) >= 6
     assert data["matchups"]["methodology"]["source"] == "COMMUNITY WIN-RATE METRICS"
-

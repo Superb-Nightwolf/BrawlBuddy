@@ -59,8 +59,8 @@ GLOBAL_SOURCES = [
         "covers": "Buffy ownership model and replacement of Epic/Mythic Gears",
     },
     {
-        "label": "Supercell — Release Notes June 2026",
-        "url": "https://supercell.com/en/games/brawlstars/blog/release-notes/release-notes-june-2026/",
+        "label": "Supercell — Release Notes August 2026",
+        "url": "https://supercell.com/en/games/brawlstars/blog/release-notes/release-notes-august-2026/",
         "covers": "Latest official release and balance changes",
     },
     {

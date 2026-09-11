@@ -20138,5 +20138,75 @@
         "total_battles": 5255
       }
     ]
+  },
+  "16000109": {
+    "brawler_id": 16000109,
+    "brawler_name": "COSMO",
+    "strong_against": [
+      {
+        "id": 16000082,
+        "name": "BERRY",
+        "win_rate": 84.8,
+        "total_battles": null
+      },
+      {
+        "id": 16000006,
+        "name": "BARLEY",
+        "win_rate": 77.1,
+        "total_battles": null
+      },
+      {
+        "id": 16000090,
+        "name": "OLLIE",
+        "win_rate": 75.3,
+        "total_battles": null
+      }
+    ],
+    "struggles_against": [
+      {
+        "id": 16000086,
+        "name": "SHADE",
+        "win_rate": 37.5,
+        "total_battles": null
+      },
+      {
+        "id": 16000108,
+        "name": "WENDY",
+        "win_rate": 38.3,
+        "total_battles": null
+      },
+      {
+        "id": 16000061,
+        "name": "GUS",
+        "win_rate": 39.6,
+        "total_battles": null
+      }
+    ],
+    "best_alongside": [
+      {
+        "id": 16000108,
+        "name": "WENDY",
+        "win_rate": 69.7,
+        "total_battles": null
+      },
+      {
+        "id": 16000090,
+        "name": "OLLIE",
+        "win_rate": 68.0,
+        "total_battles": null
+      },
+      {
+        "id": 16000051,
+        "name": "ASH",
+        "win_rate": 68.0,
+        "total_battles": null
+      }
+    ],
+    "methodology": {
+      "source": "BRAWLMETRICS LIVE WIN-RATE DATA",
+      "url": "https://brawlmetrics.gg/brawlers/cosmo",
+      "checked_at": "2026-09-11",
+      "sample_size": "Not published by source"
+    }
   }
 }

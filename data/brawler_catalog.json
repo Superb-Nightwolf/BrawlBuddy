@@ -634,5 +634,11 @@
     "name": "WENDY",
     "rarity": "Legendary",
     "class": "Damage Dealer"
+  },
+  {
+    "id": 16000109,
+    "name": "COSMO",
+    "rarity": "Mythic",
+    "class": "Controller"
   }
 ]

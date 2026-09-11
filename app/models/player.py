@@ -235,7 +235,7 @@ class PlayerProfile(BaseModel):
 
     @property
     def completion_score(self) -> int:
-        total_possible_brawlers = 106
+        total_possible_brawlers = 107
         roster_pct = (len(self.brawlers) / total_possible_brawlers) * 100
         power11_pct = (self.power_11_count / max(1, len(self.brawlers))) * 100
         max_equip = len(self.brawlers) * 8

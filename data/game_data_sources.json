@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-02",
+  "checked_at": "2026-09-11",
   "policy": "Supercell is authoritative for game rules and releases; the Brawl Stars Wiki supplies current per-ability text and per-brawler Gear rosters.",
   "sources": [
     {
@@ -34,11 +34,11 @@
     }
   ],
   "sync": {
-    "guides": 106,
-    "wiki_pages_loaded": 106,
+    "guides": 107,
+    "wiki_pages_loaded": 107,
     "wiki_pages_failed": 0,
-    "base_ability_descriptions": 419,
-    "attack_and_super_descriptions": 197,
+    "base_ability_descriptions": 423,
+    "attack_and_super_descriptions": 199,
     "buffie_descriptions": 135,
     "hypercharge_descriptions": 106
   },

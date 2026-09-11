@@ -359,6 +359,11 @@ async function loadCatalog() {
       request('/api/prestige/assets').catch(() => ({}))
     ]);
     state.catalog = catPayload.list || [];
+    const catalogTotal = state.catalog.length;
+    setText('collection-total', catalogTotal);
+    setText('catalog-total-copy', `${catalogTotal} brawlers. Every level.`);
+    const catalogSearch = $('brawler-search');
+    if (catalogSearch) catalogSearch.placeholder = `Search all ${catalogTotal} brawlers`;
     state.equipmentDb = equipPayload || {};
     state.buffiesDb = buffiesPayload || {};
     state.dataSources = sourcesPayload || {};
@@ -1584,7 +1589,7 @@ function addImageWithFallback(holder, brawler, className) {
   fallback.textContent = initials(brawler.name);
   const image = document.createElement('img');
   image.className = className;
-  const primarySrc = (brawler.id === 16000108)
+  const primarySrc = ([16000108, 16000109].includes(brawler.id))
     ? brawlerImage(brawler, true)
     : `https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png`;
   image.src = primarySrc;
@@ -2722,7 +2727,10 @@ function createMatchupCard(item, category) {
   const card = document.createElement('a');
   card.className = `matchup-card matchup-card-${category}`;
   card.href = `/brawlers/${item.id}`;
-  card.setAttribute('aria-label', `${item.name}: ${item.win_rate}% win rate over ${format(item.total_battles)} matches`);
+  const sampleLabel = Number.isFinite(item.total_battles) && item.total_battles > 0
+    ? `${format(item.total_battles)} matches`
+    : 'sample size not published';
+  card.setAttribute('aria-label', `${item.name}: ${item.win_rate}% win rate; ${sampleLabel}`);
   card.dataset.brawlerId = item.id;
 
   const avatar = document.createElement('div');
@@ -2732,7 +2740,7 @@ function createMatchupCard(item, category) {
   img.className = 'matchup-avatar-img';
   img.loading = 'lazy';
   img.alt = item.name;
-  img.src = (item.id === 16000108)
+  img.src = ([16000108, 16000109].includes(item.id))
     ? '/assets/brawlers/thumbs/16000108.png?v=2'
     : `https://cdn.brawlify.com/brawlers/borders/${item.id}.png`;
   let fallbackStep = 0;
@@ -2757,7 +2765,7 @@ function createMatchupCard(item, category) {
 
   const count = document.createElement('span');
   count.className = 'matchup-match-count';
-  count.textContent = `${format(item.total_battles)} matches`;
+  count.textContent = sampleLabel;
 
   meta.append(name, count);
 
@@ -2947,7 +2955,7 @@ function renderDetailArtwork(brawler) {
   if (!stage) return;
   stage.replaceChildren();
   const image = new Image();
-  image.alt = `${brawler.name} generated artwork`;
+  image.alt = `${brawler.name} character artwork`;
   image.decoding = 'async';
   image.src = brawler.id === 16000038 && !brawler.owned
     ? '/assets/surge-guide-art.png'
@@ -3052,7 +3060,7 @@ async function renderDetail() {
     statusEl.className = `data-label ${brawler.owned ? '' : 'demo'}`;
   }
 
-  setText('detail-intro', guide.intro || (brawler.owned ? `${brawler.name} is Power ${brawler.power} on this account. Progression and owned equipment below come from the loaded player data.` : `${brawler.name} is part of the 106-brawler catalog but is not present in this account. Use the level journey below to preview future progression.`));
+  setText('detail-intro', guide.intro || (brawler.owned ? `${brawler.name} is Power ${brawler.power} on this account. Progression and owned equipment below come from the loaded player data.` : `${brawler.name} is part of the ${state.catalog.length}-brawler catalog but is not present in this account. Use the level journey below to preview future progression.`));
   const prestige = getPrestigeState(brawler);
   setText('detail-power', brawler.owned ? brawler.power : '—');
   setText('detail-trophies', brawler.owned ? format(brawler.trophies) : '—');
@@ -3066,7 +3074,7 @@ async function renderDetail() {
 
   const portraitEl = $('detail-portrait-icon');
   if (portraitEl) {
-    portraitEl.src = (brawler.id === 16000108)
+    portraitEl.src = ([16000108, 16000109].includes(brawler.id))
       ? brawlerImage(brawler, true)
       : `https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png`;
     portraitEl.alt = `${brawler.name} official portrait`;

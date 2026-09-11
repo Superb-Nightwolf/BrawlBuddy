@@ -133,15 +133,13 @@ def main() -> None:
         overcharges[display_name] = card
 
     guide_names = {guide["name"] for guide in guides.values()}
-    if not guide_names.issubset(overcharges):
-        raise RuntimeError(
-            f"Catalog brawlers without client Hypercharges: {sorted(guide_names - set(overcharges))}"
-        )
+    released_hypercharge_names = guide_names.intersection(overcharges)
 
     wiki_quotes: dict[str, tuple[str, str]] = {}
     with ThreadPoolExecutor(max_workers=10) as executor:
         futures = {
-            executor.submit(fetch_hypercharge_quote, name): name for name in guide_names
+            executor.submit(fetch_hypercharge_quote, name): name
+            for name in released_hypercharge_names
         }
         for future in as_completed(futures):
             name = futures[future]
@@ -150,6 +148,14 @@ def main() -> None:
     hypercharge_name_changes = 0
     wiki_name_anomalies: list[dict[str, str]] = []
     for brawler_id, guide in guides.items():
+        if guide["name"] not in released_hypercharge_names:
+            guide["hypercharge"] = {
+                "released": False,
+                "name": "Unreleased",
+                "description": f"{guide['name'].title()} does not have a released Hypercharge yet.",
+                "image_url": None,
+            }
+            continue
         client_card = overcharges[guide["name"]]
         client_name = text_by_tid[client_card["TID"]]
         wiki_heading, wiki_description = wiki_quotes[guide["name"]]
@@ -322,10 +328,10 @@ def main() -> None:
             client_buffy_names.add(display_name)
     buffies["released_brawlers"] = sorted(client_buffy_names)
 
-    sources["checked_at"] = "2026-09-02"
+    sources["checked_at"] = "2026-09-11"
     sources["client_asset_version"] = CLIENT_VERSION
     sources["sync"]["guides"] = len(guides)
-    sources["sync"]["hypercharge_descriptions"] = len(guides)
+    sources["sync"]["hypercharge_descriptions"] = len(released_hypercharge_names)
     sources["sync"]["buffie_descriptions"] = sum(
         sum(bool(item.get("buffie_description")) for item in guide["gadgets"])
         + sum(bool(item.get("buffie_description")) for item in guide["star_powers"])
@@ -343,11 +349,11 @@ def main() -> None:
                 "client_version": CLIENT_VERSION,
                 "guides_checked": len(guides),
                 "hypercharge_names_corrected": hypercharge_name_changes,
-                "released_hypercharges": len(guides),
+                "released_hypercharges": len(released_hypercharge_names),
                 "buffy_brawlers": len(client_buffy_names),
                 "gadget_reworks": len(gadget_reworks),
                 "wiki_name_anomalies_rejected": wiki_name_anomalies,
-                "future_brawlers_not_published": ["COSMO", "VINCE"],
+                "future_brawlers_not_published": ["VINCE"],
             },
             indent=2,
         )

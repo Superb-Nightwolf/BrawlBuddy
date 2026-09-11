@@ -18,6 +18,12 @@ ART_DIR = PROJECT_ROOT / "app" / "ui" / "assets" / "brawlers"
 THUMB_DIR = ART_DIR / "thumbs"
 VISUAL_MANIFEST_PATH = DATA_DIR / "visual_asset_manifest.json"
 UI_DIR = PROJECT_ROOT / "app" / "ui"
+FANKIT_EQUIPMENT_SOURCES = {
+    23001442: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_1",
+    23001443: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2",
+    23001444: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1",
+    23001445: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_2",
+}
 
 
 def load_json(path: Path) -> Any:
@@ -102,8 +108,9 @@ def audit(online: bool) -> tuple[list[str], list[str], dict[str, int]]:
                 item_name = item.get("name")
                 equipment_ids.append(item_id)
                 equipment_names.append(item_name)
-                expected_source_url = (
-                    f"https://cdn.brawlify.com/{url_folder}/regular/{item_id}.png"
+                expected_source_url = FANKIT_EQUIPMENT_SOURCES.get(
+                    item_id,
+                    f"https://cdn.brawlify.com/{url_folder}/regular/{item_id}.png",
                 )
                 expected_url = (
                     f"/assets/equipment/{url_folder}/{item_id}.png"
@@ -386,10 +393,15 @@ def audit(online: bool) -> tuple[list[str], list[str], dict[str, int]]:
             for brawler in catalog:
                 brawler_id = str(brawler["id"])
                 guide = guides[brawler_id]
-                expected_paths = [f"brawlers/borders/{brawler_id}.png"]
-                expected_paths.extend(
+                border_path = f"brawlers/borders/{brawler_id}.png"
+                if border_path not in paths:
+                    warnings.append(
+                        f"{brawler['name']}: Brawlify portrait is not published yet; "
+                        "the verified local artwork will be used."
+                    )
+                expected_paths = [
                     f"gadgets/regular/{item['id']}.png" for item in guide["gadgets"]
-                )
+                ]
                 expected_paths.extend(
                     f"star-powers/regular/{item['id']}.png"
                     for item in guide["star_powers"]

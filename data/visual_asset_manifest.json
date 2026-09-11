@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "checked_at": "2026-09-02",
+  "checked_at": "2026-09-11",
   "client": {
     "repository": "https://github.com/tailsjs/brawl-stars-assets",
     "version": "69.230",
@@ -4366,6 +4366,28 @@
           "local_url": null
         }
       }
+    },
+    "16000109": {
+      "name": "COSMO",
+      "hypercharge": {
+        "released": false,
+        "local_url": null
+      },
+      "buffies": {
+        "released": false,
+        "gadget": {
+          "released": false,
+          "local_url": null
+        },
+        "star_power": {
+          "released": false,
+          "local_url": null
+        },
+        "hypercharge": {
+          "released": false,
+          "local_url": null
+        }
+      }
     }
   },
   "gears": {
@@ -4507,9 +4529,18 @@
   },
   "equipment": {
     "source": "https://github.com/Brawlify/CDN",
+    "official_overrides": {
+      "source": "https://fankit.supercell.com/",
+      "equipment_ids": [
+        23001442,
+        23001443,
+        23001444,
+        23001445
+      ]
+    },
     "cross_validation": "https://api.brawlapi.com/v1/brawlers",
-    "gadgets": 212,
-    "star_powers": 212,
+    "gadgets": 214,
+    "star_powers": 214,
     "gears": 15,
     "duplicate_content_groups": [
       [

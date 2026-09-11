@@ -7,6 +7,14 @@ from fastapi.testclient import TestClient
 from app.main import app
 
 
+FANKIT_EQUIPMENT_SOURCES = {
+    23001442: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_1",
+    23001443: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2",
+    23001444: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1",
+    23001445: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_2",
+}
+
+
 def test_product_pages_and_surge_guide_are_available() -> None:
     with TestClient(app) as client:
         for path in ("/", "/brawlers", "/battles", "/events", "/leaderboards", "/brawlers/16000038"):
@@ -111,15 +119,15 @@ def test_demo_contains_clickable_surge_account_progress() -> None:
     assert surge["star_powers"][0]["name"] == "TO THE MAX!"
 
 
-def test_full_catalog_has_106_unique_brawlers_and_local_artwork() -> None:
+def test_full_catalog_has_107_unique_brawlers_and_local_artwork() -> None:
     with TestClient(app) as client:
         payload = client.get("/api/brawlers/catalog").json()
 
     brawlers = payload["list"]
-    assert payload["count"] == 106
-    assert len(brawlers) == 106
-    assert len({brawler["id"] for brawler in brawlers}) == 106
-    assert len({brawler["name"] for brawler in brawlers}) == 106
+    assert payload["count"] == 107
+    assert len(brawlers) == 107
+    assert len({brawler["id"] for brawler in brawlers}) == 107
+    assert len({brawler["name"] for brawler in brawlers}) == 107
 
     artwork_dir = Path("app/ui/assets/brawlers")
     missing = [brawler["name"] for brawler in brawlers if not (artwork_dir / f"{brawler['id']}.png").is_file()]
@@ -158,8 +166,9 @@ def test_every_recommended_ability_and_icon_matches_its_brawler() -> None:
         ):
             for item in guide[collection]:
                 expected_url = f"/assets/equipment/{folder}/{item['id']}.png"
-                expected_source_url = (
-                    f"https://cdn.brawlify.com/{folder}/regular/{item['id']}.png"
+                expected_source_url = FANKIT_EQUIPMENT_SOURCES.get(
+                    item["id"],
+                    f"https://cdn.brawlify.com/{folder}/regular/{item['id']}.png",
                 )
                 assert item["id"] not in seen_ids, item["id"]
                 assert item["name"] not in seen_names, item["name"]
@@ -176,8 +185,8 @@ def test_every_recommended_ability_and_icon_matches_its_brawler() -> None:
                     "source_url": expected_source_url,
                 }
 
-    assert len(seen_ids) == 424
-    assert len(seen_names) == 424
+    assert len(seen_ids) == 428
+    assert len(seen_names) == 428
 
 
 def test_penny_and_tara_use_distinct_canonical_ids() -> None:
@@ -192,7 +201,7 @@ def test_penny_and_tara_use_distinct_canonical_ids() -> None:
     assert penny["id"] != tara["id"]
 
 
-def test_all_106_brawlers_have_complete_curated_guides() -> None:
+def test_all_107_brawlers_have_complete_curated_guides() -> None:
     with TestClient(app) as client:
         catalog = client.get("/api/brawlers/catalog").json()["list"]
         for brawler in catalog:
@@ -272,7 +281,7 @@ def test_current_gear_roster_is_consistent_for_every_brawler() -> None:
 
     for guide in guides:
         assert guide["gears"] == universal + special.get(guide["name"], []), guide["name"]
-    assert sum(len(guide["gears"]) == 6 for guide in guides) == 86
+    assert sum(len(guide["gears"]) == 6 for guide in guides) == 87
     assert sum(len(guide["gears"]) == 7 for guide in guides) == 18
     assert sum(len(guide["gears"]) == 8 for guide in guides) == 2
 
@@ -282,7 +291,7 @@ def test_data_source_metadata_is_current_and_cross_validated() -> None:
         payload = client.get("/api/data-sources").json()
 
     assert payload["checked_at"] >= "2026-08-31"
-    assert payload["sync"]["guides"] == 106
+    assert payload["sync"]["guides"] == 107
     assert payload["sync"]["wiki_pages_failed"] == 0
     urls = {source["url"] for source in payload["sources"]}
     assert "https://support.supercell.com/brawl-stars/en/articles/gears-8.html" in urls

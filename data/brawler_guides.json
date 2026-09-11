@@ -17844,5 +17844,176 @@
         "image_url": "https://cdn.brawlify.com/maps/regular/15001316.png"
       }
     ]
+  },
+  "16000109": {
+    "id": 16000109,
+    "name": "COSMO",
+    "rarity": "Mythic",
+    "class": "Controller",
+    "intro": "Cosmo is a long-range controller whose three orbiting projectiles grow larger and stronger as they travel. His Super marks an enemy with a gravity field that makes allied projectiles home toward the target.",
+    "attack": {
+      "name": "Orbit",
+      "description": "Cosmo fires 3 projectiles that orbit in a circle. The projectiles get further apart as they travel, while growing in size and damage."
+    },
+    "super": {
+      "name": "Gravitational Pull",
+      "description": "Cosmo fires a positive magnet that attaches to an enemy. Teammates' projectiles then gain extreme homing toward the target."
+    },
+    "max_stats": [
+      {
+        "label": "Health",
+        "value": "6,800"
+      },
+      {
+        "label": "Attack damage",
+        "value": "500–2,000 per projectile"
+      },
+      {
+        "label": "Maximum burst",
+        "value": "6,000"
+      },
+      {
+        "label": "Attack range",
+        "value": "9.0 tiles"
+      },
+      {
+        "label": "Reload",
+        "value": "2.0 seconds"
+      },
+      {
+        "label": "Super damage",
+        "value": "1,000"
+      },
+      {
+        "label": "Super duration",
+        "value": "6.0 seconds"
+      },
+      {
+        "label": "Movement",
+        "value": "Normal (750)"
+      }
+    ],
+    "how_to_use": [
+      "Fight from long range so Orbit's projectiles have time to grow and reach their highest damage.",
+      "Aim with the outside of the orbit instead of placing the center line directly over a distant target.",
+      "Mark a priority enemy with Gravitational Pull when your teammates are ready to fire and capitalize on the homing effect.",
+      "Use Telescope Trap to reveal a key area and deny dashes, jumps, and teleports during an objective fight.",
+      "Use Planetary Pushback when a tank or assassin closes the distance and then re-establish maximum range."
+    ],
+    "strengths": [
+      "High long-range damage when all three projectiles connect near maximum range",
+      "Super can coordinate an entire team's projectiles onto one marked target",
+      "Telescope Trap reveals invisible enemies and blocks movement abilities in its area",
+      "Orbiting projectiles can approach cover from unusual angles"
+    ],
+    "watch_out_for": [
+      "Damage is much lower at close range before the projectiles have grown",
+      "Slow reload makes missed attacks expensive",
+      "Fast divers can pressure Cosmo before his orbit reaches maximum damage",
+      "The Super is most valuable when teammates are positioned and have ammo available"
+    ],
+    "mode_fit": [
+      "Knockout",
+      "Bounty",
+      "Hot Zone",
+      "Brawl Ball"
+    ],
+    "gadgets": [
+      {
+        "id": 23001444,
+        "name": "PLANETARY PUSHBACK",
+        "description": "Cosmo knocks enemies back from the targeted area. Cooldown: 14 seconds.",
+        "image_url": "/assets/equipment/gadgets/23001444.png",
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1"
+      },
+      {
+        "id": 23001445,
+        "name": "TELESCOPE TRAP",
+        "description": "Cosmo uses his telescope to reveal an area for 6 seconds, including invisible enemies. Enemy Brawlers inside this area cannot use movement abilities. Cooldown: 20 seconds.",
+        "image_url": "/assets/equipment/gadgets/23001445.png",
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_2"
+      }
+    ],
+    "star_powers": [
+      {
+        "id": 23001442,
+        "name": "PRECESSION",
+        "description": "Increases the orbit speed of Cosmo's main attack by 25%.",
+        "image_url": "/assets/equipment/star-powers/23001442.png",
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_1"
+      },
+      {
+        "id": 23001443,
+        "name": "AMMO ATTRACTOR",
+        "description": "Hitting an enemy with Cosmo's Super reloads 2 ammo.",
+        "image_url": "/assets/equipment/star-powers/23001443.png",
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2"
+      }
+    ],
+    "hypercharge": {
+      "released": false,
+      "name": "Unreleased",
+      "description": "Cosmo does not have a released Hypercharge yet.",
+      "image_url": null
+    },
+    "recommended_build": {
+      "gadget": "TELESCOPE TRAP",
+      "star_power": "PRECESSION",
+      "gears": [
+        "SHIELD",
+        "DAMAGE"
+      ],
+      "note": "This early-release build uses Telescope Trap for objective control and Precession to make long-range orbit hits easier; current loadout pick rates are not yet available."
+    },
+    "gears": [
+      "SPEED",
+      "HEALTH",
+      "DAMAGE",
+      "VISION",
+      "SHIELD",
+      "GADGET COOLDOWN"
+    ],
+    "source_note": "Release status and kit were checked against Supercell's August 2026 release notes; current ability text and level-scaled stats were checked against the Brawl Stars Wiki. Verified 2026-09-11.",
+    "sources": [
+      {
+        "label": "Brawl Stars Wiki - Cosmo",
+        "url": "https://brawlstars.fandom.com/wiki/Cosmo"
+      },
+      {
+        "label": "Supercell - Release Notes August 2026",
+        "url": "https://supercell.com/en/games/brawlstars/blog/release-notes/release-notes-august-2026/"
+      },
+      {
+        "label": "BrawlMetrics - Cosmo Statistics",
+        "url": "https://brawlmetrics.gg/brawlers/cosmo"
+      }
+    ],
+    "verified_at": "2026-09-11",
+    "useful_maps": [
+      {
+        "id": 15000005,
+        "name": "Shooting Star",
+        "mode": "Bounty",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000005.png"
+      },
+      {
+        "id": 15001318,
+        "name": "Out In The Open",
+        "mode": "Knockout",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15001318.png"
+      },
+      {
+        "id": 15000306,
+        "name": "Dueling Beetles",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000306.png"
+      },
+      {
+        "id": 15000300,
+        "name": "Ring of Fire",
+        "mode": "Hot Zone",
+        "image_url": "https://cdn.brawlify.com/maps/regular/15000300.png"
+      }
+    ]
   }
 }

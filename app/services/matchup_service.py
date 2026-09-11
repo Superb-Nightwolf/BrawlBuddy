@@ -61,7 +61,6 @@ class MatchupService:
             "mode": "3v3 Competitive",
             "smoothing": "Bayesian adjusted win rate"
         })
-        res["methodology"]["source"] = "COMMUNITY WIN-RATE METRICS"
         res["last_updated"] = datetime.now(timezone.utc).isoformat()
         res["is_dynamic"] = True
         return res

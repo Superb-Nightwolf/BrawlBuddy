@@ -3390,5 +3390,37 @@
     "brawler_name": "GIGI",
     "image_url": "/assets/equipment/star-powers/23001068.png",
     "source_url": "https://cdn.brawlify.com/star-powers/regular/23001068.png"
+  },
+  "PLANETARY PUSHBACK": {
+    "id": 23001444,
+    "type": "gadget",
+    "brawler_id": "16000109",
+    "brawler_name": "COSMO",
+    "image_url": "/assets/equipment/gadgets/23001444.png",
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1"
+  },
+  "TELESCOPE TRAP": {
+    "id": 23001445,
+    "type": "gadget",
+    "brawler_id": "16000109",
+    "brawler_name": "COSMO",
+    "image_url": "/assets/equipment/gadgets/23001445.png",
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_2"
+  },
+  "PRECESSION": {
+    "id": 23001442,
+    "type": "star_power",
+    "brawler_id": "16000109",
+    "brawler_name": "COSMO",
+    "image_url": "/assets/equipment/star-powers/23001442.png",
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_1"
+  },
+  "AMMO ATTRACTOR": {
+    "id": 23001443,
+    "type": "star_power",
+    "brawler_id": "16000109",
+    "brawler_name": "COSMO",
+    "image_url": "/assets/equipment/star-powers/23001443.png",
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2"
   }
 }

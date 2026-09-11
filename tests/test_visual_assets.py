@@ -14,6 +14,12 @@ from app.main import app
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 UI_DIR = PROJECT_ROOT / "app" / "ui"
 DATA_DIR = PROJECT_ROOT / "data"
+FANKIT_EQUIPMENT_SOURCES = {
+    23001442: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_1",
+    23001443: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2",
+    23001444: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1",
+    23001445: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_2",
+}
 
 
 def _load(name: str) -> dict:
@@ -128,8 +134,9 @@ def test_all_equipment_and_gear_icons_are_local_valid_pngs() -> None:
         ):
             for item in guide[collection]:
                 assert item["image_url"] == f"/assets/equipment/{folder}/{item['id']}.png"
-                assert item["source_url"] == (
-                    f"https://cdn.brawlify.com/{folder}/regular/{item['id']}.png"
+                assert item["source_url"] == FANKIT_EQUIPMENT_SOURCES.get(
+                    item["id"],
+                    f"https://cdn.brawlify.com/{folder}/regular/{item['id']}.png",
                 )
                 assert equipment[item["name"]]["brawler_id"] == brawler_id
                 path = UI_DIR / item["image_url"].lstrip("/")
@@ -137,7 +144,7 @@ def test_all_equipment_and_gear_icons_are_local_valid_pngs() -> None:
                 _png_dimensions(path)
                 paths.add(path)
 
-    assert len(paths) == 424
+    assert len(paths) == 428
     assert len(manifest["gears"]) == 15
     for gear in manifest["gears"].values():
         path = UI_DIR / gear["local_url"].lstrip("/")
@@ -241,7 +248,7 @@ def test_every_catalog_and_detail_route_can_serve_its_local_images() -> None:
                 assert response.headers["content-type"] == "image/png"
 
 
-def test_september_client_changes_are_published_without_future_brawlers() -> None:
+def test_september_cosmo_release_is_published_without_october_brawler() -> None:
     guides = _load("brawler_guides.json")
     equipment = _load("equipment_ids.json")
     catalog = _load("brawler_catalog.json")
@@ -263,5 +270,5 @@ def test_september_client_changes_are_published_without_future_brawlers() -> Non
     assert {"BOUNCY CASTLE", "TOOLBOX", "SOUL SWITCHER"}.isdisjoint(equipment)
 
     catalog_names = {item["name"] for item in catalog}
-    assert "COSMO" not in catalog_names
+    assert "COSMO" in catalog_names
     assert "VINCE" not in catalog_names
