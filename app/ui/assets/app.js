@@ -1573,7 +1573,7 @@ function brawlerImage(brawler, thumbnail = false) {
   return thumbnail
     ? (brawler.id === 16000108
       ? '/assets/brawlers/thumbs/16000108.png?v=2'
-      : `/assets/brawlers/thumbs/${brawler.id}.webp`)
+      : `/assets/brawlers/thumbs/${brawler.id}.webp${brawler.id === 16000109 ? '?v=4' : ''}`)
     : `/assets/brawlers/${brawler.id}.png`;
 }
 
@@ -1969,23 +1969,34 @@ function cardFor(brawler) {
   top.append(name, rarityTag);
   nameBlock.append(top);
 
-  if (brawler.owned) {
-    const prestige = getPrestigeState(brawler);
-    const progRow = document.createElement('div'); progRow.className = 'brawler-progression-row';
+  const isOwned = Boolean(brawler.owned);
+  const displayedTrophies = isOwned ? format(brawler.trophies) : '0';
+  const displayedLevel = isOwned ? brawler.power : 0;
+  const prestigeBrawler = isOwned ? brawler : {
+    ...brawler,
+    trophies: 0,
+    highest_trophies: 0,
+    highestTrophies: 0,
+    prestige_level: 0,
+    prestige_asset_id: 0,
+    prestige_label: 'Wood',
+  };
+  const prestige = getPrestigeState(prestigeBrawler);
+  const progRow = document.createElement('div');
+  progRow.className = `brawler-progression-row${isOwned ? '' : ' locked'}`;
 
-    const trophyChip = document.createElement('div'); trophyChip.className = 'brawler-stat-chip trophies-chip'; trophyChip.title = `${brawler.name}: ${format(brawler.trophies)} Trophies`;
-    trophyChip.innerHTML = `<div class="trophy-chip-row"><img class="trophy-chip-img" src="/assets/icon_trophy.png" alt="Trophy" /><span class="trophy-chip-val">${format(brawler.trophies)}</span></div><span class="trophy-chip-lbl">TROPHIES</span>`;
+  const trophyChip = document.createElement('div'); trophyChip.className = 'brawler-stat-chip trophies-chip'; trophyChip.title = `${brawler.name}: ${displayedTrophies} Trophies${isOwned ? '' : ' (locked)'}`;
+  trophyChip.innerHTML = `<div class="trophy-chip-row"><img class="trophy-chip-img" src="/assets/icon_trophy.png" alt="Trophy" /><span class="trophy-chip-val">${displayedTrophies}</span></div><span class="trophy-chip-lbl">TROPHIES</span>`;
 
-    const prestigeWrap = document.createElement('div'); prestigeWrap.className = 'brawler-prestige-center-wrap'; prestigeWrap.title = `${brawler.name}: ${prestige.label}`;
-    const emblemImage = document.createElement('img'); emblemImage.className = 'prestige-card-emblem-img'; emblemImage.alt = `${brawler.name} ${prestige.label} emblem`; applyPrestigeImage(emblemImage, brawler);
-    prestigeWrap.append(emblemImage);
+  const prestigeWrap = document.createElement('div'); prestigeWrap.className = 'brawler-prestige-center-wrap'; prestigeWrap.title = `${brawler.name}: ${prestige.label}${isOwned ? '' : ' Prestige (locked)'}`;
+  const emblemImage = document.createElement('img'); emblemImage.className = 'prestige-card-emblem-img'; emblemImage.alt = `${brawler.name} ${prestige.label} emblem${isOwned ? '' : ' (locked)'}`; applyPrestigeImage(emblemImage, prestigeBrawler);
+  prestigeWrap.append(emblemImage);
 
-    const levelChip = document.createElement('div'); levelChip.className = 'brawler-stat-chip level-chip'; levelChip.title = `${brawler.name}: Level ${brawler.power}`;
-    levelChip.innerHTML = `<span class="level-chip-val">${brawler.power}</span><span class="level-chip-lbl">LEVEL</span>`;
+  const levelChip = document.createElement('div'); levelChip.className = 'brawler-stat-chip level-chip'; levelChip.title = `${brawler.name}: Level ${displayedLevel}${isOwned ? '' : ' (locked)'}`;
+  levelChip.innerHTML = `<span class="level-chip-val">${displayedLevel}</span><span class="level-chip-lbl">LEVEL</span>`;
 
-    progRow.append(trophyChip, prestigeWrap, levelChip);
-    nameBlock.append(progRow);
-  }
+  progRow.append(trophyChip, prestigeWrap, levelChip);
+  nameBlock.append(progRow);
 
   const equipment = document.createElement('div'); equipment.className = 'equipment-row equipment-lab-wrap'; renderRosterEquipmentLab(equipment, brawler);
   const open = document.createElement('div'); open.className = 'open-guide'; open.innerHTML = '<span>VIEW GUIDE</span><b>→</b>';
@@ -2797,7 +2808,9 @@ function createMatchupCard(item, category) {
   img.loading = 'lazy';
   img.alt = item.name;
   img.src = ([16000108, 16000109].includes(item.id))
-    ? '/assets/brawlers/thumbs/16000108.png?v=2'
+    ? (item.id === 16000108
+      ? '/assets/brawlers/thumbs/16000108.png?v=2'
+      : '/assets/brawlers/thumbs/16000109.webp?v=4')
     : `https://cdn.brawlify.com/brawlers/borders/${item.id}.png`;
   let fallbackStep = 0;
   img.onerror = () => {
@@ -3015,7 +3028,7 @@ function renderDetailArtwork(brawler) {
   image.decoding = 'async';
   image.src = brawler.id === 16000038 && !brawler.owned
     ? '/assets/surge-guide-art.png'
-    : [16000107, 16000108].includes(brawler.id)
+    : [16000107, 16000108, 16000109].includes(brawler.id)
       ? `/assets/brawlers/generated/${brawler.id}.png`
       : `/assets/brawlers/${brawler.id}.png`;
   image.onerror = () => {

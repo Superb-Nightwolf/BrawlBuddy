@@ -253,6 +253,31 @@ def test_every_catalog_and_detail_route_can_serve_its_local_images() -> None:
                 assert response.headers["content-type"] == "image/png"
 
 
+def test_cosmo_has_centered_portrait_and_separate_generated_hero_art() -> None:
+    hero_manifest = json.loads(
+        (UI_DIR / "assets" / "brawlers" / "hero-artwork.json").read_text(encoding="utf-8")
+    )
+    cosmo = hero_manifest["16000109"]
+
+    assert cosmo["official"] == "/assets/brawlers/16000109.png"
+    assert cosmo["generated"] == "/assets/brawlers/generated/16000109.png"
+    assert cosmo["initial"] == "generated"
+    hero_path = UI_DIR / "assets" / cosmo["generated"].removeprefix("/assets/")
+    assert _png_dimensions(hero_path) == (
+        1254,
+        1254,
+    )
+
+    with TestClient(app) as client:
+        portrait = client.get("/assets/brawlers/thumbs/16000109.webp")
+        hero = client.get(cosmo["generated"])
+
+    assert portrait.status_code == 200
+    assert portrait.headers["content-type"] == "image/webp"
+    assert hero.status_code == 200
+    assert hero.headers["content-type"] == "image/png"
+
+
 def test_september_cosmo_release_is_published_without_october_brawler() -> None:
     guides = _load("brawler_guides.json")
     equipment = _load("equipment_ids.json")

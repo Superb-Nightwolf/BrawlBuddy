@@ -863,8 +863,8 @@
     "name": "COSMO",
     "official": "/assets/brawlers/16000109.png",
     "source": "portrait_brawler_cosmo.png",
-    "generated": "/assets/brawlers/16000109.png",
-    "initial": "official",
+    "generated": "/assets/brawlers/generated/16000109.png",
+    "initial": "generated",
     "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=portrait_brawler_cosmo"
   }
 }

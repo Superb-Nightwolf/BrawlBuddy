@@ -33,6 +33,19 @@ def test_product_pages_and_surge_guide_are_available() -> None:
         assert len(guide["star_powers"]) == 2
 
 
+def test_locked_brawler_cards_keep_zeroed_grey_progression() -> None:
+    with TestClient(app) as client:
+        javascript = client.get("/assets/app.js").text
+        stylesheet = client.get("/assets/styles.css").text
+
+    assert "displayedTrophies = isOwned ? format(brawler.trophies) : '0'" in javascript
+    assert "displayedLevel = isOwned ? brawler.power : 0" in javascript
+    assert "prestige_asset_id: 0" in javascript
+    assert "brawler-progression-row${isOwned ? '' : ' locked'}" in javascript
+    assert ".brawler-progression-row.locked .brawler-stat-chip" in stylesheet
+    assert "filter: grayscale(1) opacity(.38)" in stylesheet
+
+
 def test_penny_and_tara_have_full_curated_guides() -> None:
     with TestClient(app) as client:
         penny = client.get("/api/guides/16000019").json()
