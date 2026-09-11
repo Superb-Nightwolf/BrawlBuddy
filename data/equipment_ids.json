@@ -389,7 +389,7 @@
     "brawler_id": "16000012",
     "brawler_name": "CROW",
     "image_url": "/assets/equipment/gadgets/23000286.png",
-    "source_url": "https://cdn.brawlify.com/gadgets/regular/23000286.png"
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_crow_2"
   },
   "EXTRA TOXIC": {
     "id": 23000088,
@@ -3301,7 +3301,7 @@
     "brawler_id": "16000107",
     "brawler_name": "NORI",
     "image_url": "/assets/equipment/gadgets/23001297.png",
-    "source_url": "https://cdn.brawlify.com/gadgets/regular/23001297.png"
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_nori_1"
   },
   "GONNA NEED A BIGGER NET": {
     "id": 23001298,
@@ -3309,7 +3309,7 @@
     "brawler_id": "16000107",
     "brawler_name": "NORI",
     "image_url": "/assets/equipment/gadgets/23001298.png",
-    "source_url": "https://cdn.brawlify.com/gadgets/regular/23001298.png"
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_nori_2"
   },
   "BIG HAUL": {
     "id": 23001295,
@@ -3317,7 +3317,7 @@
     "brawler_id": "16000107",
     "brawler_name": "NORI",
     "image_url": "/assets/equipment/star-powers/23001295.png",
-    "source_url": "https://cdn.brawlify.com/star-powers/regular/23001295.png"
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_nori_1"
   },
   "HIS MOTHER’S SON": {
     "id": 23001296,
@@ -3325,7 +3325,7 @@
     "brawler_id": "16000107",
     "brawler_name": "NORI",
     "image_url": "/assets/equipment/star-powers/23001296.png",
-    "source_url": "https://cdn.brawlify.com/star-powers/regular/23001296.png"
+    "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_nori_2"
   },
   "WIND-POWERED": {
     "id": 23001320,

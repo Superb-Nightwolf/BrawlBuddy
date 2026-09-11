@@ -6032,7 +6032,7 @@
         "description": "Throw a kunai that damages, slows, and poisons the first enemy hit for 2 sec. Cooldown: 17 seconds.",
         "image_url": "/assets/equipment/gadgets/23000286.png",
         "buffie_description": "The kunai also bounces to nearby targets, causing the same effect.",
-        "source_url": "https://cdn.brawlify.com/gadgets/regular/23000286.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_crow_2"
       }
     ],
     "star_powers": [
@@ -17590,14 +17590,14 @@
         "name": "SUSHI SNACK",
         "description": "Nori eats up to 3 fish to heal himself for 1000 per fish. Cooldown: 12 seconds.",
         "image_url": "/assets/equipment/gadgets/23001297.png",
-        "source_url": "https://cdn.brawlify.com/gadgets/regular/23001297.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_nori_1"
       },
       {
         "id": 23001298,
         "name": "GONNA NEED A BIGGER NET",
         "description": "Aim a fishing net that roots the first Brawler hit for 1.25 sec and deals 800 damage. Cooldown: 20 seconds.",
         "image_url": "/assets/equipment/gadgets/23001298.png",
-        "source_url": "https://cdn.brawlify.com/gadgets/regular/23001298.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_nori_2"
       }
     ],
     "star_powers": [
@@ -17606,14 +17606,14 @@
         "name": "BIG HAUL",
         "description": "Nori catches 3 fish when his Super hits enemy Brawlers.",
         "image_url": "/assets/equipment/star-powers/23001295.png",
-        "source_url": "https://cdn.brawlify.com/star-powers/regular/23001295.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_nori_1"
       },
       {
         "id": 23001296,
         "name": "HIS MOTHER’S SON",
         "description": "Nori gains +20% speed for 1 sec whenever he hits an enemy with his Main Attack.",
         "image_url": "/assets/equipment/star-powers/23001296.png",
-        "source_url": "https://cdn.brawlify.com/star-powers/regular/23001296.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_nori_2"
       }
     ],
     "hypercharge": {
@@ -17681,9 +17681,9 @@
   "16000108": {
     "id": 16000108,
     "name": "WENDY",
-    "rarity": "Legendary",
+    "rarity": "Mythic",
     "class": "Damage Dealer",
-    "intro": "Wendy is a Legendary support brawler whose attack damages enemies while shielding herself, or shields a teammate on hit. Planet Protector deploys a generator that absorbs most damage taken by allies inside its area.",
+    "intro": "Wendy is a Mythic support brawler whose attack damages enemies while shielding herself, or shields a teammate on hit. Planet Protector deploys a generator that absorbs most damage taken by allies inside its area.",
     "attack": {
       "name": "Blow Dryer",
       "description": "Wendy fires a blast dealing 2000 damage and giving herself 1160 shield. When hitting a teammate, Wendy gives them 1520 shield."

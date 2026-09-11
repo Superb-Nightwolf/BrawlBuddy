@@ -34,6 +34,11 @@ GEARS = {
     "GADGET COOLDOWN": 62000017,
 }
 FANKIT_EQUIPMENT_SOURCES = {
+    23000286: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_crow_2",
+    23001295: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_nori_1",
+    23001296: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_nori_2",
+    23001297: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_nori_1",
+    23001298: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_nori_2",
     23001442: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_1",
     23001443: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2",
     23001444: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1",

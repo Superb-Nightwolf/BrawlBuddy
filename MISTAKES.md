@@ -271,3 +271,15 @@ This document tracks all identified UI, calculation, and data integration discre
   3. Added the `.trophy-emblem-sub` micro-label (`"TROPHIES"`, 6.5px, uppercase, `#fff8db`, deep text-shadow) underneath the bold white trophy count (`"Lilita One"`, 13.5px, `#ffffff`, text-shadow `0 1.5px 0 #78350f`), elevating functional clarity and visual balance as a twin progression medal directly opposite the silver Prestige emblem.
   4. Preserved responsive scaling across desktop (`49px × 49px`), mobile (`37px × 37px`), compact (`54px × 54px`), and table view.
   5. Kept all other card elements, copy sections, equipment rows, and pages strictly untouched.
+
+---
+
+### Issue 34: Wendy Rarity Misclassification (Legendary -> Mythic)
+- **Root Cause**: Wendy (`16000108`) was registered as `Legendary` instead of `Mythic` across the brawler catalog, guides, and frontend rarity dictionaries.
+- **Fix**: Updated `data/brawler_catalog.json`, `data/brawler_guides.json`, and `app/ui/assets/app.js` to correctly classify Wendy as **Mythic**.
+
+---
+
+### Issue 35: In-Game Notification Red Dot on Nori and Crow Equipment Icons
+- **Root Cause**: Gadget and Star Power icons downloaded from early community assets for Nori (`23001297`, `23001298`, `23001295`, `23001296`) and Crow's "SLOWING TOXIN" (`23000286`) contained an in-game "new/unread" red notification badge in the upper right quadrant.
+- **Fix**: Sourced and integrated clean high-definition renders from the official Supercell fan kit repository via Brawl Stars Wiki without the red indicator dot, added entries to `FANKIT_EQUIPMENT_SOURCES` and `data/visual_asset_manifest.json`, and updated verified references in `data/brawler_guides.json` and `data/equipment_ids.json`.
