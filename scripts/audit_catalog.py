@@ -253,6 +253,7 @@ def audit(online: bool) -> tuple[list[str], list[str], dict[str, int]]:
         visual_assets.get("fallbacks", {}).get("hypercharge", []),
         *visual_assets.get("fallbacks", {}).get("buffy", {}).values(),
         visual_assets.get("fallbacks", {}).get("buffy_unreleased", []),
+        visual_assets.get("fallbacks", {}).get("hypercharge_unreleased", []),
     ):
         for local_url in fallback_group:
             if not (UI_DIR / local_url.lstrip("/")).is_file():

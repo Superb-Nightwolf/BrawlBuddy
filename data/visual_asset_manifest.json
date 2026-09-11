@@ -31,6 +31,10 @@
     "buffy_unreleased": [
       "/assets/buffies/generic.png",
       "/assets/buffie_icon.webp"
+    ],
+    "hypercharge_unreleased": [
+      "/assets/hypercharges/generic.png",
+      "/assets/hypercharge_icon.webp"
     ]
   },
   "brawlers": {

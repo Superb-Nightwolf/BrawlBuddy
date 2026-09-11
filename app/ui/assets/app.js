@@ -3402,6 +3402,14 @@ function setAssetImageSources(image, sources, textFallback) {
 
 function getHyperchargeImageSources(brawler) {
   const entry = getVisualAssetEntry(brawler);
+  const unreleasedFallbacks = state.visualAssets?.fallbacks?.hypercharge_unreleased || [
+    '/assets/hypercharges/generic.png',
+    '/assets/hypercharge_generic.png',
+    '/assets/hypercharge_icon.webp',
+  ];
+  if (entry?.hypercharge?.released === false || (!entry?.hypercharge?.local_url && !entry?.hypercharge?.source_url)) {
+    return uniqueAssetSources(unreleasedFallbacks);
+  }
   const fallbacks = state.visualAssets?.fallbacks?.hypercharge || [
     '/assets/section_hypercharge.png',
     '/assets/hypercharge_icon.webp',
@@ -3477,7 +3485,11 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
     unreleasedCard.innerHTML = `
       <div class="ability-header-row">
         <div class="ability-title-wrap">
-          <span class="ability-emblem unreleased-emblem">⏳</span>
+          <div class="ability-emblem-wrap hyper-wrap">
+            <div class="official-hypercharge-emblem unreleased-hyper-emblem" title="Hypercharge Not Yet Released">
+              <img src="/assets/hypercharges/generic.png" alt="Hypercharge Unreleased" class="ability-icon-img hyper-icon-img unreleased-icon" onerror="this.onerror=null;this.src='/assets/hypercharge_generic.png';">
+            </div>
+          </div>
           <strong style="color:#536888;">HYPERCHARGE UNRELEASED</strong>
         </div>
         <span class="missing-status">COMING SOON</span>

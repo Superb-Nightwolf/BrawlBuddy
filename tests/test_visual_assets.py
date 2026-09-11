@@ -113,10 +113,15 @@ def test_visual_asset_fallbacks_are_local_and_ordered_by_specificity() -> None:
         "/assets/buffies/generic.png",
         "/assets/buffie_icon.webp",
     ]
+    assert fallbacks["hypercharge_unreleased"] == [
+        "/assets/hypercharges/generic.png",
+        "/assets/hypercharge_icon.webp",
+    ]
     for sources in [
         fallbacks["hypercharge"],
         *fallbacks["buffy"].values(),
         fallbacks["buffy_unreleased"],
+        fallbacks["hypercharge_unreleased"],
     ]:
         assert sources[-1] in {
             "/assets/hypercharge_icon.webp",
