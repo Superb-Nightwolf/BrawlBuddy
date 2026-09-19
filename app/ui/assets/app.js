@@ -3344,12 +3344,20 @@ async function renderDetail() {
   if (howTo) {
     howTo.replaceChildren();
     const steps = (guide.how_to_use || guide.how_to || [brawler.owned ? 'Review the current equipment and complete the highest-priority gap shown here.' : 'Unlock this brawler before planning account-specific equipment upgrades.']);
+    setText('how-to-counter', `${steps.length} TIPS`);
     steps.forEach((text, index) => {
       const li = document.createElement('li');
       li.className = 'how-to-item';
+      let formattedText = text;
+      const colonIdx = text.indexOf(':');
+      if (colonIdx > 0 && colonIdx <= 30) {
+        const lead = text.slice(0, colonIdx).trim();
+        const rest = text.slice(colonIdx + 1).trim();
+        formattedText = `<strong>${lead}:</strong> ${rest}`;
+      }
       li.innerHTML = `
         <span class="how-to-step-num">${index + 1}</span>
-        <span class="how-to-text">${text}</span>
+        <span class="how-to-text">${formattedText}</span>
       `;
       howTo.append(li);
     });
