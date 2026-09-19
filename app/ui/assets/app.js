@@ -3168,6 +3168,10 @@ async function renderDetail() {
   if (heroEl) {
     heroEl.dataset.rarity = rawRarity;
   }
+  const detailViewEl = $('detail-view');
+  if (detailViewEl) {
+    detailViewEl.dataset.rarity = rawRarity;
+  }
 
   const rarityEl = $('detail-rarity');
   if (rarityEl) {
