@@ -3135,6 +3135,127 @@ function renderPrestigeProgress(brawler) {
   }
 }
 
+/* ==========================================================================
+   BRAWLER COMBAT KIT STATS (Ammo & Super Charge Rates for all 107 Brawlers)
+   ========================================================================== */
+const BRAWLER_COMBAT_KITS = {
+  'SHELLY': { ammo: '3 Slots · 5 pellets / attack', hits: '11 pellets (~2-3 attacks)' },
+  'COLT': { ammo: '3 Slots · 6 bullets / attack', hits: '12 bullets (2 full bursts)' },
+  'BULL': { ammo: '3 Slots · 5 pellets / attack', hits: '8 pellets (2 full attacks)' },
+  'BROCK': { ammo: '3 Slots · 1 rocket / attack', hits: '4 rockets (4 attacks)' },
+  'RICO': { ammo: '3 Slots · 5 bouncy bullets / attack', hits: '12 bullets (2.4 attacks)' },
+  'SPIKE': { ammo: '3 Slots · 1 grenade / 6 spikes', hits: '6 direct spikes (~2-3 attacks)' },
+  'BARLEY': { ammo: '3 Slots · 1 bottle / puddle', hits: '5 splash puddles (5 attacks)' },
+  'JESSIE': { ammo: '3 Slots · 1 bouncing orb', hits: '6 energy orbs (6 attacks)' },
+  'NITA': { ammo: '3 Slots · 1 shockwave', hits: '6 shockwaves (6 attacks)' },
+  'DYNAMIKE': { ammo: '3 Slots · 2 dynamite sticks', hits: '4 sticks (2 full attacks)' },
+  'EL PRIMO': { ammo: '3 Slots · 4 punches / attack', hits: '9 punches (or tank trait)' },
+  'MORTIS': { ammo: '3 Slots (+ Coiled Snake)', hits: '5 dashes (5 attacks)' },
+  'CROW': { ammo: '3 Slots · 3 poison daggers / attack', hits: '14 daggers with poison' },
+  'POCO': { ammo: '3 Slots · 1 wide soundwave', hits: '5 soundwaves (5 attacks)' },
+  'BO': { ammo: '3 Slots · 3 explosive arrows / attack', hits: '10 arrows (3.3 attacks)' },
+  'PIPER': { ammo: '3 Slots · 1 sniper bullet', hits: '3 sniper shots (3 attacks)' },
+  'PAM': { ammo: '3 Slots · 9 scrap bolts / burst', hits: '16 scraps (~2 bursts)' },
+  'TARA': { ammo: '3 Slots · 3 piercing tarot cards', hits: '13 cards (4.3 attacks)' },
+  'DARRYL': { ammo: '3 Slots · 10 shells (2x5 burst)', hits: 'Auto-charges 30s (or 10 shells)' },
+  'PENNY': { ammo: '3 Slots · 1 gold pouch (bursts)', hits: '5 gold pouches (5 attacks)' },
+  'FRANK': { ammo: '3 Slots · 1 heavy hammer slam', hits: '3 hammer slams (or tank trait)' },
+  'GENE': { ammo: '3 Slots · 1 smoke orb (splits to 6)', hits: '4 smoke orbs (4 attacks)' },
+  'TICK': { ammo: '3 Slots · 3 cluster mines / attack', hits: '7 mines (2.3 attacks)' },
+  'LEON': { ammo: '3 Slots · 4 spinner blades / attack', hits: '15 spinner blades (~4 attacks)' },
+  'ROSA': { ammo: '3 Slots · 3 boxing punches / attack', hits: '9 punches (or tank trait)' },
+  'CARL': { ammo: '1 Slot · 1 boomerang pickaxe', hits: '7 pickaxe hits (7 attacks)' },
+  'BIBI': { ammo: '3 Slots (+ Home Run)', hits: '3 bat swings (3 attacks)' },
+  '8-BIT': { ammo: '3 Slots · 6 laser beams / attack', hits: '12 laser beams (2 bursts)' },
+  'SANDY': { ammo: '3 Slots · 1 piercing sand wave', hits: '6 sand waves (6 attacks)' },
+  'BEA': { ammo: '1 Slot · 1 sniper stinger', hits: '3 stingers (3 attacks)' },
+  'EMZ': { ammo: '3 Slots · 1 spray cloud (3 ticks)', hits: '11 spray ticks (~3.7 attacks)' },
+  'MR. P': { ammo: '3 Slots · 1 bouncing suitcase', hits: '6 suitcase bounces (6 attacks)' },
+  'MAX': { ammo: '4 Slots · 4 blaster shots / attack', hits: '13 blaster shots (3.25 attacks)' },
+  'JACKY': { ammo: '3 Slots · 1 360° ground smash', hits: '4 ground smashes (or tank trait)' },
+  'GALE': { ammo: '3 Slots · 6 snowballs / attack', hits: '15 snowballs (2.5 attacks)' },
+  'NANI': { ammo: '3 Slots · 3 converging light orbs', hits: '7 light orbs (~2.3 attacks)' },
+  'SPROUT': { ammo: '3 Slots · 1 bouncing seed bomb', hits: '4 seed bombs (4 attacks)' },
+  'SURGE': { ammo: '3 Slots · 1 juice shot (splits)', hits: '3 juice shots (3 attacks)' },
+  'COLETTE': { ammo: '3 Slots · 1 tax shot / attack', hits: '4 tax shots (4 attacks)' },
+  'AMBER': { ammo: '40 Fuel · Continuous flame', hits: '22 flame ticks' },
+  'LOU': { ammo: '3 Slots · 3 snow cones / attack', hits: '7 snow cones (2.3 attacks)' },
+  'BYRON': { ammo: '3 Slots · 1 dart (3 ticks)', hits: '9 dart ticks (3 attacks)' },
+  'EDGAR': { ammo: '3 Slots · 2 scarf punches / attack', hits: 'Auto-charges 30s (or 10 punches)' },
+  'RUFFS': { ammo: '3 Slots · 2 laser shots / attack', hits: '7 laser shots (3.5 attacks)' },
+  'STU': { ammo: '3 Slots · 2 pyrotechnic fireworks', hits: '1 hit (100% instant)' },
+  'BELLE': { ammo: '3 Slots · 1 electro-bolt (bounces)', hits: '4 electro-bolts (4 attacks)' },
+  'SQUEAK': { ammo: '3 Slots · 1 sticky slime blob', hits: '4 slime blobs (4 attacks)' },
+  'GROM': { ammo: '3 Slots · 1 4-way cross bud bomb', hits: '4 bud bombs (4 attacks)' },
+  'BUZZ': { ammo: '3 Slots · 5 punches per attack', hits: 'Trait aura (or 9 punches)' },
+  'GRIFF': { ammo: '3 Slots · 3 coin waves (9 coins)', hits: '12 coins (4 attacks)' },
+  'ASH': { ammo: '3 Slots · 1 shockwave sweep', hits: '4 sweeps (or tank trait)' },
+  'MEG': { ammo: '3 Slots · 2 blaster bolts (Mech: 8)', hits: '8 blaster shots (Mech: 6 slashes)' },
+  'LOLA': { ammo: '3 Slots · 6 diamond stars / burst', hits: '16 diamond stars (2.7 bursts)' },
+  'FANG': { ammo: '3 Slots · 1 shoe kick (drops shoe)', hits: '4 shoe kicks (4 attacks)' },
+  'EVE': { ammo: '3 Slots · 3 egg shots / attack', hits: '9 egg hits (3 attacks)' },
+  'JANET': { ammo: '3 Slots · 1 sound blast (hold to focus)', hits: '5 sound blasts (5 attacks)' },
+  'BONNIE': { ammo: '3 Slots · 1 tooth cannon (Melee: 1)', hits: '4 cannon teeth (Melee: 4 slashes)' },
+  'OTIS': { ammo: '3 Slots · 3 ink drops / attack', hits: '12 ink drops (4 attacks)' },
+  'SAM': { ammo: '3 Slots · 2 knuckle punches', hits: 'Spawns with Super (or 12 hits)' },
+  'GUS': { ammo: '3 Slots · 1 spirit balloon shot', hits: '4 spirit balloons (4 attacks)' },
+  'BUSTER': { ammo: '3 Slots · 1 projector shotgun wave', hits: 'Trait aura (or 4 wave hits)' },
+  'CHESTER': { ammo: '3 Slots · 1, 2, 3, or 4 bell cycle', hits: '7 bells (~3 cycle attacks)' },
+  'GRAY': { ammo: '3 Slots · 1 finger-gun portal shot', hits: '4 finger-gun shots (4 attacks)' },
+  'MANDY': { ammo: '3 Slots · 1 candy dispenser shot', hits: '5 candy shots (5 attacks)' },
+  'R-T': { ammo: '3 Slots · 1 mark tracker shot', hits: '5 mark shots (5 attacks)' },
+  'WILLOW': { ammo: '3 Slots · 1 lantern splash (3 ticks)', hits: '4 lantern hexes (4 attacks)' },
+  'MAISIE': { ammo: '3 Slots · 1 pressure rocket', hits: '3 pressure rockets (3 attacks)' },
+  'HANK': { ammo: '1 Slot · 1 inflating balloon blast', hits: '3 max-charged balloons (3 attacks)' },
+  'CORDELIUS': { ammo: '3 Slots · 2 mushroom spittings', hits: 'Trait aura (or 6 mushrooms)' },
+  'DOUG': { ammo: '3 Slots · 1 360° hotdog splash', hits: '5 hotdog splats (5 attacks)' },
+  'PEARL': { ammo: '3 Slots · 5 hot cookies / burst', hits: '15 cookies (3 full bursts)' },
+  'CHUCK': { ammo: '3 Slots · 3 steam puffs / attack', hits: 'Auto-charges 5s (or 7 steam puffs)' },
+  'CHARLIE': { ammo: '1 Slot · 1 hairball yo-yo (return)', hits: '5 yo-yo hits (5 attacks)' },
+  'MICO': { ammo: '3 Slots · 1 microphone ground slam', hits: '4 microphone slams (4 attacks)' },
+  'KIT': { ammo: '3 Slots · 2 claw slashes / attack', hits: 'Auto-charges 30s (or 6 claw slashes)' },
+  'LARRY & LAWRIE': { ammo: '3 Slots · 1 ticket dispenser (2x)', hits: '8 ticket explosions (4 attacks)' },
+  'MELODIE': { ammo: '3 Slots · 1 musical note (spawns 3)', hits: '4 musical notes (4 attacks)' },
+  'ANGELO': { ammo: '3 Slots · 1 water arrow (chargeable)', hits: '3 fully-charged arrows (3 attacks)' },
+  'DRACO': { ammo: '3 Slots · 1 guitar power chord', hits: '5 guitar chords (or tank trait)' },
+  'LILY': { ammo: '3 Slots · 1 thorn dagger strike', hits: 'Trait aura (or 4 daggers)' },
+  'BERRY': { ammo: '3 Slots · 1 ice cream splat (puddle)', hits: '10 ice cream ticks (~3 attacks)' },
+  'CLANCY': { ammo: '3 Slots · Paintball burst', hits: '10 paintball hits' },
+  'MOE': { ammo: '3 Slots · 1 stone digger bounce (4x)', hits: '4 stone digger bursts (4 attacks)' },
+  'KENJI': { ammo: '3 Slots · Dash & Slash combo sequence', hits: '4 combo strikes (2 cycles)' },
+  'SHADE': { ammo: '3 Slots · 1 ghostly scythe sweep', hits: '5 scythe sweeps (5 attacks)' },
+  'JUJU': { ammo: '3 Slots · 1 elemental needle dart', hits: '4 elemental darts (4 attacks)' },
+  'MEEPLE': { ammo: '3 Slots · 1 boardgame token roll', hits: '4 token rolls (4 attacks)' },
+  'OLLIE': { ammo: '3 Slots · 1 skateboard kickflip grind', hits: '4 skateboard grinds (4 attacks)' },
+  'LUMI': { ammo: '3 Slots · 1 crystal aurora pulse', hits: '4 aurora pulses (4 attacks)' },
+  'FINX': { ammo: '3 Slots · 1 chrono-beam burst', hits: '4 chrono-beams (4 attacks)' },
+  'JAE-YONG': { ammo: '3 Slots · 2 rhythm kicks / attack', hits: '4 rhythm kicks (2 attacks)' },
+  'KAZE': { ammo: '3 Slots · 2 shadow shurikens / attack', hits: '4 shurikens (2 attacks)' },
+  'ALLI': { ammo: '3 Slots · 1 swamp crocodile snap', hits: '4 jaw snaps (4 attacks)' },
+  'TRUNK': { ammo: '3 Slots · 1 heavy branch slam', hits: '4 branch slams (4 attacks)' },
+  'MINA': { ammo: '3 Slots · 1 cane storm burst', hits: '4 cane bursts (4 attacks)' },
+  'ZIGGY': { ammo: '3 Slots · 2 zap sparks / attack', hits: '4 zap sparks (2 attacks)' },
+  'PIERCE': { ammo: '3 Slots · 1 piercing javelin', hits: '3 piercing javelins (3 attacks)' },
+  'GIGI': { ammo: '3 Slots · 2 flutter darts / attack', hits: '4 flutter darts (2 attacks)' },
+  'GLOWY': { ammo: '3 Slots · 1 bioluminescent spark', hits: '4 glow sparks (4 attacks)' },
+  'SIRIUS': { ammo: '3 Slots · 1 cosmic beam pulse', hits: '4 cosmic pulses (4 attacks)' },
+  'NAJIA': { ammo: '3 Slots · 2 desert cobra strikes', hits: '4 cobra strikes (2 attacks)' },
+  'DAMIAN': { ammo: '3 Slots · 1 inferno trident strike', hits: '4 trident strikes (4 attacks)' },
+  'STARR NOVA': { ammo: '3 Slots · 1 galaxy starburst', hits: '4 starbursts (4 attacks)' },
+  'BOLT': { ammo: '3 Slots · 2 lightning arcs / attack', hits: '4 lightning arcs (2 attacks)' },
+  'NORI': { ammo: '3 Slots · 2 seaweed blade slices', hits: '4 blade slices (2 attacks)' },
+  'WENDY': { ammo: '3 Slots · 1 whirlwind draft', hits: '4 whirlwind drafts (4 attacks)' },
+  'COSMO': { ammo: '3 Slots · 1 starlight meteor blast', hits: '4 meteor blasts (4 attacks)' }
+};
+
+function renderCombatKitStats(brawler, guide) {
+  const normName = normalizeKey(brawler.name || guide.name || '').toUpperCase();
+  const preset = BRAWLER_COMBAT_KITS[normName] || { ammo: '3 Slots', hits: '4-5 hits' };
+
+  setText('attack-ammo-val', preset.ammo || '3 Slots');
+  setText('super-charge-hits', preset.hits || '4-5 hits');
+}
+
 async function renderDetail() {
   const id = Number(location.pathname.split('/').filter(Boolean).pop());
   if (!state.catalog || state.catalog.length === 0) {
@@ -3204,6 +3325,7 @@ async function renderDetail() {
   setText('attack-description', guide.attack?.description || 'Detailed combat notes are not curated yet.');
   setText('super-name', guide.super?.name || 'Super');
   setText('super-description', guide.super?.description || 'Detailed combat notes are not curated yet.');
+  renderCombatKitStats(brawler, guide);
 
   const portraitEl = $('detail-portrait-icon');
   if (portraitEl) {
