@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=98">
+  <link rel="stylesheet" href="/assets/styles.css?v=99">
 </head>
 <body>
   <div class="app-shell">
@@ -700,16 +700,16 @@
               <p id="detail-intro">Loading this brawler’s combat guide…</p>
               <div class="detail-account-stats">
                 <div class="stat-pill">
-                  <span>POWER</span>
+                  <span>POWER LEVEL</span>
                   <strong id="detail-power">—</strong>
                 </div>
                 <div class="stat-pill">
-                  <span>TROPHIES</span>
+                  <span>CURRENT TROPHIES</span>
                   <strong id="detail-trophies">—</strong>
                 </div>
-                <div class="stat-pill" id="detail-rank-pill">
-                  <span>RANK</span>
-                  <strong id="detail-rank">—</strong>
+                <div class="stat-pill">
+                  <span>BEST TROPHIES</span>
+                  <strong id="detail-best-trophies">—</strong>
                 </div>
               </div>
             </div>
@@ -718,40 +718,34 @@
           <!-- Subtle Divider -->
           <div class="detail-hero-divider" aria-hidden="true"></div>
 
-          <!-- Right Wing: Permanent Brawler Progression -->
+          <!-- Right Wing: Prestige Progression Bay -->
           <div id="prestige-progress-panel" class="detail-hero-prestige" aria-label="Brawler Prestige progression">
-            <div class="prestige-head-row">
-              <span class="eyebrow">PERMANENT BRAWLER PROGRESSION</span>
-              <span id="detail-prestige-source" class="prestige-source-chip">OFFICIAL API</span>
-            </div>
-
             <div class="prestige-identity-cluster">
+              <!-- Top: Prestige Icon -->
               <div class="prestige-emblem-wrap">
                 <img id="detail-prestige-emblem" class="detail-prestige-emblem" alt="Brawler Prestige emblem">
                 <span id="detail-prestige-visual-note" class="prestige-visual-note hidden"></span>
               </div>
-              <div class="prestige-identity-meta">
-                <h3 id="detail-prestige-label" class="prestige-level-name">Path to Prestige</h3>
-                <div class="prestige-metric-row">
-                  <span id="detail-prestige-score" class="prestige-metric-score">— / 1,000</span>
-                  <span id="detail-prestige-score-unit" class="prestige-metric-label">Prestige Trophies</span>
-                </div>
-                <span id="detail-prestige-remaining" class="prestige-remaining-chip">—</span>
+
+              <!-- Below Row: Respective Tier or Prestige Title -->
+              <h3 id="detail-prestige-label" class="prestige-level-name">Path to Prestige</h3>
+
+              <!-- Below Row: Trophies Count (e.g. 50 / 1,000) -->
+              <div class="prestige-metric-row">
+                <span id="detail-prestige-score" class="prestige-metric-score">— / 1,000</span>
+                <span id="detail-prestige-score-unit" class="prestige-metric-label">Prestige Trophies</span>
               </div>
-            </div>
 
-            <div class="prestige-progress-track" role="progressbar" aria-label="Progress to next Prestige">
-              <i id="detail-prestige-bar"></i>
-            </div>
-
-            <p id="detail-prestige-summary" class="prestige-summary-copy">Load a player to see this Brawler's permanent Prestige progress.</p>
-
-            <div class="prestige-milestone-box">
-              <div class="prestige-milestone-main">
-                <span class="milestone-icon" aria-hidden="true">✦</span>
-                <strong id="detail-prestige-reward-val">Milestone reward: Neon Player Icon</strong>
+              <!-- Below Row: Remaining Trophies Delta (e.g. "953 trophies to Prestige 2") -->
+              <div class="prestige-deltas-wrap" id="detail-prestige-deltas">
+                <span id="detail-prestige-milestone-remaining" class="prestige-remaining-chip milestone-step hidden">—</span>
+                <span id="detail-prestige-remaining" class="prestige-remaining-chip prestige-step">—</span>
               </div>
-              <span class="prestige-ownership-note">Availability only — ownership is not exposed by the API.</span>
+
+              <!-- Bottom: Progress Bar Track -->
+              <div class="prestige-progress-track" role="progressbar" aria-label="Progress to next Prestige">
+                <i id="detail-prestige-bar"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -1166,6 +1160,6 @@
     </div>
   </dialog>
 
-  <script src="/assets/app.js?v=98" defer></script>
+  <script src="/assets/app.js?v=99" defer></script>
 </body>
 </html>

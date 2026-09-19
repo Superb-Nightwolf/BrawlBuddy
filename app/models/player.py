@@ -57,6 +57,9 @@ class PlayerBrawler(BaseModel):
     prestige_visual_level: int | None = Field(default=None, ge=1, le=10)
     prestige_visual_is_fallback: bool = False
     next_prestige_reward: str | None = None
+    next_milestone_label: str | None = None
+    trophies_to_next_milestone: int | None = None
+    trophies_to_prestige: int | None = None
     trophies: int = Field(default=0, ge=0)
     highest_trophies: int = Field(default=0, ge=0)
     gadgets: list[EquipmentItem] = Field(default_factory=list)

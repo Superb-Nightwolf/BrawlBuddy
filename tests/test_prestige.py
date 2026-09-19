@@ -97,3 +97,43 @@ def test_prestige_asset_manifest_covers_current_catalog_and_special_names() -> N
     assert by_name["WENDY"] in available
     assert by_name["LARRY & LAWRIE"] in available
     assert {0, 1, 2, 3, 13}.issubset(manifest["available"]["tiered_asset_ids"])
+
+
+def test_prestige_path_intermediate_milestone_deltas() -> None:
+    # Scenario requested by user: 481 trophies on Bronze path
+    state_481 = resolve_prestige_state(481, 0)
+    assert state_481.level == 0
+    assert state_481.label == "Bronze"
+    assert state_481.next_milestone_label == "Silver"
+    assert state_481.trophies_to_next_milestone == 19
+    assert state_481.trophies_to_prestige == 519
+
+    # Wood tier: 100 trophies
+    state_wood = resolve_prestige_state(100, 0)
+    assert state_wood.label == "Wood"
+    assert state_wood.next_milestone_label == "Bronze"
+    assert state_wood.trophies_to_next_milestone == 150
+    assert state_wood.trophies_to_prestige == 900
+
+    # Silver tier: 600 trophies
+    state_silver = resolve_prestige_state(600, 0)
+    assert state_silver.label == "Silver"
+    assert state_silver.next_milestone_label == "Gold"
+    assert state_silver.trophies_to_next_milestone == 150
+    assert state_silver.trophies_to_prestige == 400
+
+    # Gold tier: 850 trophies (next milestone is Prestige 1)
+    state_gold = resolve_prestige_state(850, 0)
+    assert state_gold.label == "Gold"
+    assert state_gold.next_milestone_label == "Prestige 1"
+    assert state_gold.trophies_to_next_milestone == 150
+    assert state_gold.trophies_to_prestige == 150
+
+    # Prestige 1+: 1,481 trophies
+    state_p1 = resolve_prestige_state(1481, 1)
+    assert state_p1.level == 1
+    assert state_p1.label == "Prestige 1"
+    assert state_p1.next_milestone_label == "Prestige 2"
+    assert state_p1.trophies_to_next_milestone is None
+    assert state_p1.trophies_to_prestige == 519
+

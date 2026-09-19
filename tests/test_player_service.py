@@ -39,6 +39,9 @@ def test_parse_player_uses_only_available_fields() -> None:
     assert player.brawlers[0].gadgets == []
     assert player.source is DataSource.OFFICIAL_API
     assert player.average_power == 9.0
+    assert player.brawlers[0].next_milestone_label == "Silver"
+    assert player.brawlers[0].trophies_to_next_milestone == 100
+    assert player.brawlers[0].trophies_to_prestige == 600
 
 
 def test_parse_player_prestige_and_victories() -> None:

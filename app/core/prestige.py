@@ -40,6 +40,9 @@ class PrestigeState:
     visual_level: int | None
     visual_is_fallback: bool
     next_reward: str | None
+    next_milestone_label: str | None = None
+    trophies_to_next_milestone: int | None = None
+    trophies_to_prestige: int | None = None
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -51,12 +54,16 @@ def _path_state(total_trophies: int, authoritative: bool) -> PrestigeState:
         if total_trophies >= candidate[0]:
             threshold, label, asset_id = candidate
 
-    next_threshold = next(
-        (value for value, _, _ in PATH_MILESTONES if value > total_trophies),
-        PRESTIGE_STEP_TROPHIES,
+    next_candidate = next(
+        (cand for cand in PATH_MILESTONES if cand[0] > total_trophies),
+        None,
     )
+    next_threshold = next_candidate[0] if next_candidate else PRESTIGE_STEP_TROPHIES
+    next_milestone_label = next_candidate[1] if next_candidate else "Prestige 1"
     span = max(1, next_threshold - threshold)
     progress = min(span, max(0, total_trophies - threshold))
+    milestone_remaining = max(0, next_threshold - total_trophies)
+    prestige_remaining = max(0, PRESTIGE_STEP_TROPHIES - total_trophies)
     return PrestigeState(
         level=0,
         level_is_authoritative=authoritative,
@@ -65,13 +72,16 @@ def _path_state(total_trophies: int, authoritative: bool) -> PrestigeState:
         floor_trophies=0,
         next_level=1,
         next_total_trophies=PRESTIGE_STEP_TROPHIES,
-        trophies_remaining=max(0, next_threshold - total_trophies),
+        trophies_remaining=milestone_remaining,
         progress_percent=round((progress / span) * 100, 1),
         label=label,
         asset_id=asset_id,
         visual_level=None,
         visual_is_fallback=False,
         next_reward=MILESTONE_REWARDS.get(next_threshold),
+        next_milestone_label=next_milestone_label,
+        trophies_to_next_milestone=milestone_remaining,
+        trophies_to_prestige=prestige_remaining,
     )
 
 
@@ -117,4 +127,7 @@ def resolve_prestige_state(
         visual_level=visual_level,
         visual_is_fallback=level > MAX_PRESTIGE_ASSET_LEVEL,
         next_reward=MILESTONE_REWARDS.get(next_total),
+        next_milestone_label=f"Prestige {level + 1}",
+        trophies_to_next_milestone=None,
+        trophies_to_prestige=trophies_remaining,
     )

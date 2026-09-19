@@ -332,22 +332,34 @@ def test_brawler_detail_hero_redesign_and_deduplication() -> None:
     assert html.count('id="prestige-progress-panel"') == 1
     assert '<section id="prestige-progress-panel"' not in html
 
-    # Deduplicated left account stat pills (POWER, TROPHIES, RANK)
+    # Three primary stat boxes: POWER LEVEL, CURRENT TROPHIES, BEST TROPHIES
+    assert "POWER LEVEL" in html
     assert 'id="detail-power"' in html
+    assert "CURRENT TROPHIES" in html
     assert 'id="detail-trophies"' in html
-    assert 'id="detail-rank-pill"' in html
-    assert 'id="detail-rank"' in html
+    assert "BEST TROPHIES" in html
+    assert 'id="detail-best-trophies"' in html
 
-    # Right wing permanent progression bay elements
-    assert "PERMANENT BRAWLER PROGRESSION" in html
-    assert 'id="detail-prestige-source"' in html
+    # Rank completely removed from hero
+    assert 'id="detail-rank"' not in html
+    assert 'id="detail-rank-pill"' not in html
+
+    # Clean right-side prestige section without text clutter
+    assert "PERMANENT BRAWLER PROGRESSION" not in html
+    prestige_section = html.split('id="prestige-progress-panel"')[1].split('</div>\n        </div>')[0]
+    assert "OFFICIAL API" not in prestige_section
+    assert "Silver milestone on the permanent path to Prestige 1 at 1,000 Trophies. Prestige progress is permanent." not in html
+    assert 'id="detail-prestige-summary"' not in html
+
+    # Visual prestige elements intact
     assert 'id="detail-prestige-emblem"' in html
     assert 'id="detail-prestige-label"' in html
     assert 'id="detail-prestige-score"' in html
     assert 'id="detail-prestige-score-unit"' in html
+    assert 'id="detail-prestige-deltas"' in html
+    assert 'id="detail-prestige-milestone-remaining"' in html
     assert 'id="detail-prestige-remaining"' in html
-    assert 'id="detail-prestige-bar"' in html
-    assert 'id="detail-prestige-summary"' in html
-    assert 'id="detail-prestige-reward-val"' in html
-    assert "Availability only — ownership is not exposed by the API." in html
+    assert 'id="detail-prestige-reward-val"' not in html
+    assert 'id="detail-prestige-milestone-box"' not in html
+    assert "Milestone Reward" not in html
 
