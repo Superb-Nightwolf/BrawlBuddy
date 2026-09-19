@@ -314,3 +314,40 @@ def test_data_source_metadata_is_current_and_cross_validated() -> None:
     urls = {source["url"] for source in payload["sources"]}
     assert "https://support.supercell.com/brawl-stars/en/articles/gears-8.html" in urls
     assert "https://brawlstars.fandom.com/wiki/Gears" in urls
+
+
+def test_brawler_detail_hero_redesign_and_deduplication() -> None:
+    with TestClient(app) as client:
+        response = client.get("/brawlers/16000026")
+        assert response.status_code == 200
+        html = response.text
+
+    # Unified hero container with left identity, center divider, right prestige
+    assert 'class="detail-hero panel" id="detail-hero"' in html
+    assert 'class="detail-hero-identity"' in html
+    assert 'class="detail-hero-divider"' in html
+    assert 'id="prestige-progress-panel" class="detail-hero-prestige"' in html
+
+    # Exactly one prestige progress panel on the page (no separate section below hero)
+    assert html.count('id="prestige-progress-panel"') == 1
+    assert '<section id="prestige-progress-panel"' not in html
+
+    # Deduplicated left account stat pills (POWER, TROPHIES, RANK)
+    assert 'id="detail-power"' in html
+    assert 'id="detail-trophies"' in html
+    assert 'id="detail-rank-pill"' in html
+    assert 'id="detail-rank"' in html
+
+    # Right wing permanent progression bay elements
+    assert "PERMANENT BRAWLER PROGRESSION" in html
+    assert 'id="detail-prestige-source"' in html
+    assert 'id="detail-prestige-emblem"' in html
+    assert 'id="detail-prestige-label"' in html
+    assert 'id="detail-prestige-score"' in html
+    assert 'id="detail-prestige-score-unit"' in html
+    assert 'id="detail-prestige-remaining"' in html
+    assert 'id="detail-prestige-bar"' in html
+    assert 'id="detail-prestige-summary"' in html
+    assert 'id="detail-prestige-reward-val"' in html
+    assert "Availability only — ownership is not exposed by the API." in html
+

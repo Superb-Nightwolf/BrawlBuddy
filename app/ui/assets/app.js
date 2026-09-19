@@ -3054,20 +3054,45 @@ function renderPrestigeProgress(brawler) {
 
   setText('detail-prestige-label', owned ? prestige.label : 'Path to Prestige');
   setText('detail-prestige-source', owned ? (prestige.authoritative ? 'OFFICIAL API' : 'DERIVED FALLBACK') : 'CATALOG PREVIEW');
+
+  // Primary score & score unit
+  if (owned) {
+    if (prestige.level > 0) {
+      setText('detail-prestige-score', `${format(prestige.trophiesInLevel)} / 1,000`);
+      setText('detail-prestige-score-unit', 'Prestige Trophies');
+    } else {
+      setText('detail-prestige-score', `${format(brawler.trophies)} / 1,000`);
+      setText('detail-prestige-score-unit', 'Path to Prestige 1');
+    }
+  } else {
+    setText('detail-prestige-score', '0 / 1,000');
+    setText('detail-prestige-score-unit', 'Prestige Trophies');
+  }
+
+  // Delta remaining chip
+  setText('detail-prestige-remaining', owned
+    ? (prestige.remaining === 0 ? 'Milestone reached' : `${format(prestige.remaining)} to ${prestige.level > 0 ? `Prestige ${prestige.nextLevel}` : 'Prestige 1'}`)
+    : 'Progress is player-specific');
+
+  // Cumulative summary copy
+  setText('detail-prestige-summary', owned
+    ? (prestige.level > 0
+      ? `${format(brawler.trophies)} cumulative API Trophies · ${format(prestige.trophiesInLevel)} earned toward Prestige ${prestige.nextLevel}. Prestige progress is permanent.`
+      : `${prestige.label} milestone on the permanent path to Prestige 1 at 1,000 Trophies. Prestige progress is permanent.`)
+    : 'Prestige is permanent and begins after this Brawler reaches the 1,000-Trophy milestone.');
+
+  // Milestone reward value
+  setText('detail-prestige-reward-val', owned
+    ? (prestige.nextReward ? `Milestone reward: ${prestige.nextReward}` : 'Milestone reward: Permanent Prestige Badge')
+    : 'Unlock brawler to preview milestone cosmetic rewards');
+
+  // Retain legacy target bindings for compatibility if referenced elsewhere
   setText('detail-prestige-current', owned
     ? (prestige.level > 0 ? `${format(prestige.trophiesInLevel)} / 1,000 Prestige Trophies` : `${format(brawler.trophies)} total Trophies`)
     : 'Connect a player to view progress');
-  setText('detail-prestige-remaining', owned
-    ? (prestige.remaining === 0 ? 'Milestone reached' : `${format(prestige.remaining)} to ${prestige.level > 0 ? `Prestige ${prestige.nextLevel}` : prestige.nextTotal}`)
-    : 'Progress is player-specific');
   setText('detail-prestige-reward', owned && prestige.nextReward
     ? `Milestone reward: ${prestige.nextReward} (availability only; ownership is not exposed by the API)`
     : 'No confirmed cosmetic reward at the next level; reward ownership is not exposed by the API.');
-  setText('detail-prestige-summary', owned
-    ? (prestige.level > 0
-      ? `${format(brawler.trophies)} cumulative API Trophies; ${format(prestige.trophiesInLevel)} earned since Prestige ${prestige.level}. Prestige progress is permanent.`
-      : `${prestige.label} milestone on the permanent path to Prestige 1 at 1,000 Trophies.`)
-    : 'Prestige is permanent and begins after this Brawler reaches the 1,000-Trophy milestone.');
 
   const bar = $('detail-prestige-bar');
   if (bar) bar.style.width = `${owned ? Math.max(0, Math.min(100, prestige.progress)) : 0}%`;
@@ -3110,6 +3135,11 @@ async function renderDetail() {
   setText('detail-name', brawler.name);
   
   const rawRarity = (guide.rarity || brawler.rarity || 'common').toLowerCase().replace(/\s+/g, '_');
+  const heroEl = $('detail-hero');
+  if (heroEl) {
+    heroEl.dataset.rarity = rawRarity;
+  }
+
   const rarityEl = $('detail-rarity');
   if (rarityEl) {
     rarityEl.className = `rarity-badge ${rawRarity}`;
@@ -3130,11 +3160,14 @@ async function renderDetail() {
   }
 
   setText('detail-intro', guide.intro || (brawler.owned ? `${brawler.name} is Power ${brawler.power} on this account. Progression and owned equipment below come from the loaded player data.` : `${brawler.name} is part of the ${state.catalog.length}-brawler catalog but is not present in this account. Use the level journey below to preview future progression.`));
-  const prestige = getPrestigeState(brawler);
   setText('detail-power', brawler.owned ? brawler.power : '—');
   setText('detail-trophies', brawler.owned ? format(brawler.trophies) : '—');
-  setText('detail-prestige', brawler.owned ? (prestige.level > 0 ? prestige.level : prestige.label) : '—');
-  setText('detail-prestige-progress', brawler.owned ? `${format(prestige.trophiesInLevel)} / 1,000` : '—');
+  const rankPill = $('detail-rank-pill');
+  if (rankPill) {
+    const hasRank = brawler.owned && Number.isFinite(brawler.rank) && brawler.rank > 0;
+    rankPill.classList.toggle('hidden', !hasRank);
+    setText('detail-rank', hasRank ? brawler.rank : '—');
+  }
   renderPrestigeProgress(brawler);
   setText('attack-name', guide.attack?.name || 'Main attack');
   setText('attack-description', guide.attack?.description || 'Detailed combat notes are not curated yet.');
