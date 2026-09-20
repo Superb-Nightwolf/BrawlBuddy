@@ -3218,7 +3218,7 @@ const BRAWLER_COMBAT_KITS = {
   'MELODIE': { ammo: '3 Slots · 1 musical note (spawns 3)', hits: '4 musical notes (4 attacks)' },
   'ANGELO': { ammo: '3 Slots · 1 water arrow (chargeable)', hits: '3 fully-charged arrows (3 attacks)' },
   'DRACO': { ammo: '3 Slots · 1 guitar power chord', hits: '5 guitar chords (or tank trait)' },
-  'LILY': { ammo: '3 Slots · 1 thorn dagger strike', hits: 'Trait aura (or 4 daggers)' },
+  'LILY': { ammo: '2 Slots · 1 thorn dagger strike', hits: 'Trait aura (or 4 daggers)' },
   'BERRY': { ammo: '3 Slots · 1 ice cream splat (puddle)', hits: '10 ice cream ticks (~3 attacks)' },
   'CLANCY': { ammo: '3 Slots · Paintball burst', hits: '10 paintball hits' },
   'MOE': { ammo: '3 Slots · 1 stone digger bounce (4x)', hits: '4 stone digger bursts (4 attacks)' },
