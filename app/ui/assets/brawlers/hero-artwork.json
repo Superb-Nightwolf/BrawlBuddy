@@ -874,6 +874,8 @@
     "generated": "/assets/brawlers/generated/16000110.png",
     "initial": "generated",
     "source_url": "https://static.wikia.nocookie.net/brawlstars/images/9/99/Vince_Skin-Default.png/revision/latest?cb=20260831173546",
-    "portrait_source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/53/Vince_Portrait.png/revision/latest?cb=20260906195539"
+    "portrait_source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=portrait_brawler_vince",
+    "portrait_download_url": "https://media.ffycdn.net/eu/supercell/4jpzs3rMXP8hVAFEaTYT.png",
+    "portrait_source_file": "Portrait_Vince.png"
   }
 }

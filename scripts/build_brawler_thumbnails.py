@@ -3,7 +3,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -40,6 +40,12 @@ def main() -> None:
             image.thumbnail(render_size, Image.Resampling.LANCZOS)
             if inset:
                 portrait = Image.new("RGBA", THUMBNAIL_SIZE, (0, 0, 0, 0))
+                if source.stem == "16000110":
+                    # Official portraits have no frame; match the other bordered
+                    # portraits with black inside the UI's existing white rim.
+                    ImageDraw.Draw(portrait).rounded_rectangle(
+                        (0, 0, 479, 479), radius=52, fill=(0, 0, 0, 255)
+                    )
                 position = tuple((canvas - rendered) // 2 for canvas, rendered in zip(
                     THUMBNAIL_SIZE, image.size, strict=True
                 ))

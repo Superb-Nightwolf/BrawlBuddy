@@ -1586,7 +1586,7 @@ function brawlerImage(brawler, thumbnail = false) {
   return thumbnail
     ? (brawler.id === 16000108
       ? '/assets/brawlers/thumbs/16000108.png?v=2'
-      : `/assets/brawlers/thumbs/${brawler.id}.webp${brawler.id === 16000109 ? '?v=4' : ''}`)
+      : `/assets/brawlers/thumbs/${brawler.id}.webp${brawler.id === 16000109 ? '?v=4' : brawler.id === 16000110 ? '?v=2' : ''}`)
     : `/assets/brawlers/${brawler.id}.png`;
 }
 
@@ -1845,7 +1845,7 @@ function renderRosterEquipmentLab(holder, brawler) {
     equipSlot.className = `equip-slot ${isOwned ? 'owned' : 'unowned'}`;
     const equipImg = document.createElement('img');
     equipImg.className = 'equip-icon';
-    equipImg.src = g.image_url || `/assets/equipment/gadgets/${g.id}.png`;
+    equipImg.src = getEquipmentImageUrl(g, 'gadget', brawler);
     equipImg.alt = g.name || 'Gadget';
     equipImg.onerror = () => { equipImg.src = '/assets/section_gadget.png'; };
     equipSlot.append(equipImg);
@@ -1884,7 +1884,7 @@ function renderRosterEquipmentLab(holder, brawler) {
     equipSlot.className = `equip-slot ${isOwned ? 'owned' : 'unowned'}`;
     const equipImg = document.createElement('img');
     equipImg.className = 'equip-icon';
-    equipImg.src = sp.image_url || `/assets/equipment/star-powers/${sp.id}.png`;
+    equipImg.src = getEquipmentImageUrl(sp, 'star_power', brawler);
     equipImg.alt = sp.name || 'Star Power';
     equipImg.onerror = () => { equipImg.src = '/assets/section_star_power.png'; };
     equipSlot.append(equipImg);
@@ -3038,6 +3038,8 @@ document.addEventListener('visibilitychange', async () => {
   }
 });
 
+const artworkBoundsCache = new Map();
+
 function renderDetailArtwork(brawler) {
   const stage = $('hero-art-stage');
   if (!stage) return;
@@ -3045,16 +3047,47 @@ function renderDetailArtwork(brawler) {
   const image = new Image();
   image.alt = `${brawler.name} character artwork`;
   image.decoding = 'async';
+  const crop = document.createElement('div');
+  crop.className = 'hero-art-crop';
+  crop.append(image);
+  image.onload = () => {
+    if (!stage.contains(crop)) return;
+    try {
+      let bounds = artworkBoundsCache.get(image.src);
+      if (!bounds) {
+        const canvas = document.createElement('canvas');
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext('2d', { willReadFrequently: true });
+        context.drawImage(image, 0, 0);
+        bounds = BrawlBuddyArtwork.visibleBounds(
+          context.getImageData(0, 0, canvas.width, canvas.height).data,
+          canvas.width, canvas.height
+        );
+        artworkBoundsCache.set(image.src, bounds);
+      }
+      crop.style.setProperty('--art-aspect', bounds.width / bounds.height);
+      image.style.width = `${100 * image.naturalWidth / bounds.width}%`;
+      image.style.height = `${100 * image.naturalHeight / bounds.height}%`;
+      image.style.left = `${-100 * bounds.left / bounds.width}%`;
+      image.style.top = `${-100 * bounds.top / bounds.height}%`;
+      crop.classList.add('artwork-normalized');
+    } catch {
+      // An unreadable/new source still gets centered, padded contain sizing.
+      crop.classList.add('artwork-fallback');
+    }
+  };
   image.src = brawler.id === 16000038 && !brawler.owned
     ? '/assets/surge-guide-art.png'
     : [16000107, 16000108, 16000109, 16000110].includes(brawler.id)
       ? `/assets/brawlers/generated/${brawler.id}.png`
       : `/assets/brawlers/${brawler.id}.png`;
   image.onerror = () => {
+    if (!stage.contains(crop)) return;
     image.remove();
     stage.textContent = brawler.name;
   };
-  stage.append(image);
+  stage.append(crop);
 }
 
 function renderPrestigeProgress(brawler) {
@@ -3894,9 +3927,13 @@ function renderPowerLadder(current, guide) {
   selectLevel(selectedLevel);
 }
 
+function versionedEquipmentAsset(url) {
+  return /\/2300145[0-3]\.png$/.test(url) ? `${url}?v=2` : url;
+}
+
 function getEquipmentImageUrl(item, type, brawler) {
   if (item && item.image_url) {
-    return item.image_url;
+    return versionedEquipmentAsset(item.image_url);
   }
 
   const rawName = (item.name || '').toUpperCase().trim();
@@ -3904,21 +3941,21 @@ function getEquipmentImageUrl(item, type, brawler) {
 
   // 1. Check in official equipment database loaded from Supercell API
   if (state.equipmentDb && state.equipmentDb[rawName]) {
-    return state.equipmentDb[rawName].image_url;
+    return versionedEquipmentAsset(state.equipmentDb[rawName].image_url);
   }
   
   if (state.equipmentDb) {
     for (const [key, val] of Object.entries(state.equipmentDb)) {
       if (normalizeKey(key) === norm) {
-        return val.image_url;
+        return versionedEquipmentAsset(val.image_url);
       }
     }
   }
 
   // 2. If item has an id directly
   if (item.id) {
-    if (type === 'gadget') return `/assets/equipment/gadgets/${item.id}.png`;
-    if (type === 'star_power') return `/assets/equipment/star-powers/${item.id}.png`;
+    if (type === 'gadget') return versionedEquipmentAsset(`/assets/equipment/gadgets/${item.id}.png`);
+    if (type === 'star_power') return versionedEquipmentAsset(`/assets/equipment/star-powers/${item.id}.png`);
     if (type === 'gear') return `/assets/equipment/gears/${item.id}.png`;
   }
 

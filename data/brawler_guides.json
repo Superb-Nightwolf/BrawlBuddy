@@ -18100,14 +18100,14 @@
         "name": "HOT COFFEE",
         "description": "Throw an aimed explosive cappuccino for area damage. Cooldown: 15 seconds.",
         "image_url": "/assets/equipment/gadgets/23001452.png",
-        "source_url": "https://cdn.brawlify.com/gadgets/regular/23001452.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_vince_1"
       },
       {
         "id": 23001453,
         "name": "METAMOTHOSIS",
         "description": "Convert nearby caterpillars into moths, gaining an additional moth per caterpillar collected. Cooldown: 13 seconds.",
         "image_url": "/assets/equipment/gadgets/23001453.png",
-        "source_url": "https://cdn.brawlify.com/gadgets/regular/23001453.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_vince_2"
       }
     ],
     "star_powers": [
@@ -18116,14 +18116,14 @@
         "name": "COME TO PAPA",
         "description": "Nearby caterpillars crawl toward Vince.",
         "image_url": "/assets/equipment/star-powers/23001450.png",
-        "source_url": "https://cdn.brawlify.com/star-powers/regular/23001450.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_vince_1"
       },
       {
         "id": 23001451,
         "name": "BUG BANDAGE",
         "description": "Converting a caterpillar into a moth restores 1,200 health at Power 11.",
         "image_url": "/assets/equipment/star-powers/23001451.png",
-        "source_url": "https://cdn.brawlify.com/star-powers/regular/23001451.png"
+        "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_vince_2"
       }
     ],
     "hypercharge": {

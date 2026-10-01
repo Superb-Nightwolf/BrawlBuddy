@@ -17,6 +17,10 @@ FANKIT_EQUIPMENT_SOURCES = {
     23001443: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2",
     23001444: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1",
     23001445: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_2",
+    23001450: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_vince_1",
+    23001451: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_vince_2",
+    23001452: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_vince_1",
+    23001453: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_vince_2",
 }
 
 

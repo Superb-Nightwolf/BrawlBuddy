@@ -9,7 +9,7 @@ from datetime import date
 import re
 
 from sync_release_data import DATA_DIR, CLIENT_ROOT, fetch_csv, fetch_json, load_json, save_json
-from sync_equipment_assets import ASSET_DIR, download
+from sync_equipment_assets import ASSET_DIR, FANKIT_EQUIPMENT_SOURCES, local_metadata
 
 
 BRAWLER_ID = 16000110
@@ -119,8 +119,10 @@ def main() -> None:
 
     for collection, kind, folder in (("gadgets", "gadget", "gadgets"), ("star_powers", "star_power", "star-powers")):
         for item in guide[collection]:
-            source = f"https://cdn.brawlify.com/{folder}/regular/{item['id']}.png"
-            metadata = download(source, ASSET_DIR / folder / f"{item['id']}.png")
+            # Preserve verified original FanKit assets. CDN previews contain
+            # red notification badges and must never overwrite these files.
+            source = FANKIT_EQUIPMENT_SOURCES[item['id']]
+            metadata = local_metadata(source, ASSET_DIR / folder / f"{item['id']}.png")
             item.update(image_url=metadata["local_url"], source_url=source)
             equipment[item["name"]] = {"id": item["id"], "type": kind, "brawler_id": str(BRAWLER_ID), "brawler_name": "VINCE",
                                       "image_url": item["image_url"], "source_url": source}
@@ -133,6 +135,16 @@ def main() -> None:
                                           for category in ("gadget", "star_power", "hypercharge")}}}
     for collection in ("gadgets", "star_powers"):
         manifest["equipment"][collection] = sum(len(item[collection]) for item in guides.values())
+    overrides = manifest["equipment"]["official_overrides"]
+    overrides["equipment_ids"] = sorted(FANKIT_EQUIPMENT_SOURCES)
+    overrides.setdefault("assets", {})
+    for collection, folder in (("gadgets", "gadgets"), ("star_powers", "star-powers")):
+        for index, item in enumerate(guide[collection], start=1):
+            overrides["assets"][str(item["id"])] = {
+                **local_metadata(item["source_url"], ASSET_DIR / folder / f"{item['id']}.png"),
+                "source_file": f"{'gadget' if collection == 'gadgets' else 'starpower'}_vince_{index}.png",
+                "checked_at": checked,
+            }
 
     # The generic service fallback invents rates, so explicitly publish no sample.
     matchups[str(BRAWLER_ID)] = {"brawler_id": BRAWLER_ID, "brawler_name": "VINCE", "strong_against": [],

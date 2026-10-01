@@ -24,12 +24,31 @@ FANKIT_EQUIPMENT_SOURCES = {
     23001443: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2",
     23001444: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_1",
     23001445: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_cosmo_2",
+    23001450: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_vince_1",
+    23001451: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_vince_2",
+    23001452: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_vince_1",
+    23001453: "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_vince_2",
 }
 
 
 def _load(name: str) -> dict:
     with (DATA_DIR / name).open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def test_roster_and_guide_share_the_exact_rarity_surface() -> None:
+    import re
+
+    css = (UI_DIR / "assets/styles.css").read_text(encoding="utf-8")
+    surface = re.search(r"#detail-view \.panel\.detail-hero,\s*\.brawler-card\s*\{([^}]+)\}", css)
+    assert surface is not None
+    assert "var(--hero-bg)" in surface[1]
+    assert "var(--hero-glow" in surface[1]
+    assert "brawl_skull_diagonal.svg" in surface[1]
+    for selector in ("brawler-visual", "brawler-card-copy"):
+        section = re.search(rf"\.{selector}\s*\{{([^}}]+)\}}", css)
+        assert section is not None
+        assert "background: transparent" in section[1]
 
 
 def _png_dimensions(path: Path) -> tuple[int, int]:

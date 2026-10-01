@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import hashlib
 
 from fastapi.testclient import TestClient
 from PIL import Image
@@ -70,3 +71,29 @@ def test_vince_official_and_generated_artwork_are_separate_and_valid() -> None:
     with Image.open(base / "thumbs/16000110.webp") as image:
         assert image.size == (480, 480)
         assert image.format == "WEBP"
+        # The inner black rim is part of the thumbnail, so every portrait
+        # context gets it beneath the existing outer white UI frame.
+        r, g, b, alpha = image.convert("RGBA").getpixel((240, 12))
+        assert max(r, g, b) < 15 and alpha == 255
+
+
+def test_equipment_icons_have_no_red_notification_badges() -> None:
+    manifest = json.loads((ROOT / "data/visual_asset_manifest.json").read_text(encoding="utf-8"))
+    count = 0
+    for folder in ("gadgets", "star-powers"):
+        for path in (ROOT / "app/ui/assets/equipment" / folder).glob("*.png"):
+            count += 1
+            with Image.open(path) as image:
+                image = image.convert("RGBA")
+                corner = image.crop((int(image.width * .65), 0, image.width, int(image.height * .3)))
+                pixels = iter(corner.tobytes())
+                red_pixels = sum(1 for r, g, b, a in zip(pixels, pixels, pixels, pixels)
+                                 if r > 190 and g < 90 and b < 90 and a > 200)
+                assert red_pixels <= 50, f"Notification badge in {path.name}"
+            if path.stem not in {"23001450", "23001451", "23001452", "23001453"}:
+                continue
+            source = manifest["equipment"]["official_overrides"]["assets"][path.stem]
+            assert source["source_url"].startswith("https://fankit.supercell.com/")
+            assert source["width"] >= 800 and source["height"] >= 800
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == source["local_sha256"]
+    assert count == 432

@@ -4566,8 +4566,54 @@
         23001442,
         23001443,
         23001444,
-        23001445
-      ]
+        23001445,
+        23001450,
+        23001451,
+        23001452,
+        23001453
+      ],
+      "assets": {
+        "23001452": {
+          "local_url": "/assets/equipment/gadgets/23001452.png",
+          "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_vince_1",
+          "local_sha256": "08ec6303d7b588db6765f7cabeb44003c5f73063d528a90eee05894367d88f5a",
+          "width": 864,
+          "height": 909,
+          "mime": "image/png",
+          "source_file": "gadget_vince_1.png",
+          "checked_at": "2026-10-01"
+        },
+        "23001453": {
+          "local_url": "/assets/equipment/gadgets/23001453.png",
+          "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=gadget_vince_2",
+          "local_sha256": "d2fb03f9ef2aa3c4f111e8f0fa6ed7983b0a63b9cc3c026c78997014f4962eed",
+          "width": 864,
+          "height": 908,
+          "mime": "image/png",
+          "source_file": "gadget_vince_2.png",
+          "checked_at": "2026-10-01"
+        },
+        "23001450": {
+          "local_url": "/assets/equipment/star-powers/23001450.png",
+          "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_vince_1",
+          "local_sha256": "a91a1fb064bec4b9446943c8d165ba3c64b7574715a4511f20e75e1a52c6f45c",
+          "width": 911,
+          "height": 951,
+          "mime": "image/png",
+          "source_file": "starpower_vince_1.png",
+          "checked_at": "2026-10-01"
+        },
+        "23001451": {
+          "local_url": "/assets/equipment/star-powers/23001451.png",
+          "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_vince_2",
+          "local_sha256": "c447c97ffa20e5731c1df764d4f1c657a76ea21a900f3de572766d916a5c6a1f",
+          "width": 910,
+          "height": 951,
+          "mime": "image/png",
+          "source_file": "starpower_vince_2.png",
+          "checked_at": "2026-10-01"
+        }
+      }
     },
     "cross_validation": "https://api.brawlapi.com/v1/brawlers",
     "gadgets": 216,
