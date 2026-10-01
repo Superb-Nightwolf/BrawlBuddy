@@ -36,19 +36,19 @@ def _load(name: str) -> dict:
         return json.load(handle)
 
 
-def test_roster_and_guide_share_the_exact_rarity_surface() -> None:
+def test_roster_header_matches_guide_and_preserves_original_partition() -> None:
     import re
 
     css = (UI_DIR / "assets/styles.css").read_text(encoding="utf-8")
-    surface = re.search(r"#detail-view \.panel\.detail-hero,\s*\.brawler-card\s*\{([^}]+)\}", css)
+    surface = re.search(r"#detail-view \.panel\.detail-hero,\s*\.brawler-visual\s*\{([^}]+)\}", css)
     assert surface is not None
     assert "var(--hero-bg)" in surface[1]
     assert "var(--hero-glow" in surface[1]
     assert "brawl_skull_diagonal.svg" in surface[1]
-    for selector in ("brawler-visual", "brawler-card-copy"):
+    for selector in ("brawler-card", "brawler-card-copy"):
         section = re.search(rf"\.{selector}\s*\{{([^}}]+)\}}", css)
         assert section is not None
-        assert "background: transparent" in section[1]
+        assert "background: #ffffff" in section[1]
 
 
 def _png_dimensions(path: Path) -> tuple[int, int]:

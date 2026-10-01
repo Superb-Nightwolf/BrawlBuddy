@@ -478,7 +478,7 @@ a { color: inherit; }
 .brawler-card.rarity-ultra-legendary, .brawler-card.rarity-ultra_legendary, .brawler-card.rarity-ultra { --rarity-color:#a855f7; --rarity-highlight:#f472b6; --rarity-shadow:#18082e; --rarity-edge:#c084fc; }
 .brawler-card.rarity-ultra-legendary:hover, .brawler-card.rarity-ultra_legendary:hover, .brawler-card.rarity-ultra:hover { border-color:#c084fc; box-shadow:0 9px 0 #9333ea, 0 0 28px rgba(168, 85, 247, 0.45), 0 16px 28px rgba(18,64,120,.14); }
 .brawler-card:hover { transform: translateY(-4px); border-color: var(--rarity-color); box-shadow: 0 9px 0 var(--rarity-edge), 0 0 24px color-mix(in srgb, var(--rarity-color) 38%, transparent), 0 16px 28px rgba(18,64,120,.14); }
-.brawler-visual { height: 180px; display: grid; place-items: center; position: relative; overflow: hidden; background: transparent; border-top-left-radius: 24px; border-top-right-radius: 24px; }
+.brawler-visual { height: 180px; display: grid; place-items: center; position: relative; overflow: hidden; border-top-left-radius: 24px; border-top-right-radius: 24px; }
 .brawler-frame-box { width: 114px; height: 114px; position: relative; display: grid; place-items: center; border: 4.5px solid #ffffff; border-radius: 26px; background: rgba(255, 255, 255, 0.85); box-shadow: 0 8px 18px rgba(0, 18, 55, 0.35); overflow: hidden; z-index: 2; transition: transform .2s ease; }
 .brawler-card:hover .brawler-frame-box { transform: scale(1.05); }
 .brawler-image { width: 100%; height: 100%; max-width: 106px; max-height: 106px; z-index: 2; object-fit: contain; object-position: center; border-radius: 20px; filter: drop-shadow(0 4px 6px rgba(0, 15, 45, 0.35)); image-rendering: -webkit-optimize-contrast; image-rendering: auto; transform: translateZ(0); }
@@ -493,7 +493,7 @@ a { color: inherit; }
 .rarity-mythic .power-badge:not(.locked), .power-badge.rarity-mythic:not(.locked) { background: linear-gradient(135deg, #e11d48, #be123c 50%, #881337); }
 .rarity-legendary .power-badge:not(.locked), .power-badge.rarity-legendary:not(.locked) { background: linear-gradient(135deg, #f59e0b, #d97706 50%, #b45309); }
 .rarity-ultra-legendary .power-badge:not(.locked), .rarity-ultra_legendary .power-badge:not(.locked), .rarity-ultra .power-badge:not(.locked), .power-badge.rarity-ultra-legendary:not(.locked), .power-badge.rarity-ultra_legendary:not(.locked), .power-badge.rarity-ultra:not(.locked) { background: linear-gradient(90deg, #e11d48 0%, #9333ea 28%, #2563eb 55%, #059669 80%, #d97706 100%); border-color: #fef08a; box-shadow: 0 2px 8px rgba(147, 51, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
-.brawler-card-copy { display: flex; flex-direction: column; flex: 1; padding: 15px 14px 14px; background: transparent; }
+.brawler-card-copy { display: flex; flex-direction: column; flex: 1; padding: 15px 14px 14px; background: #ffffff; }
 .brawler-name-row { position: relative; width: 78%; min-height: 34px; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 20px; padding: 4.5px 11px; border-radius: 12px; text-align: center; box-sizing: border-box; background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border: 2px solid #bfdbfe; box-shadow: 0 3px 0 #93c5fd; transition: transform .15s ease; }
 .brawler-name-row strong { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 400; color: #1e40af; line-height: 1; letter-spacing: .4px; text-align: center; text-transform: uppercase; font-family: "Lilita One", var(--font-heading), system-ui, sans-serif; }
 .brawler-rarity-tag { position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 88%); z-index: 5; display: inline-flex; align-items: center; justify-content: center; height: 22px; min-height: 22px; max-height: 22px; min-width: 78px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; font-size: 9.5px; font-weight: 900; letter-spacing: .8px; line-height: 1; text-transform: uppercase; white-space: nowrap; overflow: hidden; border: 1.4px solid #ffffff; box-shadow: 0 2px 6px rgba(0, 15, 45, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.45); pointer-events: none; color: #ffffff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
@@ -750,7 +750,7 @@ a { color: inherit; }
   box-shadow: 0 8px 0 var(--hero-shadow-edge, #93c5fd), 0 20px 44px rgba(0, 18, 55, 0.18); 
   margin-bottom: 24px; 
   transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
-  --hero-bg: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+  --hero-bg: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
   --hero-border: #bfdbfe;
   --hero-shadow-edge: #93c5fd;
   --hero-ink: #1e40af;
@@ -761,7 +761,7 @@ a { color: inherit; }
 #detail-view,
 .detail-hero,
 .brawler-card {
-  --hero-bg: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+  --hero-bg: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
   --hero-border: #bfdbfe;
   --hero-shadow-edge: #93c5fd;
   --hero-ink: #1e40af;
@@ -772,7 +772,7 @@ a { color: inherit; }
 #detail-view[data-rarity="common"], #detail-view[data-rarity="starting"],
 .detail-hero[data-rarity="common"], .detail-hero[data-rarity="starting"],
 .brawler-card.rarity-common, .brawler-card.rarity-starting {
-  --hero-bg: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+  --hero-bg: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
   --hero-border: #bfdbfe;
   --hero-shadow-edge: #93c5fd;
   --hero-ink: #1e40af;
@@ -782,7 +782,7 @@ a { color: inherit; }
 #detail-view[data-rarity="rare"],
 .detail-hero[data-rarity="rare"],
 .brawler-card.rarity-rare {
-  --hero-bg: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+  --hero-bg: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #86efac 100%);
   --hero-border: #bbf7d0;
   --hero-shadow-edge: #86efac;
   --hero-ink: #166534;
@@ -792,7 +792,7 @@ a { color: inherit; }
 #detail-view[data-rarity="super_rare"], #detail-view[data-rarity="super-rare"],
 .detail-hero[data-rarity="super_rare"], .detail-hero[data-rarity="super-rare"],
 .brawler-card.rarity-super-rare, .brawler-card.rarity-super_rare {
-  --hero-bg: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+  --hero-bg: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
   --hero-border: #bae6fd;
   --hero-shadow-edge: #7dd3fc;
   --hero-ink: #075985;
@@ -802,7 +802,7 @@ a { color: inherit; }
 #detail-view[data-rarity="epic"],
 .detail-hero[data-rarity="epic"],
 .brawler-card.rarity-epic {
-  --hero-bg: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #e9d5ff 100%);
+  --hero-bg: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
   --hero-border: #e9d5ff;
   --hero-shadow-edge: #d8b4fe;
   --hero-ink: #581c87;
@@ -812,7 +812,7 @@ a { color: inherit; }
 #detail-view[data-rarity="mythic"],
 .detail-hero[data-rarity="mythic"],
 .brawler-card.rarity-mythic {
-  --hero-bg: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 50%, #fecdd3 100%);
+  --hero-bg: linear-gradient(135deg, #ffe4e6 0%, #fecdd3 50%, #fda4af 100%);
   --hero-border: #fecdd3;
   --hero-shadow-edge: #fda4af;
   --hero-ink: #9f1239;
@@ -822,7 +822,7 @@ a { color: inherit; }
 #detail-view[data-rarity="legendary"],
 .detail-hero[data-rarity="legendary"],
 .brawler-card.rarity-legendary {
-  --hero-bg: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+  --hero-bg: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%);
   --hero-border: #fef08a;
   --hero-shadow-edge: #fde047;
   --hero-ink: #78350f;
@@ -832,7 +832,7 @@ a { color: inherit; }
 #detail-view[data-rarity="ultra_legendary"], #detail-view[data-rarity="ultra-legendary"], #detail-view[data-rarity="ultra"],
 .detail-hero[data-rarity="ultra_legendary"], .detail-hero[data-rarity="ultra-legendary"], .detail-hero[data-rarity="ultra"],
 .brawler-card.rarity-ultra-legendary, .brawler-card.rarity-ultra_legendary, .brawler-card.rarity-ultra {
-  --hero-bg: linear-gradient(135deg, #faf5ff 0%, #ede9fe 50%, #ddd6fe 100%);
+  --hero-bg: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 50%, #c4b5fd 100%);
   --hero-border: #e9d5ff;
   --hero-shadow-edge: #c084fc;
   --hero-ink: #581c87;
@@ -840,10 +840,10 @@ a { color: inherit; }
   --hero-glow: rgba(168, 85, 247, 0.2);
 }
 
-/* One exact surface for the guide and the complete roster card. Transparent
-   card sections keep the gradient/pattern continuous behind the loadout. */
+/* Match the guide and portrait header, while preserving the original
+   colored-header / white-loadout / blue-footer roster partition. */
 #detail-view .panel.detail-hero,
-.brawler-card {
+.brawler-visual {
   background:
     radial-gradient(ellipse 520px 420px at 15% 45%, var(--hero-glow, rgba(56, 189, 248, 0.16)) 0%, transparent 70%),
     radial-gradient(circle 350px at 85% 25%, rgba(255, 255, 255, 0.45) 0%, transparent 65%),
