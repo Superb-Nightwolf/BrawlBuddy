@@ -1602,7 +1602,7 @@ function addImageWithFallback(holder, brawler, className) {
   fallback.textContent = initials(brawler.name);
   const image = document.createElement('img');
   image.className = className;
-  const primarySrc = ([16000108, 16000109].includes(brawler.id))
+  const primarySrc = ([16000108, 16000109, 16000110].includes(brawler.id))
     ? brawlerImage(brawler, true)
     : `https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png`;
   image.src = primarySrc;
@@ -2044,10 +2044,12 @@ function scheduleBrawlerNameFit(root = document) {
 }
 
 const BRAWLER_CLASSES_BY_NAME = {
+  "VINCE": "Damage Dealer",
   "PENNY": "Controller", "TARA": "Damage Dealer", "FRANK": "Tank", "GENE": "Controller", "TICK": "Artillery", "LEON": "Assassin", "ROSA": "Tank", "CARL": "Damage Dealer", "BIBI": "Tank", "8-BIT": "Damage Dealer", "SANDY": "Controller", "BEA": "Marksman", "EMZ": "Controller", "MR. P": "Controller", "MAX": "Support", "JACKY": "Tank", "GALE": "Controller", "NANI": "Marksman", "SPROUT": "Artillery", "COLETTE": "Damage Dealer", "AMBER": "Controller", "LOU": "Controller", "SURGE": "Damage Dealer", "SHELLY": "Damage Dealer", "COLT": "Damage Dealer", "BULL": "Tank", "BROCK": "Marksman", "RICO": "Damage Dealer", "SPIKE": "Damage Dealer", "BARLEY": "Artillery", "JESSIE": "Controller", "NITA": "Damage Dealer", "DYNAMIKE": "Artillery", "EL PRIMO": "Tank", "MORTIS": "Assassin", "CROW": "Assassin", "POCO": "Support", "BO": "Controller", "PIPER": "Marksman", "PAM": "Support", "DARRYL": "Tank", "BYRON": "Support", "EDGAR": "Assassin", "RUFFS": "Support", "STU": "Assassin", "BELLE": "Marksman", "SQUEAK": "Controller", "GROM": "Artillery", "BUZZ": "Assassin", "GRIFF": "Controller", "ASH": "Tank", "MEG": "Tank", "LOLA": "Damage Dealer", "FANG": "Assassin", "EVE": "Damage Dealer", "JANET": "Marksman", "BONNIE": "Marksman", "OTIS": "Controller", "SAM": "Tank", "GUS": "Support", "BUSTER": "Tank", "CHESTER": "Damage Dealer", "GRAY": "Support", "MANDY": "Marksman", "R-T": "Damage Dealer", "WILLOW": "Controller", "MAISIE": "Marksman", "HANK": "Tank", "CORDELIUS": "Assassin", "DOUG": "Support", "PEARL": "Damage Dealer", "CHUCK": "Damage Dealer", "CHARLIE": "Controller", "MICO": "Assassin", "KIT": "Support", "LARRY & LAWRIE": "Artillery", "MELODIE": "Assassin", "ANGELO": "Marksman", "DRACO": "Tank", "LILY": "Assassin", "BERRY": "Support", "CLANCY": "Damage Dealer", "MOE": "Damage Dealer", "KENJI": "Assassin", "SHADE": "Assassin", "JUJU": "Artillery", "MEEPLE": "Controller", "OLLIE": "Assassin", "LUMI": "Support", "FINX": "Controller", "JAE-YONG": "Assassin", "KAZE": "Assassin", "ALLI": "Tank", "TRUNK": "Tank", "MINA": "Marksman", "ZIGGY": "Controller", "PIERCE": "Marksman", "GIGI": "Support", "GLOWY": "Controller", "SIRIUS": "Damage Dealer", "NAJIA": "Assassin", "DAMIAN": "Damage Dealer", "STARR NOVA": "Controller", "BOLT": "Marksman", "NORI": "Assassin", "WENDY": "Damage Dealer", "COSMO": "Controller"
 };
 
 const BRAWLER_RARITIES_BY_NAME = {
+  "VINCE": "Mythic",
   "SHELLY": "Common", "COLT": "Rare", "BULL": "Rare", "BROCK": "Rare", "RICO": "Super Rare", "SPIKE": "Legendary", "BARLEY": "Rare", "JESSIE": "Super Rare", "NITA": "Rare", "DYNAMIKE": "Super Rare", "EL PRIMO": "Rare", "MORTIS": "Mythic", "CROW": "Legendary", "POCO": "Rare", "BO": "Epic", "PIPER": "Epic", "PAM": "Epic", "TARA": "Mythic", "DARRYL": "Super Rare", "PENNY": "Super Rare", "FRANK": "Epic", "GENE": "Mythic", "TICK": "Super Rare", "LEON": "Legendary", "ROSA": "Rare", "CARL": "Super Rare", "BIBI": "Epic", "8-BIT": "Super Rare", "SANDY": "Legendary", "BEA": "Epic", "EMZ": "Epic", "MR. P": "Mythic", "MAX": "Mythic", "JACKY": "Super Rare", "GALE": "Epic", "NANI": "Epic", "SPROUT": "Mythic", "SURGE": "Legendary", "COLETTE": "Epic", "AMBER": "Legendary", "LOU": "Mythic", "BYRON": "Mythic", "EDGAR": "Epic", "RUFFS": "Mythic", "STU": "Epic", "BELLE": "Epic", "SQUEAK": "Mythic", "GROM": "Epic", "BUZZ": "Mythic", "GRIFF": "Epic", "ASH": "Epic", "MEG": "Legendary", "LOLA": "Epic", "FANG": "Mythic", "EVE": "Mythic", "JANET": "Mythic", "BONNIE": "Epic", "OTIS": "Mythic", "SAM": "Epic", "GUS": "Super Rare", "BUSTER": "Mythic", "CHESTER": "Legendary", "GRAY": "Mythic", "MANDY": "Epic", "R-T": "Mythic", "WILLOW": "Mythic", "MAISIE": "Epic", "HANK": "Epic", "CORDELIUS": "Legendary", "DOUG": "Mythic", "PEARL": "Epic", "CHUCK": "Mythic", "CHARLIE": "Mythic", "MICO": "Mythic", "KIT": "Legendary", "LARRY & LAWRIE": "Epic", "MELODIE": "Mythic", "ANGELO": "Epic", "DRACO": "Legendary", "LILY": "Mythic", "BERRY": "Epic", "CLANCY": "Mythic", "MOE": "Mythic", "KENJI": "Legendary", "SHADE": "Epic", "JUJU": "Mythic", "MEEPLE": "Epic", "OLLIE": "Mythic", "LUMI": "Mythic", "FINX": "Mythic", "JAE-YONG": "Mythic", "KAZE": "Ultra Legendary", "ALLI": "Mythic", "TRUNK": "Epic", "MINA": "Mythic", "ZIGGY": "Mythic", "PIERCE": "Legendary", "GIGI": "Mythic", "GLOWY": "Mythic", "SIRIUS": "Ultra Legendary", "NAJIA": "Mythic", "DAMIAN": "Mythic", "STARR NOVA": "Mythic", "BOLT": "Epic", "NORI": "Legendary", "WENDY": "Mythic", "COSMO": "Mythic"
 };
 
@@ -2304,7 +2306,7 @@ function renderBrawlers() {
   const equipmentFilter = $('equipment-filter')?.value || state.equipment || 'all';
   state.equipment = equipmentFilter;
 
-  const totalCatalogCount = (state.brawlers || []).length || 107;
+  const totalCatalogCount = (state.brawlers || []).length || 108;
 
   // Determine category-scoped brawlers (level & equipment filter, before search query)
   const categoryScopedBrawlers = (state.brawlers || []).filter((brawler) => {
@@ -2522,6 +2524,12 @@ function renderGuideProfile(guide, brawler) {
   const hasProfile = Array.isArray(guide.max_stats) && guide.max_stats.length > 0;
   panel.classList.toggle('hidden', !hasProfile);
   if (!hasProfile) return;
+
+  const verificationNote = $('guide-verification-note');
+  if (verificationNote) {
+    verificationNote.textContent = guide.release_status ? guide.source_note || '' : '';
+    verificationNote.classList.toggle('hidden', !verificationNote.textContent);
+  }
 
   // Stats will be rendered by renderPowerLadder after it determines the default level.
   // But if guide-only (no brawler context), render at max (level 11) right away.
@@ -2820,10 +2828,8 @@ function createMatchupCard(item, category) {
   img.className = 'matchup-avatar-img';
   img.loading = 'lazy';
   img.alt = item.name;
-  img.src = ([16000108, 16000109].includes(item.id))
-    ? (item.id === 16000108
-      ? '/assets/brawlers/thumbs/16000108.png?v=2'
-      : '/assets/brawlers/thumbs/16000109.webp?v=4')
+  img.src = ([16000108, 16000109, 16000110].includes(item.id))
+    ? brawlerImage(item, true)
     : `https://cdn.brawlify.com/brawlers/borders/${item.id}.png`;
   let fallbackStep = 0;
   img.onerror = () => {
@@ -3041,7 +3047,7 @@ function renderDetailArtwork(brawler) {
   image.decoding = 'async';
   image.src = brawler.id === 16000038 && !brawler.owned
     ? '/assets/surge-guide-art.png'
-    : [16000107, 16000108, 16000109].includes(brawler.id)
+    : [16000107, 16000108, 16000109, 16000110].includes(brawler.id)
       ? `/assets/brawlers/generated/${brawler.id}.png`
       : `/assets/brawlers/${brawler.id}.png`;
   image.onerror = () => {
@@ -3136,9 +3142,10 @@ function renderPrestigeProgress(brawler) {
 }
 
 /* ==========================================================================
-   BRAWLER COMBAT KIT STATS (Ammo & Super Charge Rates for all 107 Brawlers)
+   BRAWLER COMBAT KIT STATS (Ammo & Super Charge Rates for all 108 Brawlers)
    ========================================================================== */
 const BRAWLER_COMBAT_KITS = {
+  'VINCE': { ammo: '3 Slots · 1 coffee shot / attack', hits: 'Charge rate not independently verified' },
   'SHELLY': { ammo: '3 Slots · 5 pellets / attack', hits: '11 pellets (~2-3 attacks)' },
   'COLT': { ammo: '3 Slots · 6 bullets / attack', hits: '12 bullets (2 full bursts)' },
   'BULL': { ammo: '3 Slots · 5 pellets / attack', hits: '8 pellets (2 full attacks)' },
@@ -3329,7 +3336,7 @@ async function renderDetail() {
 
   const portraitEl = $('detail-portrait-icon');
   if (portraitEl) {
-    portraitEl.src = ([16000108, 16000109].includes(brawler.id))
+    portraitEl.src = ([16000108, 16000109, 16000110].includes(brawler.id))
       ? brawlerImage(brawler, true)
       : `https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png`;
     portraitEl.alt = `${brawler.name} official portrait`;
@@ -3404,6 +3411,7 @@ async function renderDetail() {
     const brawlerName = guide?.name || brawler?.name || 'this brawler';
 
     const sourceItems = [
+      ...(guide.sources || []),
       { label: 'Brawl Stars Gears', url: 'https://support.supercell.com/brawl-stars/en/articles/gears-8.html' },
       { label: 'Brawl Stars Gadgets', url: 'https://support.supercell.com/brawl-stars/en/articles/gadgets-4.html' },
       { label: 'Brawl Stars Star Powers', url: 'https://support.supercell.com/brawl-stars/en/articles/star-powers-3.html' },

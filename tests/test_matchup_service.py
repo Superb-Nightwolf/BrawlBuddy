@@ -19,10 +19,17 @@ def test_brawler_matchups_catalog():
     with data_path.open("r", encoding="utf-8") as f:
         matchups = json.load(f)
 
-    assert len(matchups) == 107, "All 107 catalog brawlers must have matchup profiles"
+    assert len(matchups) == 108, "All 108 catalog brawlers must have matchup profiles"
 
     for brawler_id, data in matchups.items():
         assert "brawler_id" in data
+        if brawler_id == "16000110":
+            assert data["methodology"]["status"] == "unavailable"
+            assert data["methodology"]["sample_size"] is None
+            assert data["strong_against"] == []
+            assert data["struggles_against"] == []
+            assert data["best_alongside"] == []
+            continue
         minimum = 3 if brawler_id == "16000109" else 6
         assert "strong_against" in data and len(data["strong_against"]) >= minimum
         assert "struggles_against" in data and len(data["struggles_against"]) >= minimum

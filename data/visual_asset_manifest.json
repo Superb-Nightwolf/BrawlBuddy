@@ -4392,6 +4392,28 @@
           "local_url": null
         }
       }
+    },
+    "16000110": {
+      "name": "VINCE",
+      "hypercharge": {
+        "released": false,
+        "local_url": null
+      },
+      "buffies": {
+        "released": false,
+        "gadget": {
+          "released": false,
+          "local_url": null
+        },
+        "star_power": {
+          "released": false,
+          "local_url": null
+        },
+        "hypercharge": {
+          "released": false,
+          "local_url": null
+        }
+      }
     }
   },
   "gears": {
@@ -4548,8 +4570,8 @@
       ]
     },
     "cross_validation": "https://api.brawlapi.com/v1/brawlers",
-    "gadgets": 214,
-    "star_powers": 214,
+    "gadgets": 216,
+    "star_powers": 216,
     "gears": 15,
     "duplicate_content_groups": [
       [

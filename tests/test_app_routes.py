@@ -137,15 +137,15 @@ def test_demo_contains_clickable_surge_account_progress() -> None:
     assert surge["star_powers"][0]["name"] == "TO THE MAX!"
 
 
-def test_full_catalog_has_107_unique_brawlers_and_local_artwork() -> None:
+def test_full_catalog_has_108_unique_brawlers_and_local_artwork() -> None:
     with TestClient(app) as client:
         payload = client.get("/api/brawlers/catalog").json()
 
     brawlers = payload["list"]
-    assert payload["count"] == 107
-    assert len(brawlers) == 107
-    assert len({brawler["id"] for brawler in brawlers}) == 107
-    assert len({brawler["name"] for brawler in brawlers}) == 107
+    assert payload["count"] == 108
+    assert len(brawlers) == 108
+    assert len({brawler["id"] for brawler in brawlers}) == 108
+    assert len({brawler["name"] for brawler in brawlers}) == 108
 
     artwork_dir = Path("app/ui/assets/brawlers")
     missing = [brawler["name"] for brawler in brawlers if not (artwork_dir / f"{brawler['id']}.png").is_file()]
@@ -203,8 +203,8 @@ def test_every_recommended_ability_and_icon_matches_its_brawler() -> None:
                     "source_url": expected_source_url,
                 }
 
-    assert len(seen_ids) == 428
-    assert len(seen_names) == 428
+    assert len(seen_ids) == 432
+    assert len(seen_names) == 432
 
 
 def test_penny_and_tara_use_distinct_canonical_ids() -> None:
@@ -219,7 +219,7 @@ def test_penny_and_tara_use_distinct_canonical_ids() -> None:
     assert penny["id"] != tara["id"]
 
 
-def test_all_107_brawlers_have_complete_curated_guides() -> None:
+def test_all_108_brawlers_have_complete_curated_guides() -> None:
     with TestClient(app) as client:
         catalog = client.get("/api/brawlers/catalog").json()["list"]
         for brawler in catalog:
@@ -299,7 +299,7 @@ def test_current_gear_roster_is_consistent_for_every_brawler() -> None:
 
     for guide in guides:
         assert guide["gears"] == universal + special.get(guide["name"], []), guide["name"]
-    assert sum(len(guide["gears"]) == 6 for guide in guides) == 87
+    assert sum(len(guide["gears"]) == 6 for guide in guides) == 88
     assert sum(len(guide["gears"]) == 7 for guide in guides) == 18
     assert sum(len(guide["gears"]) == 8 for guide in guides) == 2
 
@@ -309,7 +309,7 @@ def test_data_source_metadata_is_current_and_cross_validated() -> None:
         payload = client.get("/api/data-sources").json()
 
     assert payload["checked_at"] >= "2026-08-31"
-    assert payload["sync"]["guides"] == 107
+    assert payload["sync"]["guides"] == 108
     assert payload["sync"]["wiki_pages_failed"] == 0
     urls = {source["url"] for source in payload["sources"]}
     assert "https://support.supercell.com/brawl-stars/en/articles/gears-8.html" in urls

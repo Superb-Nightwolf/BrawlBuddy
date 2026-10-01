@@ -20208,5 +20208,18 @@
       "checked_at": "2026-09-11",
       "sample_size": "Not published by source"
     }
+  },
+  "16000110": {
+    "brawler_id": 16000110,
+    "brawler_name": "VINCE",
+    "strong_against": [],
+    "struggles_against": [],
+    "best_alongside": [],
+    "methodology": {
+      "source": "NO VERIFIED MATCHUP SAMPLE",
+      "checked_at": "2026-10-01",
+      "sample_size": null,
+      "status": "unavailable"
+    }
   }
 }

@@ -353,7 +353,7 @@ def main() -> None:
                 "buffy_brawlers": len(client_buffy_names),
                 "gadget_reworks": len(gadget_reworks),
                 "wiki_name_anomalies_rejected": wiki_name_anomalies,
-                "future_brawlers_not_published": ["VINCE"],
+                "future_brawlers_not_published": sorted(set(overcharges) - guide_names),
             },
             indent=2,
         )

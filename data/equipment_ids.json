@@ -3422,5 +3422,37 @@
     "brawler_name": "COSMO",
     "image_url": "/assets/equipment/star-powers/23001443.png",
     "source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=starpower_cosmo_2"
+  },
+  "HOT COFFEE": {
+    "id": 23001452,
+    "type": "gadget",
+    "brawler_id": "16000110",
+    "brawler_name": "VINCE",
+    "image_url": "/assets/equipment/gadgets/23001452.png",
+    "source_url": "https://cdn.brawlify.com/gadgets/regular/23001452.png"
+  },
+  "METAMOTHOSIS": {
+    "id": 23001453,
+    "type": "gadget",
+    "brawler_id": "16000110",
+    "brawler_name": "VINCE",
+    "image_url": "/assets/equipment/gadgets/23001453.png",
+    "source_url": "https://cdn.brawlify.com/gadgets/regular/23001453.png"
+  },
+  "COME TO PAPA": {
+    "id": 23001450,
+    "type": "star_power",
+    "brawler_id": "16000110",
+    "brawler_name": "VINCE",
+    "image_url": "/assets/equipment/star-powers/23001450.png",
+    "source_url": "https://cdn.brawlify.com/star-powers/regular/23001450.png"
+  },
+  "BUG BANDAGE": {
+    "id": 23001451,
+    "type": "star_power",
+    "brawler_id": "16000110",
+    "brawler_name": "VINCE",
+    "image_url": "/assets/equipment/star-powers/23001451.png",
+    "source_url": "https://cdn.brawlify.com/star-powers/regular/23001451.png"
   }
 }

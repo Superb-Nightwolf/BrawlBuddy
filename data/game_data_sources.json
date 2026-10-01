@@ -34,7 +34,7 @@
     }
   ],
   "sync": {
-    "guides": 107,
+    "guides": 108,
     "wiki_pages_loaded": 107,
     "wiki_pages_failed": 0,
     "base_ability_descriptions": 423,
@@ -42,5 +42,32 @@
     "buffie_descriptions": 135,
     "hypercharge_descriptions": 106
   },
-  "client_asset_version": "69.230"
+  "client_asset_version": "69.230",
+  "brawler_updates": {
+    "16000110": {
+      "checked_at": "2026-10-01",
+      "name": "VINCE",
+      "sources": [
+        {
+          "label": "Brawl Stars Wiki - Vince",
+          "url": "https://brawlstars.fandom.com/wiki/Vince"
+        },
+        {
+          "label": "Supercell - August 2026 release notes",
+          "url": "https://supercell.com/en/games/brawlstars/blog/release-notes/release-notes-august-2026/"
+        },
+        {
+          "label": "BrawlAPI - Vince IDs and release flag",
+          "url": "https://api.brawlapi.com/v1/brawlers/16000110"
+        },
+        {
+          "label": "Client data snapshot 69.230 (community mirror)",
+          "url": "https://raw.githubusercontent.com/tailsjs/brawl-stars-assets/master/69.230/csv_logic/skills.csv"
+        }
+      ],
+      "scope": "Vince identity, abilities, stats, equipment and artwork only; older brawlers were not reverified.",
+      "unlock_date_confirmed": false,
+      "client_asset_version": "69.230"
+    }
+  }
 }

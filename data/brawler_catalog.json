@@ -640,5 +640,11 @@
     "name": "COSMO",
     "rarity": "Mythic",
     "class": "Controller"
+  },
+  {
+    "id": 16000110,
+    "name": "VINCE",
+    "rarity": "Mythic",
+    "class": "Damage Dealer"
   }
 ]

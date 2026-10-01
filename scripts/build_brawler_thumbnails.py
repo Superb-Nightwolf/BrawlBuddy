@@ -15,9 +15,11 @@ THUMBNAIL_SIZE = (480, 480)
 # trim its left and right sides while preserving the complete portrait height.
 PORTRAIT_CROPS = {
     "16000109": (542, 0, 1652, 1110),
+    "16000110": (0, 0, 1600, 1600),
 }
 PORTRAIT_INSETS = {
     "16000109": 28,
+    "16000110": 28,
 }
 
 

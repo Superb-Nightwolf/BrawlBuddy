@@ -154,7 +154,7 @@ def test_all_equipment_and_gear_icons_are_local_valid_pngs() -> None:
                 _png_dimensions(path)
                 paths.add(path)
 
-    assert len(paths) == 428
+    assert len(paths) == 432
     assert len(manifest["gears"]) == 15
     for gear in manifest["gears"].values():
         path = UI_DIR / gear["local_url"].lstrip("/")
@@ -283,7 +283,7 @@ def test_cosmo_has_centered_portrait_and_separate_generated_hero_art() -> None:
     assert hero.headers["content-type"] == "image/png"
 
 
-def test_september_cosmo_release_is_published_without_october_brawler() -> None:
+def test_september_and_october_catalog_brawlers_are_published() -> None:
     guides = _load("brawler_guides.json")
     equipment = _load("equipment_ids.json")
     catalog = _load("brawler_catalog.json")
@@ -306,4 +306,4 @@ def test_september_cosmo_release_is_published_without_october_brawler() -> None:
 
     catalog_names = {item["name"] for item in catalog}
     assert "COSMO" in catalog_names
-    assert "VINCE" not in catalog_names
+    assert "VINCE" in catalog_names
