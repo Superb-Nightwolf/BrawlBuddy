@@ -359,13 +359,16 @@ a { color: inherit; }
 .brawler-panel {
   padding: 24px;
   margin-top: 20px;
+  background-color: #edf5ff;
   background-image:
-    repeating-conic-gradient(from 0deg at 50% 50%, rgba(37, 99, 235, .13) 0 7deg, transparent 7deg 15deg),
-    linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
-  background-size: calc(100vw - 244px) 100vh, 100% 100%;
-  background-position: right center, center;
-  background-repeat: no-repeat;
-  background-attachment: fixed, scroll;
+    radial-gradient(circle, rgba(70, 117, 179, .12) 1px, transparent 1.5px),
+    radial-gradient(ellipse at top left, rgba(113, 169, 255, .17), transparent 72%),
+    radial-gradient(ellipse at top right, rgba(94, 210, 239, .14), transparent 72%),
+    linear-gradient(180deg, #f5f9ff 0%, #eaf2ff 100%);
+  background-size: 20px 20px, 680px 440px, 520px 360px, 100% 100%;
+  background-position: 0 0, left top, right top, center;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-attachment: scroll;
 }
 .collection-toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
 .search-box { flex: 1; min-width: 220px; height: 44px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border: 2px solid var(--line); border-radius: 13px; background: #f8fbff; transition: border-color .15s ease, box-shadow .15s ease; }
