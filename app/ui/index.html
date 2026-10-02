@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=547">
+  <link rel="stylesheet" href="/assets/styles.css?v=548">
 </head>
 <body>
   <div class="app-shell">
@@ -859,7 +859,7 @@
                 </div>
               </div>
               <div class="readiness-total readiness-total-compact">
-                <h3 data-readiness-total-title>TOTAL TO MAX READY</h3>
+                <div class="readiness-total-heading"><h3 data-readiness-total-title>TOTAL TO MAX READY</h3></div>
                 <h4 class="readiness-route-title readiness-route-label hidden" data-readiness-direct-route>Direct Gems route</h4>
                 <div class="readiness-total-grid" id="readiness-overview-totals"></div>
                 <div class="readiness-route-comparison hidden" data-readiness-route-comparison></div>
@@ -886,7 +886,13 @@
             </div>
             <div class="readiness-buffie-section">
               <div class="readiness-buffie-heading"><h3>Buffie progress</h3><strong id="readiness-buffie-count">—</strong></div>
-              <div id="readiness-buffie-list" class="readiness-buffie-list"></div>
+              <div class="readiness-table-wrap">
+                <table class="readiness-table readiness-buffie-table">
+                  <caption class="sr-only">Gameplay Buffie ownership and direct Gem requirements</caption>
+                  <thead><tr><th scope="col">Requirement</th><th scope="col">Status</th><th scope="col">Resource needed</th></tr></thead>
+                  <tbody id="readiness-buffie-list"></tbody>
+                </table>
+              </div>
               <div id="readiness-direct-card" class="readiness-direct-card">
                 <span>GUARANTEED ACQUISITION</span><h4>Direct Gems</h4>
                 <strong id="readiness-direct-gems">—</strong><p id="readiness-direct-note"></p>
@@ -910,11 +916,10 @@
             </div>
           </div>
           <div class="readiness-total">
-            <h3 data-readiness-total-title>TOTAL TO MAX READY</h3>
+            <div class="readiness-total-heading"><h3 data-readiness-total-title>TOTAL TO MAX READY</h3></div>
             <h4 class="readiness-route-title readiness-route-label hidden" data-readiness-direct-route>Direct Gems route</h4>
             <div id="readiness-plan-totals" class="readiness-total-grid"></div>
             <div class="readiness-route-comparison hidden" data-readiness-route-comparison></div>
-            <p class="readiness-total-note">Power upgrades + missing recommended equipment + direct Gems for gameplay Buffies.</p>
           </div>
         </section>
         <section id="guide-profile-panel" class="panel guide-profile-panel hidden">
@@ -1271,7 +1276,7 @@
 
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
-  <script src="/assets/readiness.js?v=18" defer></script>
+  <script src="/assets/readiness.js?v=19" defer></script>
   <script src="/assets/app.js?v=121" defer></script>
 </body>
 </html>

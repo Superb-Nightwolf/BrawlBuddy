@@ -158,6 +158,7 @@ class ReadinessService:
                      "buffies": {"gadget": False, "starPower": False, "hyperCharge": False}}
         missing: dict[str, Any] = {"gadget": False, "starPower": False, "gears": [], "hypercharge": False, "buffies": []}
         totals = {"powerPoints": 0, "coins": 0, "gems": 0}
+        subtotals = {category: {**totals, "gemsEstimated": False} for category in ("power", "build", "buffies")}
         costs_complete = True
 
         def add_row(key: str, category: str, label: str, item_name: str, item_id: int | None,
@@ -169,6 +170,8 @@ class ReadinessService:
                 actual_cost.update(cost)
                 for currency in totals:
                     totals[currency] += actual_cost[currency]
+                    subtotals[category][currency] += actual_cost[currency]
+                subtotals[category]["gemsEstimated"] |= estimated
             row = {"key": key, "category": category, "label": label, "name": item_name,
                    "id": item_id, "status": status, "owned": owned, "available": available,
                    "unlockPower": unlock, "cost": actual_cost, "gemsEstimated": estimated and not owned,
@@ -315,6 +318,7 @@ class ReadinessService:
                        "buffiesOwned": buffies_owned, "buffiesTotal": len(buffie_rows)},
             "owned": ownership, "missing": missing, "breakdown": rows,
             "costs": {"guaranteed": {**totals, "gemsEstimated": gems_estimated},
+                      "subtotals": subtotals,
                       "buffieDirect": {"missing": len(missing["buffies"]), "gems": buffie_gems, "estimated": gems_estimated},
                       "buffieClawAlternative": claw},
             "weights": weights, "normalizationWeight": denominator,

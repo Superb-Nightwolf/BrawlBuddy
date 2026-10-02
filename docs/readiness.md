@@ -10,6 +10,13 @@ budget, and Claw estimates consume that result. No economy calculations are
 duplicated in the browser. Combat Kit and Readiness keep equal desktop widths;
 the full breakdown sits underneath, with a stacked layout on phones.
 
+The server returns Power, recommended-build, and gameplay-Buffie subtotals in
+`costs.subtotals`. Both requirements tables share the same item, status, and
+resource layout. The compact Readiness totals omit the repeated Claw trio;
+the full planning comparison retains its portraits and ownership icons.
+Totals explanations appear in their information buttons. The Claw alternative
+stays expanded, including an availability message when no pulls apply.
+
 The five category circles show Power Level, Gears, Gadget + Star Power,
 Hypercharge, and Buffies in that order. `categoryProgress` provides separate
 owned counts and percentages for Gears, the recommended Gadget/Star Power

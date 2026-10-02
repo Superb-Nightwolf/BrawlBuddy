@@ -52,12 +52,12 @@ function readinessSetRing(id, value, label, valueId) {
   setText(valueId, value == null ? '—' : `${readinessNumber(value)}%`);
 }
 
-function readinessCostContent(cost, estimated = false) {
+function readinessCostContent(cost, estimated = false, currencies = null) {
   const holder = readinessElement('span', 'readiness-row-cost');
   const labels = { powerPoints: 'PP', coins: 'Coins', gems: 'Gems' };
-  for (const currency of ['powerPoints', 'coins', 'gems']) {
-    if (!(cost[currency] > 0)) continue;
-    const part = readinessElement('span', 'readiness-cost-part');
+  for (const currency of currencies || ['powerPoints', 'coins', 'gems']) {
+    if (!currencies && !(cost[currency] > 0)) continue;
+    const part = readinessElement('span', `readiness-cost-part cost-${currency}`);
     part.append(readinessCurrencyIcon(currency), readinessElement('span', '',
       `${readinessNumber(cost[currency])} ${labels[currency]}`));
     if (currency === 'gems' && estimated) part.title = 'Uses the configured reference Gem price. See readiness information for price details.';
@@ -108,10 +108,34 @@ function readinessRenderTotals(result) {
       holder.append(card);
     }
   }
-  document.querySelectorAll('[data-readiness-total-title]').forEach((title) => {
+  document.querySelectorAll('[data-readiness-total-title]').forEach((title, index) => {
     title.textContent = result.costsComplete ? 'TOTAL TO MAX READY' : 'KNOWN RESOURCE REQUIREMENTS';
+    if (!title.parentElement.querySelector('.readiness-info-wrap')) {
+      const info = readinessInfo('Total resource requirements', `readiness-total-info-${index}`);
+      info.querySelector('.readiness-info-tooltip').append(readinessElement('p', '', 'Power upgrades + missing recommended equipment + direct Gems for gameplay Buffies.'));
+      title.parentElement.append(info);
+      readinessBindInfo(info);
+    }
   });
   readinessRenderRoutes(result);
+}
+
+function readinessInfo(label, id) {
+  const wrap = readinessElement('div', 'matchups-info-wrap readiness-info-wrap');
+  const button = readinessElement('button', 'matchups-info-btn');
+  button.type = 'button';
+  button.setAttribute('aria-label', label);
+  button.setAttribute('aria-controls', id);
+  button.setAttribute('aria-expanded', 'false');
+  const icon = readinessElement('span', 'matchups-info-icon', 'i');
+  icon.setAttribute('aria-hidden', 'true');
+  button.append(icon);
+  const tooltip = readinessElement('div', 'matchups-info-tooltip readiness-info-tooltip');
+  tooltip.id = id;
+  tooltip.setAttribute('role', 'tooltip');
+  tooltip.append(readinessElement('h3', '', label));
+  wrap.append(button, tooltip);
+  return wrap;
 }
 
 function readinessRenderRoutes(result) {
@@ -167,7 +191,7 @@ function readinessRenderRoutes(result) {
       readinessElement('p', '', `${readinessProbability(claw.startingTargetProbability)}% chance of a needed Buffie next pull`),
       readinessElement('p', 'readiness-route-note', `Totals include Power upgrades and the recommended build. ${poolNote} Odds assume every missing Buffie is in this pool and rewards are equally likely.`));
     holder.append(divider, heading);
-    if (claw.group) holder.append(readinessClawGroup(claw.group));
+    if (claw.group && !holder.closest('.readiness-total-compact')) holder.append(readinessClawGroup(claw.group));
     holder.append(scenarios);
     readinessBindInfo(infoWrap);
   });
@@ -208,6 +232,42 @@ function readinessClawGroup(group) {
   return holder;
 }
 
+function readinessRequirementRow(item, result) {
+  const row = readinessElement('tr', `readiness-requirement status-${item.status}`);
+  const label = readinessElement('th');
+  label.scope = 'row';
+  const content = readinessElement('div', 'readiness-requirement-copy');
+  const text = readinessElement('div');
+  text.append(readinessElement('strong', '', item.category === 'power' ? item.label : item.name));
+  if (item.category !== 'buffies' || item.note) {
+    text.append(readinessElement('small', '', item.note || (item.category === 'power' ? 'Power upgrade' : item.label)));
+  }
+  if (item.available && item.unlockPower > result.currentPower && item.category !== 'power') {
+    text.append(readinessElement('small', 'readiness-unlock-note', `Usable at Power ${item.unlockPower}`));
+  }
+  content.append(readinessItemIcon(item), text);
+  label.append(content);
+  const status = readinessElement('td');
+  status.append(readinessStatus(item));
+  const cost = readinessElement('td');
+  cost.append(readinessCostContent(item.cost, item.gemsEstimated));
+  row.append(label, status, cost);
+  return row;
+}
+
+function readinessSubtotalRow(category, heading, result) {
+  const subtotal = result.costs.subtotals[category];
+  const row = readinessElement('tr', 'readiness-subtotal');
+  const label = readinessElement('th', '', `${heading} subtotal`);
+  label.colSpan = 2;
+  label.scope = 'row';
+  const cost = readinessElement('td');
+  cost.append(readinessCostContent(subtotal, subtotal.gemsEstimated,
+    category === 'power' ? ['powerPoints', 'coins'] : category === 'build' ? ['coins'] : ['gems']));
+  row.append(label, cost);
+  return row;
+}
+
 function readinessRenderBreakdown(result) {
   const body = $('readiness-breakdown-body');
   if (!body) return;
@@ -230,26 +290,8 @@ function readinessRenderBreakdown(result) {
       row.append(empty);
       body.append(row);
     }
-    for (const item of rows) {
-      const row = readinessElement('tr', `readiness-requirement status-${item.status}`);
-      const label = readinessElement('th', '', null);
-      label.scope = 'row';
-      const content = readinessElement('div', 'readiness-requirement-copy');
-      const text = readinessElement('div');
-      text.append(readinessElement('strong', '', item.category === 'power' ? item.label : item.name));
-      text.append(readinessElement('small', '', item.note || (item.category === 'power' ? 'Power upgrade' : item.label)));
-      if (item.available && item.unlockPower > result.currentPower && item.category !== 'power') {
-        text.append(readinessElement('small', 'readiness-unlock-note', `Usable at Power ${item.unlockPower}`));
-      }
-      content.append(readinessItemIcon(item), text);
-      label.append(content);
-      const status = readinessElement('td');
-      status.append(readinessStatus(item));
-      const cost = readinessElement('td');
-      cost.append(readinessCostContent(item.cost, item.gemsEstimated));
-      row.append(label, status, cost);
-      body.append(row);
-    }
+    for (const item of rows) body.append(readinessRequirementRow(item, result));
+    body.append(readinessSubtotalRow(category, heading, result));
   }
 }
 
@@ -331,11 +373,16 @@ function readinessRenderResult(result) {
   const buffies = $('readiness-buffie-list');
   buffies.replaceChildren();
   for (const row of result.breakdown.filter((row) => row.category === 'buffies')) {
-    const item = readinessElement('div', 'readiness-buffie-item');
-    item.append(readinessItemIcon(row), readinessElement('strong', '', row.name), readinessStatus(row));
-    buffies.append(item);
+    buffies.append(readinessRequirementRow(row, result));
   }
-  if (!buffies.childElementCount) buffies.append(readinessElement('p', 'readiness-message', 'Gameplay Buffies are not released for this Brawler. They do not reduce readiness.'));
+  if (!buffies.childElementCount) {
+    const row = readinessElement('tr');
+    const cell = readinessElement('td', 'readiness-table-empty', 'Gameplay Buffies are not released for this Brawler. They do not reduce readiness.');
+    cell.colSpan = 3;
+    row.append(cell);
+    buffies.append(row);
+  }
+  buffies.append(readinessSubtotalRow('buffies', 'Gameplay Buffies', result));
   $('readiness-direct-card').classList.toggle('hidden', !result.counts.buffiesTotal);
   const direct = result.costs.buffieDirect;
   $('readiness-direct-gems').replaceChildren(readinessCurrencyIcon('gems'),

@@ -97,6 +97,11 @@ def test_power_8_example_uses_actual_recommended_inventory_and_direct_gems():
                        gears=[{"id": 62000002, "name": "DAMAGE"}], buffies={"gadget": True})
     result = calculate(fixture_service(), player, remainingClawPoolSize=9)
     assert result["costs"]["guaranteed"] == {"powerPoints": 2880, "coins": 13925, "gems": 378, "gemsEstimated": False}
+    assert result["costs"]["subtotals"] == {
+        "power": {"powerPoints": 2880, "coins": 5925, "gems": 0, "gemsEstimated": False},
+        "build": {"powerPoints": 0, "coins": 8000, "gems": 0, "gemsEstimated": False},
+        "buffies": {"powerPoints": 0, "coins": 0, "gems": 378, "gemsEstimated": False},
+    }
     assert result["counts"] == {"buildOwned": 2, "buildTotal": 5, "buffiesOwned": 1, "buffiesTotal": 3}
     assert result["progress"] == {"power": 72.7, "build": 40.0, "buffies": 33.3}
     assert result["categoryProgress"] == {
@@ -157,6 +162,7 @@ def test_owned_stored_items_and_buffies_never_receive_a_second_charge():
     assert maxed["overallProgress"] == 100
     assert maxed["complete"] is True
     assert maxed["costs"]["guaranteed"] == {"coins": 0, "powerPoints": 0, "gems": 0, "gemsEstimated": False}
+    assert all(not any(subtotal.values()) for subtotal in maxed["costs"]["subtotals"].values())
     assert maxed["costs"]["buffieClawAlternative"]["worstCase"]["pulls"] == 0
     assert maxed["costs"]["buffieClawAlternative"]["totalToMaxReady"]["worstCase"] == {"powerPoints": 0, "coins": 0, "gems": 0}
 
@@ -171,6 +177,7 @@ def test_unreleased_hypercharge_and_buffies_are_removed_from_denominator():
     assert result["progress"]["buffies"] is None
     assert result["categoryProgress"]["hypercharge"] == {"owned": 0, "total": 0, "progress": None}
     assert result["costs"]["guaranteed"]["gems"] == 0
+    assert result["costs"]["subtotals"]["buffies"] == {"powerPoints": 0, "coins": 0, "gems": 0, "gemsEstimated": False}
     assert result["missing"]["hypercharge"] is False
     assert result["counts"]["buildTotal"] == 4
 
@@ -226,6 +233,7 @@ def test_missing_category_price_uses_explicit_estimated_fallback():
     del service.config["buffie"]["directGemPricesByCategory"]["gadget"]
     result = calculate(service, inventory(buffies={"star_power": True, "hypercharge": True}))
     assert result["costs"]["buffieDirect"] == {"missing": 1, "gems": 300, "estimated": True}
+    assert result["costs"]["subtotals"]["buffies"] == {"powerPoints": 0, "coins": 0, "gems": 300, "gemsEstimated": True}
 
 
 @pytest.mark.parametrize("size,targets", [(9, 1), (9, 2), (9, 3), (5, 2), (3, 3), (1, 1)])

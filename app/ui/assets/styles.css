@@ -1376,8 +1376,9 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-total-compact .readiness-total-grid { gap: 7px; }
 .readiness-total-compact .readiness-total-item { padding: 10px; }
 .readiness-total-compact .readiness-total-item > strong { font-size: 24px; }
-.readiness-total-note, .readiness-footnote { color: #667994; font-size: 10px; line-height: 1.6; }
-.readiness-total-note { margin: 12px 0 0; }
+.readiness-footnote { color: #667994; font-size: 10px; line-height: 1.6; }
+.readiness-total-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.readiness-total-heading h3 { margin: 0; }
 .readiness-route-title { margin: 0; color: #123b72; font-size: 13px; font-weight: 800; line-height: 1.5; }
 .readiness-route-label { display: flex; align-items: center; min-height: 24px; margin-bottom: 12px; }
 .readiness-route-divider { display: flex; align-items: center; gap: 10px; margin: 18px 0 14px; color: #798bab; font-size: 10px; font-weight: 800; }
@@ -1403,11 +1404,11 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-claw-member-items .buffie-owned img { filter: none; opacity: 1; }
 .readiness-route-badge { padding: 4px 7px; border-radius: 5px; color: #71509d; background: #eae3f8; font-size: 10px; font-weight: 800; }
 .readiness-route-scenarios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
-.readiness-route-scenario { min-width: 0; display: grid; grid-template-rows: auto auto 1fr auto; gap: 8px; padding: 12px 9px; border: 1px solid #d9e4f2; border-radius: 10px; background: #ffffffd9; }
+.readiness-route-scenario { min-width: 0; display: grid; grid-template-rows: auto auto auto auto; align-content: start; gap: 8px; padding: 12px; border: 1px solid #d9e4f2; border-radius: 10px; background: #ffffffd9; }
 .readiness-route-scenario > strong { color: #193862; font-size: 11px; }
 .readiness-route-pulls { color: #60728d; font-size: 10px; }
 .readiness-route-scenario .readiness-row-cost { justify-content: flex-start; flex-direction: column; align-self: start; gap: 7px; font-size: 11px; font-variant-numeric: tabular-nums; }
-.readiness-route-chance { min-height: 4.5em; color: #526581; font-size: 9px; line-height: 1.5; }
+.readiness-route-chance { color: #526581; font-size: 9px; line-height: 1.5; }
 .readiness-route-note { margin: 12px 0 0; color: #667994; font-size: 10px; line-height: 1.6; }
 .readiness-footnote { margin: 12px 0 0; }
 .readiness-planning-panel { margin-top: 24px; padding: 24px; scroll-margin-top: 20px; }
@@ -1416,12 +1417,25 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-breakdown, .readiness-buffie-section { min-width: 0; padding: 20px; background: #ffffffeb; border: 1.5px solid var(--hero-border); border-radius: 16px; }
 .readiness-breakdown h3, .readiness-buffie-heading h3 { margin: 0; color: #213954; font-size: 17px; }
 .readiness-table-wrap { margin-top: 14px; overflow-x: auto; }
-.readiness-table { width: 100%; border-collapse: collapse; text-align: left; }
+.readiness-table { width: 100%; table-layout: fixed; border-collapse: collapse; text-align: left; }
 .readiness-table thead th { padding: 10px 8px; font-size: 9px; text-transform: uppercase; letter-spacing: .5px; color: #77849a; font-weight: 800; }
 .readiness-table th, .readiness-table td { padding: 12px 8px; border-bottom: 1px solid #e6edf6; vertical-align: middle; }
 .readiness-table thead th:last-child { text-align: right; }
+.readiness-table thead th:nth-child(2) { width: 70px; }
+.readiness-table thead th:last-child { width: 202px; }
+.readiness-buffie-table thead th:last-child { width: 104px; }
+.readiness-table .readiness-row-cost { display: grid; grid-template-columns: 82px 104px; gap: 8px; justify-content: end; font-variant-numeric: tabular-nums; }
+.readiness-table .readiness-cost-part { display: grid; grid-template-columns: 19px minmax(0, 1fr); gap: 5px; }
+.readiness-table .readiness-cost-part > span:last-child { text-align: right; }
+.readiness-table .cost-powerPoints { grid-column: 1; }
+.readiness-table .cost-coins, .readiness-table .cost-gems { grid-column: 2; }
+.readiness-buffie-table .readiness-row-cost { grid-template-columns: 88px; }
+.readiness-buffie-table .cost-gems { grid-column: 1; }
 .readiness-section-row th { padding-top: 18px; padding-bottom: 10px; font-size: 12px; color: #2769ae; background: #f5f9ff; }
-.readiness-requirement-copy { display: flex; gap: 9px; align-items: center; min-width: 160px; }
+.readiness-requirement-copy { display: flex; gap: 9px; align-items: center; min-width: 0; }
+.readiness-requirement-copy > div { min-width: 0; overflow-wrap: anywhere; }
+.readiness-subtotal th, .readiness-subtotal td { padding: 12px 8px; background: #eef5ff; border-top: 1px solid #d5e2f3; border-bottom: 1px solid #d5e2f3; color: #254e7d; font-size: 10px; }
+.readiness-subtotal .readiness-row-cost { font-weight: 800; }
 .readiness-requirement-copy strong { display: block; color: #253c5b; font-size: 11px; }
 .readiness-requirement-copy small { display: block; margin-top: 4px; color: #7b8a9e; font-size: 9px; font-weight: 500; }
 .readiness-requirement-copy .readiness-unlock-note { color: #aa7215; }
@@ -1433,10 +1447,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-table-empty { color: #6c809b; font-size: 11px; line-height: 1.5; }
 .readiness-buffie-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .readiness-buffie-heading > strong { color: #ae3680; background: #fff0f8; font-size: 10px; border-radius: 6px; padding: 6px 9px; white-space: nowrap; }
-.readiness-buffie-list { display: grid; gap: 10px; margin: 18px 0; }
-.readiness-buffie-item { display: flex; align-items: center; gap: 9px; }
-.readiness-buffie-item > strong { flex: 1; color: #344763; font-size: 11px; }
-.readiness-direct-card { padding: 18px; border: 1.5px solid #b5ebd7; border-radius: 12px; background: #effcf6; }
+.readiness-direct-card { margin-top: 18px; padding: 18px; border: 1.5px solid #b5ebd7; border-radius: 12px; background: #effcf6; }
 .readiness-direct-card > span { color: #328c6e; font-size: 8px; letter-spacing: .8px; font-weight: 800; }
 .readiness-direct-card h4 { margin: 10px 0 6px; color: #234d40; font-size: 14px; }
 .readiness-direct-card > strong { display: flex; align-items: center; gap: 8px; color: #148460; font-family: var(--font-heading); font-size: 28px; }
@@ -1497,6 +1508,10 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   .readiness-requirement > td { padding: 4px 4px 12px; border: 0; }
   .readiness-section-row, .readiness-section-row th { display: block; }
   .readiness-section-row th { padding: 12px 8px; }
+  .readiness-subtotal { display: grid; grid-template-columns: minmax(0, 1fr); background: #eef5ff; border-bottom: 1px solid #d5e2f3; }
+  .readiness-subtotal th, .readiness-subtotal td { border: 0; background: none; }
+  .readiness-subtotal th { padding-bottom: 4px; }
+  .readiness-subtotal td { padding-top: 4px; }
   .readiness-table-empty { display: block; }
 }
 @media (max-width: 380px) {
