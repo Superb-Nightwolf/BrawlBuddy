@@ -2204,7 +2204,7 @@ a { color: inherit; }
 .guide-sources a:hover { background:var(--blue-dark); color:#fff; border-color:var(--blue-dark); transform:translateY(-1px); }
 
 .guide-profile-panel { margin-top:20px; padding:25px; }
-.guide-profile-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:16px; margin-top:14px; }
+.guide-profile-grid { display:grid; grid-template-columns:minmax(0, 3fr) minmax(0, 2fr); gap:16px; margin-top:14px; }
 .guide-fact-card { min-width:0; padding:20px; border:2px solid var(--line); border-radius:16px; background:#f8fbff; }
 .guide-fact-card h3 { margin:0 0 13px; font-size:16px; }
 .combat-stats { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
