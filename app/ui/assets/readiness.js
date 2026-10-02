@@ -141,6 +141,12 @@ function readinessInfo(label, id) {
 function readinessRenderRoutes(result) {
   const claw = result.costs.buffieClawAlternative;
   const hasTargets = result.isOwned && result.costs.buffieDirect.missing > 0;
+  $('readiness-plan-routes').classList.toggle('has-claw-route', hasTargets);
+  $('readiness-plan-divider').classList.toggle('hidden', !hasTargets);
+  const groupHolder = $('readiness-plan-claw-group');
+  groupHolder.replaceChildren();
+  groupHolder.classList.toggle('hidden', !hasTargets || !claw.group);
+  if (hasTargets && claw.group) groupHolder.append(readinessClawGroup(claw.group));
   document.querySelectorAll('[data-readiness-direct-route]').forEach((label) => {
     label.classList.toggle('hidden', !hasTargets);
   });
@@ -177,7 +183,15 @@ function readinessRenderRoutes(result) {
       const pulls = claw[key].pulls;
       card.append(readinessElement('strong', '', label), readinessElement('small', 'readiness-route-pulls',
         `${key === 'expected' ? '~' : key === 'worstCase' ? 'Up to ' : ''}${readinessNumber(pulls)} ${pulls === 1 ? 'pull' : 'pulls'}`));
-      card.append(readinessCostContent(claw.totalToMaxReady[key]));
+      const costs = readinessElement('div', 'readiness-route-costs');
+      for (const [currency, label] of [['powerPoints', 'Power Points'], ['coins', 'Coins']]) {
+        const resource = readinessElement('div', `readiness-route-resource route-${currency}`);
+        const resourceLabel = readinessElement('span', 'readiness-total-label', label);
+        resourceLabel.prepend(readinessCurrencyIcon(currency));
+        resource.append(resourceLabel, readinessElement('strong', '', readinessNumber(claw.totalToMaxReady[key][currency])));
+        costs.append(resource);
+      }
+      card.append(costs);
       card.append(readinessElement('small', 'readiness-route-chance', key === 'expected'
         ? 'Expected cost'
         : `${readinessProbability(claw.completionProbabilities[key])}% chance to finish${key === 'worstCase' ? ' by then' : ''}`));
@@ -190,8 +204,8 @@ function readinessRenderRoutes(result) {
     tooltip.append(readinessElement('h3', '', 'Claw Machine costs & odds'),
       readinessElement('p', '', `${readinessProbability(claw.startingTargetProbability)}% chance of a needed Buffie next pull`),
       readinessElement('p', 'readiness-route-note', `Totals include Power upgrades and the recommended build. ${poolNote} Odds assume every missing Buffie is in this pool and rewards are equally likely.`));
-    holder.append(divider, heading);
-    if (claw.group && !holder.closest('.readiness-total-compact')) holder.append(readinessClawGroup(claw.group));
+    if (holder.closest('.readiness-total-compact')) holder.append(divider);
+    holder.append(heading);
     holder.append(scenarios);
     readinessBindInfo(infoWrap);
   });

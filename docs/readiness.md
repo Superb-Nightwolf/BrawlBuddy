@@ -14,6 +14,10 @@ The server returns Power, recommended-build, and gameplay-Buffie subtotals in
 `costs.subtotals`. Both requirements tables share the same item, status, and
 resource layout. The compact Readiness totals omit the repeated Claw trio;
 the full planning comparison retains its portraits and ownership icons.
+On desktop, the full comparison places Direct Gems beside the three Claw
+scenarios and presents the trio in a compact row underneath. Scenario amounts
+use the same number size as the direct totals. Requirements tables use
+proportional columns, centered statuses, and centered Power Point values.
 Totals explanations appear in their information buttons. The Claw alternative
 stays expanded, including an availability message when no pulls apply.
 

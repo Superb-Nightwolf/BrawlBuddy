@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=548">
+  <link rel="stylesheet" href="/assets/styles.css?v=549">
 </head>
 <body>
   <div class="app-shell">
@@ -915,11 +915,17 @@
               </section>
             </div>
           </div>
-          <div class="readiness-total">
+          <div class="readiness-total readiness-total-planning">
             <div class="readiness-total-heading"><h3 data-readiness-total-title>TOTAL TO MAX READY</h3></div>
-            <h4 class="readiness-route-title readiness-route-label hidden" data-readiness-direct-route>Direct Gems route</h4>
-            <div id="readiness-plan-totals" class="readiness-total-grid"></div>
-            <div class="readiness-route-comparison hidden" data-readiness-route-comparison></div>
+            <div id="readiness-plan-routes" class="readiness-plan-routes">
+              <div class="readiness-direct-route-panel">
+                <h4 class="readiness-route-title readiness-route-label hidden" data-readiness-direct-route>Direct Gems route</h4>
+                <div id="readiness-plan-totals" class="readiness-total-grid"></div>
+              </div>
+              <div id="readiness-plan-divider" class="readiness-route-divider readiness-plan-divider hidden"><span>OR</span></div>
+              <div class="readiness-route-comparison hidden" data-readiness-route-comparison></div>
+            </div>
+            <div id="readiness-plan-claw-group" class="readiness-plan-claw-group hidden"></div>
           </div>
         </section>
         <section id="guide-profile-panel" class="panel guide-profile-panel hidden">
@@ -1276,7 +1282,7 @@
 
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
-  <script src="/assets/readiness.js?v=19" defer></script>
+  <script src="/assets/readiness.js?v=20" defer></script>
   <script src="/assets/app.js?v=121" defer></script>
 </body>
 </html>

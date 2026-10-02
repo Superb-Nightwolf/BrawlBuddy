@@ -1407,7 +1407,25 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-route-scenario { min-width: 0; display: grid; grid-template-rows: auto auto auto auto; align-content: start; gap: 8px; padding: 12px; border: 1px solid #d9e4f2; border-radius: 10px; background: #ffffffd9; }
 .readiness-route-scenario > strong { color: #193862; font-size: 11px; }
 .readiness-route-pulls { color: #60728d; font-size: 10px; }
-.readiness-route-scenario .readiness-row-cost { justify-content: flex-start; flex-direction: column; align-self: start; gap: 7px; font-size: 11px; font-variant-numeric: tabular-nums; }
+.readiness-route-costs { display: grid; gap: 12px; margin: 4px 0; }
+.readiness-route-resource { min-width: 0; }
+.readiness-route-resource > strong { display: block; margin-top: 5px; font-family: var(--font-heading); font-size: 28px; line-height: 1.2; color: #193862; font-variant-numeric: tabular-nums; }
+.readiness-total-compact .readiness-route-resource > strong { font-size: 24px; }
+.readiness-total-compact .readiness-route-scenario { padding: 10px; }
+.readiness-total-compact .readiness-route-resource .readiness-total-label { font-size: 9px; gap: 5px; }
+.readiness-plan-routes { min-width: 0; }
+.readiness-plan-routes.has-claw-route { display: grid; grid-template-columns: minmax(0, .9fr) 24px minmax(0, 2fr); gap: 16px; align-items: start; }
+.readiness-direct-route-panel, .readiness-plan-routes > .readiness-route-comparison { min-width: 0; }
+.has-claw-route #readiness-plan-totals { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.has-claw-route #readiness-plan-totals .readiness-total-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 12px; }
+.has-claw-route #readiness-plan-totals .readiness-total-item > strong { margin: 0; }
+.readiness-plan-divider { flex-direction: column; align-self: stretch; margin: 36px 0 0; }
+.readiness-plan-divider::before, .readiness-plan-divider::after { flex: 1; width: 1px; height: auto; }
+.readiness-plan-claw-group { margin-top: 18px; padding-top: 16px; border-top: 1px solid #d4e0f1; }
+.readiness-plan-claw-group .readiness-claw-group { margin: 0; }
+.readiness-plan-claw-group .readiness-claw-member { grid-template-columns: minmax(0, 1fr) auto; justify-items: start; align-items: center; gap: 4px 10px; padding: 12px; text-align: left; }
+.readiness-plan-claw-group .readiness-claw-member-name { justify-content: flex-start; }
+.readiness-plan-claw-group .readiness-claw-member-items { grid-column: 2; grid-row: 1 / span 2; width: 104px; }
 .readiness-route-chance { color: #526581; font-size: 9px; line-height: 1.5; }
 .readiness-route-note { margin: 12px 0 0; color: #667994; font-size: 10px; line-height: 1.6; }
 .readiness-footnote { margin: 12px 0 0; }
@@ -1420,13 +1438,18 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-table { width: 100%; table-layout: fixed; border-collapse: collapse; text-align: left; }
 .readiness-table thead th { padding: 10px 8px; font-size: 9px; text-transform: uppercase; letter-spacing: .5px; color: #77849a; font-weight: 800; }
 .readiness-table th, .readiness-table td { padding: 12px 8px; border-bottom: 1px solid #e6edf6; vertical-align: middle; }
-.readiness-table thead th:last-child { text-align: right; }
-.readiness-table thead th:nth-child(2) { width: 70px; }
-.readiness-table thead th:last-child { width: 202px; }
-.readiness-buffie-table thead th:last-child { width: 104px; }
-.readiness-table .readiness-row-cost { display: grid; grid-template-columns: 82px 104px; gap: 8px; justify-content: end; font-variant-numeric: tabular-nums; }
+.readiness-table thead th:nth-child(2), .readiness-requirement > td:first-of-type { text-align: center; }
+.readiness-table thead th:last-child { text-align: center; }
+.readiness-table thead th:first-child { width: 42%; }
+.readiness-table thead th:nth-child(2) { width: 16%; }
+.readiness-table thead th:last-child { width: 42%; }
+.readiness-buffie-table thead th:first-child { width: 43%; }
+.readiness-buffie-table thead th:nth-child(2) { width: 22%; }
+.readiness-buffie-table thead th:last-child { width: 35%; }
+.readiness-table .readiness-row-cost { display: grid; grid-template-columns: 82px 104px; gap: 8px; justify-content: center; font-variant-numeric: tabular-nums; }
 .readiness-table .readiness-cost-part { display: grid; grid-template-columns: 19px minmax(0, 1fr); gap: 5px; }
 .readiness-table .readiness-cost-part > span:last-child { text-align: right; }
+.readiness-table .cost-powerPoints > span:last-child { text-align: center; }
 .readiness-table .cost-powerPoints { grid-column: 1; }
 .readiness-table .cost-coins, .readiness-table .cost-gems { grid-column: 2; }
 .readiness-buffie-table .readiness-row-cost { grid-template-columns: 88px; }
@@ -1480,6 +1503,17 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 @media (max-width: 1120px) {
   .readiness-planning-grid { grid-template-columns: minmax(0, 1fr); }
 }
+@media (max-width: 900px) {
+  .readiness-plan-routes.has-claw-route { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .has-claw-route #readiness-plan-totals { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .has-claw-route #readiness-plan-totals .readiness-total-item { display: block; padding: 12px; }
+  .has-claw-route #readiness-plan-totals .readiness-total-item > strong { margin-top: 9px; }
+  .readiness-plan-divider { flex-direction: row; margin: 18px 0 14px; }
+  .readiness-plan-divider::before, .readiness-plan-divider::after { width: auto; height: 1px; }
+  .readiness-plan-claw-group .readiness-claw-member { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; }
+  .readiness-plan-claw-group .readiness-claw-member-name { justify-content: center; }
+  .readiness-plan-claw-group .readiness-claw-member-items { grid-column: auto; grid-row: auto; width: 100%; }
+}
 @media (max-width: 600px) {
   .readiness-category-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px 8px; }
   .readiness-category { grid-column: span 2; }
@@ -1498,7 +1532,8 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   .readiness-total-label { font-size: 9px; gap: 5px; }
   .readiness-route-scenarios { grid-template-columns: minmax(0, 1fr); }
   .readiness-route-scenario { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto auto; align-items: center; gap: 8px; padding: 12px; }
-  .readiness-route-scenario .readiness-row-cost { grid-column: 2; grid-row: 1 / span 3; justify-self: end; align-self: center; }
+  .readiness-route-costs { grid-column: 2; grid-row: 1 / span 3; align-self: center; gap: 8px; }
+  .readiness-route-resource > strong, .readiness-total-compact .readiness-route-resource > strong { font-size: 23px; }
   .readiness-route-pulls, .readiness-route-chance { grid-column: 1; }
   .readiness-route-chance { min-height: 0; }
   .readiness-table, .readiness-table tbody { display: block; }
@@ -1506,6 +1541,8 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   .readiness-requirement { display: grid; grid-template-columns: auto minmax(0, 1fr); border-bottom: 1px solid #e6edf6; }
   .readiness-requirement > th { grid-column: 1 / -1; padding: 12px 4px 6px; border: 0; }
   .readiness-requirement > td { padding: 4px 4px 12px; border: 0; }
+  .readiness-requirement > td:first-of-type { text-align: left; }
+  .readiness-requirement > td:last-child .readiness-row-cost, .readiness-subtotal .readiness-row-cost { justify-content: end; }
   .readiness-section-row, .readiness-section-row th { display: block; }
   .readiness-section-row th { padding: 12px 8px; }
   .readiness-subtotal { display: grid; grid-template-columns: minmax(0, 1fr); background: #eef5ff; border-bottom: 1px solid #d5e2f3; }
@@ -1521,6 +1558,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   .readiness-ring strong { font-size: 15px; }
   .readiness-ring-large strong { font-size: 28px; }
   .readiness-total-item > strong, .readiness-total-compact .readiness-total-item > strong { font-size: 20px; }
+  .readiness-route-resource > strong, .readiness-total-compact .readiness-route-resource > strong { font-size: 20px; }
 }
 .combat-guide .section-heading { margin-bottom: 12px; }
 .equipment-panel { padding:22px; margin-top:20px; }
