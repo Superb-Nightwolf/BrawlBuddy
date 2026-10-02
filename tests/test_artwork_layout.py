@@ -40,6 +40,9 @@ def test_all_hero_art_fits_the_shared_vertical_frame_without_clipping() -> None:
             bounds = image.convert("RGBA").getchannel("A").point(lambda alpha: 255 if alpha > 24 else 0).getbbox()
             assert bounds is not None
             width, height = bounds[2] - bounds[0], bounds[3] - bounds[1]
-            # CSS reserves the same 82% stage-width body height for every hero.
-            assert .82 * width / height <= 1, f"{brawler_id} would overflow horizontally"
+            # The 10% enlargement and existing 3% hover zoom can extend into
+            # the identity panel's existing padding without being clipped.
+            for stage_width, padding in ((276, 20), (240, 16), (210, 16), (180, 16)):
+                enlarged_width = .82 * stage_width * 1.1 * 1.03 * width / height
+                assert enlarged_width <= stage_width + 2 * padding, f"{brawler_id} would clip horizontally"
     assert len(registry) == 108

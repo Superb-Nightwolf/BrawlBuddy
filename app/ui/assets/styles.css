@@ -944,6 +944,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   flex-shrink: 0;
   overflow: hidden;
   filter: drop-shadow(0 12px 10px rgba(0,14,50,.35));
+  transform: scale(1.1) translateZ(0);
   transition: transform .25s ease;
 }
 .detail-art .hero-art-crop img {
@@ -954,13 +955,13 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   filter: none;
 }
 .hero-art-crop:not(.artwork-normalized):not(.artwork-fallback) { visibility: hidden; }
-.detail-hero:hover .hero-art-crop { transform: scale(1.03) translateZ(0); }
+.detail-hero:hover .hero-art-crop { transform: scale(1.133) translateZ(0); }
 @media (max-width: 768px) { .hero-art-stage { height: 250px; } }
 @media (prefers-reduced-motion: reduce) { 
   .detail-art .hero-art-stage img,
   .detail-art img,
   .hero-art-crop { transition: none; }
-  .detail-hero:hover .hero-art-crop { transform: none; }
+  .detail-hero:hover .hero-art-crop { transform: scale(1.1) translateZ(0); }
 }
 
 .detail-copy { 
