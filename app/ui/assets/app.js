@@ -335,7 +335,7 @@ async function request(url, options) {
   const apiBaseUrl = (window.BRAWLBUDDY_CONFIG?.apiBaseUrl || '').replace(/\/+$/, '');
   const response = await fetch(url.startsWith('/api/') ? `${apiBaseUrl}${url}` : url, options);
   const payload = await response.json().catch(() => ({}));
-  if (!response.ok || payload.error) throw new Error(payload?.error?.message || `Request failed (${response.status})`);
+  if (!response.ok || payload.error) throw new Error(payload?.error?.message || (typeof payload.detail === 'string' ? payload.detail : `Request failed (${response.status})`));
   return payload;
 }
 
@@ -2403,125 +2403,6 @@ function renderBrawlers() {
   }
 }
 
-function prioritySteps(brawler, guide = {}) {
-  const build = guide.recommended_build || {};
-  if (!brawler.owned) {
-    return [
-      { title: `Unlock ${brawler.name}`, reason: 'This brawler is in the catalog but is not present in the loaded player account.', tag: 'LOCKED' },
-      { title: build.gadget ? `Plan for ${build.gadget}` : 'Plan for Primary Gadget', reason: 'The curated guide marks this as the general-purpose first Gadget choice.', tag: 'FUTURE BUILD' },
-      { title: build.star_power ? `Plan for ${build.star_power}` : 'Plan for Primary Star Power', reason: 'Use this as the default Star Power, then adapt for the map and mode.', tag: 'FUTURE BUILD' },
-      { title: build.gears?.length ? `Plan for ${build.gears.join(' + ')}` : 'Plan for Recommended Gears', reason: 'These are the guide’s general-purpose Gear choices for standard map pools.', tag: 'FUTURE BUILD' }
-    ];
-  }
-
-  const steps = [];
-  if (brawler.power < 11) {
-    steps.push({
-      title: `Reach Power Level ${brawler.power + 1}`,
-      reason: `Upgrade from Power ${brawler.power} to ${brawler.power + 1} to increase base health, attack, and Super damage scaling.`,
-      tag: 'NEXT LEVEL'
-    });
-  }
-
-  if (!brawler.gadgets.length) {
-    steps.push({
-      title: brawler.power < 7 ? 'Reach Power Level 7 for Gadgets' : (build.gadget ? `Unlock ${build.gadget}` : 'Unlock a Gadget'),
-      reason: brawler.power < 7
-        ? 'Gadgets and an owned Gadget Buffy remain stored until this brawler reaches Power Level 7.'
-        : (build.gadget ? `The curated guide recommends ${build.gadget} as the primary active utility tool.` : 'No owned Gadget is recorded in the player response.'),
-      tag: brawler.power < 7 ? 'LEVEL 7' : 'LOADOUT GAP'
-    });
-  } else if (brawler.gadgets.length < (guide.gadgets || []).length) {
-    const missingGadget = (guide.gadgets || []).find(g => !brawler.gadgets.some(bg => bg.name?.toLowerCase() === g.name?.toLowerCase() || bg.id === g.id));
-    if (missingGadget) {
-      steps.push({
-        title: `Consider Alternate Gadget (${missingGadget.name})`,
-        reason: 'Unlocking alternate gadgets gives situational flexibility across specialized maps.',
-        tag: 'ADAPT'
-      });
-    }
-  }
-
-  if (!brawler.star_powers.length) {
-    steps.push({
-      title: brawler.power < 9 ? 'Reach Power Level 9 for Star Powers' : (build.star_power ? `Unlock ${build.star_power}` : 'Unlock a Star Power'),
-      reason: brawler.power < 9
-        ? 'Star Powers and an owned Star Power Buffy remain stored until this brawler reaches Power Level 9.'
-        : (build.star_power ? `The curated guide recommends ${build.star_power} as the default permanent passive bonus.` : 'No owned Star Power is recorded in the player response.'),
-      tag: brawler.power < 9 ? 'LEVEL 9' : 'LOADOUT GAP'
-    });
-  } else if (brawler.star_powers.length < (guide.star_powers || []).length) {
-    const missingSP = (guide.star_powers || []).find(s => !brawler.star_powers.some(bs => bs.name?.toLowerCase() === s.name?.toLowerCase() || bs.id === s.id));
-    if (missingSP) {
-      steps.push({
-        title: `Consider Alternate Star Power (${missingSP.name})`,
-        reason: 'Having both Star Powers enables counter-picks depending on map geometry.',
-        tag: 'ADAPT'
-      });
-    }
-  }
-
-  if (!brawler.gears.length) {
-    steps.push({
-      title: build.gears?.length ? `Build Gear: ${build.gears[0]}` : 'Equip First Gear',
-      reason: build.gears?.length ? `Recommended starting gear from the curated general-purpose build.` : 'No equipped Gear recorded in the player profile.',
-      tag: 'LOADOUT GAP'
-    });
-  } else if (brawler.gears.length === 1 && brawler.power >= 10) {
-    steps.push({
-      title: build.gears?.length > 1 ? `Build Second Gear: ${build.gears[1]}` : 'Equip Second Gear Slot',
-      reason: 'At Power 10+, the second gear slot is unlocked for dual stat amplification.',
-      tag: 'LOADOUT GAP'
-    });
-  }
-
-  const hcReleased = guide.hypercharge && guide.hypercharge.released !== false && guide.hypercharge.name?.toLowerCase() !== 'unreleased';
-  const hcOwned = hasHypercharge(brawler, guide);
-  if (hcOwned && brawler.power < 11) {
-    steps.push({
-      title: 'Hypercharge Stored',
-      reason: 'This Hypercharge is owned, but it cannot be used until the brawler reaches Power Level 11.',
-      tag: 'LEVEL 11'
-    });
-  } else if (hcReleased && !hcOwned && brawler.power >= 11) {
-    steps.push({
-      title: `Unlock ${guide.hypercharge.name}`,
-      reason: 'The Hypercharge is released and this brawler is eligible at Power Level 11, but the player response does not list it as owned.',
-      tag: 'LOADOUT GAP'
-    });
-  }
-
-  if (brawler.power === 11 && brawler.gadgets.length && brawler.star_powers.length && brawler.gears.length >= 1) {
-    steps.push({
-      title: 'Core Loadout Ready',
-      reason: 'Primary build is fully online with recommended Gadget, Star Power, and Gears.',
-      tag: 'READY'
-    });
-    steps.push({
-      title: 'Ranked & Competitive Tournament Viable',
-      reason: 'Meets full Power 11 requirements for draft mode and high-elo competitive matches.',
-      tag: 'RANKED'
-    });
-    if (hcReleased) {
-      steps.push({
-        title: `Hypercharge Specification (${guide.hypercharge.name})`,
-        reason: 'Review the official Hypercharge ability below for combat stat boosts and Super enhancement.',
-        tag: 'OFFICIAL SPEC'
-      });
-    }
-  }
-
-  if (steps.length < 3) {
-    steps.push({
-      title: 'Refine Mode Strategy',
-      reason: 'Review team synergies and master range spacing in top recommended modes.',
-      tag: 'STRATEGY'
-    });
-  }
-
-  return steps.slice(0, 4);
-}
-
 function renderGuideProfile(guide, brawler) {
   const panel = $('guide-profile-panel');
   if (!panel) return;
@@ -3410,7 +3291,7 @@ async function renderDetail() {
     });
   }
 
-  updateDetailReadiness(brawler, guide);
+  await updateDetailReadiness(brawler);
 
   renderGuideProfile(guide, brawler);
   renderPowerLadder(brawler.owned ? brawler.power : 0, guide);
@@ -3476,38 +3357,8 @@ async function renderDetail() {
   setupDetailAutoRefresh(id);
 }
 
-function updateDetailReadiness(brawler, guide) {
-  const ownedGears = brawler.owned ? (brawler.gears || []).length : 0;
-  setText('readiness-power-val', brawler.owned ? `LVL ${brawler.power}` : 'LOCKED');
-  setText('readiness-gadget-val', brawler.owned ? `${brawler.gadgets.length}/${(guide.gadgets || []).length || 2}` : '0/2');
-  setText('readiness-star-val', brawler.owned ? `${brawler.star_powers.length}/${(guide.star_powers || []).length || 2}` : '0/2');
-  setText('readiness-gear-val', ownedGears);
-
-  const priorities = $('priority-list');
-  if (priorities) {
-    priorities.replaceChildren();
-    prioritySteps(brawler, guide).forEach((step, index) => {
-      const row = document.createElement('article');
-      row.className = 'priority-card-item';
-      
-      let tagClass = 'tag-ready';
-      const t = (step.tag || '').toUpperCase();
-      if (t.includes('READY')) tagClass = 'tag-ready';
-      else if (t.includes('GAP') || t.includes('LOCKED')) tagClass = 'tag-gap';
-      else if (t.includes('LEVEL') || t.includes('NEXT')) tagClass = 'tag-next';
-      else if (t.includes('FUTURE')) tagClass = 'tag-future';
-
-      row.innerHTML = `
-        <span class="priority-step-num">${index + 1}</span>
-        <div class="priority-copy">
-          <h3 class="priority-title">${step.title}</h3>
-          <p class="priority-reason">${step.reason}</p>
-        </div>
-        <span class="priority-status-pill ${tagClass}">${step.tag}</span>
-      `;
-      priorities.append(row);
-    });
-  }
+function updateDetailReadiness(brawler) {
+  return loadBrawlerReadiness(brawler);
 }
 
 function getHyperchargeIcon(brawlerName, hyperchargeName) {

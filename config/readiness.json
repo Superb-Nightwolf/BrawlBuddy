@@ -1,0 +1,68 @@
+{
+  "version": "2026-10-02",
+  "targetPower": 11,
+  "powerUpgrades": {
+    "1": {"powerPoints": 20, "coins": 20},
+    "2": {"powerPoints": 30, "coins": 35},
+    "3": {"powerPoints": 50, "coins": 75},
+    "4": {"powerPoints": 80, "coins": 140},
+    "5": {"powerPoints": 130, "coins": 290},
+    "6": {"powerPoints": 210, "coins": 480},
+    "7": {"powerPoints": 340, "coins": 800},
+    "8": {"powerPoints": 550, "coins": 1250},
+    "9": {"powerPoints": 890, "coins": 1875},
+    "10": {"powerPoints": 1440, "coins": 2800}
+  },
+  "equipment": {
+    "gadget": {"coins": 1000, "unlockPower": 7},
+    "star_power": {"coins": 2000, "unlockPower": 9},
+    "hypercharge": {"coins": 5000, "unlockPower": 11},
+    "gearUnlockPowers": [8, 10],
+    "gearPrices": {"super_rare": 1000, "epic": 1500, "mythic": 2000},
+    "gears": {
+      "SPEED": {"id": 62000000, "rarity": "super_rare", "enabled": true},
+      "HEALTH": {"id": 62000001, "rarity": "super_rare", "enabled": true},
+      "DAMAGE": {"id": 62000002, "rarity": "super_rare", "enabled": true},
+      "VISION": {"id": 62000003, "rarity": "super_rare", "enabled": true},
+      "SHIELD": {"id": 62000004, "rarity": "super_rare", "enabled": true},
+      "GADGET COOLDOWN": {"id": 62000017, "rarity": "super_rare", "enabled": true},
+      "RELOAD SPEED": {"id": 62000005, "rarity": "epic", "enabled": true, "removedWithBuffies": true},
+      "SUPER CHARGE": {"id": 62000006, "rarity": "epic", "enabled": true, "removedWithBuffies": true},
+      "PET POWER": {"id": 62000014, "rarity": "epic", "enabled": true, "removedWithBuffies": true},
+      "THICC HEAD": {"id": 62000007, "rarity": "mythic", "enabled": true, "removedWithBuffies": true},
+      "TALK TO THE HAND": {"id": 62000008, "rarity": "mythic", "enabled": true, "removedWithBuffies": true},
+      "EXHAUSTING STORM": {"id": 62000012, "rarity": "mythic", "enabled": true, "removedWithBuffies": true},
+      "STICKY OIL": {"id": 62000013, "rarity": "mythic", "enabled": true, "removedWithBuffies": true},
+      "QUADRUPLETS": {"id": 62000015, "rarity": "mythic", "enabled": true, "removedWithBuffies": true},
+      "SUPER TURRET": {"id": 62000016, "rarity": "mythic", "enabled": true, "removedWithBuffies": true}
+    }
+  },
+  "buffie": {
+    "defaultDirectGemPrice": 300,
+    "directGemPricesByCategory": {
+      "gadget": {"gems": 149, "estimated": false},
+      "star_power": {"gems": 179, "estimated": false},
+      "hypercharge": {"gems": 199, "estimated": false}
+    },
+    "directPriceSources": [
+      {"label": "Supercell Buffies guide", "url": "https://support.supercell.com/brawl-stars/en/articles/buffies.html", "scope": "Direct purchase mechanics", "checkedAt": "2026-10-02"},
+      {"label": "Brawl Stars Wiki", "url": "https://brawlstars.fandom.com/wiki/Buffies", "scope": "Standard category Gem prices", "checkedAt": "2026-10-02"},
+      {"label": "BrawlMetrics", "url": "https://brawlmetrics.gg/news/brawl-stars-buffies", "scope": "Standard category Gem prices", "checkedAt": "2026-10-02"}
+    ],
+    "directGemPrices": {},
+    "categories": ["gadget", "star_power", "hypercharge"],
+    "claw": {
+      "coinsPerPull": 1000,
+      "powerPointsPerPull": 2000,
+      "initialPoolSize": 9,
+      "pools": []
+    }
+  },
+  "weights": {"power": 40, "gadget": 10, "star_power": 15, "gears": 15, "hypercharge": 10, "buffies": 10},
+  "sources": [
+    {"label": "Gear prices and slots", "url": "https://support.supercell.com/brawl-stars/en/articles/gears-8.html"},
+    {"label": "Buffie duplicate protection and drop chances", "url": "https://support.supercell.com/brawl-stars/en/articles/buffie-claw-machine-drop-chances-3.html"},
+    {"label": "Buffie eligibility and direct purchase", "url": "https://support.supercell.com/brawl-stars/en/articles/buffies.html"},
+    {"label": "Claw costs and Gear removal", "url": "https://supercell.com/en/games/brawlstars/blog/news/new-power-brawl-pass-changes-and-a-new-starr-drop-2/"}
+  ]
+}

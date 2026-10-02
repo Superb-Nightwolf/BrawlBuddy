@@ -4643,7 +4643,8 @@
     "checked_at": "2026-09-02",
     "official_references": {
       "modes": "https://support.supercell.com/brawl-stars/en/articles/game-modes-12.html",
-      "classes": "https://support.supercell.com/brawl-stars/en/articles/brawler-classes.html"
+      "classes": "https://support.supercell.com/brawl-stars/en/articles/brawler-classes.html",
+      "currencies": "https://support.supercell.com/brawl-stars/en/articles/currencies-3.html"
     },
     "modes": {
       "gem-grab": {
@@ -5035,6 +5036,55 @@
       "width": 452,
       "height": 552,
       "mime": "image/png"
+    },
+    "currencies": {
+      "coins": {
+        "label": "Coins",
+        "aliases": [
+          "coins",
+          "coin"
+        ],
+        "local_url": "/assets/currencies/coins.png",
+        "source_page": "https://support.supercell.com/brawl-stars/en/articles/currencies-3.html",
+        "source_url": "https://support.supercell.com/images/reward_profilebutton_1.png?v=1668780181",
+        "local_sha256": "5c71d9bd9d0e151a122f655e38a16caa98ce19d9d130d6e2a9577051c8edb246",
+        "width": 148,
+        "height": 134,
+        "mime": "image/png",
+        "checked_at": "2026-10-02"
+      },
+      "power-points": {
+        "label": "Power Points",
+        "aliases": [
+          "powerPoints",
+          "power points",
+          "PP",
+          "power cards"
+        ],
+        "local_url": "/assets/currencies/power-points.png",
+        "source_page": "https://theriagames.com/guide/brawl-stars-power-points-2/",
+        "source_url": "https://theriagames.com/wp-content/uploads/2025/01/Brawl-Stars-Power-Points-2-1024x576.png",
+        "local_sha256": "4f1c416a4b493d43cb3379794d591624bf400f6742403f146025eb6af9043716",
+        "width": 1024,
+        "height": 576,
+        "mime": "image/png",
+        "checked_at": "2026-10-02"
+      },
+      "gems": {
+        "label": "Gems",
+        "aliases": [
+          "gems",
+          "gem"
+        ],
+        "local_url": "/assets/currencies/gems.png",
+        "source_page": "https://support.supercell.com/brawl-stars/en/articles/currencies-3.html",
+        "source_url": "https://support.supercell.com/images/reward_profilebutton_16.png?v=1668780181",
+        "local_sha256": "0f00b8de4f4fb3f8a76641b653b9c18eabac7e66ca3483df8c6f387f4b91aa19",
+        "width": 149,
+        "height": 134,
+        "mime": "image/png",
+        "checked_at": "2026-10-02"
+      }
     }
   }
 }

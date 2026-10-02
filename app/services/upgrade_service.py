@@ -1,40 +1,15 @@
 from typing import Any
+from app.core.readiness_config import READINESS_CONFIG
 
 # Official Supercell Upgrade Costs (Level -> Next Level)
 # Index i is cost to go from level (i+1) to (i+2)
-POWER_UPGRADE_COINS = {
-    1: 20,
-    2: 35,
-    3: 75,
-    4: 140,
-    5: 290,
-    6: 480,
-    7: 800,
-    8: 1250,
-    9: 1875,
-    10: 2800,
-}
+POWER_UPGRADE_COINS = {int(level): cost["coins"] for level, cost in READINESS_CONFIG["powerUpgrades"].items()}
 
-POWER_UPGRADE_POWER_POINTS = {
-    1: 20,
-    2: 30,
-    3: 50,
-    4: 80,
-    5: 130,
-    6: 210,
-    7: 340,
-    8: 550,
-    9: 890,
-    10: 1440,
-}
+POWER_UPGRADE_POWER_POINTS = {int(level): cost["powerPoints"] for level, cost in READINESS_CONFIG["powerUpgrades"].items()}
 
 EQUIPMENT_COSTS = {
-    "gadget": 1000,
-    "star_power": 2000,
-    "gear_super_rare": 1000,
-    "gear_epic": 1500,
-    "gear_mythic": 2000,
-    "hypercharge": 5000,
+    **{key: READINESS_CONFIG["equipment"][key]["coins"] for key in ("gadget", "star_power", "hypercharge")},
+    **{f"gear_{key}": value for key, value in READINESS_CONFIG["equipment"]["gearPrices"].items()},
 }
 
 

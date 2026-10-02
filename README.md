@@ -2,7 +2,7 @@
 
 BrawlBuddy is a Python-first Brawl Stars progression companion. It connects a player tag to the official Brawl Stars API, displays the real public profile and brawler collection, tracks manually entered resources locally, and provides transparent per-brawler account-readiness guidance. A polished, clearly labeled demo works without credentials.
 
-It intentionally does **not** show fabricated meta tiers, upgrade prices, affordability, or recommendation scores. Those features come after current game metadata is verified and versioned.
+It uses versioned upgrade prices and transparent readiness calculations. Buffie Gem totals use category-specific prices, and unknown Claw pools are labeled as estimates; readiness does not represent skill, win rate, or measured meta strength.
 
 ## What is included
 
@@ -12,6 +12,7 @@ It intentionally does **not** show fabricated meta tiers, upgrade prices, afford
 - brawler cards and compact table mode with search, exact Power 1–11 filters, equipment ownership filters, and sorting;
 - official API-backed permanent Brawler Prestige, Total Prestige, progression filters, and Brawler-specific Prestige emblems;
 - a Surge guide with official-release-note sources, combat usage, power ladder, equipment ownership, and a rule-based readiness plan;
+- calculated Brawler Readiness with overall/category donuts, exact Power and equipment costs, category-specific direct-Gem Buffie prices, and a separate duplicate-protected Claw alternative;
 - manual coin, Power Point, gem, credit, and bling inventory stored in SQLite;
 - explicit `OFFICIAL_API`, `USER_INPUT`, `CALCULATED`, and `DEMO` provenance;
 - short player cache, retry/backoff, timeouts, and useful API errors;
@@ -20,6 +21,10 @@ It intentionally does **not** show fabricated meta tiers, upgrade prices, afford
 - unit tests for tag validation, missing API fields, parsing, and local persistence.
 
 See [docs/architecture.md](docs/architecture.md) for API capabilities, limitations, design decisions, recommendation boundaries, and the development roadmap.
+
+See [docs/readiness.md](docs/readiness.md) for the readiness model, price configuration, ownership matching, and Claw pool assumptions. Standard Buffie prices are 149/179/199 Gems for Gadget/Star/Hyper Buffies; maintained offers can override them.
+
+Claw routes use the released three-Brawler trios in `data/buffies_db.json`, subtracting owned gameplay Buffies across all three members from the nine-reward machine. The upper comparison shows the collection counts and calculates costs and odds from the eligible remaining rewards.
 
 ## Prerequisites
 
@@ -76,7 +81,7 @@ Not implemented in this milestone. The planned deterministic engine will score i
 
 ## Updating metadata
 
-There is no production upgrade-cost metadata in this milestone. Do not add costs from memory. The next phase should add versioned source files, effective dates/game version, provenance, schema validation, duplicate/reference checks, and tests before exposing cost or recommendation UI.
+Power, equipment, Buffie pricing, readiness weights, and Claw settings live in `config/readiness.json`. Maintain prices against published game information and current offers, update the configuration version, and run the readiness tests when changing economy data. See [docs/readiness.md](docs/readiness.md) for supported overrides and pool definitions.
 
 Refresh the lightweight Brawlify Prestige availability manifest without downloading duplicate artwork:
 

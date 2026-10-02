@@ -118,7 +118,12 @@
           "gadget_img_file": "File:Leon Buffie-Gadget.png",
           "star_img_file": "File:Leon Buffie-Star.png",
           "hyper_img_file": "File:Leon Buffie-Hyper.png"
-        },
+        }
+      ]
+    },
+    {
+      "trio": "Gift Shop",
+      "brawlers": [
         {
           "name": "Colette",
           "gadget_img_file": "File:Colette Buffie-Gadget.png",
@@ -136,7 +141,12 @@
           "gadget_img_file": "File:Griff Buffie-Gadget.png",
           "star_img_file": "File:Griff Buffie-Star.png",
           "hyper_img_file": "File:Griff Buffie-Hyper.png"
-        },
+        }
+      ]
+    },
+    {
+      "trio": "Arcade",
+      "brawlers": [
         {
           "name": "Rico",
           "gadget_img_file": "File:Rico Buffie-Gadget.png",
@@ -154,7 +164,12 @@
           "gadget_img_file": "File:8-Bit Buffie-Gadget.png",
           "star_img_file": "File:8-Bit Buffie-Star.png",
           "hyper_img_file": "File:8-Bit Buffie-Hyper.png"
-        },
+        }
+      ]
+    },
+    {
+      "trio": "Super City",
+      "brawlers": [
         {
           "name": "Max",
           "gadget_img_file": "File:Max Buffie-Gadget.png",

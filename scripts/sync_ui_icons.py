@@ -131,8 +131,10 @@ def main() -> None:
     )
     info = wiki_file_info(titles)
     ui_icons: dict[str, Any] = {
+        **manifest.get("ui_icons", {}),
         "checked_at": date.today().isoformat(),
         "official_references": {
+            **manifest.get("ui_icons", {}).get("official_references", {}),
             "modes": "https://support.supercell.com/brawl-stars/en/articles/game-modes-12.html",
             "classes": "https://support.supercell.com/brawl-stars/en/articles/brawler-classes.html",
         },

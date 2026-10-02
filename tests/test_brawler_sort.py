@@ -25,7 +25,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const source = fs.readFileSync('./app/ui/assets/app.js', 'utf8');
-const render = source.slice(source.indexOf('function renderBrawlers() {'), source.indexOf('\nfunction prioritySteps('));
+const render = source.slice(source.indexOf('function renderBrawlers() {'), source.indexOf('\nfunction renderGuideProfile('));
 const catalog = JSON.parse(fs.readFileSync('./data/brawler_catalog.json', 'utf8'));
 const state = {brawlers: catalog.map((b, i) => ({...b, owned: i % 2 === 0, power: i % 11 + 1})), level: 'all', view: 'grid'};
 let sort = 'newest';

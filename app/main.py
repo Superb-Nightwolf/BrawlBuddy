@@ -20,6 +20,7 @@ from app.clients.brawl_stars import BrawlStarsClient
 from app.core.config import PROJECT_ROOT, get_settings
 from app.core.errors import BrawlAdvisorError
 from app.models.player import PlayerResources
+from app.models.readiness import ReadinessRequest
 from app.services.battlelog_service import BattleLogService
 from app.services.club_service import ClubService
 from app.services.events_service import EventsService
@@ -28,6 +29,7 @@ from app.services.player_service import PlayerService
 from app.services.rankings_service import RankingsService
 from app.services.resource_service import ResourceService
 from app.services.upgrade_service import UpgradeService
+from app.services.readiness_service import ReadinessService
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 logger = logging.getLogger(__name__)
@@ -85,6 +87,7 @@ if buffies_path.exists():
     with buffies_path.open("r", encoding="utf-8") as handle:
         buffies_db = json.load(handle)
 visual_asset_manifest = {}
+readiness_service = ReadinessService(brawler_guides, equipment_db, buffies_db)
 visual_asset_manifest_path = PROJECT_ROOT / "data" / "visual_asset_manifest.json"
 if visual_asset_manifest_path.exists():
     with visual_asset_manifest_path.open("r", encoding="utf-8") as handle:
@@ -432,6 +435,16 @@ async def get_brawler_guide(brawler_id: int) -> dict:
 @app.get("/api/brawlers/{brawler_id}/matchups")
 async def get_brawler_matchups(brawler_id: int) -> dict:
     return matchup_service.get_matchups(brawler_id)
+
+
+@app.post("/api/brawlers/{brawler_id}/readiness")
+async def get_brawler_readiness(brawler_id: int, body: ReadinessRequest) -> dict:
+    try:
+        return readiness_service.calculate(brawler_id, body)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="Brawler guide not found") from None
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
 
 
 @app.post("/api/brawlers/{brawler_id}/matchups/refresh")

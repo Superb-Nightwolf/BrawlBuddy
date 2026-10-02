@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=530">
+  <link rel="stylesheet" href="/assets/styles.css?v=547">
 </head>
 <body>
   <div class="app-shell">
@@ -807,36 +807,116 @@
           <section class="panel priority-panel">
             <div class="section-heading">
               <div>
-                <p class="eyebrow">ACCOUNT READINESS</p>
-                <h2>What to prioritize</h2>
+                <p class="eyebrow">BRAWLER READINESS</p>
+                <h2>How ready is your build?</h2>
               </div>
-              <span class="source-chip calculated">RULE-BASED</span>
-            </div>
-
-            <!-- Readiness Quick Status Metrics -->
-            <div class="readiness-summary-grid">
-              <div class="readiness-pill-box">
-                <span class="readiness-box-label">POWER</span>
-                <strong id="readiness-power-val">LVL —</strong>
-              </div>
-              <div class="readiness-pill-box">
-                <span class="readiness-box-label">GADGETS</span>
-                <strong id="readiness-gadget-val">—</strong>
-              </div>
-              <div class="readiness-pill-box">
-                <span class="readiness-box-label">STAR POWERS</span>
-                <strong id="readiness-star-val">—</strong>
-              </div>
-              <div class="readiness-pill-box">
-                <span class="readiness-box-label">GEARS</span>
-                <strong id="readiness-gear-val">—</strong>
+              <div class="readiness-heading-actions">
+                <span id="readiness-source" class="source-chip calculated">CALCULATED</span>
+                <div class="matchups-info-wrap readiness-info-wrap">
+                  <button class="matchups-info-btn" id="readiness-info-btn" type="button" aria-label="How readiness is calculated" aria-expanded="false" aria-controls="readiness-info-tooltip" aria-describedby="readiness-info-title">
+                    <span class="matchups-info-icon" aria-hidden="true">i</span>
+                  </button>
+                  <div id="readiness-info-tooltip" class="matchups-info-tooltip readiness-info-tooltip" role="tooltip">
+                    <h3 id="readiness-info-title">How readiness is calculated</h3>
+                    <div id="readiness-scoring-copy"></div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div id="priority-list" class="priority-list"></div>
-            <p class="priority-note">This is a transparent readiness order based on your current power and missing equipment—not a live meta score or invented upgrade cost.</p>
+            <p id="readiness-loading" class="readiness-message" role="status">Calculating your build…</p>
+            <div id="readiness-overview" class="hidden">
+              <div class="readiness-hero-row">
+                <div id="readiness-overall-ring" class="readiness-ring readiness-ring-large">
+                  <span><strong id="readiness-overall-value">—</strong><small>READY</small></span>
+                </div>
+                <div class="readiness-hero-copy">
+                  <span id="readiness-status" class="readiness-status">IN PROGRESS</span>
+                  <h3 id="readiness-power-target">Power — → Target 11</h3>
+                  <p id="readiness-overview-copy"></p>
+                </div>
+              </div>
+              <div class="readiness-category-grid">
+                <div class="readiness-category">
+                  <div id="readiness-power-ring" class="readiness-ring"><span><strong id="readiness-power-percent">—</strong></span></div>
+                  <strong>Power Level</strong><small id="readiness-power-caption">—</small>
+                </div>
+                <div class="readiness-category">
+                  <div id="readiness-gears-ring" class="readiness-ring"><span><strong id="readiness-gears-percent">—</strong></span></div>
+                  <strong>Gears</strong><small id="readiness-gears-caption">—</small>
+                </div>
+                <div class="readiness-category">
+                  <div id="readiness-abilities-ring" class="readiness-ring"><span><strong id="readiness-abilities-percent">—</strong></span></div>
+                  <strong>Gadget +<br>Star Power</strong><small id="readiness-abilities-caption">—</small>
+                </div>
+                <div class="readiness-category">
+                  <div id="readiness-hypercharge-ring" class="readiness-ring"><span><strong id="readiness-hypercharge-percent">—</strong></span></div>
+                  <strong>Hypercharge</strong><small id="readiness-hypercharge-caption">—</small>
+                </div>
+                <div class="readiness-category">
+                  <div id="readiness-buffies-ring" class="readiness-ring"><span><strong id="readiness-buffies-percent">—</strong></span></div>
+                  <strong>Buffies</strong><small id="readiness-buffies-caption">—</small>
+                </div>
+              </div>
+              <div class="readiness-total readiness-total-compact">
+                <h3 data-readiness-total-title>TOTAL TO MAX READY</h3>
+                <h4 class="readiness-route-title readiness-route-label hidden" data-readiness-direct-route>Direct Gems route</h4>
+                <div class="readiness-total-grid" id="readiness-overview-totals"></div>
+                <div class="readiness-route-comparison hidden" data-readiness-route-comparison></div>
+              </div>
+            </div>
           </section>
         </div>
+        <section id="readiness-planning-panel" class="panel readiness-planning-panel hidden">
+          <div class="section-heading">
+            <div><p class="eyebrow">YOUR PATH TO READY</p><h2>What is missing, and what it costs</h2></div>
+            <span id="readiness-plan-source" class="source-chip calculated">CALCULATED</span>
+          </div>
+          <p id="readiness-plan-note" class="readiness-plan-note"></p>
+          <div class="readiness-planning-grid">
+            <div class="readiness-breakdown">
+              <h3>Upgrade breakdown</h3>
+              <div class="readiness-table-wrap">
+                <table class="readiness-table">
+                  <caption class="sr-only">Power upgrades, recommended equipment, and gameplay Buffies</caption>
+                  <thead><tr><th scope="col">Requirement</th><th scope="col">Status</th><th scope="col">Resource needed</th></tr></thead>
+                  <tbody id="readiness-breakdown-body"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="readiness-buffie-section">
+              <div class="readiness-buffie-heading"><h3>Buffie progress</h3><strong id="readiness-buffie-count">—</strong></div>
+              <div id="readiness-buffie-list" class="readiness-buffie-list"></div>
+              <div id="readiness-direct-card" class="readiness-direct-card">
+                <span>GUARANTEED ACQUISITION</span><h4>Direct Gems</h4>
+                <strong id="readiness-direct-gems">—</strong><p id="readiness-direct-note"></p>
+              </div>
+              <section id="readiness-claw-details" class="readiness-claw-details" aria-labelledby="readiness-claw-title">
+                <h4 id="readiness-claw-title" class="readiness-claw-title">Claw Machine Alternative</h4>
+                <div class="readiness-claw-content">
+                  <p id="readiness-claw-intro" class="readiness-claw-intro">Want to save Gems? Each pull gives one random new gameplay Buffie.</p>
+                  <p id="readiness-claw-each" class="readiness-claw-each"></p>
+                  <form id="readiness-pool-form" class="readiness-pool-form">
+                    <label for="readiness-pool-size">Remaining rewards in your machine</label>
+                    <div><input id="readiness-pool-size" type="number" min="0" max="1000" step="1" inputmode="numeric" required><button type="submit">Update odds</button></div>
+                  </form>
+                  <p id="readiness-pool-note" class="readiness-pool-note"></p>
+                  <p id="readiness-pool-error" class="readiness-pool-error hidden" role="alert"></p>
+                  <div id="readiness-claw-odds" class="readiness-claw-odds"></div>
+                  <div id="readiness-claw-scenarios" class="readiness-claw-scenarios"></div>
+                  <p id="readiness-claw-footnote" class="readiness-footnote">No duplicate gameplay Buffies are awarded, so the pool shrinks after every pull. Expected cost is an estimate, not a guarantee. These costs are separate from the primary total.</p>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div class="readiness-total">
+            <h3 data-readiness-total-title>TOTAL TO MAX READY</h3>
+            <h4 class="readiness-route-title readiness-route-label hidden" data-readiness-direct-route>Direct Gems route</h4>
+            <div id="readiness-plan-totals" class="readiness-total-grid"></div>
+            <div class="readiness-route-comparison hidden" data-readiness-route-comparison></div>
+            <p class="readiness-total-note">Power upgrades + missing recommended equipment + direct Gems for gameplay Buffies.</p>
+          </div>
+        </section>
         <section id="guide-profile-panel" class="panel guide-profile-panel hidden">
           <div class="section-heading">
             <div>
@@ -1191,6 +1271,7 @@
 
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
-  <script src="/assets/app.js?v=119" defer></script>
+  <script src="/assets/readiness.js?v=18" defer></script>
+  <script src="/assets/app.js?v=121" defer></script>
 </body>
 </html>
