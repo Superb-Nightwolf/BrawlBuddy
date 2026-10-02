@@ -1,0 +1,51 @@
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env.production
+    environment:
+      BRAWL_ADVISOR_HOST: 0.0.0.0
+      BRAWL_ADVISOR_PORT: 8000
+      BRAWL_ADVISOR_DEBUG: "false"
+      BRAWL_ADVISOR_DATABASE_PATH: /var/lib/brawlbuddy/resources.db
+      BRAWL_ADVISOR_ALLOW_RESOURCE_WRITES: "false"
+    volumes:
+      - resources:/var/lib/brawlbuddy
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      BRAWLBUDDY_API_HOST: ${BRAWLBUDDY_API_HOST:?Set BRAWLBUDDY_API_HOST in .env.production}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      api:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  resources:
+  caddy_data:
+  caddy_config:

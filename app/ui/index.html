@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=528">
+  <link rel="stylesheet" href="/assets/styles.css?v=530">
 </head>
 <body>
   <div class="app-shell">
@@ -838,7 +838,6 @@
           </section>
         </div>
         <section id="guide-profile-panel" class="panel guide-profile-panel hidden">
-          <p id="guide-verification-note" class="priority-note hidden"></p>
           <div class="section-heading">
             <div>
               <p class="eyebrow">CURATED GUIDE & BRAWLER STATS</p>
@@ -918,13 +917,17 @@
                   <h3>Matchups &amp; Teammates</h3>
                 </div>
                 <div class="matchups-header-right">
-                  <span class="matchups-source-badge">COMMUNITY WIN-RATE METRICS</span>
+                  <span class="matchups-source-badge" id="matchups-source-badge">COMMUNITY WIN-RATE METRICS</span>
                   <button type="button" class="matchups-sync-btn" id="matchups-sync-btn" title="Refresh matchups data" aria-label="Refresh matchups">
                     <span class="sync-icon">↻</span>
                   </button>
                 </div>
               </div>
-              <div class="matchups-columns-grid">
+              <div class="matchups-empty-state hidden" id="matchups-empty-state" role="status">
+                <strong id="matchups-empty-title">Matchup data unavailable</strong>
+                <p id="matchups-empty-description"></p>
+              </div>
+              <div class="matchups-columns-grid" id="matchups-columns-grid">
                 <!-- Column 1: Favorable (Strong Against) -->
                 <div class="matchup-col favorable-col">
                   <div class="matchup-col-header">
@@ -952,7 +955,7 @@
                   <div class="matchup-cards-list" id="matchup-synergy-list"></div>
                 </div>
               </div>
-              <div class="matchups-panel-footer">
+              <div class="matchups-panel-footer" id="matchups-panel-footer">
                 <button type="button" class="matchups-toggle-btn" id="matchups-toggle-btn" aria-expanded="false">
                   <span id="matchups-toggle-label">View All Matchups</span>
                   <span class="matchups-toggle-chevron">▼</span>
@@ -1186,7 +1189,8 @@
     </div>
   </dialog>
 
+  <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
-  <script src="/assets/app.js?v=117" defer></script>
+  <script src="/assets/app.js?v=119" defer></script>
 </body>
 </html>

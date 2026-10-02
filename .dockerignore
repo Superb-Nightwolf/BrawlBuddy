@@ -1,0 +1,12 @@
+.git
+.venv
+.env
+.env.*
+**/__pycache__
+**/*.db
+**/*.db-*
+.pytest_cache
+.tmp_chrome
+node_modules
+firebase-debug.log
+tests

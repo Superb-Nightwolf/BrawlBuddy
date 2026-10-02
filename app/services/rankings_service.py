@@ -10,7 +10,7 @@ logger = logging.getLogger("brawlbuddy.rankings_service")
 
 
 class RankingsService:
-    def __init__(self, client: BrawlStarsClient, demo_path: Optional[Path] = None) -> None:
+    def __init__(self, client: BrawlStarsClient | None, demo_path: Optional[Path] = None) -> None:
         self.client = client
         self.demo_path = demo_path or Path(__file__).resolve().parent.parent.parent / "data" / "demo_rankings.json"
         self._player_cache: dict[str, list[RankingPlayerItem]] = {}
@@ -35,7 +35,7 @@ class RankingsService:
         if cc in self._player_cache:
             return self._player_cache[cc], "CACHE"
 
-        if not self.client.api_key:
+        if self.client is None or not self.client.api_key:
             demo_items = self.load_demo_players()
             return demo_items, "DEMO"
 
@@ -65,7 +65,7 @@ class RankingsService:
         if cc in self._club_cache:
             return self._club_cache[cc], "CACHE"
 
-        if not self.client.api_key:
+        if self.client is None or not self.client.api_key:
             demo_items = self.load_demo_clubs()
             return demo_items, "DEMO"
 

@@ -30,7 +30,7 @@ META_MAP_PICKS: dict[str, list[str]] = {
 
 
 class EventsService:
-    def __init__(self, client: BrawlStarsClient, demo_path: Optional[Path] = None) -> None:
+    def __init__(self, client: BrawlStarsClient | None, demo_path: Optional[Path] = None) -> None:
         self.client = client
         self.demo_path = demo_path or Path(__file__).resolve().parent.parent.parent / "data" / "demo_events.json"
         self._cached_events: Optional[list[EventSlot]] = None
@@ -76,7 +76,7 @@ class EventsService:
         if self._cached_events:
             return self._cached_events, "CACHE"
 
-        if not self.client.api_key:
+        if self.client is None or not self.client.api_key:
             demo_events = self.load_demo()
             return demo_events, "DEMO"
 

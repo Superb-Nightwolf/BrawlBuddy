@@ -11,7 +11,8 @@ from typing import AsyncIterator
 mimetypes.add_type('image/webp', '.webp')
 mimetypes.add_type('image/png', '.png')
 
-from fastapi import FastAPI, Query, Request
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -65,7 +66,10 @@ matchup_service = MatchupService(
     catalog_path=PROJECT_ROOT / "data" / "brawler_catalog.json",
     battlelog_service=battlelog_service,
 )
-resource_service = ResourceService(PROJECT_ROOT / "data" / "brawl_advisor.db")
+database_path = Path(settings.app.database_path)
+if not database_path.is_absolute():
+    database_path = PROJECT_ROOT / database_path
+resource_service = ResourceService(database_path)
 with (PROJECT_ROOT / "data" / "brawler_guides.json").open("r", encoding="utf-8") as handle:
     brawler_guides = json.load(handle)
 with (PROJECT_ROOT / "data" / "brawler_catalog.json").open("r", encoding="utf-8") as handle:
@@ -111,6 +115,13 @@ app = FastAPI(
     description="Account intelligence API for Brawl Stars progression planning.",
     lifespan=lifespan,
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.app.cors_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT"],
+    allow_headers=["Content-Type", "Authorization"],
+)
 assets = PROJECT_ROOT / "app" / "ui" / "assets"
 app.mount("/assets", StaticFiles(directory=assets), name="assets")
 
@@ -137,6 +148,15 @@ async def handle_domain_error(_: Request, exc: BrawlAdvisorError) -> JSONRespons
 @app.get("/", include_in_schema=False)
 async def dashboard() -> FileResponse:
     return FileResponse(PROJECT_ROOT / "app" / "ui" / "index.html")
+
+
+@app.get("/config.js", include_in_schema=False)
+async def frontend_config() -> FileResponse:
+    return FileResponse(
+        PROJECT_ROOT / "app" / "ui" / "config.js",
+        media_type="application/javascript",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/brawlers", include_in_schema=False)
@@ -547,5 +567,7 @@ async def get_brawler_catalog() -> dict:
 
 @app.put("/api/resources/{player_tag}")
 async def save_resources(player_tag: str, resources: PlayerResources) -> PlayerResources:
+    if not settings.app.allow_resource_writes:
+        raise HTTPException(status_code=403, detail="Server resource saving is disabled for this alpha.")
     resources.player_tag = player_tag
     return resource_service.save(resources)

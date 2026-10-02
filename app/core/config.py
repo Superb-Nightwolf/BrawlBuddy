@@ -19,6 +19,9 @@ class AppConfig(BaseModel):
     demo_mode: bool = True
     host: str = "127.0.0.1"
     port: int = Field(default=8000, ge=1, le=65535)
+    cors_origins: list[str] = Field(default_factory=list)
+    database_path: str = "data/brawl_advisor.db"
+    allow_resource_writes: bool = True
 
 
 class BrawlStarsConfig(BaseModel):
@@ -62,4 +65,13 @@ def get_settings(config_path: Path | None = None) -> Settings:
     settings.app.debug = _env_bool("BRAWL_ADVISOR_DEBUG", settings.app.debug)
     settings.app.host = os.getenv("BRAWL_ADVISOR_HOST", settings.app.host)
     settings.app.port = int(os.getenv("BRAWL_ADVISOR_PORT", settings.app.port))
+    origins = os.getenv("BRAWL_ADVISOR_CORS_ORIGINS")
+    if origins is not None:
+        settings.app.cors_origins = [origin.strip() for origin in origins.split(",") if origin.strip()]
+    settings.app.database_path = os.getenv(
+        "BRAWL_ADVISOR_DATABASE_PATH", settings.app.database_path
+    )
+    settings.app.allow_resource_writes = _env_bool(
+        "BRAWL_ADVISOR_ALLOW_RESOURCE_WRITES", settings.app.allow_resource_writes
+    )
     return settings

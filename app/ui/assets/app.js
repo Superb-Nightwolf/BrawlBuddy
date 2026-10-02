@@ -332,7 +332,8 @@ function showView() {
 }
 
 async function request(url, options) {
-  const response = await fetch(url, options);
+  const apiBaseUrl = (window.BRAWLBUDDY_CONFIG?.apiBaseUrl || '').replace(/\/+$/, '');
+  const response = await fetch(url.startsWith('/api/') ? `${apiBaseUrl}${url}` : url, options);
   const payload = await response.json().catch(() => ({}));
   if (!response.ok || payload.error) throw new Error(payload?.error?.message || `Request failed (${response.status})`);
   return payload;
@@ -2528,12 +2529,6 @@ function renderGuideProfile(guide, brawler) {
   panel.classList.toggle('hidden', !hasProfile);
   if (!hasProfile) return;
 
-  const verificationNote = $('guide-verification-note');
-  if (verificationNote) {
-    verificationNote.textContent = guide.release_status ? guide.source_note || '' : '';
-    verificationNote.classList.toggle('hidden', !verificationNote.textContent);
-  }
-
   // Stats will be rendered by renderPowerLadder after it determines the default level.
   // But if guide-only (no brawler context), render at max (level 11) right away.
   renderCombatStats(guide.max_stats, 11);
@@ -2909,11 +2904,18 @@ async function renderMatchups(brawler, matchupsData = null, resetExpanded = true
     }
   }
 
-  if (!data || (!data.strong_against?.length && !data.struggles_against?.length && !data.best_alongside?.length)) {
-    panel.style.display = 'none';
-    return;
-  }
+  const hasData = Boolean(data && (data.strong_against?.length || data.struggles_against?.length || data.best_alongside?.length));
   panel.style.display = '';
+  $('matchups-empty-state')?.classList.toggle('hidden', hasData);
+  $('matchups-columns-grid')?.classList.toggle('hidden', !hasData);
+  $('matchups-panel-footer')?.classList.toggle('hidden', !hasData);
+  setText('matchups-source-badge', hasData
+    ? data.methodology?.source || 'COMMUNITY WIN-RATE METRICS'
+    : data ? 'DATA UNAVAILABLE' : 'LOAD FAILED');
+  setText('matchups-empty-title', data ? 'Matchup data unavailable' : 'Could not load matchup data');
+  setText('matchups-empty-description', data
+    ? `Verified matchup and teammate win rates for ${brawler.name || 'this brawler'} are not available in the current dataset. Rankings will appear here once a verified sample is added.`
+    : 'Try the refresh button to load matchup and teammate data again.');
 
   const favTitle = $('favorable-col-title');
   if (favTitle) {
@@ -2929,21 +2931,21 @@ async function renderMatchups(brawler, matchupsData = null, resetExpanded = true
 
     if (favList) {
       favList.replaceChildren();
-      (data.strong_against || []).slice(0, limit).forEach((item) => {
+      (data?.strong_against || []).slice(0, limit).forEach((item) => {
         favList.append(createMatchupCard(item, 'favorable'));
       });
     }
 
     if (cntList) {
       cntList.replaceChildren();
-      (data.struggles_against || []).slice(0, limit).forEach((item) => {
+      (data?.struggles_against || []).slice(0, limit).forEach((item) => {
         cntList.append(createMatchupCard(item, 'counters'));
       });
     }
 
     if (synList) {
       synList.replaceChildren();
-      (data.best_alongside || []).slice(0, limit).forEach((item) => {
+      (data?.best_alongside || []).slice(0, limit).forEach((item) => {
         synList.append(createMatchupCard(item, 'synergy'));
       });
     }
@@ -2951,35 +2953,33 @@ async function renderMatchups(brawler, matchupsData = null, resetExpanded = true
 
   populateLists(matchupsExpanded);
 
-  if (toggleBtn && !toggleBtn.dataset.bound) {
-    toggleBtn.dataset.bound = 'true';
-    toggleBtn.addEventListener('click', () => {
+  if (toggleBtn) {
+    toggleBtn.onclick = () => {
       matchupsExpanded = !matchupsExpanded;
       toggleBtn.setAttribute('aria-expanded', String(matchupsExpanded));
       if (toggleLabel) {
         toggleLabel.textContent = matchupsExpanded ? 'Show Less Matchups' : 'View All Matchups';
       }
       populateLists(matchupsExpanded);
-    });
+    };
   }
 
   // Bind manual sync trigger
   const syncBtn = $('matchups-sync-btn');
-  if (syncBtn && !syncBtn.dataset.bound) {
-    syncBtn.dataset.bound = 'true';
-    syncBtn.addEventListener('click', async () => {
+  if (syncBtn) {
+    syncBtn.onclick = async () => {
       syncBtn.classList.add('spinning');
       try {
         const freshData = await request(`/api/brawlers/${brawler.id}/matchups/refresh`, { method: 'POST' });
         if (freshData) {
-          renderMatchups(brawler, freshData, false);
+          await renderMatchups(brawler, freshData, false);
         }
       } catch {
         // quiet fallback
       } finally {
         setTimeout(() => syncBtn.classList.remove('spinning'), 600);
       }
-    });
+    };
   }
 
   // Bind info button click toggle for mobile / click interactions
