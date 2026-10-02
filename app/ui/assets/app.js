@@ -2346,10 +2346,13 @@ function renderBrawlers() {
   });
 
   brawlers.sort((a, b) => {
+    // Catalog IDs track addition order; release dates are not in the catalog.
+    if (sort === 'newest') return Number(b.id) - Number(a.id);
+    if (sort === 'oldest') return Number(a.id) - Number(b.id);
     if (sort === 'name') return (a.name || '').localeCompare(b.name || '');
+    if (sort === 'name_desc') return (b.name || '').localeCompare(a.name || '');
     if (sort === 'trophies') return (b.trophies || 0) - (a.trophies || 0) || (a.name || '').localeCompare(b.name || '');
-    if (sort === 'prestige_desc') return getPrestigeLevel(b) - getPrestigeLevel(a) || (b.trophies || 0) - (a.trophies || 0) || (a.name || '').localeCompare(b.name || '');
-    if (sort === 'prestige_asc') return getPrestigeLevel(a) - getPrestigeLevel(b) || (a.trophies || 0) - (b.trophies || 0) || (a.name || '').localeCompare(b.name || '');
+    if (sort === 'trophies_asc') return (a.trophies || 0) - (b.trophies || 0) || (a.name || '').localeCompare(b.name || '');
     if (sort === 'prestige_next') {
       if (a.owned !== b.owned) return a.owned ? -1 : 1;
       return getPrestigeState(a).remaining - getPrestigeState(b).remaining || (b.trophies || 0) - (a.trophies || 0);
@@ -3079,9 +3082,13 @@ function renderDetailArtwork(brawler) {
   };
   image.src = brawler.id === 16000038 && !brawler.owned
     ? '/assets/surge-guide-art.png'
-    : [16000107, 16000108, 16000109, 16000110].includes(brawler.id)
-      ? `/assets/brawlers/generated/${brawler.id}.png`
-      : `/assets/brawlers/${brawler.id}.png`;
+    : brawler.id === 16000108
+      ? '/assets/brawlers/generated/16000108-v3.png'
+      : brawler.id === 16000110
+        ? '/assets/brawlers/generated/16000110-v3.png'
+        : [16000107, 16000109].includes(brawler.id)
+          ? `/assets/brawlers/generated/${brawler.id}.png`
+          : `/assets/brawlers/${brawler.id}.png`;
   image.onerror = () => {
     if (!stage.contains(crop)) return;
     image.remove();
@@ -3441,10 +3448,13 @@ async function renderDetail() {
   const sources = $('guide-sources');
   if (sources) {
     sources.replaceChildren();
-    const brawlerName = guide?.name || brawler?.name || 'this brawler';
+    const wikiSource = (guide.sources || []).find((source) =>
+      source.url?.startsWith('https://brawlstars.fandom.com/wiki/')
+      && source.url !== 'https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki');
 
     const sourceItems = [
-      ...(guide.sources || []),
+      ...(wikiSource ? [{ ...wikiSource, label: wikiSource.label.replace(' - ', ' — ') }] : []),
+      { label: 'Brawl Stars Wiki — home', url: 'https://brawlstars.fandom.com/wiki/Brawl_Stars_Wiki' },
       { label: 'Brawl Stars Gears', url: 'https://support.supercell.com/brawl-stars/en/articles/gears-8.html' },
       { label: 'Brawl Stars Gadgets', url: 'https://support.supercell.com/brawl-stars/en/articles/gadgets-4.html' },
       { label: 'Brawl Stars Star Powers', url: 'https://support.supercell.com/brawl-stars/en/articles/star-powers-3.html' },
@@ -3851,23 +3861,70 @@ function renderCombatStats(maxStats, level) {
     let dotClass = 'stat-dot-default';
     const l = (stat.label || '').toLowerCase();
     if (l.includes('health') || l.includes('hp')) dotClass = 'stat-dot-health';
+    else if (l.includes('reload')) dotClass = 'stat-dot-reload';
+    else if (l.includes('speed') || l.includes('movement') || l.includes('range')) dotClass = 'stat-dot-utility';
     else if (l.includes('damage') || l.includes('attack')) dotClass = 'stat-dot-damage';
     else if (l.includes('super')) dotClass = 'stat-dot-super';
-    else if (l.includes('speed') || l.includes('movement') || l.includes('range')) dotClass = 'stat-dot-utility';
-    else if (l.includes('reload')) dotClass = 'stat-dot-reload';
 
     const labelWrap = document.createElement('div');
     labelWrap.className = 'stat-label-wrap';
-    labelWrap.innerHTML = `
-      <span class="stat-dot ${dotClass}"></span>
-      <span class="stat-label-text">${stat.label}</span>
-    `;
+
+    const dot = document.createElement('span');
+    dot.className = `stat-dot ${dotClass}`;
+    dot.setAttribute('aria-hidden', 'true');
+
+    const label = document.createElement('span');
+    label.className = 'stat-label-text';
+    label.textContent = stat.label;
+
+    labelWrap.append(dot, label);
 
     const valueEl = document.createElement('strong');
     valueEl.className = 'stat-val-text';
-    valueEl.textContent = scaleStatString(stat.value, mult, stat.label);
-    
-    row.append(labelWrap, valueEl);
+    const scaledValue = scaleStatString(stat.value, mult, stat.label);
+    const numericValue = String(scaledValue).match(/^([+-]?\d[\d,.]*)(.*)$/);
+    if (numericValue) {
+      const amount = document.createElement('span');
+      amount.className = 'stat-value-amount';
+      amount.textContent = numericValue[1];
+      valueEl.append(amount);
+      if (numericValue[2].trim()) {
+        const detail = document.createElement('span');
+        detail.className = 'stat-value-detail';
+        detail.textContent = numericValue[2].trim();
+        valueEl.append(document.createTextNode(' '), detail);
+      }
+    } else {
+      valueEl.textContent = scaledValue;
+    }
+
+    const header = document.createElement('div');
+    header.className = 'combat-stat-header';
+    header.append(labelWrap, valueEl);
+
+    const isLevelScaled = scaleStatString(stat.value, POWER_MULTIPLIERS[1], stat.label) !== stat.value;
+    const progress = isLevelScaled ? Math.round(mult * 100) : 100;
+    const track = document.createElement('div');
+    track.className = 'combat-stat-track';
+    track.setAttribute('role', 'progressbar');
+    track.setAttribute('aria-label', `${stat.label} at Level ${level}`);
+    track.setAttribute('aria-valuemin', '0');
+    track.setAttribute('aria-valuemax', '100');
+    track.setAttribute('aria-valuenow', String(progress));
+    track.setAttribute('aria-valuetext', `${scaledValue}. ${isLevelScaled ? `${progress}% of the Level 11 value` : 'Unchanged by power level'}`);
+    track.title = isLevelScaled
+      ? `${progress}% of the Level 11 value`
+      : 'This stat does not change with power level';
+
+    const fill = document.createElement('i');
+    fill.style.width = `${progress}%`;
+    track.append(fill);
+
+    const meter = document.createElement('div');
+    meter.className = 'combat-stat-meter';
+    meter.append(track);
+
+    row.append(header, meter);
     stats.append(row);
   });
 }

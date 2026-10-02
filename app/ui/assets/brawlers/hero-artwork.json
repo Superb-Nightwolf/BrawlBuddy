@@ -856,8 +856,8 @@
     "name": "WENDY",
     "official": "/assets/brawlers/16000108.png",
     "source": "File:Wendy Skin-Default.png",
-    "generated": "/assets/brawlers/generated/16000108.png",
-    "initial": "official"
+    "generated": "/assets/brawlers/generated/16000108-v3.png",
+    "initial": "generated"
   },
   "16000109": {
     "name": "COSMO",
@@ -871,7 +871,7 @@
     "name": "VINCE",
     "official": "/assets/brawlers/official/16000110.png",
     "source": "File:Vince Skin-Default.png",
-    "generated": "/assets/brawlers/generated/16000110.png",
+    "generated": "/assets/brawlers/generated/16000110-v3.png",
     "initial": "generated",
     "source_url": "https://static.wikia.nocookie.net/brawlstars/images/9/99/Vince_Skin-Default.png/revision/latest?cb=20260831173546",
     "portrait_source_url": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=portrait_brawler_vince",

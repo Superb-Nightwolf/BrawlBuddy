@@ -1,0 +1,80 @@
+from pathlib import Path
+import shutil
+import subprocess
+
+import pytest
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_roster_sort_options_and_ordering() -> None:
+    html = (ROOT / "app/ui/index.html").read_text(encoding="utf-8")
+    assert '<option value="newest">Newest brawlers</option>' in html
+    assert '<option value="oldest">Oldest brawlers</option>' in html
+    assert '<option value="trophies_asc">Least trophies</option>' in html
+    assert '<option value="name_desc">Name Z–A</option>' in html
+    assert 'value="prestige_desc"' not in html
+    assert 'value="prestige_asc"' not in html
+    assert '<option value="prestige_next">Closest to next Prestige</option>' in html
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is required to test roster sorting")
+    script = r"""
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const source = fs.readFileSync('./app/ui/assets/app.js', 'utf8');
+const render = source.slice(source.indexOf('function renderBrawlers() {'), source.indexOf('\nfunction prioritySteps('));
+const catalog = JSON.parse(fs.readFileSync('./data/brawler_catalog.json', 'utf8'));
+const state = {brawlers: catalog.map((b, i) => ({...b, owned: i % 2 === 0, power: i % 11 + 1})), level: 'all', view: 'grid'};
+let sort = 'newest';
+let query = '';
+let equipment = 'all';
+let displayed = [];
+const holder = {replaceChildren() { displayed = []; }, classList: {toggle() {}}, append(b) {displayed.push(b.id);}};
+const context = {
+  state, document: {querySelector() {return null;}},
+  $(id) {
+    if (id === 'brawler-sort') return {value: sort};
+    if (id === 'brawler-search') return {value: query};
+    if (id === 'equipment-filter') return {value: equipment};
+    if (id === 'brawler-grid') return holder;
+    return null;
+  },
+  matchesEquipment(b, filter) {return filter === 'all' || b.owned;},
+  cardFor(b) {return b;}, scheduleBrawlerNameFit() {},
+};
+vm.createContext(context);
+vm.runInContext(render, context);
+const run = () => vm.runInContext('renderBrawlers()', context);
+run();
+assert.deepEqual(displayed, catalog.map(b => b.id).sort((a,b) => b-a));
+assert.equal(displayed[0], 16000110);
+sort = 'oldest'; run();
+assert.deepEqual(displayed, catalog.map(b => b.id).sort((a,b) => a-b));
+assert.equal(displayed[0], 16000000);
+query = 'co'; sort = 'newest'; run();
+assert.deepEqual(displayed, catalog.filter(b => b.name.toLowerCase().includes(query)).map(b => b.id).sort((a,b) => b-a));
+query = ''; equipment = 'owned'; state.level = '3'; sort = 'oldest'; run();
+assert.deepEqual(displayed, state.brawlers.filter(b => b.owned && b.power === 3).map(b => b.id).sort((a,b) => a-b));
+equipment = 'all'; state.level = 'all';
+state.brawlers = [
+  {id: 1, name: 'ZIGGY', trophies: 20, owned: true},
+  {id: 2, name: 'COSMO', trophies: 0, owned: false},
+  {id: 3, name: 'WENDY', trophies: 20, owned: true},
+  {id: 4, name: 'AMBER', owned: false},
+  {id: 5, name: 'SHELLY', trophies: 200, owned: true},
+];
+sort = 'trophies_asc'; run();
+assert.deepEqual(displayed, [4, 2, 3, 1, 5]);
+sort = 'trophies'; run();
+assert.deepEqual(displayed, [5, 3, 1, 4, 2]);
+sort = 'name_desc'; run();
+assert.deepEqual(displayed, [1, 3, 5, 2, 4]);
+sort = 'name'; run();
+assert.deepEqual(displayed, [4, 2, 5, 3, 1]);
+query = 'w'; sort = 'name_desc'; run();
+assert.deepEqual(displayed, [3]);
+"""
+    subprocess.run([node, "-e", script], cwd=ROOT, check=True)

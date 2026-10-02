@@ -286,6 +286,9 @@ def test_cosmo_has_centered_portrait_and_separate_generated_hero_art() -> None:
     assert cosmo["official"] == "/assets/brawlers/16000109.png"
     assert cosmo["generated"] == "/assets/brawlers/generated/16000109.png"
     assert cosmo["initial"] == "generated"
+    # Transparent portrait insets must not reveal a second white border.
+    stylesheet = (UI_DIR / "assets/styles.css").read_text(encoding="utf-8")
+    assert 'img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }' in stylesheet
     hero_path = UI_DIR / "assets" / cosmo["generated"].removeprefix("/assets/")
     assert _png_dimensions(hero_path) == (
         1254,

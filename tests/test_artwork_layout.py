@@ -31,8 +31,8 @@ def test_all_hero_art_fits_the_shared_vertical_frame_without_clipping() -> None:
     base = ROOT / "app/ui/assets/brawlers"
     registry = json.loads((base / "hero-artwork.json").read_text(encoding="utf-8"))
     paths = [
-        (brawler_id, (base / "generated" if brawler_id in {"16000107", "16000108", "16000109", "16000110"} else base) / f"{brawler_id}.png")
-        for brawler_id in registry
+        (brawler_id, base.parent / entry["generated"].removeprefix("/assets/"))
+        for brawler_id, entry in registry.items()
     ]
     paths.append(("SURGE preview", base.parent / "surge-guide-art.png"))
     for brawler_id, path in paths:
