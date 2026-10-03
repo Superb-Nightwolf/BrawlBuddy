@@ -1920,7 +1920,7 @@ function renderRosterEquipmentLab(holder, brawler) {
   hcImg.className = 'equip-icon hc-icon';
   hcImg.src = hcIconUrl;
   hcImg.alt = 'Hypercharge';
-  hcImg.onerror = () => { hcImg.src = '/assets/section_hypercharge.png'; };
+  hcImg.onerror = () => { hcImg.src = '/assets/section_hypercharge.png?v=2'; };
   hcSlot.append(hcImg);
 
   const hcBuffieSlot = document.createElement('div');
@@ -1956,7 +1956,7 @@ function renderRosterEquipmentLab(holder, brawler) {
     gearImg.className = 'gear-icon';
     gearImg.src = gear.icon;
     gearImg.alt = gear.name;
-    gearImg.onerror = () => { gearImg.src = '/assets/section_gear.png'; };
+    gearImg.onerror = () => { gearImg.src = '/assets/section_gear.png?v=2'; };
     gearSlot.append(gearImg);
     gearsPill.append(gearSlot);
   });
@@ -2357,6 +2357,7 @@ function renderCollectionPrestige() {
 }
 
 function renderBrawlers() {
+  globalThis.RosterDropdowns?.sync();
   if (!state.brawlers || state.brawlers.length === 0) {
     state.brawlers = mergeCatalog(state.ownedBrawlers);
   }
@@ -2566,7 +2567,7 @@ function renderGuideProfile(guide, brawler) {
             ? '/assets/section_gadget.png'
             : type === 'star_power'
               ? '/assets/section_star_power.png'
-              : '/assets/section_gear.png';
+              : '/assets/section_gear.png?v=2';
           setAssetImageSources(image, [iconUrl, categoryFallback], fallback.textContent);
           iconWrap.append(image);
         } else {
@@ -3608,7 +3609,7 @@ function getHyperchargeImageSources(brawler) {
     return uniqueAssetSources(unreleasedFallbacks);
   }
   const fallbacks = state.visualAssets?.fallbacks?.hypercharge || [
-    '/assets/section_hypercharge.png',
+    '/assets/section_hypercharge.png?v=2',
     '/assets/hypercharge_icon.webp',
   ];
   return uniqueAssetSources([entry?.hypercharge?.local_url, ...fallbacks]);
@@ -3628,7 +3629,7 @@ function getBuffieImageSources(brawler, abilityType) {
       ? '/assets/section_gadget.png'
       : abilityType === 'star_power'
         ? '/assets/section_star_power.png'
-        : '/assets/section_hypercharge.png',
+        : '/assets/section_hypercharge.png?v=2',
     '/assets/buffie_icon.webp',
   ];
   return uniqueAssetSources([entry?.buffies?.[abilityType]?.local_url, ...fallbacks]);
@@ -3972,7 +3973,7 @@ function getEquipmentImageUrl(item, type, brawler) {
   if (type === 'gear') {
     const gear = Object.entries(state.visualAssets?.gears || {})
       .find(([name]) => normalizeKey(name) === norm)?.[1];
-    return gear?.local_url || '/assets/section_gear.png';
+    return gear?.local_url || '/assets/section_gear.png?v=2';
   }
 
   return null;
@@ -4091,7 +4092,7 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
         ? '/assets/section_gadget.png'
         : type === 'star_power'
           ? '/assets/section_star_power.png'
-          : '/assets/section_gear.png';
+          : '/assets/section_gear.png?v=2';
       setAssetImageSources(
         iconImg,
         [imgUrl, categoryFallback],
@@ -4141,7 +4142,95 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
   });
 }
 
+function initializeSidebar() {
+  const shell = document.querySelector('.app-shell');
+  const sidebar = $('primary-sidebar');
+  const toggle = $('sidebar-toggle');
+  const edgeToggle = $('sidebar-edge-toggle');
+  const close = $('sidebar-close');
+  const mobileNav = document.querySelector('.mobile-nav');
+  const main = document.querySelector('.main-content');
+  const mobile = window.matchMedia('(max-width: 980px)');
+  const preferenceKey = 'brawlbuddy_sidebar_collapsed';
+  let desktopCollapsed = false;
+  let open;
+  try {
+    desktopCollapsed = localStorage.getItem(preferenceKey) === 'true';
+  } catch { /* The menu still works when browser storage is unavailable. */ }
+
+  function setOpen(nextOpen, moveFocus = false) {
+    open = nextOpen;
+    // Restore focus before making the menu or page inert.
+    main.inert = false;
+    mobileNav.inert = false;
+    if (!open && sidebar.contains(document.activeElement)) toggle.focus();
+    shell.classList.toggle('sidebar-collapsed', !mobile.matches && !open);
+    shell.classList.toggle('menu-open', mobile.matches && open);
+    document.body.classList.toggle('menu-drawer-open', mobile.matches && open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Hide menu' : 'Show menu');
+    edgeToggle.setAttribute('aria-expanded', String(open));
+    edgeToggle.setAttribute('aria-label', open ? 'Hide menu' : 'Show menu');
+    edgeToggle.title = open ? 'Hide menu' : 'Show menu';
+    sidebar.inert = !open;
+    sidebar.setAttribute('aria-hidden', String(!open));
+    if (mobile.matches && open) {
+      sidebar.setAttribute('role', 'dialog');
+      sidebar.setAttribute('aria-modal', 'true');
+      main.inert = true;
+      mobileNav.inert = true;
+      requestAnimationFrame(() => {
+        if (open && mobile.matches) close.focus();
+      });
+    } else {
+      sidebar.removeAttribute('role');
+      sidebar.removeAttribute('aria-modal');
+      if (moveFocus) toggle.focus();
+    }
+    if (!mobile.matches) {
+      desktopCollapsed = !open;
+      try {
+        localStorage.setItem(preferenceKey, String(desktopCollapsed));
+      } catch { /* Keep the current session's state without persistence. */ }
+    }
+  }
+
+  toggle.addEventListener('click', () => setOpen(!open));
+  edgeToggle.addEventListener('click', () => setOpen(!open));
+  close.addEventListener('click', () => setOpen(false, true));
+  $('sidebar-backdrop').addEventListener('click', () => setOpen(false, true));
+  sidebar.addEventListener('click', (event) => {
+    if (mobile.matches && event.target.closest('a[href]')) setOpen(false, true);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (!open) return;
+    if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {
+      event.preventDefault();
+      setOpen(false, true);
+    } else if (mobile.matches && event.key === 'Tab') {
+      const items = sidebar.querySelectorAll('button, a[href]');
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+  mobile.addEventListener('change', () => setOpen(mobile.matches ? false : !desktopCollapsed));
+  shell.addEventListener('transitionend', (event) => {
+    if (event.target === shell && event.propertyName === 'grid-template-columns') {
+      scheduleBrawlerNameFit($('brawler-grid') || document);
+    }
+  });
+  setOpen(mobile.matches ? false : !desktopCollapsed);
+}
+
 function bindEvents() {
+  initializeSidebar();
   $('connect-button')?.addEventListener('click', () => {
     $('dialog-error')?.classList.add('hidden');
     $('connect-dialog')?.showModal();
@@ -4352,6 +4441,7 @@ function setView(view) {
 }
 
 async function handleRoute(options = {}) {
+  globalThis.RosterDropdowns?.close();
   configurePage();
   showView();
   if (!options.isPop) {
@@ -4400,6 +4490,7 @@ window.addEventListener('popstate', (e) => {
 document.addEventListener('DOMContentLoaded', async () => {
   configurePage();
   bindEvents();
+  globalThis.RosterDropdowns?.init();
   await Promise.all([loadStatus(), loadCatalog()]);
   await handleRoute({ isPop: false });
 });

@@ -116,6 +116,37 @@ assert.deepEqual(displayed, [1, 2, 3, 4, 5]);
     subprocess.run([node, "-e", script], cwd=ROOT, check=True)
 
 
+def test_individual_equipment_filters_require_ownership_and_match_inventory() -> None:
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is required to test roster filters")
+    script = r"""
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const source = fs.readFileSync('./app/ui/assets/app.js', 'utf8');
+const filters = source.slice(source.indexOf('function matchesEquipment('), source.indexOf('function renderBrawlers('));
+const context = {
+  state: {}, getBrawlerClass() {return '';}, getBrawlerRarity() {return '';},
+  getPrestigeLevel() {return 0;}, hasBuffie() {return false;},
+  hasHypercharge(b) {return !!b.hyperchargeOwned;},
+};
+vm.createContext(context);
+vm.runInContext(filters, context);
+const owned = {owned: true, gadgets: [{id: 1}], star_powers: [{id: 2}], hyperchargeOwned: true};
+const empty = {owned: true, gadgets: [], star_powers: [], hyperchargeOwned: false};
+for (const [has, missing] of [['has_gadget', 'no_gadget'], ['has_sp', 'no_sp'], ['has_hypercharge', 'no_hypercharge']]) {
+  assert.equal(context.matchesEquipment(owned, has), true);
+  assert.equal(context.matchesEquipment(empty, has), false);
+  assert.equal(context.matchesEquipment(owned, missing), false);
+  assert.equal(context.matchesEquipment(empty, missing), true);
+  assert.equal(context.matchesEquipment({...owned, owned: false}, has), false);
+  assert.equal(context.matchesEquipment({...empty, owned: false}, missing), false);
+}
+"""
+    subprocess.run([node, "-e", script], cwd=ROOT, check=True)
+
+
 def test_progression_filters_match_one_stage_and_respect_permanent_prestige() -> None:
     node = shutil.which("node")
     if not node:
