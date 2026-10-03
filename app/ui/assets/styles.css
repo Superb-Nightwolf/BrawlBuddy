@@ -386,9 +386,9 @@ a { color: inherit; }
 /* Account Prestige uses the same soft rarity palette as the roster cards. */
 #brawlers-view .prestige-collection {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 190px;
-  gap: 24px 32px;
-  padding: 28px 32px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  padding: 12px 32px 28px;
   min-height: 0;
   isolation: isolate;
   color: #30265b;
@@ -406,25 +406,41 @@ a { color: inherit; }
   background: repeating-conic-gradient(#9370cd 0 6deg, transparent 6deg 18deg);
   z-index: -1;
 }
-.collection-prestige-copy { min-width: 0; align-self: center; }
+.collection-prestige-hero { display: flex; align-items: center; justify-content: flex-start; gap: 24px; min-width: 0; transform: translateX(-5%); }
+.collection-prestige-copy { flex: 0 1 auto; min-width: 0; max-width: 540px; margin-inline-start: 10%; align-self: center; text-align: left; }
 .collection-prestige-identity { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .prestige-collection .banner-chip { background: #e4d8ff; border-color: #cbb5f7; color: #624293; box-shadow: none; }
 .collection-prestige-source { color: #665480; font-size: 9px; font-weight: 800; letter-spacing: .7px; }
 .prestige-collection.is-demo .collection-prestige-source { background: #fff1b8; color: #745211; padding: 5px 9px; border-radius: 7px; }
-#brawlers-view .prestige-collection h2 { font-size: clamp(27px, 3.2vw, 42px); line-height: 1.1; margin: 13px 0 10px; letter-spacing: -1.1px; }
+#brawlers-view .prestige-collection h2 { font-size: clamp(27px, 3vw, 42px); line-height: 1.1; margin: 13px 0 10px; letter-spacing: -1.1px; }
 #brawlers-view .prestige-collection h2 em { color: #8050b5; }
 #brawlers-view .prestige-collection p { display: block; color: #524570; margin: 8px 0 0; max-width: 650px; font-size: 12px; line-height: 1.55; overflow-wrap: anywhere; }
 #brawlers-view .prestige-collection .collection-prestige-summary { font-size: 11px; color: #6a5b82; }
 .collection-prestige-total {
+  flex: 1 1 520px;
   align-self: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 172px; padding: 14px 16px; border: 3px solid #fff; border-radius: 36px;
-  color: #613d12; background: linear-gradient(135deg, #fff7cf, #ffe69b 60%, #ffdc74);
-  box-shadow: 0 6px 0 #d7ba70, 0 12px 24px rgba(136,100,33,.1);
+  min-width: 0; color: #574078; text-align: center;
 }
-.collection-prestige-total-icon { color: #a57823; font-size: 21px; line-height: 1; }
-.collection-prestige-total strong { font-family: var(--font-heading); font-size: clamp(40px, 5vw, 64px); font-weight: 900; line-height: 1.15; overflow-wrap: anywhere; max-width: 100%; }
-.collection-prestige-total > span:not(.collection-prestige-total-icon) { font-size: 10px; font-weight: 900; letter-spacing: 1.1px; text-align: center; }
-.collection-prestige-total small { margin-top: 6px; font-size: 10px; color: #826531; }
+.collection-prestige-emblem { position: relative; width: 52%; max-width: 300px; aspect-ratio: 1; display: grid; place-items: center; container-type: inline-size; }
+.collection-prestige-emblem::before, .collection-prestige-emblem::after {
+  content: ""; position: absolute; top: 54%; width: 42cqw; height: 18cqw;
+  background-image: url('/assets/prestige-accent-star.svg?v=2'), url('/assets/prestige-accent-star.svg?v=2'), url('/assets/prestige-accent-star.svg?v=2');
+  background-size: 18cqw 18cqw, 12cqw 12cqw, 8cqw 8cqw; background-repeat: no-repeat;
+  transform: translateY(-50%); filter: drop-shadow(0 3px 4px rgba(143,95,20,.24)); pointer-events: none;
+}
+.collection-prestige-emblem::before { left: -45cqw; background-position: 24cqw center, 10cqw center, 0 center; }
+.collection-prestige-emblem::after { right: -45cqw; background-position: 0 center, 20cqw center, 34cqw center; }
+.collection-prestige-emblem img { display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 7px 9px rgba(59,24,123,.18)); }
+.collection-prestige-total strong {
+  position: absolute; inset: 32% 22% 22%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-heading); font-size: clamp(38px, 30cqw, 92px); font-weight: 900; line-height: 1; letter-spacing: -1px;
+  background: linear-gradient(180deg, #fff 20%, #ecffd7 48%, #ffd5fa 80%);
+  background-clip: text; -webkit-background-clip: text; color: transparent;
+  -webkit-text-stroke: 2px #171544; paint-order: stroke fill;
+  filter: drop-shadow(0 3px 0 #171544); font-variant-numeric: tabular-nums;
+}
+.collection-prestige-total strong.has-long-total { font-size: clamp(24px, 16cqw, 48px); letter-spacing: -1.5px; }
+.collection-prestige-total > span { position: relative; margin-top: -14px; font-size: 11px; font-weight: 900; letter-spacing: 1.1px; }
 .collection-prestige-categories { grid-column: 1 / -1; min-width: 0; padding-top: 17px; border-top: 1px solid rgba(104,77,148,.16); }
 .collection-prestige-category-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
 .collection-prestige-category-heading > span { font-size: 9px; font-weight: 900; letter-spacing: .8px; color: #65517d; }
@@ -454,20 +470,18 @@ a { color: inherit; }
   .collection-prestige-category-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
-  #brawlers-view .prestige-collection { grid-template-columns: minmax(0, 1fr) 112px; padding: 20px 16px; gap: 20px 12px; }
+  #brawlers-view .prestige-collection { padding: 12px 16px 20px; gap: 20px; }
+  .collection-prestige-hero { flex-direction: column; gap: 4px; }
+  .collection-prestige-copy { align-self: stretch; }
+  .collection-prestige-identity { justify-content: flex-start; }
+  .collection-prestige-total { flex: 0 0 auto; width: 100%; }
   #brawlers-view .prestige-collection h2 { font-size: 26px; letter-spacing: -.6px; }
   #brawlers-view .prestige-collection p { font-size: 11px; }
-  .collection-prestige-total { min-height: 140px; border-radius: 26px; padding: 12px 8px; }
-  .collection-prestige-total strong { font-size: 42px; }
-  .collection-prestige-total > span:not(.collection-prestige-total-icon) { font-size: 8px; letter-spacing: .5px; }
-  .collection-prestige-total small { font-size: 9px; }
+  .collection-prestige-total strong { font-size: clamp(28px, 31cqw, 68px); -webkit-text-stroke-width: 1.5px; filter: drop-shadow(0 2px 0 #171544); }
+  .collection-prestige-total strong.has-long-total { font-size: clamp(20px, 16cqw, 36px); letter-spacing: -1px; }
+  .collection-prestige-total > span { margin-top: -10px; font-size: 10px; letter-spacing: .8px; }
   .collection-prestige-category { grid-template-columns: 1fr; text-align: center; justify-items: center; gap: 5px; padding: 9px 4px; }
   .collection-prestige-category img { grid-row: auto; width: 34px; height: 36px; }
-}
-@media (max-width: 360px) {
-  #brawlers-view .prestige-collection { grid-template-columns: 1fr; }
-  .collection-prestige-total { min-height: 0; border-radius: 20px; padding: 10px; }
-  .collection-prestige-total-icon, .collection-prestige-total small { display: none; }
 }
 .brawler-panel {
   padding: 24px;

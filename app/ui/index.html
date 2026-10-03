@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=563">
+  <link rel="stylesheet" href="/assets/styles.css?v=572">
 </head>
 <body>
   <div class="app-shell">
@@ -350,14 +350,18 @@
 
       <section id="brawlers-view" class="view hidden">
         <div id="collection-prestige-banner" class="collection-banner panel prestige-collection" aria-label="Player Prestige summary">
-          <div class="collection-prestige-copy">
-            <div class="collection-prestige-identity"><span class="banner-chip">PLAYER PRESTIGE</span><span id="collection-prestige-source" class="collection-prestige-source">CONNECT A PLAYER</span></div>
-            <h2>Your Prestige.<br><em>Every milestone counts.</em></h2>
-          </div>
-          <div class="collection-prestige-total" aria-label="Account Total Prestige">
-            <span class="collection-prestige-total-icon" aria-hidden="true">✦</span>
-            <strong id="collection-prestige-total">—</strong><span>TOTAL PRESTIGE</span>
-            <small>Across your roster</small>
+          <div class="collection-prestige-hero">
+            <div class="collection-prestige-copy">
+              <div class="collection-prestige-identity"><span class="banner-chip">PLAYER PRESTIGE</span><span id="collection-prestige-source" class="collection-prestige-source">CONNECT A PLAYER</span></div>
+              <h2>Your Prestige<br><em>Every milestone counts</em></h2>
+            </div>
+            <div class="collection-prestige-total" aria-label="Account Total Prestige">
+              <div class="collection-prestige-emblem">
+                <img src="/assets/total-prestige-emblem-hd.png" width="1254" height="1254" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
+                <strong id="collection-prestige-total">—</strong>
+              </div>
+              <span>TOTAL PRESTIGE</span>
+            </div>
           </div>
           <div class="collection-prestige-categories">
             <div class="collection-prestige-category-heading"><span>YOUR BRAWLERS BY PROGRESSION</span></div>
@@ -1287,6 +1291,6 @@
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
   <script src="/assets/readiness.js?v=25" defer></script>
-  <script src="/assets/app.js?v=127" defer></script>
+  <script src="/assets/app.js?v=128" defer></script>
 </body>
 </html>

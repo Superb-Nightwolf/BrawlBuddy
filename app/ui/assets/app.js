@@ -2315,6 +2315,7 @@ function renderCollectionPrestige() {
   if (!holder) return;
   const summary = getCollectionPrestigeSummary(state.player);
   setText('collection-prestige-total', summary.total === null ? '—' : format(summary.total));
+  $('collection-prestige-total')?.classList.toggle('has-long-total', summary.total >= 1000);
   const sourceLabel = summary.source === 'OFFICIAL API' ? '' : summary.source;
   setText('collection-prestige-source', sourceLabel);
   $('collection-prestige-source')?.classList.toggle('hidden', !sourceLabel);
