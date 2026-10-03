@@ -16,6 +16,7 @@ const state = {
   rankingsPlayers: [],
   rankingsClubs: [],
   level: 'all',
+  ownership: 'all',
   equipment: 'all',
   view: 'grid',
   dataSources: {},
@@ -1973,7 +1974,9 @@ function cardFor(brawler) {
   addImageWithFallback(frameBox, brawler, 'brawler-image');
   visual.append(frameBox);
   if (!brawler.owned) {
-    const badge = document.createElement('span'); badge.className = 'power-badge locked'; badge.textContent = 'LOCKED'; visual.append(badge);
+    const badge = document.createElement('span'); badge.className = 'power-badge locked';
+    badge.innerHTML = '<svg class="ownership-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>LOCKED</span>';
+    visual.append(badge);
   }
   const copy = document.createElement('div'); copy.className = 'brawler-card-copy';
   const nameBlock = document.createElement('div'); nameBlock.className = 'brawler-name-block';
@@ -2010,7 +2013,7 @@ function cardFor(brawler) {
   levelChip.innerHTML = `<span class="level-chip-val">${displayedLevel}</span><span class="level-chip-lbl">LEVEL</span>`;
 
   progRow.append(trophyChip, prestigeWrap, levelChip);
-  nameBlock.append(progRow);
+  if (isOwned) nameBlock.append(progRow);
 
   const equipment = document.createElement('div'); equipment.className = 'equipment-row equipment-lab-wrap'; renderRosterEquipmentLab(equipment, brawler);
   const open = document.createElement('div'); open.className = 'open-guide'; open.innerHTML = '<span>VIEW GUIDE</span><b>→</b>';
@@ -2308,9 +2311,28 @@ function renderBrawlers() {
   state.equipment = equipmentFilter;
 
   const totalCatalogCount = (state.brawlers || []).length || 108;
+  const ownership = state.ownership || 'all';
+  const unlockedCount = (state.brawlers || []).filter((brawler) => brawler.owned).length;
+  const ownershipCounts = { all: totalCatalogCount, unlocked: unlockedCount, locked: totalCatalogCount - unlockedCount };
+  for (const [scope, count] of Object.entries(ownershipCounts)) {
+    const countElement = $(`ownership-${scope}-count`);
+    if (countElement) countElement.textContent = scope === 'all' || state.player ? format(count) : '—';
+  }
+  const ownershipButtons = $('ownership-filter')?.querySelectorAll('[data-ownership]') || [];
+  ownershipButtons.forEach((button) => {
+    const selected = button.dataset.ownership === ownership;
+    button.classList.toggle('active', selected);
+    button.setAttribute('aria-pressed', String(selected));
+    button.disabled = button.dataset.ownership !== 'all' && !state.player;
+  });
+  const powerButtons = $('level-filter')?.querySelectorAll('[data-level]') || [];
+  powerButtons.forEach((button) => { button.disabled = ownership === 'locked' && button.dataset.level !== 'all'; });
+  const ownershipSummary = $('roster-ownership-summary');
+  if (ownershipSummary) ownershipSummary.textContent = state.player ? `${format(unlockedCount)} of ${format(totalCatalogCount)} unlocked` : '';
+  const ownershipScopedBrawlers = (state.brawlers || []).filter((brawler) => ownership === 'all' || (ownership === 'unlocked' ? brawler.owned : !brawler.owned));
 
-  // Determine category-scoped brawlers (level & equipment filter, before search query)
-  const categoryScopedBrawlers = (state.brawlers || []).filter((brawler) => {
+  // Apply ownership, Power, and equipment before searching within that scope.
+  const categoryScopedBrawlers = ownershipScopedBrawlers.filter((brawler) => {
     let matchesLevel = true;
     if (state.level && state.level !== 'all') {
       const targetLevel = Number(state.level);
@@ -2321,19 +2343,19 @@ function renderBrawlers() {
   });
 
   // Calculate denominator for active category context (e.g. 27 for Buffies)
-  let contextTotal = totalCatalogCount;
+  let contextTotal = ownershipScopedBrawlers.length;
   const isBuffieFilter = equipmentFilter.startsWith('buffie');
   if (isBuffieFilter) {
     if (equipmentFilter === 'buffies_not_available') {
-      contextTotal = (state.brawlers || []).filter((b) => !isBuffieReleased(b)).length;
+      contextTotal = ownershipScopedBrawlers.filter((b) => !isBuffieReleased(b)).length;
     } else {
-      contextTotal = (state.brawlers || []).filter((b) => isBuffieReleased(b)).length;
+      contextTotal = ownershipScopedBrawlers.filter((b) => isBuffieReleased(b)).length;
     }
   }
 
   // Dynamically update search input placeholder based on current filter scope
   if (searchInput) {
-    const isCategoryFiltered = Boolean((state.level && state.level !== 'all') || (equipmentFilter && equipmentFilter !== 'all'));
+    const isCategoryFiltered = Boolean(ownership !== 'all' || (state.level && state.level !== 'all') || (equipmentFilter && equipmentFilter !== 'all'));
     if (isCategoryFiltered) {
       const scopeCount = categoryScopedBrawlers.length;
       searchInput.placeholder = scopeCount === 1 ? 'Search 1 brawler' : `Search ${scopeCount} brawlers`;
@@ -2380,7 +2402,9 @@ function renderBrawlers() {
   if (empty) empty.classList.toggle('hidden', brawlers.length > 0);
 
   const filteredCount = brawlers.length;
-  const isFiltered = Boolean(query || (state.level && state.level !== 'all') || (equipmentFilter && equipmentFilter !== 'all'));
+  const isFiltered = Boolean(ownership !== 'all' || query || (state.level && state.level !== 'all') || (equipmentFilter && equipmentFilter !== 'all'));
+  const resultsSummary = $('roster-results-summary');
+  if (resultsSummary) resultsSummary.textContent = `Showing ${format(filteredCount)}${ownership === 'all' ? '' : ` ${ownership}`} ${filteredCount === 1 ? 'brawler' : 'brawlers'}`;
 
   const countNum = $('results-count-num');
   const countTotal = $('results-count-total');
@@ -4132,10 +4156,27 @@ function bindEvents() {
   $('brawler-search')?.addEventListener('input', renderBrawlers);
   $('brawler-sort')?.addEventListener('change', renderBrawlers);
   $('equipment-filter')?.addEventListener('change', (event) => { state.equipment = event.target.value; renderBrawlers(); });
+  $('ownership-filter')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-ownership]');
+    if (!button || button.disabled) return;
+    state.ownership = button.dataset.ownership;
+    if (state.ownership === 'locked') {
+      state.level = 'all';
+      $('level-filter')?.querySelectorAll('[data-level]').forEach((chip) => chip.classList.toggle('active', chip.dataset.level === 'all'));
+      const equipmentFilter = $('equipment-filter');
+      const filter = equipmentFilter?.value || state.equipment;
+      const catalogFilter = filter === 'all' || filter.startsWith('class_') || filter.startsWith('rarity_') || ['buffies_available', 'buffies_not_available', 'hc_not_available'].includes(filter);
+      if (!catalogFilter) {
+        state.equipment = 'all';
+        if (equipmentFilter) equipmentFilter.value = 'all';
+      }
+    }
+    renderBrawlers();
+  });
   $('level-filter')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-level]');
-    if (!button) return;
-    document.querySelectorAll('.level-chip').forEach((chip) => chip.classList.remove('active'));
+    if (!button || button.disabled) return;
+    $('level-filter').querySelectorAll('.level-chip').forEach((chip) => chip.classList.remove('active'));
     button.classList.add('active');
     state.level = button.dataset.level;
     renderBrawlers();
@@ -4147,7 +4188,8 @@ function bindEvents() {
     if (equipSelect) equipSelect.value = 'all';
     state.equipment = 'all';
     state.level = 'all';
-    document.querySelectorAll('.level-chip').forEach((chip) => {
+    state.ownership = 'all';
+    $('level-filter')?.querySelectorAll('.level-chip').forEach((chip) => {
       chip.classList.toggle('active', chip.dataset.level === 'all');
     });
     renderBrawlers();

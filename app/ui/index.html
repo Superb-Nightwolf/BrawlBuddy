@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=549">
+  <link rel="stylesheet" href="/assets/styles.css?v=553">
 </head>
 <body>
   <div class="app-shell">
@@ -449,11 +449,20 @@
             </div>
             <div class="view-toggle"><button id="grid-view" class="active" type="button" aria-label="Card view">▦</button><button id="table-view" type="button" aria-label="Table view">☷</button></div>
           </div>
+          <div class="ownership-toolbar">
+            <div id="ownership-filter" class="ownership-filter" role="group" aria-label="Brawler ownership">
+              <button class="ownership-chip active" data-ownership="all" type="button" aria-pressed="true"><span>All</span><span class="ownership-count" id="ownership-all-count">—</span></button>
+              <button class="ownership-chip" data-ownership="unlocked" type="button" aria-pressed="false"><span>Unlocked</span><span class="ownership-count" id="ownership-unlocked-count">—</span></button>
+              <button class="ownership-chip" data-ownership="locked" type="button" aria-pressed="false"><svg class="ownership-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Locked</span><span class="ownership-count" id="ownership-locked-count">—</span></button>
+            </div>
+            <span id="roster-ownership-summary" class="roster-ownership-summary"></span>
+          </div>
           <div class="level-filter-label"><span>POWER LEVEL</span><small>Select one exact level</small></div>
           <div id="level-filter" class="level-filter">
             <button class="level-chip active" data-level="all" type="button">ALL</button>
             <button class="level-chip" data-level="1" type="button">1</button><button class="level-chip" data-level="2" type="button">2</button><button class="level-chip" data-level="3" type="button">3</button><button class="level-chip" data-level="4" type="button">4</button><button class="level-chip" data-level="5" type="button">5</button><button class="level-chip" data-level="6" type="button">6</button><button class="level-chip" data-level="7" type="button">7</button><button class="level-chip" data-level="8" type="button">8</button><button class="level-chip" data-level="9" type="button">9</button><button class="level-chip" data-level="10" type="button">10</button><button class="level-chip max" data-level="11" type="button">11</button>
           </div>
+          <p id="roster-results-summary" class="roster-results-summary" role="status"></p>
           <div id="brawler-grid" class="brawler-grid" aria-live="polite"></div><div id="brawler-empty" class="empty-state hidden">No brawlers match those filters.</div>
         </section>
       </section>
@@ -860,7 +869,7 @@
               </div>
               <div class="readiness-total readiness-total-compact">
                 <div class="readiness-total-heading"><h3 data-readiness-total-title>TOTAL TO MAX READY</h3></div>
-                <h4 class="readiness-route-title readiness-route-label hidden" data-readiness-direct-route>Direct Gems route</h4>
+                <div class="readiness-route-label hidden" data-readiness-direct-route><h4 class="readiness-route-title">Direct Gems route</h4></div>
                 <div class="readiness-total-grid" id="readiness-overview-totals"></div>
                 <div class="readiness-route-comparison hidden" data-readiness-route-comparison></div>
               </div>
@@ -870,37 +879,39 @@
         <section id="readiness-planning-panel" class="panel readiness-planning-panel hidden">
           <div class="section-heading">
             <div><p class="eyebrow">YOUR PATH TO READY</p><h2>What is missing, and what it costs</h2></div>
-            <span id="readiness-plan-source" class="source-chip calculated">CALCULATED</span>
+            <div class="readiness-heading-actions"><span id="readiness-plan-source" class="source-chip calculated">CALCULATED</span><div id="readiness-plan-info"></div></div>
           </div>
           <p id="readiness-plan-note" class="readiness-plan-note"></p>
           <div class="readiness-planning-grid">
             <div class="readiness-breakdown">
-              <h3>Upgrade breakdown</h3>
+              <div class="readiness-breakdown-heading"><h3>Upgrade breakdown</h3><div id="readiness-breakdown-info"></div></div>
+              <div id="readiness-breakdown-notes"></div>
               <div class="readiness-table-wrap">
                 <table class="readiness-table">
-                  <caption class="sr-only">Power upgrades, recommended equipment, and gameplay Buffies</caption>
+                  <caption class="sr-only">Power upgrades, recommended equipment, and Buffies</caption>
                   <thead><tr><th scope="col">Requirement</th><th scope="col">Status</th><th scope="col">Resource needed</th></tr></thead>
                   <tbody id="readiness-breakdown-body"></tbody>
                 </table>
               </div>
             </div>
             <div class="readiness-buffie-section">
-              <div class="readiness-buffie-heading"><h3>Buffie progress</h3><strong id="readiness-buffie-count">—</strong></div>
+              <div class="readiness-buffie-heading"><h3>Buffie progress</h3><div class="readiness-heading-actions"><strong id="readiness-buffie-count">—</strong><div id="readiness-buffie-info"></div></div></div>
+              <p id="readiness-buffie-note"></p>
               <div class="readiness-table-wrap">
                 <table class="readiness-table readiness-buffie-table">
-                  <caption class="sr-only">Gameplay Buffie ownership and direct Gem requirements</caption>
+                  <caption class="sr-only">Buffie ownership and direct Gem requirements</caption>
                   <thead><tr><th scope="col">Requirement</th><th scope="col">Status</th><th scope="col">Resource needed</th></tr></thead>
                   <tbody id="readiness-buffie-list"></tbody>
                 </table>
               </div>
               <div id="readiness-direct-card" class="readiness-direct-card">
-                <span>GUARANTEED ACQUISITION</span><h4>Direct Gems</h4>
+                <div class="readiness-direct-heading"><h4>Direct Gems</h4><div id="readiness-direct-info"></div></div>
                 <strong id="readiness-direct-gems">—</strong><p id="readiness-direct-note"></p>
               </div>
               <section id="readiness-claw-details" class="readiness-claw-details" aria-labelledby="readiness-claw-title">
-                <h4 id="readiness-claw-title" class="readiness-claw-title">Claw Machine Alternative</h4>
+                <div class="readiness-claw-heading"><h4 id="readiness-claw-title" class="readiness-claw-title">Claw Machine Alternative</h4><div id="readiness-claw-details-info"></div></div>
                 <div class="readiness-claw-content">
-                  <p id="readiness-claw-intro" class="readiness-claw-intro">Want to save Gems? Each pull gives one random new gameplay Buffie.</p>
+                  <p id="readiness-claw-intro" class="readiness-claw-intro">Want to save Gems? Each pull gives one random new Buffie.</p>
                   <p id="readiness-claw-each" class="readiness-claw-each"></p>
                   <form id="readiness-pool-form" class="readiness-pool-form">
                     <label for="readiness-pool-size">Remaining rewards in your machine</label>
@@ -909,8 +920,9 @@
                   <p id="readiness-pool-note" class="readiness-pool-note"></p>
                   <p id="readiness-pool-error" class="readiness-pool-error hidden" role="alert"></p>
                   <div id="readiness-claw-odds" class="readiness-claw-odds"></div>
+                  <p id="readiness-claw-odds-note"></p>
                   <div id="readiness-claw-scenarios" class="readiness-claw-scenarios"></div>
-                  <p id="readiness-claw-footnote" class="readiness-footnote">No duplicate gameplay Buffies are awarded, so the pool shrinks after every pull. Expected cost is an estimate, not a guarantee. These costs are separate from the primary total.</p>
+                  <p id="readiness-claw-footnote" class="readiness-footnote">No duplicate Buffies are awarded, so the pool shrinks after every pull. Expected cost is an estimate, not a guarantee. These costs are separate from the primary total.</p>
                 </div>
               </section>
             </div>
@@ -919,7 +931,7 @@
             <div class="readiness-total-heading"><h3 data-readiness-total-title>TOTAL TO MAX READY</h3></div>
             <div id="readiness-plan-routes" class="readiness-plan-routes">
               <div class="readiness-direct-route-panel">
-                <h4 class="readiness-route-title readiness-route-label hidden" data-readiness-direct-route>Direct Gems route</h4>
+                <div class="readiness-route-label hidden" data-readiness-direct-route><h4 class="readiness-route-title">Direct Gems route</h4></div>
                 <div id="readiness-plan-totals" class="readiness-total-grid"></div>
               </div>
               <div id="readiness-plan-divider" class="readiness-route-divider readiness-plan-divider hidden"><span>OR</span></div>
@@ -1282,7 +1294,7 @@
 
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
-  <script src="/assets/readiness.js?v=20" defer></script>
-  <script src="/assets/app.js?v=121" defer></script>
+  <script src="/assets/readiness.js?v=22" defer></script>
+  <script src="/assets/app.js?v=122" defer></script>
 </body>
 </html>

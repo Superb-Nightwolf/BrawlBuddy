@@ -76,5 +76,15 @@ sort = 'name'; run();
 assert.deepEqual(displayed, [4, 2, 5, 3, 1]);
 query = 'w'; sort = 'name_desc'; run();
 assert.deepEqual(displayed, [3]);
+query = ''; state.ownership = 'locked'; sort = 'newest'; run();
+assert.deepEqual(displayed, [4, 2]);
+query = 'cos'; run();
+assert.deepEqual(displayed, [2]);
+state.ownership = 'unlocked'; run();
+assert.deepEqual(displayed, []);
+query = ''; sort = 'oldest'; run();
+assert.deepEqual(displayed, [1, 3, 5]);
+state.ownership = 'all'; run();
+assert.deepEqual(displayed, [1, 2, 3, 4, 5]);
 """
     subprocess.run([node, "-e", script], cwd=ROOT, check=True)

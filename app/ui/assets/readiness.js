@@ -112,7 +112,7 @@ function readinessRenderTotals(result) {
     title.textContent = result.costsComplete ? 'TOTAL TO MAX READY' : 'KNOWN RESOURCE REQUIREMENTS';
     if (!title.parentElement.querySelector('.readiness-info-wrap')) {
       const info = readinessInfo('Total resource requirements', `readiness-total-info-${index}`);
-      info.querySelector('.readiness-info-tooltip').append(readinessElement('p', '', 'Power upgrades + missing recommended equipment + direct Gems for gameplay Buffies.'));
+      info.querySelector('.readiness-info-tooltip').append(readinessElement('p', '', 'Power upgrades + missing recommended equipment + direct Gems for Buffies.'));
       title.parentElement.append(info);
       readinessBindInfo(info);
     }
@@ -138,6 +138,20 @@ function readinessInfo(label, id) {
   return wrap;
 }
 
+function readinessMoveInfoNotes(host, label, id, noteIds) {
+  if (!host || host.querySelector(`#${id}`)) return;
+  const info = readinessInfo(label, id);
+  const tooltip = info.querySelector('.readiness-info-tooltip');
+  for (const noteId of noteIds) {
+    const note = $(noteId);
+    if (!note) continue;
+    note.className = '';
+    tooltip.append(note);
+  }
+  host.append(info);
+  readinessBindInfo(info);
+}
+
 function readinessRenderRoutes(result) {
   const claw = result.costs.buffieClawAlternative;
   const hasTargets = result.isOwned && result.costs.buffieDirect.missing > 0;
@@ -147,15 +161,26 @@ function readinessRenderRoutes(result) {
   groupHolder.replaceChildren();
   groupHolder.classList.toggle('hidden', !hasTargets || !claw.group);
   if (hasTargets && claw.group) groupHolder.append(readinessClawGroup(claw.group));
-  document.querySelectorAll('[data-readiness-direct-route]').forEach((label) => {
+  document.querySelectorAll('[data-readiness-direct-route]').forEach((label, index) => {
     label.classList.toggle('hidden', !hasTargets);
+    if (!label.querySelector('.readiness-info-wrap')) {
+      const info = readinessInfo('Direct Gems route information', `readiness-direct-route-info-${index}`);
+      info.querySelector('.readiness-info-tooltip').append(readinessElement('p', '', 'Guaranteed acquisition using direct Gem purchases. Totals include Power upgrades, missing recommended equipment, and missing Buffies. Owned items cost nothing.'));
+      label.append(info);
+      readinessBindInfo(info);
+    }
   });
   document.querySelectorAll('[data-readiness-route-comparison]').forEach((holder, index) => {
     holder.replaceChildren();
     holder.classList.toggle('hidden', !hasTargets);
     if (!hasTargets) return;
     if (!claw.available) {
-      holder.append(readinessElement('p', 'readiness-route-note', `Claw Machine unavailable: ${claw.reason}`));
+      const heading = readinessElement('div', 'readiness-route-heading');
+      const info = readinessInfo('Claw Machine route information', `readiness-claw-unavailable-info-${index}`);
+      info.querySelector('.readiness-info-tooltip').append(readinessElement('p', '', claw.reason));
+      heading.append(readinessElement('h4', 'readiness-route-title', 'Claw Machine unavailable'), info);
+      holder.append(heading);
+      readinessBindInfo(info);
       return;
     }
     const divider = readinessElement('div', 'readiness-route-divider');
@@ -198,12 +223,13 @@ function readinessRenderRoutes(result) {
       scenarios.append(card);
     }
     const poolNote = claw.poolSource === 'trio_pool'
-      ? `${claw.group.name}: ${claw.group.owned} / ${claw.group.total} gameplay Buffies owned across ${claw.group.members.map((member) => member.name).join(', ')}. ${claw.poolSize} eligible rewards remain.${claw.group.excluded ? ` ${claw.group.excluded} rewards for locked Brawlers are excluded.` : ''} Counts come from your loaded collection.`
+      ? `${claw.group.name}: ${claw.group.owned} / ${claw.group.total} Buffies owned across ${claw.group.members.map((member) => member.name).join(', ')}. ${claw.poolSize} eligible rewards remain.${claw.group.excluded ? ` ${claw.group.excluded} rewards for locked Brawlers are excluded.` : ''} Counts come from your loaded collection.`
       : claw.isEstimate ? `Reference pool: ${claw.poolSize} remaining rewards. Verify your machine’s count in the Claw section below.`
         : `${claw.poolSize} remaining rewards in ${claw.poolSource === 'user_input' ? 'your machine' : claw.poolName}.`;
     tooltip.append(readinessElement('h3', '', 'Claw Machine costs & odds'),
       readinessElement('p', '', `${readinessProbability(claw.startingTargetProbability)}% chance of a needed Buffie next pull`),
-      readinessElement('p', 'readiness-route-note', `Totals include Power upgrades and the recommended build. ${poolNote} Odds assume every missing Buffie is in this pool and rewards are equally likely.`));
+      readinessElement('p', 'readiness-route-note', `Totals include Power upgrades and the recommended build. ${poolNote} Odds assume every missing Buffie is in this pool and rewards are equally likely.`),
+      readinessElement('p', '', 'Each pull awards one new Buffie with no duplicates, so the reward pool shrinks after every pull. Average costs are estimates, not guarantees. Choose either route; their costs are alternatives.'));
     if (holder.closest('.readiness-total-compact')) holder.append(divider);
     holder.append(heading);
     holder.append(scenarios);
@@ -214,9 +240,13 @@ function readinessRenderRoutes(result) {
 function readinessClawGroup(group) {
   const holder = readinessElement('div', 'readiness-claw-group');
   const heading = readinessElement('div', 'readiness-claw-group-summary');
-  heading.append(readinessElement('strong', '', 'Claw Machine group'),
-    readinessElement('span', '', `${group.owned} / ${group.total} owned · ${group.missing} missing`));
-  if (group.excluded) heading.append(readinessElement('span', '', `${group.remaining} eligible · ${group.excluded} locked`));
+  const actions = readinessElement('div', 'readiness-heading-actions');
+  const info = readinessInfo('Claw Machine group information', 'readiness-claw-group-info-tooltip');
+  info.querySelector('.readiness-info-tooltip').append(readinessElement('p', '', `${group.name}: Buffie ownership across ${group.members.map((member) => member.name).join(', ')} comes from your loaded collection. Owned Buffies are removed from the reward pool. Gray icons are missing or locked; colored icons are owned.`));
+  if (group.excluded) info.querySelector('.readiness-info-tooltip').append(readinessElement('p', '', `${group.remaining} eligible rewards remain; ${group.excluded} rewards for locked Brawlers are excluded.`));
+  actions.append(readinessElement('span', '', `${group.owned} / ${group.total} owned · ${group.missing} missing`), info);
+  heading.append(readinessElement('strong', '', 'Claw Machine group'), actions);
+  readinessBindInfo(info);
   const members = readinessElement('div', 'readiness-claw-group-members');
   for (const member of group.members) {
     const card = readinessElement('div', 'readiness-claw-member');
@@ -224,8 +254,9 @@ function readinessClawGroup(group) {
     const portrait = readinessElement('span', 'readiness-claw-portrait');
     addImageWithFallback(portrait, { id: member.brawlerId, name: member.name }, 'readiness-claw-portrait-img');
     name.append(portrait, readinessElement('strong', '', member.name));
-    card.append(name,
-      readinessElement('small', '', member.isOwned ? `${member.owned} / ${member.total} owned` : 'Brawler locked'));
+    const ownedCount = readinessElement('small', 'readiness-claw-member-count', member.isOwned ? `${member.owned} / ${member.total}` : 'Locked');
+    ownedCount.title = member.isOwned ? `${member.owned} of ${member.total} Buffies owned` : 'Brawler locked';
+    card.append(name, ownedCount);
     const items = readinessElement('div', 'readiness-claw-member-items');
     for (const [category, label] of [['gadget', 'Gadget'], ['star_power', 'Star Power'], ['hypercharge', 'Hypercharge']]) {
       const status = !member.isOwned ? 'locked' : member.categories[category] ? 'owned' : 'missing';
@@ -253,12 +284,7 @@ function readinessRequirementRow(item, result) {
   const content = readinessElement('div', 'readiness-requirement-copy');
   const text = readinessElement('div');
   text.append(readinessElement('strong', '', item.category === 'power' ? item.label : item.name));
-  if (item.category !== 'buffies' || item.note) {
-    text.append(readinessElement('small', '', item.note || (item.category === 'power' ? 'Power upgrade' : item.label)));
-  }
-  if (item.available && item.unlockPower > result.currentPower && item.category !== 'power') {
-    text.append(readinessElement('small', 'readiness-unlock-note', `Usable at Power ${item.unlockPower}`));
-  }
+  if (item.category === 'build') text.append(readinessElement('small', '', item.label));
   content.append(readinessItemIcon(item), text);
   label.append(content);
   const status = readinessElement('td');
@@ -286,7 +312,7 @@ function readinessRenderBreakdown(result) {
   const body = $('readiness-breakdown-body');
   if (!body) return;
   body.replaceChildren();
-  const groups = [['power', 'Power upgrades'], ['build', 'Recommended build'], ['buffies', 'Gameplay Buffies']];
+  const groups = [['power', 'Power upgrades'], ['build', 'Recommended build'], ['buffies', 'Buffies']];
   for (const [category, heading] of groups) {
     const rows = result.breakdown.filter((row) => row.category === category);
     const header = readinessElement('tr', 'readiness-section-row');
@@ -299,7 +325,7 @@ function readinessRenderBreakdown(result) {
       const row = readinessElement('tr');
       const empty = readinessElement('td', 'readiness-table-empty', category === 'power'
         ? `✓ Power ${result.currentPower} already reaches your target`
-        : category === 'buffies' ? 'Buffies not released · excluded from readiness' : 'No build recommendation available');
+        : category === 'buffies' ? 'Buffies not released' : 'No build recommendation available');
       empty.colSpan = 3;
       row.append(empty);
       body.append(row);
@@ -316,6 +342,7 @@ function readinessRenderClaw(result) {
   const odds = $('readiness-claw-odds');
   scenarios.replaceChildren();
   odds.replaceChildren();
+  setText('readiness-claw-odds-note', '');
   $('readiness-claw-each').replaceChildren();
   for (const id of ['readiness-claw-each', 'readiness-pool-note', 'readiness-claw-odds', 'readiness-claw-scenarios', 'readiness-claw-footnote']) {
     $(id).classList.toggle('hidden', !hasTargets);
@@ -323,18 +350,18 @@ function readinessRenderClaw(result) {
   $('readiness-pool-form').classList.toggle('hidden', !hasTargets || claw.poolSource === 'trio_pool');
   $('readiness-pool-error').classList.add('hidden');
   setText('readiness-claw-intro', hasTargets
-    ? 'Want to save Gems? Each pull gives one random new gameplay Buffie.'
-    : !result.counts.buffiesTotal ? 'Gameplay Buffies are not available for this Brawler yet.'
+    ? 'Want to save Gems? Each pull gives one random new Buffie.'
+    : !result.counts.buffiesTotal ? 'Buffies are not available for this Brawler yet.'
       : !result.isOwned ? 'Unlock this Brawler before planning Claw rewards.'
-        : 'All gameplay Buffies for this Brawler are already owned. No Claw pulls are needed.');
+        : 'All Buffies for this Brawler are already owned. No Claw pulls are needed.');
   if (!hasTargets) return;
   const input = $('readiness-pool-size');
   input.min = String(claw.targetCount);
   input.value = String(claw.poolSize ?? claw.targetCount);
   setText('readiness-pool-note', claw.poolSource === 'trio_pool'
-    ? `${claw.poolName}: ${claw.group.owned} / ${claw.group.total} gameplay Buffies owned across the trio. ${claw.poolSize} eligible rewards remain. Calculated automatically from your collection.${claw.group.excluded ? ` ${claw.group.excluded} rewards for locked Brawlers are excluded.` : ''}`
+    ? `${claw.poolName}: ${claw.group.owned} / ${claw.group.total} Buffies owned across the trio. ${claw.poolSize} eligible rewards remain. Calculated automatically from your collection.${claw.group.excluded ? ` ${claw.group.excluded} rewards for locked Brawlers are excluded.` : ''}`
     : claw.poolSource === 'reference'
-    ? 'Reference pool estimate. Enter the remaining gameplay reward count from your machine for accurate odds.'
+    ? 'Reference pool estimate. Enter the remaining reward count from your machine for accurate odds.'
     : claw.poolSource === 'configured_pool' ? `${claw.poolName} · owned rewards and locked Brawlers excluded`
       : 'Using the remaining reward count you entered. All desired Buffies must be in this machine.');
   if (!claw.available) {
@@ -345,7 +372,7 @@ function readinessRenderClaw(result) {
   }
   $('readiness-claw-each').replaceChildren(readinessElement('strong', '', 'Each pull'), readinessCostContent(claw.perPull));
   odds.append(readinessElement('strong', '', `${readinessProbability(claw.startingTargetProbability)}% chance of a target next pull`));
-  odds.append(readinessElement('small', '', `${claw.targetCount} desired / ${claw.poolSize} remaining rewards · ${readinessProbability(claw.individualTargetProbability)}% for one specific Buffie`));
+  setText('readiness-claw-odds-note', `${claw.targetCount} desired / ${claw.poolSize} remaining rewards · ${readinessProbability(claw.individualTargetProbability)}% for one specific Buffie`);
   for (const [key, label] of [['bestCase', 'Best case'], ['expected', 'Estimated RNG cost'], ['worstCase', 'Worst ordering']]) {
     const cost = claw[key];
     const card = readinessElement('div', `readiness-claw-scenario scenario-${key}`);
@@ -359,12 +386,21 @@ function readinessRenderClaw(result) {
 
 function readinessRenderResult(result) {
   state.readiness = result;
+  const overviewTooltip = $('readiness-info-tooltip');
+  if ($('readiness-overview-copy').parentElement !== overviewTooltip) {
+    overviewTooltip.insertBefore($('readiness-overview-copy'), $('readiness-scoring-copy'));
+  }
+  readinessMoveInfoNotes($('readiness-plan-info'), 'Readiness plan information', 'readiness-plan-info-tooltip', ['readiness-plan-note']);
+  readinessMoveInfoNotes($('readiness-breakdown-info'), 'Upgrade breakdown information', 'readiness-breakdown-info-tooltip', ['readiness-breakdown-notes']);
+  readinessMoveInfoNotes($('readiness-buffie-info'), 'Buffie progress information', 'readiness-buffie-info-tooltip', ['readiness-buffie-note']);
+  readinessMoveInfoNotes($('readiness-direct-info'), 'Direct Gems information', 'readiness-direct-info-tooltip', ['readiness-direct-note']);
+  readinessMoveInfoNotes($('readiness-claw-details-info'), 'Claw Machine information', 'readiness-claw-details-info-tooltip', ['readiness-claw-intro', 'readiness-pool-note', 'readiness-claw-odds-note', 'readiness-claw-footnote']);
   setText('readiness-source', result.inventorySource === 'DEMO' ? 'DEMO ACCOUNT' : 'YOUR BUILD');
   setText('readiness-plan-source', result.inventorySource === 'DEMO' ? 'DEMO ACCOUNT' : 'YOUR BUILD');
   setText('readiness-status', !result.isOwned ? 'UNLOCK FIRST' : result.complete ? 'MAX READY' : 'IN PROGRESS');
   setText('readiness-power-target', result.isOwned ? `Power ${result.currentPower} → Target ${result.targetPower}` : `After unlock: Power 1 → ${result.targetPower}`);
   setText('readiness-overview-copy', !result.isOwned ? 'Unlock this Brawler to track your readiness. The costs below preview the build after unlock.'
-    : result.complete ? 'Your Power, recommended equipment, and available gameplay Buffies are complete.'
+    : result.complete ? 'Your Power, recommended equipment, and available Buffies are complete.'
       : `Progress toward Power ${result.targetPower} and your recommended build.`);
   readinessSetRing('readiness-overall-ring', result.overallProgress, 'Overall readiness', 'readiness-overall-value');
   for (const [key, label] of [['power', 'Power Level'], ['buffies', 'Buffies']]) {
@@ -383,6 +419,14 @@ function readinessRenderResult(result) {
   setText('readiness-plan-note', note);
   readinessRenderTotals(result);
   readinessRenderBreakdown(result);
+  const breakdownNotes = $('readiness-breakdown-notes');
+  breakdownNotes.replaceChildren(readinessElement('p', '', 'Only missing items in the recommended build are charged. Owned equipment below its unlock Power is stored.'));
+  for (const row of result.breakdown) {
+    const notes = [row.note];
+    if (row.available && row.unlockPower > result.currentPower && row.category !== 'power') notes.push(`Usable at Power ${row.unlockPower}`);
+    if (notes.some(Boolean)) breakdownNotes.append(readinessElement('p', '', `${row.label}: ${notes.filter(Boolean).join(' · ')}`));
+  }
+  setText('readiness-buffie-note', result.counts.buffiesTotal ? 'Buffie progress counts owned Buffies. Cosmetic Buffies do not count.' : 'Buffies are not released for this Brawler. They do not reduce readiness.');
   setText('readiness-buffie-count', result.counts.buffiesTotal ? `${result.counts.buffiesOwned} / ${result.counts.buffiesTotal} owned` : 'Not released');
   const buffies = $('readiness-buffie-list');
   buffies.replaceChildren();
@@ -391,20 +435,20 @@ function readinessRenderResult(result) {
   }
   if (!buffies.childElementCount) {
     const row = readinessElement('tr');
-    const cell = readinessElement('td', 'readiness-table-empty', 'Gameplay Buffies are not released for this Brawler. They do not reduce readiness.');
+    const cell = readinessElement('td', 'readiness-table-empty', 'Buffies not released');
     cell.colSpan = 3;
     row.append(cell);
     buffies.append(row);
   }
-  buffies.append(readinessSubtotalRow('buffies', 'Gameplay Buffies', result));
+  buffies.append(readinessSubtotalRow('buffies', 'Buffies', result));
   $('readiness-direct-card').classList.toggle('hidden', !result.counts.buffiesTotal);
   const direct = result.costs.buffieDirect;
   $('readiness-direct-gems').replaceChildren(readinessCurrencyIcon('gems'),
     readinessElement('span', '', `${readinessNumber(direct.gems)} Gems`));
-  setText('readiness-direct-note', direct.missing ? `${direct.missing} missing gameplay ${direct.missing === 1 ? 'Buffie' : 'Buffies'}. ${direct.estimated ? 'Uses configured reference prices; see the readiness info button for details.' : 'Using the configured direct-purchase prices.'}` : 'All available gameplay Buffies are owned. No Gems needed.');
+  setText('readiness-direct-note', direct.missing ? `${direct.missing} missing ${direct.missing === 1 ? 'Buffie' : 'Buffies'}. ${direct.estimated ? 'Uses configured reference prices; see the readiness info button for details.' : 'Using the configured direct-purchase prices.'}` : 'All available Buffies are owned. No Gems needed.');
   readinessRenderClaw(result);
   const scoring = $('readiness-scoring-copy');
-  scoring.replaceChildren(readinessElement('p', '', 'Power progress uses current Power divided by target Power. Build progress counts only the exact recommended items. Buffie progress counts gameplay Buffies only.'));
+  scoring.replaceChildren(readinessElement('p', '', 'Power progress uses current Power divided by target Power. Build progress counts only the exact recommended items. Buffie progress counts Buffies only.'));
   const weightLabels = { power: 'Power', gadget: 'Gadget', star_power: 'Star Power', gears: 'Gears', hypercharge: 'Hypercharge', buffies: 'Buffies' };
   const weights = readinessElement('p', '', Object.entries(result.weights).map(([key, value]) => `${weightLabels[key]} ${value}`).join(' · '));
   scoring.append(weights, readinessElement('p', '', 'These are relative weights. Unreleased or unavailable components are excluded and the remaining weights are normalized. Cosmetic Buffies do not count.'));
