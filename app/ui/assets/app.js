@@ -2252,38 +2252,15 @@ function matchesEquipment(brawler, filter = state.equipment) {
     case 'buffie_combo_complete':
       return isBuffieReleased(brawler) && hasGadgetBuffy && hasSpBuffy && hasHcBuffy;
 
-    // INDIVIDUAL BUFFIES
-    case 'buffie_ind_gadget_owned':
-    case 'has_buffies_gadget':
-      return isBuffieReleased(brawler) && hasGadgetBuffy;
-    case 'buffie_ind_gadget_unowned':
-      return isBuffieReleased(brawler) && !hasGadgetBuffy;
-    case 'buffie_ind_sp_owned':
-    case 'has_buffies_sp':
-      return isBuffieReleased(brawler) && hasSpBuffy;
-    case 'buffie_ind_sp_unowned':
-      return isBuffieReleased(brawler) && !hasSpBuffy;
-    case 'buffie_ind_hc_owned':
-    case 'has_buffies_hc':
-      return isBuffieReleased(brawler) && hasHcBuffy;
-    case 'buffie_ind_hc_unowned':
-      return isBuffieReleased(brawler) && !hasHcBuffy;
-
-    // TROPHIES
-    case 'trophies_0_249':
-      return trophies >= 0 && trophies <= 249;
-    case 'trophies_250_499':
-      return trophies >= 250 && trophies <= 499;
-    case 'trophies_500_749':
-      return trophies >= 500 && trophies <= 749;
-    case 'trophies_750_999':
-      return trophies >= 750 && trophies <= 999;
-    case 'trophies_1000_plus':
-      return trophies >= 1000;
-
-    // PRESTIGE
-    case 'prestige_0':
-      return brawlerPrestige === 0;
+    // PROGRESSION: trophy milestones before the first permanent Prestige
+    case 'progression_wood':
+      return brawlerPrestige === 0 && trophies >= 0 && trophies < 250;
+    case 'progression_bronze':
+      return brawlerPrestige === 0 && trophies >= 250 && trophies < 500;
+    case 'progression_silver':
+      return brawlerPrestige === 0 && trophies >= 500 && trophies < 750;
+    case 'progression_gold':
+      return brawlerPrestige === 0 && trophies >= 750;
     case 'prestige_1':
       return brawlerPrestige === 1;
     case 'prestige_2':

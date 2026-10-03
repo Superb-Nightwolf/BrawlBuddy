@@ -88,3 +88,38 @@ state.ownership = 'all'; run();
 assert.deepEqual(displayed, [1, 2, 3, 4, 5]);
 """
     subprocess.run([node, "-e", script], cwd=ROOT, check=True)
+
+
+def test_progression_filters_match_one_stage_and_respect_permanent_prestige() -> None:
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is required to test roster progression")
+    script = r"""
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const source = fs.readFileSync('./app/ui/assets/app.js', 'utf8');
+const prestige = source.slice(source.indexOf('function getPrestigeLevel('), source.indexOf('function getPrestigeState('));
+const filters = source.slice(source.indexOf('function matchesEquipment('), source.indexOf('function renderBrawlers('));
+const context = {
+  PRESTIGE_STEP: 1000, state: {},
+  getBrawlerClass() {return '';}, getBrawlerRarity() {return '';},
+  hasHypercharge() {return false;}, hasBuffie() {return false;},
+};
+vm.createContext(context);
+vm.runInContext(prestige + filters, context);
+const stages = ['progression_wood', 'progression_bronze', 'progression_silver', 'progression_gold', 'prestige_1', 'prestige_2', 'prestige_3_plus'];
+const cases = [
+  [0, 0, 0], [249, 0, 0], [250, 0, 1], [499, 0, 1],
+  [500, 0, 2], [749, 0, 2], [750, 0, 3], [999, 0, 3],
+  [1000, 0, 3], [1000, 1, 4], [1999, 1, 4], [2000, 2, 5],
+  [3000, 3, 6], [12000, 12, 6], [100, 2, 5],
+];
+for (const [trophies, prestige_level, stage] of cases) {
+  const brawler = {owned: true, trophies, prestige_level};
+  assert.deepEqual(stages.filter(filter => context.matchesEquipment(brawler, filter)), [stages[stage]]);
+  assert.equal(context.matchesEquipment({...brawler, owned: false}, stages[stage]), false);
+}
+assert.equal(context.matchesEquipment({owned: true, trophies: 900, highest_trophies: 2050}, 'prestige_2'), true);
+"""
+    subprocess.run([node, "-e", script], cwd=ROOT, check=True)
