@@ -18,6 +18,8 @@ const state = {
   level: 'all',
   ownership: 'all',
   equipment: 'all',
+  progression: 'all',
+  buffieAvailability: 'all',
   view: 'grid',
   dataSources: {},
   visualAssets: {},
@@ -375,8 +377,6 @@ async function loadCatalog() {
     ]);
     state.catalog = catPayload.list || [];
     const catalogTotal = state.catalog.length;
-    setText('collection-total', catalogTotal);
-    setText('catalog-total-copy', `${catalogTotal} brawlers. Every level.`);
     const catalogSearch = $('brawler-search');
     if (catalogSearch) catalogSearch.placeholder = `Search all ${catalogTotal} brawlers`;
     state.equipmentDb = equipPayload || {};
@@ -2277,6 +2277,84 @@ function matchesEquipment(brawler, filter = state.equipment) {
   }
 }
 
+const COLLECTION_PRESTIGE_CATEGORIES = [
+  { key: 'wood', label: 'Wood', filter: 'progression_wood', assetId: 0 },
+  { key: 'bronze', label: 'Bronze', filter: 'progression_bronze', assetId: 1 },
+  { key: 'silver', label: 'Silver', filter: 'progression_silver', assetId: 2 },
+  { key: 'gold', label: 'Gold', filter: 'progression_gold', assetId: 3 },
+  { key: 'prestige1', label: 'Prestige 1', filter: 'prestige_1', assetId: 4 },
+  { key: 'prestige2', label: 'Prestige 2', filter: 'prestige_2', assetId: 5 },
+  { key: 'prestige3', label: 'Prestige 3+', filter: 'prestige_3_plus', assetId: 6 },
+];
+
+function getCollectionPrestigeSummary(player) {
+  const brawlers = player?.brawlers || [];
+  const counts = Object.fromEntries(COLLECTION_PRESTIGE_CATEGORIES.map(({ key }) => [key, 0]));
+  let derivedTotal = 0;
+  let prestiged = 0;
+  for (const brawler of brawlers) {
+    const level = getPrestigeLevel(brawler);
+    derivedTotal += level;
+    if (level > 0) prestiged += 1;
+    const trophies = Math.max(0, Number(brawler.trophies || 0));
+    const key = level >= 3 ? 'prestige3' : level === 2 ? 'prestige2' : level === 1 ? 'prestige1'
+      : trophies >= 750 ? 'gold' : trophies >= 500 ? 'silver' : trophies >= 250 ? 'bronze' : 'wood';
+    counts[key] += 1;
+  }
+  const hasTotal = Number.isInteger(player?.total_prestige_level) && player.total_prestige_level >= 0;
+  return {
+    total: player ? (hasTotal ? player.total_prestige_level : derivedTotal) : null,
+    counts, prestiged, unlocked: brawlers.length,
+    source: !player ? 'CONNECT A PLAYER' : player.source === 'DEMO' ? 'DEMO PLAYER'
+      : hasTotal && player.total_prestige_source === 'OFFICIAL_API' ? 'OFFICIAL API' : 'ESTIMATED PRESTIGE',
+  };
+}
+
+function renderCollectionPrestige() {
+  const holder = $('collection-prestige-categories');
+  if (!holder) return;
+  const summary = getCollectionPrestigeSummary(state.player);
+  setText('collection-prestige-total', summary.total === null ? '—' : format(summary.total));
+  const sourceLabel = summary.source === 'OFFICIAL API' ? '' : summary.source;
+  setText('collection-prestige-source', sourceLabel);
+  $('collection-prestige-source')?.classList.toggle('hidden', !sourceLabel);
+  $('collection-prestige-banner')?.classList.toggle('is-demo', state.player?.source === 'DEMO');
+  holder.replaceChildren();
+  const base = state.prestigeAssets?.cdn_base_url || 'https://cdn.brawlify.com/prestiges';
+  for (const category of COLLECTION_PRESTIGE_CATEGORIES) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `collection-prestige-category tier-${category.key}`;
+    button.dataset.prestigeFilter = category.filter;
+    const active = state.progression === category.filter;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+    button.disabled = !state.player;
+    button.setAttribute('aria-label', `${category.label}: ${state.player ? summary.counts[category.key] : 'unknown'} Brawlers. Filter roster`);
+    const image = document.createElement('img');
+    image.src = `${base}/${category.assetId < 4 ? 'regular' : 'tiered'}/${category.assetId}.png`;
+    image.alt = '';
+    image.setAttribute('aria-hidden', 'true');
+    image.onerror = () => { image.hidden = true; };
+    const count = document.createElement('strong');
+    count.textContent = state.player ? format(summary.counts[category.key]) : '—';
+    const label = document.createElement('span');
+    label.textContent = category.label;
+    button.append(image, count, label);
+    button.addEventListener('click', () => {
+      state.progression = active ? 'all' : category.filter;
+      state.ownership = 'unlocked';
+      state.level = 'all';
+      if ($('brawler-search')) $('brawler-search').value = '';
+      document.querySelectorAll('#level-filter [data-level]').forEach((item) => {
+        item.classList.toggle('active', item.dataset.level === 'all');
+      });
+      renderBrawlers();
+    });
+    holder.append(button);
+  }
+}
+
 function renderBrawlers() {
   if (!state.brawlers || state.brawlers.length === 0) {
     state.brawlers = mergeCatalog(state.ownedBrawlers);
@@ -2286,6 +2364,9 @@ function renderBrawlers() {
   const sort = $('brawler-sort')?.value || 'power_asc';
   const equipmentFilter = $('equipment-filter')?.value || state.equipment || 'all';
   state.equipment = equipmentFilter;
+  const progressionFilter = state.progression || 'all';
+  const buffieAvailabilityFilter = state.buffieAvailability || 'all';
+  renderCollectionPrestige();
 
   const totalCatalogCount = (state.brawlers || []).length || 108;
   const ownership = state.ownership || 'all';
@@ -2307,32 +2388,50 @@ function renderBrawlers() {
   const ownershipSummary = $('roster-ownership-summary');
   if (ownershipSummary) ownershipSummary.textContent = state.player ? `${format(unlockedCount)} of ${format(totalCatalogCount)} unlocked` : '';
   const ownershipScopedBrawlers = (state.brawlers || []).filter((brawler) => ownership === 'all' || (ownership === 'unlocked' ? brawler.owned : !brawler.owned));
+  const availableBuffieCount = ownershipScopedBrawlers.filter(isBuffieReleased).length;
+  const buffieCounts = {
+    buffies_available: availableBuffieCount,
+    buffies_not_available: ownershipScopedBrawlers.length - availableBuffieCount,
+  };
+  const buffieButtons = $('buffie-availability-filter')?.querySelectorAll('[data-buffie-availability]') || [];
+  buffieButtons.forEach((button) => {
+    const selected = button.dataset.buffieAvailability === buffieAvailabilityFilter;
+    button.classList.toggle('active', selected);
+    button.setAttribute('aria-pressed', String(selected));
+    const label = button.dataset.buffieAvailability === 'buffies_available' ? 'Buffie Brawlers' : 'Non-Buffie Brawlers';
+    button.setAttribute('aria-label', `${label}: ${buffieCounts[button.dataset.buffieAvailability]} ${ownership === 'all' ? 'catalog' : ownership} Brawlers. Select again to clear`);
+  });
+  setText('buffie-available-count', format(buffieCounts.buffies_available));
+  setText('buffie-unavailable-count', format(buffieCounts.buffies_not_available));
+  const buffieScopedBrawlers = ownershipScopedBrawlers.filter((brawler) => buffieAvailabilityFilter === 'all'
+    || (buffieAvailabilityFilter === 'buffies_available' ? isBuffieReleased(brawler) : !isBuffieReleased(brawler)));
 
-  // Apply ownership, Power, and equipment before searching within that scope.
-  const categoryScopedBrawlers = ownershipScopedBrawlers.filter((brawler) => {
+  // Apply ownership, Power, equipment, progression and Buffie availability before search.
+  const categoryScopedBrawlers = buffieScopedBrawlers.filter((brawler) => {
     let matchesLevel = true;
     if (state.level && state.level !== 'all') {
       const targetLevel = Number(state.level);
       matchesLevel = brawler.owned && (brawler.power === targetLevel);
     }
     const matchesEquip = matchesEquipment(brawler, equipmentFilter);
-    return matchesLevel && matchesEquip;
+    const matchesProgression = matchesEquipment(brawler, progressionFilter);
+    return matchesLevel && matchesEquip && matchesProgression;
   });
 
   // Calculate denominator for active category context (e.g. 27 for Buffies)
-  let contextTotal = ownershipScopedBrawlers.length;
+  let contextTotal = buffieScopedBrawlers.length;
   const isBuffieFilter = equipmentFilter.startsWith('buffie');
   if (isBuffieFilter) {
     if (equipmentFilter === 'buffies_not_available') {
-      contextTotal = ownershipScopedBrawlers.filter((b) => !isBuffieReleased(b)).length;
+      contextTotal = buffieScopedBrawlers.filter((b) => !isBuffieReleased(b)).length;
     } else {
-      contextTotal = ownershipScopedBrawlers.filter((b) => isBuffieReleased(b)).length;
+      contextTotal = buffieScopedBrawlers.filter((b) => isBuffieReleased(b)).length;
     }
   }
 
   // Dynamically update search input placeholder based on current filter scope
   if (searchInput) {
-    const isCategoryFiltered = Boolean(ownership !== 'all' || (state.level && state.level !== 'all') || (equipmentFilter && equipmentFilter !== 'all'));
+    const isCategoryFiltered = Boolean(ownership !== 'all' || (state.level && state.level !== 'all') || equipmentFilter !== 'all' || progressionFilter !== 'all' || buffieAvailabilityFilter !== 'all');
     if (isCategoryFiltered) {
       const scopeCount = categoryScopedBrawlers.length;
       searchInput.placeholder = scopeCount === 1 ? 'Search 1 brawler' : `Search ${scopeCount} brawlers`;
@@ -2379,7 +2478,7 @@ function renderBrawlers() {
   if (empty) empty.classList.toggle('hidden', brawlers.length > 0);
 
   const filteredCount = brawlers.length;
-  const isFiltered = Boolean(ownership !== 'all' || query || (state.level && state.level !== 'all') || (equipmentFilter && equipmentFilter !== 'all'));
+  const isFiltered = Boolean(ownership !== 'all' || query || (state.level && state.level !== 'all') || equipmentFilter !== 'all' || progressionFilter !== 'all' || buffieAvailabilityFilter !== 'all');
   const resultsSummary = $('roster-results-summary');
   if (resultsSummary) resultsSummary.textContent = `Showing ${format(filteredCount)}${ownership === 'all' ? '' : ` ${ownership}`} ${filteredCount === 1 ? 'brawler' : 'brawlers'}`;
 
@@ -4145,11 +4244,19 @@ function bindEvents() {
   $('brawler-search')?.addEventListener('input', renderBrawlers);
   $('brawler-sort')?.addEventListener('change', renderBrawlers);
   $('equipment-filter')?.addEventListener('change', (event) => { state.equipment = event.target.value; renderBrawlers(); });
+  $('buffie-availability-filter')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-buffie-availability]');
+    if (!button) return;
+    const filter = button.dataset.buffieAvailability;
+    state.buffieAvailability = state.buffieAvailability === filter ? 'all' : filter;
+    renderBrawlers();
+  });
   $('ownership-filter')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-ownership]');
     if (!button || button.disabled) return;
     state.ownership = button.dataset.ownership;
     if (state.ownership === 'locked') {
+      state.progression = 'all';
       state.level = 'all';
       $('level-filter')?.querySelectorAll('[data-level]').forEach((chip) => chip.classList.toggle('active', chip.dataset.level === 'all'));
       const equipmentFilter = $('equipment-filter');
@@ -4176,8 +4283,10 @@ function bindEvents() {
     const equipSelect = $('equipment-filter');
     if (equipSelect) equipSelect.value = 'all';
     state.equipment = 'all';
+    state.progression = 'all';
     state.level = 'all';
     state.ownership = 'all';
+    state.buffieAvailability = 'all';
     $('level-filter')?.querySelectorAll('.level-chip').forEach((chip) => {
       chip.classList.toggle('active', chip.dataset.level === 'all');
     });

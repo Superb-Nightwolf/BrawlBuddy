@@ -32,6 +32,7 @@ let sort = 'newest';
 let query = '';
 let equipment = 'all';
 let displayed = [];
+const counts = {};
 const holder = {replaceChildren() { displayed = []; }, classList: {toggle() {}}, append(b) {displayed.push(b.id);}};
 const context = {
   state, document: {querySelector() {return null;}},
@@ -43,7 +44,9 @@ const context = {
     return null;
   },
   matchesEquipment(b, filter) {return filter === 'all' || b.owned;},
-  cardFor(b) {return b;}, scheduleBrawlerNameFit() {},
+  isBuffieReleased(b) {return b.buffiesReleased ?? b.id % 2 === 1;},
+  format(value) {return String(value);}, setText(id, value) {counts[id] = value;},
+  cardFor(b) {return b;}, scheduleBrawlerNameFit() {}, renderCollectionPrestige() {},
 };
 vm.createContext(context);
 vm.runInContext(render, context);
@@ -85,6 +88,29 @@ assert.deepEqual(displayed, []);
 query = ''; sort = 'oldest'; run();
 assert.deepEqual(displayed, [1, 3, 5]);
 state.ownership = 'all'; run();
+assert.deepEqual(displayed, [1, 2, 3, 4, 5]);
+// Availability covers catalog metadata, including locked Brawlers, and composes with ownership.
+state.brawlers[1].buffiesReleased = true;
+state.brawlers[2].buffiesReleased = false;
+state.buffieAvailability = 'buffies_available'; run();
+assert.deepEqual(displayed, [1, 2, 5]);
+assert.equal(counts['buffie-available-count'], '3');
+assert.equal(counts['buffie-unavailable-count'], '2');
+state.buffieAvailability = 'buffies_not_available'; run();
+assert.deepEqual(displayed, [3, 4]);
+state.ownership = 'locked'; run();
+assert.deepEqual(displayed, [4]);
+assert.equal(counts['buffie-available-count'], '1');
+assert.equal(counts['buffie-unavailable-count'], '1');
+state.buffieAvailability = 'buffies_available'; run();
+assert.deepEqual(displayed, [2]);
+state.ownership = 'unlocked'; run();
+assert.deepEqual(displayed, [1, 5]);
+state.level = '11'; run();
+assert.deepEqual(displayed, []);
+state.level = 'all'; query = 'sh'; run();
+assert.deepEqual(displayed, [5]);
+query = ''; state.buffieAvailability = 'all'; state.ownership = 'all'; run();
 assert.deepEqual(displayed, [1, 2, 3, 4, 5]);
 """
     subprocess.run([node, "-e", script], cwd=ROOT, check=True)

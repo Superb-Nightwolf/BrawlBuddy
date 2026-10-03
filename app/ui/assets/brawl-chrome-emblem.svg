@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" stroke="#4675b3" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Trophy silhouette with arena sparks, for decorative watermark use. -->
+  <path d="M77 49h86v37c0 30-19 49-43 49s-43-19-43-49z" fill="#4675b3" fill-opacity=".2"/>
+  <path d="M76 62H49v18c0 23 14 36 40 36M164 62h27v18c0 23-14 36-40 36M120 137v32M101 171h38l12 22H89zM80 194h80"/>
+  <path d="m125 64-20 31h15l-7 25 25-34h-17z" fill="#4675b3" stroke="none"/>
+  <path d="m34 127 4 11 12 2-9 7 2 12-9-6-10 6 2-12-9-7 12-2zM203 29v18M194 38h18M192 151l-10 16h10l-5 19 20-25h-11l6-10" stroke-width="5"/>
+</svg>

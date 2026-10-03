@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=557">
+  <link rel="stylesheet" href="/assets/styles.css?v=563">
 </head>
 <body>
   <div class="app-shell">
@@ -349,9 +349,20 @@
       </section>
 
       <section id="brawlers-view" class="view hidden">
-        <div class="collection-banner panel">
-          <div><span class="banner-chip">FULL CATALOG</span><h2><span id="catalog-total-copy">108 brawlers. Every level.</span><br><em>One clear picture.</em></h2><p>Equipment and Buffy ownership come from the loaded player API. Released abilities and descriptions come from catalog metadata, and are shown separately.</p></div>
-          <div class="collection-badge"><strong id="collection-total">108</strong><span>BRAWLERS</span></div>
+        <div id="collection-prestige-banner" class="collection-banner panel prestige-collection" aria-label="Player Prestige summary">
+          <div class="collection-prestige-copy">
+            <div class="collection-prestige-identity"><span class="banner-chip">PLAYER PRESTIGE</span><span id="collection-prestige-source" class="collection-prestige-source">CONNECT A PLAYER</span></div>
+            <h2>Your Prestige.<br><em>Every milestone counts.</em></h2>
+          </div>
+          <div class="collection-prestige-total" aria-label="Account Total Prestige">
+            <span class="collection-prestige-total-icon" aria-hidden="true">✦</span>
+            <strong id="collection-prestige-total">—</strong><span>TOTAL PRESTIGE</span>
+            <small>Across your roster</small>
+          </div>
+          <div class="collection-prestige-categories">
+            <div class="collection-prestige-category-heading"><span>YOUR BRAWLERS BY PROGRESSION</span></div>
+            <div id="collection-prestige-categories" class="collection-prestige-category-grid" role="group" aria-label="Filter unlocked brawlers by progression"></div>
+          </div>
         </div>
         <section class="panel brawler-panel">
           <div class="collection-toolbar">
@@ -383,10 +394,6 @@
                 <option value="hc_stored">Hypercharge Owned · Stored</option>
                 <option value="hc_active">Hypercharge Owned · Active</option>
               </optgroup>
-              <optgroup label="BUFFIE AVAILABILITY">
-                <option value="buffies_available">Brawlers With Buffies</option>
-                <option value="buffies_not_available">Brawlers Without Buffies</option>
-              </optgroup>
               <optgroup label="BUFFIE OWNERSHIP">
                 <option value="buffies_owned_0">No Buffies Owned</option>
                 <option value="buffies_owned_at_least_1">Has At Least 1 Buffie</option>
@@ -412,15 +419,6 @@
                 <option value="class_support">Support</option>
                 <option value="class_controller">Controller</option>
               </optgroup>
-              <optgroup label="PROGRESSION">
-                <option value="progression_wood">Wood · 0–249 trophies</option>
-                <option value="progression_bronze">Bronze · 250–499 trophies</option>
-                <option value="progression_silver">Silver · 500–749 trophies</option>
-                <option value="progression_gold">Gold · 750–999 trophies</option>
-                <option value="prestige_1">Prestige 1 · 1,000–1,999 trophies</option>
-                <option value="prestige_2">Prestige 2 · 2,000–2,999 trophies</option>
-                <option value="prestige_3_plus">Prestige 3+ · 3,000+ trophies</option>
-              </optgroup>
               <optgroup label="RARITY">
                 <option value="rarity_common">Common / Starter</option>
                 <option value="rarity_rare">Rare</option>
@@ -438,10 +436,16 @@
             <div class="view-toggle"><button id="grid-view" class="active" type="button" aria-label="Card view">▦</button><button id="table-view" type="button" aria-label="Table view">☷</button></div>
           </div>
           <div class="ownership-toolbar">
-            <div id="ownership-filter" class="ownership-filter" role="group" aria-label="Brawler ownership">
-              <button class="ownership-chip active" data-ownership="all" type="button" aria-pressed="true"><span>All</span><span class="ownership-count" id="ownership-all-count">—</span></button>
-              <button class="ownership-chip" data-ownership="unlocked" type="button" aria-pressed="false"><span>Unlocked</span><span class="ownership-count" id="ownership-unlocked-count">—</span></button>
-              <button class="ownership-chip" data-ownership="locked" type="button" aria-pressed="false"><svg class="ownership-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Locked</span><span class="ownership-count" id="ownership-locked-count">—</span></button>
+            <div class="roster-filter-tiles">
+              <div id="ownership-filter" class="ownership-filter" role="group" aria-label="Brawler ownership">
+                <button class="ownership-chip active" data-ownership="all" type="button" aria-pressed="true"><img src="/assets/roster-all.svg?v=2" class="ownership-filter-icon" alt="" aria-hidden="true"><span>All</span><span class="ownership-count" id="ownership-all-count">—</span></button>
+                <button class="ownership-chip" data-ownership="unlocked" type="button" aria-pressed="false"><img src="/assets/roster-unlocked.svg" class="ownership-filter-icon" alt="" aria-hidden="true"><span>Unlocked</span><span class="ownership-count" id="ownership-unlocked-count">—</span></button>
+                <button class="ownership-chip" data-ownership="locked" type="button" aria-pressed="false"><img src="/assets/roster-locked.svg" class="ownership-filter-icon" alt="" aria-hidden="true"><span>Locked</span><span class="ownership-count" id="ownership-locked-count">—</span></button>
+              </div>
+              <div id="buffie-availability-filter" class="buffie-availability-filter" role="group" aria-label="Released Buffie availability">
+                <button class="ownership-chip buffie-availability-chip" data-buffie-availability="buffies_available" type="button" aria-pressed="false" title="Brawlers with released Buffies. Select again to clear."><img src="/assets/buffie_icon.webp" class="buffie-filter-icon" alt="" aria-hidden="true"><span>Buffie Brawlers</span><span class="ownership-count" id="buffie-available-count">—</span></button>
+                <button class="ownership-chip buffie-availability-chip buffie-unavailable-chip" data-buffie-availability="buffies_not_available" type="button" aria-pressed="false" title="Brawlers without released Buffies. Select again to clear."><img src="/assets/buffie_icon.webp" class="buffie-filter-icon" alt="" aria-hidden="true"><span>Non-Buffie Brawlers</span><span class="ownership-count" id="buffie-unavailable-count">—</span></button>
+              </div>
             </div>
             <span id="roster-ownership-summary" class="roster-ownership-summary"></span>
           </div>
@@ -1283,6 +1287,6 @@
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
   <script src="/assets/readiness.js?v=25" defer></script>
-  <script src="/assets/app.js?v=123" defer></script>
+  <script src="/assets/app.js?v=127" defer></script>
 </body>
 </html>

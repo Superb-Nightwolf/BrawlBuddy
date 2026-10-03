@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 140" fill="none" stroke="#4675b3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".11">
+  <!-- Sparse trophy, lightning and arena-spark tile. -->
+  <g transform="translate(24 20) rotate(-14 16 20)">
+    <path d="M5 3h24v10c0 9-5 15-12 15S5 22 5 13zM5 7h-8v6c0 7 4 11 10 11M29 7h8v6c0 7-4 11-10 11M17 29v8M10 38h14l4 7H6z"/>
+  </g>
+  <path d="m134 77-14 21h11l-5 22 22-29h-13l6-14z" fill="#4675b3" fill-opacity=".18"/>
+  <path d="m115 22 3 8 9 1-7 6 2 9-7-5-8 5 2-9-7-6 9-1zM40 103v12M34 109h12M163 48v8M159 52h8"/>
+  <circle cx="82" cy="75" r="2" fill="#4675b3" stroke="none"/>
+</svg>
