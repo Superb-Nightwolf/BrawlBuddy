@@ -4031,7 +4031,19 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
     const name = document.createElement('strong');
     name.textContent = item.name;
 
-    titleWrap.append(emblemWrap, name);
+    const equipmentName = document.createElement('div');
+    equipmentName.className = 'ability-name-wrap';
+    equipmentName.append(name);
+    const build = guide?.recommended_build || {};
+    const recommendedNames = type === 'gear' ? (build.gears || [])
+      : type === 'gadget' ? [build.gadget] : type === 'star_power' ? [build.star_power] : [];
+    if (recommendedNames.some((recommended) => recommended && normalizeKey(recommended) === normalizeKey(item.name))) {
+      const recommendation = document.createElement('span');
+      recommendation.className = 'equipment-recommended-badge';
+      recommendation.textContent = 'Recommended';
+      equipmentName.append(recommendation);
+    }
+    titleWrap.append(emblemWrap, equipmentName);
 
     const status = document.createElement('span');
     status.className = useState.className;

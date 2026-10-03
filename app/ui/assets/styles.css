@@ -1361,7 +1361,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-ring-large strong { font-size: 34px; }
 .readiness-ring small { margin-top: 3px; font-size: 9px; letter-spacing: 1.5px; font-weight: 800; color: #64789d; }
 .readiness-ring.is-unavailable { background: #dae5f3; }
-#readiness-gears-ring { --ring-color: #12a68d; }
+#readiness-recommended-gears-ring { --ring-color: #12a68d; }
 #readiness-abilities-ring { --ring-color: #8b5ce7; }
 #readiness-hypercharge-ring { --ring-color: #ed9c16; }
 #readiness-buffies-ring { --ring-color: #e64398; }
@@ -2133,6 +2133,8 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   gap: 10px;
 }
 .ability-title-wrap strong { min-width:0; overflow-wrap:anywhere; }
+.ability-name-wrap { min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:5px; }
+.equipment-recommended-badge { padding:3px 7px; border-radius:6px; background:#fff3c4; color:#735100; font-size:9px; font-weight:800; line-height:1.3; }
 .ability-emblem-wrap {
   width: 34px;
   height: 34px;
@@ -2610,10 +2612,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .stat-val-text, .build-spec-value { font-family:var(--font-main); font-size:12.5px; font-weight:800; color:var(--ink); text-align:right; }
 .build-spec-note { margin-top:4px; padding:10px 12px; border-radius:10px; background:#eff6ff; border:1px solid #bfdbfe; }
 .build-spec-note p { margin:0; color:#1e40af; font-size:11px; line-height:1.5; font-weight:500; }
-.field-notes { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr 0.9fr; gap:20px; background:#fff; border:2px solid var(--line); border-radius:16px; padding:22px; box-shadow:0 4px 14px rgba(0,0,0,0.04); }
-@media (max-width: 900px) {
-  .field-notes { grid-template-columns:1fr; gap:18px; }
-}
+.field-notes { grid-column:1 / -1; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px; background:#fff; border:2px solid var(--line); border-radius:16px; padding:20px; }
 
 .field-notes-col { display:flex; flex-direction:column; }
 .field-notes-header { display:flex; align-items:center; gap:8px; margin-bottom:12px; padding:6px 10px; border-radius:10px; background:#f8fafc; border:1.5px solid #e2e8f0; }
@@ -2635,6 +2634,31 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .mode-chip { display:inline-flex; align-items:center; gap:7px; padding:8px 12px; border-radius:10px; background:linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%); border:1.5px solid #bae6fd; color:#0369a1; font-size:12px; font-weight:800; letter-spacing:-0.01em; box-shadow:0 2px 4px rgba(14,165,233,0.08); transition:all .15s ease; cursor:default; }
 .mode-chip:hover { transform:translateY(-2px); background:#fff; border-color:#7dd3fc; box-shadow:0 4px 10px rgba(14,165,233,0.15); }
 .mode-icon-img { width:18px; height:18px; object-fit:contain; flex:0 0 18px; filter:drop-shadow(0 1px 1px rgba(0,0,0,.2)); }
+.field-notes .field-notes-header { min-height:42px; margin-bottom:10px; padding:10px 12px; }
+.field-notes .field-notes-header h3 { margin:0; font-size:14px; line-height:20px; }
+.field-notes .field-notes-list,
+.field-notes .mode-list { display:grid; grid-template-columns:minmax(0, 1fr); grid-auto-rows:minmax(52px, 1fr); gap:8px; flex:1; margin:0; }
+.field-notes .field-note-item,
+.field-notes .mode-chip { min-width:0; align-items:center; gap:10px; padding:12px; border-radius:10px; }
+.field-notes .field-note-bullet { margin-top:0; }
+.field-notes .field-note-text { overflow-wrap:anywhere; }
+.field-notes .mode-chip { display:flex; font-size:12px; box-shadow:none; }
+.field-notes .mode-icon-img { width:22px; height:22px; flex-basis:22px; }
+.field-notes .field-note-item:hover,
+.field-notes .mode-chip:hover { transform:none; box-shadow:none; }
+@media (max-width: 1100px) {
+  .field-notes { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .field-notes .modes-col { grid-column:1 / -1; }
+  .field-notes .mode-list { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .field-notes { grid-template-columns:minmax(0, 1fr); padding:16px; gap:18px; }
+  .field-notes .modes-col { grid-column:auto; }
+  .field-notes .mode-chip { gap:8px; padding:10px; }
+}
+@media (max-width: 380px) {
+  .field-notes .mode-list { grid-template-columns:minmax(0, 1fr); }
+}
 .ui-icon-fallback { display:inline-grid; place-items:center; }
 
 /* Useful Maps Panel & Cards */

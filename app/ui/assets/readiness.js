@@ -406,10 +406,11 @@ function readinessRenderResult(result) {
   for (const [key, label] of [['power', 'Power Level'], ['buffies', 'Buffies']]) {
     readinessSetRing(`readiness-${key}-ring`, result.progress[key], `${label} progress`, `readiness-${key}-percent`);
   }
-  for (const [key, label] of [['gears', 'Gears'], ['abilities', 'Gadget + Star Power'], ['hypercharge', 'Hypercharge']]) {
+  for (const [key, label] of [['gears', 'Recommended Gears'], ['abilities', 'Recommended Gadget + Star Power'], ['hypercharge', 'Hypercharge']]) {
     const category = result.categoryProgress[key];
-    readinessSetRing(`readiness-${key}-ring`, category.progress, `${label} progress`, `readiness-${key}-percent`);
-    setText(`readiness-${key}-caption`, category.total ? `${category.owned} / ${category.total} owned` : 'Not available');
+    const target = key === 'gears' ? 'recommended-gears' : key;
+    readinessSetRing(`readiness-${target}-ring`, category.progress, `${label} progress`, `readiness-${target}-percent`);
+    setText(`readiness-${target}-caption`, category.total ? `${category.owned} / ${category.total} owned` : 'Not available');
   }
   setText('readiness-power-caption', result.isOwned ? `${result.currentPower} → ${result.targetPower}` : 'After unlock');
   setText('readiness-buffies-caption', result.counts.buffiesTotal ? `${result.counts.buffiesOwned} / ${result.counts.buffiesTotal} owned` : 'Not released');
