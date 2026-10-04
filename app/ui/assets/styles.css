@@ -564,11 +564,11 @@ a { color: inherit; }
 .roster-select-open .roster-select-chevron { transform: rotate(180deg); }
 .roster-select-menu { position: fixed; inset: auto; margin: 0; padding: 10px; border: 2px solid #c5ddff; border-radius: 20px; background: #fff; color: #142e60; box-shadow: 0 12px 36px rgba(28,99,178,.22); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #acbedc #f3f7fd; }
 .roster-select-menu::backdrop { background: transparent; }
-.roster-option-group { display: flex; align-items: center; gap: 12px; margin: 7px 0 5px; padding: 9px 14px; border-radius: 12px; background: linear-gradient(100deg, #eaf3ff, #f3f7ff); color: #6075a4; font-size: 11px; font-weight: 800; letter-spacing: .7px; text-transform: uppercase; }
+.roster-option-group { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 12px; margin: 7px 0 5px; padding: 9px 12px; border-radius: 12px; background: linear-gradient(100deg, #eaf3ff, #f3f7ff); color: #6075a4; font-size: 11px; font-weight: 800; letter-spacing: .7px; text-transform: uppercase; }
 .roster-select-menu > div:first-child .roster-option-group { margin-top: 0; }
 .roster-select-menu > div + div { margin-top: 10px; padding-top: 5px; border-top: 1px solid #e3edfb; }
 .roster-sort-menu > div + div { margin-top: 0; padding-top: 0; border-top: 1px solid #edf2fb; }
-.roster-option { display: grid; grid-template-columns: 92px minmax(0, 1fr) 18px; align-items: center; gap: 12px; width: 100%; min-height: 62px; padding: 9px 12px; border: 0; border-radius: 12px; background: #fff; color: #173162; cursor: pointer; text-align: left; }
+.roster-option { display: grid; grid-template-columns: 120px minmax(0, 1fr) 18px; align-items: center; gap: 12px; width: 100%; min-height: 62px; padding: 9px 12px; border: 0; border-radius: 12px; background: #fff; color: #173162; cursor: pointer; text-align: left; }
 .roster-sort-select .roster-option { grid-template-columns: 46px minmax(0, 1fr) 18px; }
 .roster-option + .roster-option { border-top: 1px solid #edf2fb; }
 .roster-option:hover { background: #edf6ff; }
@@ -582,19 +582,25 @@ a { color: inherit; }
 .roster-option-radio { width: 17px; height: 17px; border: 2px solid #9aafd0; border-radius: 50%; }
 .roster-option[aria-selected="true"] .roster-option-radio { border: 5px solid #fff; background: #1085f7; }
 .roster-option-art { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 3px; width: 38px; height: 38px; flex-shrink: 0; }
-.roster-option-art img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(18,44,83,.13)); }
-.roster-option-art .roster-power-icon { width: 44px; height: 34px; }
-.roster-option-art-set { width: 92px; }
-.roster-option-art-set img { width: 24px; height: 28px; }
+.roster-option-art img, .roster-option-art svg { width: 32px; height: 32px; flex-shrink: 0; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(18,44,83,.13)); }
+.roster-option > .roster-option-art, .roster-option-group > .roster-option-art { justify-self: center; }
+.roster-option-art-set { width: 120px; }
+.roster-buffie-set-art { flex-direction: column; width: 120px; height: auto; gap: 6px; padding: 3px 0; }
+.roster-buffie-set-types { width: 120px; }
 .roster-icon-plus { font-size: 12px; font-weight: 900; color: #859bc0; }
 .roster-option[aria-selected="true"] .roster-icon-plus { color: #fff; }
 .roster-art-badge { position: absolute; bottom: -2px; right: -5px; min-width: 20px; padding: 1px 3px; border: 1px solid #fff; border-radius: 5px; background: #dcecff; color: #245583; font-size: 8px; font-weight: 900; text-align: center; line-height: 1.2; }
-.roster-option-art-missing img { filter: grayscale(1); opacity: .4; }
+.roster-option-art-missing img, .roster-option-art-missing svg { filter: grayscale(1); opacity: .4; }
 .roster-option-art-missing::after { content: ''; position: absolute; inset: 7px 3px; border-top: 2px solid #8399bb; transform: translateY(12px) rotate(-45deg); }
 .roster-option-art .roster-class-icon { filter: invert(21%) sepia(27%) saturate(1279%) hue-rotate(179deg) brightness(93%); }
 .roster-option[aria-selected="true"] .roster-class-icon { filter: invert(1); }
-.roster-rarity-art::before { content: ''; width: 24px; height: 24px; border-radius: 6px; transform: rotate(45deg); background: var(--rarity-color); border: 1px solid rgba(18,44,83,.14); box-shadow: inset 3px 3px 0 rgba(255,255,255,.35), inset -3px -3px 0 rgba(18,44,83,.12), 0 2px 3px rgba(18,44,83,.1); }
-.roster-select-trigger .roster-rarity-art::before { width: 20px; height: 20px; }
+.roster-rarity-art { --roster-rarity-size: 32px; }
+.roster-rarity-art::before { content: ''; position: absolute; width: var(--roster-rarity-size); height: var(--roster-rarity-size); border-radius: 10px; background: var(--rarity-color); border: 1.5px solid color-mix(in srgb, var(--rarity-color) 50%, #14223b); box-shadow: inset 1px 2px 0 #ffffff65, 0 2px 0 #10213625; }
+.roster-rarity-art .roster-rarity-skull { position: relative; width: 23px; height: 23px; filter: none; }
+.roster-rarity-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.roster-rarity-tier { flex-shrink: 0; min-width: 30px; padding: 3px 6px; border-radius: 6px; background: #edf4ff; color: #173162; font-size: 11px; font-weight: 800; text-align: center; }
+.roster-select-trigger .roster-rarity-art { --roster-rarity-size: 27px; }
+.roster-select-trigger .roster-rarity-art .roster-rarity-skull { width: 20px; height: 20px; }
 .roster-rarity-common { --rarity-color: var(--rarity-starting); }
 .roster-rarity-rare { --rarity-color: var(--rarity-rare); }
 .roster-rarity-super_rare { --rarity-color: var(--rarity-super-rare); }
@@ -602,13 +608,15 @@ a { color: inherit; }
 .roster-rarity-mythic { --rarity-color: var(--rarity-mythic); }
 .roster-rarity-legendary { --rarity-color: var(--rarity-legendary); }
 .roster-rarity-ultra_legendary { --rarity-color: var(--rarity-ultra); }
+.roster-rarity-ultra_legendary::before { background: linear-gradient(135deg, #84e0ff, #f7a4de 65%, #ffe184); }
 .roster-select-trigger .roster-option-art { width: 30px; height: 30px; }
-.roster-select-trigger .roster-option-art img { width: 27px; height: 27px; }
-.roster-select-trigger .roster-option-art-set { width: 60px; }
-.roster-select-trigger .roster-option-art-set img { width: 18px; height: 24px; }
+.roster-select-trigger .roster-option-art img, .roster-select-trigger .roster-option-art svg { width: 27px; height: 27px; }
+.roster-select-trigger .roster-option-art-set { width: 103px; }
+.roster-select-trigger .roster-buffie-set-art { width: 30px; height: 30px; padding: 0; }
+.roster-select-trigger .roster-buffie-set-types { display: none; }
 .roster-select-trigger .roster-icon-plus { font-size: 9px; }
 .roster-option-group .roster-option-art { width: 26px; height: 26px; }
-.roster-option-group .roster-option-art img { width: 25px; height: 25px; }
+.roster-option-group .roster-option-art img, .roster-option-group .roster-option-art svg { width: 25px; height: 25px; }
 @media (max-width: 1200px) and (min-width: 769px) {
   .collection-toolbar { flex-wrap: wrap; }
   .collection-toolbar .search-box { flex-basis: 100%; }
@@ -621,9 +629,13 @@ a { color: inherit; }
   .roster-select { flex: 1 1 100%; }
   .roster-select-trigger { min-height: 48px; }
   .roster-select-menu { padding: 7px; border-radius: 16px; }
-  .roster-option { grid-template-columns: 82px minmax(0, 1fr) 17px; gap: 8px; padding: 9px 8px; }
-  .roster-option-art-set { width: 82px; gap: 2px; }
-  .roster-option-art-set img { width: 22px; }
+  .roster-option { grid-template-columns: 106px minmax(0, 1fr) 17px; gap: 8px; padding: 9px 8px; }
+  .roster-option-group { grid-template-columns: 106px minmax(0, 1fr); gap: 8px; padding: 9px 8px; }
+  .roster-option-art img, .roster-option-art svg { width: 28px; height: 28px; }
+  .roster-rarity-art { --roster-rarity-size: 28px; }
+  .roster-rarity-label { flex-wrap: wrap; }
+  .roster-option-art-set { width: 106px; gap: 2px; }
+  .roster-buffie-set-art, .roster-buffie-set-types { width: 106px; }
   .roster-option-copy strong { font-size: 12px; }
 }
 .filter-results-pill {

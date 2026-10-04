@@ -8,32 +8,53 @@
     gear: '/assets/section_gear.png?v=2',
     buffie: '/assets/buffies/generic.png',
     trophy: '/assets/icon_trophy.png',
-    power: '/assets/currencies/power-points.png',
+    power_asc: '/assets/sort-power-asc.svg',
+    power_desc: '/assets/sort-power-desc.svg',
     prestige: '/assets/filter-prestige.png',
-    brawler: '/assets/brawlers/16000000.png',
+    newest: '/assets/sort-newest.svg',
+    oldest: '/assets/sort-oldest.svg',
+    name: '/assets/sort-name-az.svg',
+    name_desc: '/assets/sort-name-za.svg',
+    rarity: '/assets/roster-rarity.svg',
+  };
+  const rarityTiers = {
+    rarity_common: 'S',
+    rarity_rare: 'R',
+    rarity_super_rare: 'SR',
+    rarity_epic: 'E',
+    rarity_mythic: 'M',
+    rarity_legendary: 'L',
+    rarity_ultra_legendary: 'UL',
+  };
+  // Visible artwork bounds exclude the different transparent margins in each source.
+  const equipmentFrames = {
+    gear: [1254, 1254, 185, 186, 880, 869],
+    gadget: [1254, 1254, 99, 92, 1049, 1050],
+    star: [872, 910, 0, 0, 872, 910],
+    hyper: [1254, 1254, 175, 85, 901, 1037],
+    buffie: [452, 552, 17, 4, 416, 539],
   };
   const groups = {
     ALL: ['Full roster', 'all'],
-    'BUFFIE OWNERSHIP': ['Buffies', 'buffie'],
-    'BUFFIE COMBINATIONS': ['Buffie sets', 'buffie'],
-    'INDIVIDUAL OWNERSHIP': ['Individual ownership', 'brawler'],
+    GEARS: ['Gears', 'gear'],
     GADGETS: ['Gadgets', 'gadget'],
     'STAR POWERS': ['Star Powers', 'star'],
-    GEARS: ['Gears', 'gear'],
     HYPERCHARGE: ['Hypercharge', 'hyper'],
+    'BUFFIE OWNERSHIP': ['Buffies', 'buffie'],
+    'BUFFIE COMBINATIONS': ['Buffie sets', 'buffie'],
     CLASS: ['Brawler class', 'class_damage_dealer'],
-    RARITY: ['Brawler rarity', 'all'],
+    RARITY: ['Brawler rarity', 'rarity'],
   };
   const metadata = {
-    power_asc: ['power', 'Lowest Power Level first', '1→11'],
-    power_desc: ['power', 'Highest Power Level first', '11→1'],
-    newest: ['brawler', 'Most recently released Brawlers first', 'NEW'],
-    oldest: ['brawler', 'Earliest released Brawlers first', 'OLD'],
+    power_asc: ['power_asc', 'Lowest Power Level first'],
+    power_desc: ['power_desc', 'Highest Power Level first'],
+    newest: ['newest', 'Most recently released Brawlers first'],
+    oldest: ['oldest', 'Earliest released Brawlers first'],
     trophies: ['trophy', 'Highest current trophy count first', '↓'],
     trophies_asc: ['trophy', 'Lowest current trophy count first', '↑'],
     prestige_next: ['prestige', 'Fewest trophies to the next Prestige milestone', '↑'],
-    name: ['brawler', 'Alphabetical order, A to Z', 'A–Z'],
-    name_desc: ['brawler', 'Alphabetical order, Z to A', 'Z–A'],
+    name: ['name', 'Alphabetical order, A to Z'],
+    name_desc: ['name_desc', 'Alphabetical order, Z to A'],
     all: ['all', 'Show the full roster within your other filters'],
     gadgets_0: ['gadget', 'Unlocked Brawlers with no Gadgets owned', '0/2', true],
     gadgets_1: ['gadget', 'Unlocked Brawlers with exactly one Gadget owned', '1/2'],
@@ -61,12 +82,6 @@
     buffie_combo_gadget_hc: [['gadget', 'hyper'], 'Gadget and Hypercharge Buffies owned; Star Power missing'],
     buffie_combo_sp_hc: [['star', 'hyper'], 'Star Power and Hypercharge Buffies owned; Gadget missing'],
     buffie_combo_complete: [['gadget', 'star', 'hyper'], 'Gadget, Star Power, and Hypercharge Buffies all owned'],
-    has_gadget: ['gadget', 'At least one Gadget owned'],
-    has_sp: ['star', 'At least one Star Power owned'],
-    has_hypercharge: ['hyper', 'Hypercharge owned, whether stored or active'],
-    no_gadget: ['gadget', 'Unlocked Brawlers without a Gadget', '', true],
-    no_sp: ['star', 'Unlocked Brawlers without a Star Power', '', true],
-    no_hypercharge: ['hyper', 'Unlocked Brawlers without an owned Hypercharge', '', true],
     class_damage_dealer: ['class_damage_dealer', 'Brawlers in the Damage Dealer class'],
     class_assassin: ['class_assassin', 'Brawlers in the Assassin class'],
     class_marksman: ['class_marksman', 'Brawlers in the Marksman class'],
@@ -99,6 +114,25 @@
       }
       if (name.startsWith('rarity_')) {
         holder.classList.add('roster-rarity-art', `roster-rarity-${name.slice(7)}`);
+        const skull = document.createElement('img');
+        skull.src = '/assets/rarity-skull.svg?v=2';
+        skull.alt = '';
+        skull.setAttribute('aria-hidden', 'true');
+        skull.className = 'roster-rarity-skull';
+        holder.append(skull);
+        return;
+      }
+      if (equipmentFrames[name]) {
+        const [width, height, x, y, visibleWidth, visibleHeight] = equipmentFrames[name];
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', `${x} ${y} ${visibleWidth} ${visibleHeight}`);
+        svg.setAttribute('aria-hidden', 'true');
+        const image = document.createElementNS(svg.namespaceURI, 'image');
+        image.setAttribute('href', art[name]);
+        image.setAttribute('width', width);
+        image.setAttribute('height', height);
+        svg.append(image);
+        holder.append(svg);
         return;
       }
       const image = document.createElement('img');
@@ -109,7 +143,6 @@
         image.className = 'roster-class-icon';
       } else {
         image.src = art[name];
-        if (name === 'power') image.className = 'roster-power-icon';
       }
       holder.append(image);
     });
@@ -118,7 +151,16 @@
 
   function optionArt(value) {
     const [key, , badge, missing] = metadata[value];
-    const holder = icon(key);
+    let holder;
+    if (value.startsWith('buffie_combo_') && value !== 'buffie_combo_0') {
+      holder = document.createElement('span');
+      holder.className = 'roster-option-art roster-buffie-set-art';
+      const buffie = icon('buffie');
+      buffie.classList.add('roster-buffie-set-symbol');
+      const types = icon(key);
+      types.classList.add('roster-buffie-set-types');
+      holder.append(buffie, types);
+    } else holder = icon(key);
     if (missing) holder.classList.add('roster-option-art-missing');
     if (badge) {
       const count = document.createElement('span');
@@ -189,7 +231,17 @@
         label.textContent = entry.textContent;
         const guide = document.createElement('small');
         guide.textContent = metadata[entry.value][1];
-        copy.append(label, guide);
+        if (rarityTiers[entry.value]) {
+          label.className = 'roster-rarity-label';
+          const name = document.createElement('span');
+          name.textContent = entry.textContent;
+          const tier = document.createElement('span');
+          tier.className = 'roster-rarity-tier';
+          tier.textContent = rarityTiers[entry.value];
+          tier.setAttribute('aria-hidden', 'true');
+          label.replaceChildren(name, tier);
+          copy.append(label);
+        } else copy.append(label, guide);
         const radio = document.createElement('span');
         radio.className = 'roster-option-radio';
         radio.setAttribute('aria-hidden', 'true');

@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=587">
+  <link rel="stylesheet" href="/assets/styles.css?v=590">
 </head>
 <body>
   <div class="app-shell">
@@ -390,6 +390,12 @@
               <optgroup label="ALL">
                 <option value="all">All Brawlers</option>
               </optgroup>
+              <optgroup label="GEARS">
+                <option value="gears_0">0 Gears</option>
+                <option value="gears_1">1 Gear</option>
+                <option value="gears_2_plus">2+ Gears</option>
+                <option value="all_gears">All Available Gears</option>
+              </optgroup>
               <optgroup label="GADGETS">
                 <option value="gadgets_0">0 / 2 Gadgets</option>
                 <option value="gadgets_1">1 / 2 Gadgets</option>
@@ -399,12 +405,6 @@
                 <option value="sp_0">0 / 2 Star Powers</option>
                 <option value="sp_1">1 / 2 Star Powers</option>
                 <option value="sp_2">2 / 2 Star Powers · Complete</option>
-              </optgroup>
-              <optgroup label="GEARS">
-                <option value="gears_0">0 Gears</option>
-                <option value="gears_1">1 Gear</option>
-                <option value="gears_2_plus">2+ Gears</option>
-                <option value="all_gears">All Available Gears</option>
               </optgroup>
               <optgroup label="HYPERCHARGE">
                 <option value="hc_not_available">Hypercharge Not Available</option>
@@ -427,14 +427,6 @@
                 <option value="buffie_combo_gadget_hc">Gadget + Hyper Buffies</option>
                 <option value="buffie_combo_sp_hc">Star + Hyper Buffies</option>
                 <option value="buffie_combo_complete">3 / 3 Buffies · Complete</option>
-              </optgroup>
-              <optgroup label="INDIVIDUAL OWNERSHIP">
-                <option value="has_gadget">Gadget Owned</option>
-                <option value="has_sp">Star Power Owned</option>
-                <option value="has_hypercharge">Hypercharge Owned</option>
-                <option value="no_gadget">Missing Gadget</option>
-                <option value="no_sp">Missing Star Power</option>
-                <option value="no_hypercharge">Missing Hypercharge</option>
               </optgroup>
               <optgroup label="CLASS">
                 <option value="class_damage_dealer">Damage Dealer</option>
@@ -1313,7 +1305,7 @@
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
   <script src="/assets/readiness.js?v=25" defer></script>
-  <script src="/assets/roster-dropdowns.js?v=6" defer></script>
+  <script src="/assets/roster-dropdowns.js?v=10" defer></script>
   <script src="/assets/app.js?v=132" defer></script>
 </body>
 </html>
