@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" preserveAspectRatio="none" fill="#fff">
+<defs><linearGradient id="edge-fade"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".28" stop-color="#fff" stop-opacity=".65"/><stop offset=".6" stop-color="#fff"/></linearGradient><mask id="edge"><path fill="url(#edge-fade)" d="M0 0H400V500H0Z"/></mask></defs>
+<g mask="url(#edge)">
+<g fill="none" stroke="#fff" stroke-linecap="round"><path stroke-width="14" opacity=".55" d="M0 455C162 420 268 501 375 389C409 352 382 309 347 334C329 348 346 370 365 359"/><path stroke-width="8" d="M0 379C155 349 189 412 279 349C343 304 290 247 264 282C255 296 270 307 281 299M203 224C270 203 349 238 400 176"/><path stroke-width="5" opacity=".7" d="M0 280C77 232 151 308 216 271M231 467C304 465 345 447 400 394M314 106L363 97"/></g>
+</g>
+</svg>

@@ -11,41 +11,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=590">
+  <link rel="stylesheet" href="/assets/styles.css?v=623">
 </head>
 <body>
   <div class="app-shell">
-    <button id="sidebar-edge-toggle" class="sidebar-edge-toggle" type="button" aria-label="Hide menu" aria-controls="primary-sidebar" aria-expanded="true" title="Hide menu">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
-    </button>
-    <aside id="primary-sidebar" class="sidebar" aria-label="Primary navigation">
-      <button id="sidebar-close" class="sidebar-close" type="button" aria-label="Hide menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12"/></svg>
-      </button>
-      <a class="brand" href="/" aria-label="BrawlBuddy home">
-        <span class="brand-mark"><img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="brand-logo-img"></span>
-        <span class="brand-copy">
-          <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="brand-text-logo-img">
-        </span>
-      </a>
-      <nav class="nav-list">
-        <a class="nav-item" data-nav="overview" href="/"><span class="nav-icon">⌂</span><span>Overview</span></a>
-        <a class="nav-item" data-nav="battles" href="/battles"><span class="nav-icon">⚔</span><span>Battle Log</span></a>
-        <a class="nav-item" data-nav="events" href="/events"><span class="nav-icon">🗺</span><span>Events & Maps</span></a>
-        <a class="nav-item" data-nav="leaderboards" href="/leaderboards"><span class="nav-icon">🏆</span><span>Leaderboards</span></a>
-        <a class="nav-item" data-nav="brawlers" href="/brawlers"><span class="nav-icon">★</span><span>Brawlers</span></a>
-        <a class="nav-item" data-nav="club" href="/club"><span class="nav-icon">🛡</span><span>Club Hub</span></a>
-      </nav>
-    </aside>
-    <button id="sidebar-backdrop" class="sidebar-backdrop" type="button" aria-label="Close menu" tabindex="-1" aria-hidden="true"></button>
-
     <main class="main-content">
       <header class="topbar header-container">
         <div class="topbar-heading">
-          <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-label="Hide menu" aria-controls="primary-sidebar" aria-expanded="true">
+          <button id="header-menu-toggle" class="header-menu-toggle" type="button" popovertarget="header-navigation" aria-label="Show menu" aria-controls="header-navigation" aria-expanded="false">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span>Menu</span>
           </button>
+          <nav id="header-navigation" class="header-navigation" popover="auto" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="BrawlBuddy home">
+              <span class="brand-mark"><img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="brand-logo-img"></span>
+              <span class="brand-copy"><img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="brand-text-logo-img"></span>
+            </a>
+            <div class="nav-list">
+              <a class="nav-item" data-nav="overview" href="/"><span class="nav-icon">⌂</span><span>Overview</span></a>
+              <a class="nav-item" data-nav="battles" href="/battles"><span class="nav-icon">⚔</span><span>Battle Log</span></a>
+              <a class="nav-item" data-nav="events" href="/events"><span class="nav-icon">🗺</span><span>Events &amp; Maps</span></a>
+              <a class="nav-item" data-nav="leaderboards" href="/leaderboards"><span class="nav-icon">🏆</span><span>Leaderboards</span></a>
+              <a class="nav-item" data-nav="brawlers" href="/brawlers"><span class="nav-icon">★</span><span>Brawlers</span></a>
+              <a class="nav-item" data-nav="club" href="/club"><span class="nav-icon">🛡</span><span>Club Hub</span></a>
+            </div>
+          </nav>
           <div class="topbar-header-copy">
             <div class="topbar-brand-mobile">
               <a href="/" class="mobile-brand-link" aria-label="BrawlBuddy home">
@@ -698,6 +688,7 @@
 
       <section id="detail-view" class="view hidden">
         <div class="detail-hero panel" id="detail-hero">
+          <div class="detail-element-edge" aria-hidden="true"></div>
           <!-- Left Wing: Brawler Identity -->
           <div class="detail-hero-identity">
             <div class="detail-art">
@@ -1190,14 +1181,6 @@
     </main>
   </div>
 
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    <a data-nav="overview" href="/"><span>⌂</span>Overview</a>
-    <a data-nav="battles" href="/battles"><span>⚔</span>Battles</a>
-    <a data-nav="events" href="/events"><span>🗺</span>Events</a>
-    <a data-nav="leaderboards" href="/leaderboards"><span>🏆</span>Ranks</a>
-    <a data-nav="brawlers" href="/brawlers"><span>★</span>Brawlers</a>
-    <a data-nav="club" href="/club"><span>🛡</span>Club</a>
-  </nav>
   
   <!-- Tactical Match Recreator Dialog -->
   <dialog id="recreator-dialog" class="recreator-dialog">
@@ -1304,8 +1287,9 @@
 
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=1" defer></script>
+  <script src="/assets/brawler-backgrounds.js?v=5" defer></script>
   <script src="/assets/readiness.js?v=25" defer></script>
-  <script src="/assets/roster-dropdowns.js?v=10" defer></script>
-  <script src="/assets/app.js?v=132" defer></script>
+  <script src="/assets/roster-dropdowns.js?v=11" defer></script>
+  <script src="/assets/app.js?v=139" defer></script>
 </body>
 </html>

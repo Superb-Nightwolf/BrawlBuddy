@@ -3029,6 +3029,9 @@ const artworkBoundsCache = new Map();
 function renderDetailArtwork(brawler) {
   const stage = $('hero-art-stage');
   if (!stage) return;
+  const hero = $('detail-hero');
+  hero?.style.removeProperty('--cover-primary');
+  hero?.style.removeProperty('--cover-secondary');
   stage.replaceChildren();
   const image = new Image();
   image.alt = `${brawler.name} character artwork`;
@@ -3046,11 +3049,14 @@ function renderDetailArtwork(brawler) {
         canvas.height = image.naturalHeight;
         const context = canvas.getContext('2d', { willReadFrequently: true });
         context.drawImage(image, 0, 0);
-        bounds = BrawlBuddyArtwork.visibleBounds(
-          context.getImageData(0, 0, canvas.width, canvas.height).data,
-          canvas.width, canvas.height
-        );
+        const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+        bounds = BrawlBuddyArtwork.visibleBounds(pixels, canvas.width, canvas.height);
+        bounds.coverPalette = BrawlBuddyBackgrounds.paletteFromPixels(pixels, canvas.width, canvas.height);
         artworkBoundsCache.set(image.src, bounds);
+      }
+      if (bounds.coverPalette) {
+        hero?.style.setProperty('--cover-primary', bounds.coverPalette.primary);
+        hero?.style.setProperty('--cover-secondary', bounds.coverPalette.secondary);
       }
       crop.style.setProperty('--art-aspect', bounds.width / bounds.height);
       image.style.width = `${100 * image.naturalWidth / bounds.width}%`;
@@ -3315,13 +3321,19 @@ async function renderDetail() {
   setText('detail-name', brawler.name);
   
   const rawRarity = (guide.rarity || brawler.rarity || 'common').toLowerCase().replace(/\s+/g, '_');
+  document.body.dataset.detailRarity = rawRarity;
   const heroEl = $('detail-hero');
   if (heroEl) {
     heroEl.dataset.rarity = rawRarity;
+    const cover = BrawlBuddyBackgrounds.coverFor(brawler, guide);
+    heroEl.dataset.coverVariant = cover.variant;
+    heroEl.style.setProperty('--cover-motif', `url("/assets/brawler-effects/${cover.motif}.svg")`);
+    heroEl.style.setProperty('--cover-left-motif', `url("/assets/brawler-effects/${cover.leftMotif}.svg")`);
   }
   const detailViewEl = $('detail-view');
   if (detailViewEl) {
     detailViewEl.dataset.rarity = rawRarity;
+    detailViewEl.dataset.theme = BrawlBuddyBackgrounds.themeFor(brawler, guide);
   }
 
   const rarityEl = $('detail-rarity');
@@ -4142,95 +4154,38 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
   });
 }
 
-function initializeSidebar() {
-  const shell = document.querySelector('.app-shell');
-  const sidebar = $('primary-sidebar');
-  const toggle = $('sidebar-toggle');
-  const edgeToggle = $('sidebar-edge-toggle');
-  const close = $('sidebar-close');
-  const mobileNav = document.querySelector('.mobile-nav');
-  const main = document.querySelector('.main-content');
-  const mobile = window.matchMedia('(max-width: 980px)');
-  const preferenceKey = 'brawlbuddy_sidebar_collapsed';
-  let desktopCollapsed = false;
-  let open;
-  try {
-    desktopCollapsed = localStorage.getItem(preferenceKey) === 'true';
-  } catch { /* The menu still works when browser storage is unavailable. */ }
+function initializeHeaderNavigation() {
+  const toggle = $('header-menu-toggle');
+  const menu = $('header-navigation');
+  if (!toggle || !menu) return;
 
-  function setOpen(nextOpen, moveFocus = false) {
-    open = nextOpen;
-    // Restore focus before making the menu or page inert.
-    main.inert = false;
-    mobileNav.inert = false;
-    if (!open && sidebar.contains(document.activeElement)) toggle.focus();
-    shell.classList.toggle('sidebar-collapsed', !mobile.matches && !open);
-    shell.classList.toggle('menu-open', mobile.matches && open);
-    document.body.classList.toggle('menu-drawer-open', mobile.matches && open);
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Hide menu' : 'Show menu');
-    edgeToggle.setAttribute('aria-expanded', String(open));
-    edgeToggle.setAttribute('aria-label', open ? 'Hide menu' : 'Show menu');
-    edgeToggle.title = open ? 'Hide menu' : 'Show menu';
-    sidebar.inert = !open;
-    sidebar.setAttribute('aria-hidden', String(!open));
-    if (mobile.matches && open) {
-      sidebar.setAttribute('role', 'dialog');
-      sidebar.setAttribute('aria-modal', 'true');
-      main.inert = true;
-      mobileNav.inert = true;
-      requestAnimationFrame(() => {
-        if (open && mobile.matches) close.focus();
-      });
-    } else {
-      sidebar.removeAttribute('role');
-      sidebar.removeAttribute('aria-modal');
-      if (moveFocus) toggle.focus();
-    }
-    if (!mobile.matches) {
-      desktopCollapsed = !open;
-      try {
-        localStorage.setItem(preferenceKey, String(desktopCollapsed));
-      } catch { /* Keep the current session's state without persistence. */ }
-    }
+  function positionMenu() {
+    const trigger = toggle.getBoundingClientRect();
+    const bounds = menu.getBoundingClientRect();
+    menu.style.left = `${Math.max(12, Math.min(trigger.left, window.innerWidth - bounds.width - 12))}px`;
+    menu.style.top = `${Math.max(12, Math.min(trigger.bottom + 10, window.innerHeight - bounds.height - 12))}px`;
   }
 
-  toggle.addEventListener('click', () => setOpen(!open));
-  edgeToggle.addEventListener('click', () => setOpen(!open));
-  close.addEventListener('click', () => setOpen(false, true));
-  $('sidebar-backdrop').addEventListener('click', () => setOpen(false, true));
-  sidebar.addEventListener('click', (event) => {
-    if (mobile.matches && event.target.closest('a[href]')) setOpen(false, true);
+  menu.addEventListener('toggle', (event) => {
+    const open = event.newState === 'open';
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Hide menu' : 'Show menu');
+    if (open) positionMenu();
   });
-  document.addEventListener('keydown', (event) => {
-    if (!open) return;
-    if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {
-      event.preventDefault();
-      setOpen(false, true);
-    } else if (mobile.matches && event.key === 'Tab') {
-      const items = sidebar.querySelectorAll('button, a[href]');
-      const first = items[0];
-      const last = items[items.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
+  menu.addEventListener('click', (event) => {
+    if (event.target.closest('a[href]')) menu.hidePopover();
   });
-  mobile.addEventListener('change', () => setOpen(mobile.matches ? false : !desktopCollapsed));
-  shell.addEventListener('transitionend', (event) => {
-    if (event.target === shell && event.propertyName === 'grid-template-columns') {
-      scheduleBrawlerNameFit($('brawler-grid') || document);
-    }
+  window.addEventListener('resize', () => {
+    if (menu.matches(':popover-open')) positionMenu();
   });
-  setOpen(mobile.matches ? false : !desktopCollapsed);
+  window.addEventListener('scroll', () => {
+    if (menu.matches(':popover-open')) positionMenu();
+  });
+  window.addEventListener('popstate', () => menu.hidePopover());
 }
 
 function bindEvents() {
-  initializeSidebar();
+  initializeHeaderNavigation();
   $('connect-button')?.addEventListener('click', () => {
     $('dialog-error')?.classList.add('hidden');
     $('connect-dialog')?.showModal();

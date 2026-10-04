@@ -36,11 +36,11 @@ def _load(name: str) -> dict:
         return json.load(handle)
 
 
-def test_roster_header_matches_guide_and_preserves_original_partition() -> None:
+def test_roster_header_preserves_original_artwork_partition() -> None:
     import re
 
     css = (UI_DIR / "assets/styles.css").read_text(encoding="utf-8")
-    surface = re.search(r"#detail-view \.panel\.detail-hero,\s*\.brawler-visual\s*\{([^}]+)\}", css)
+    surface = re.search(r"\.brawler-visual::before\s*\{([^}]+)\}", css)
     assert surface is not None
     assert "var(--hero-bg)" in surface[1]
     assert "var(--hero-glow" in surface[1]
