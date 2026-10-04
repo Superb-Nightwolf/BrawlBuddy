@@ -3069,7 +3069,7 @@ function renderDetailArtwork(brawler) {
       crop.classList.add('artwork-fallback');
     }
   };
-  image.src = brawler.id === 16000038 && !brawler.owned
+  const artSrc = brawler.id === 16000038 && !brawler.owned
     ? '/assets/surge-guide-art.png'
     : brawler.id === 16000108
       ? '/assets/brawlers/generated/16000108-v3.png'
@@ -3078,12 +3078,22 @@ function renderDetailArtwork(brawler) {
         : [16000107, 16000109].includes(brawler.id)
           ? `/assets/brawlers/generated/${brawler.id}.png`
           : `/assets/brawlers/${brawler.id}.png`;
+  image.src = artSrc;
   image.onerror = () => {
     if (!stage.contains(crop)) return;
     image.remove();
     stage.textContent = brawler.name;
   };
   stage.append(crop);
+
+  hero?.style.setProperty('--hero-watermark', `url("${artSrc}")`);
+  const watermarkImg = $('detail-hero-watermark-art');
+  if (watermarkImg) {
+    watermarkImg.src = artSrc;
+    watermarkImg.onerror = () => {
+      watermarkImg.src = brawlerImage(brawler, false);
+    };
+  }
 }
 
 function renderPrestigeProgress(brawler) {
@@ -3325,6 +3335,7 @@ async function renderDetail() {
   const heroEl = $('detail-hero');
   if (heroEl) {
     heroEl.dataset.rarity = rawRarity;
+    BrawlBuddyHeroThemes.apply(heroEl, brawler, guide);
     const cover = BrawlBuddyBackgrounds.coverFor(brawler, guide);
     heroEl.dataset.coverVariant = cover.variant;
     heroEl.style.setProperty('--cover-motif', `url("/assets/brawler-effects/${cover.motif}.svg")`);

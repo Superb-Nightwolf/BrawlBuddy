@@ -1019,18 +1019,19 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .detail-hero { 
   min-height: 360px; 
   display: grid; 
-  grid-template-columns: minmax(0, 3fr) 1px minmax(210px, 1fr); 
+  grid-template-columns: minmax(0, 2.75fr) minmax(230px, 1.25fr);
   align-items: stretch; 
   position: relative; 
   overflow: hidden; 
   color: var(--hero-ink, #0f2042); 
-  border: 3px solid #ffffff; 
+  border: 3px solid var(--hero-border, #ffffff);
   border-radius: 26px; 
-  box-shadow: 0 8px 0 var(--hero-shadow-edge, #93c5fd), 0 20px 44px rgba(0, 18, 55, 0.18); 
+  box-shadow: 0 8px 0 var(--hero-shadow-edge, #93c5fd), 0 20px 44px rgba(0, 18, 55, 0.14);
   margin-bottom: 24px; 
   transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
-  --hero-bg: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
-  --hero-border: #bfdbfe;
+  background: var(--hero-bg);
+  --hero-bg: linear-gradient(135deg, #f0f7ff 0%, #e0effe 45%, #c5e1fd 100%);
+  --hero-border: #bae0fd;
   --hero-shadow-edge: #93c5fd;
   --hero-ink: #1e40af;
   --hero-accent: #2563eb;
@@ -1040,8 +1041,8 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 #detail-view,
 .detail-hero,
 .brawler-card {
-  --hero-bg: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
-  --hero-border: #bfdbfe;
+  --hero-bg: linear-gradient(135deg, #f0f7ff 0%, #e0effe 45%, #c5e1fd 100%);
+  --hero-border: #bae0fd;
   --hero-shadow-edge: #93c5fd;
   --hero-ink: #1e40af;
   --hero-accent: #2563eb;
@@ -1051,8 +1052,8 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 #detail-view[data-rarity="common"], #detail-view[data-rarity="starting"],
 .detail-hero[data-rarity="common"], .detail-hero[data-rarity="starting"],
 .brawler-card.rarity-common, .brawler-card.rarity-starting {
-  --hero-bg: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
-  --hero-border: #bfdbfe;
+  --hero-bg: linear-gradient(135deg, #f0f7ff 0%, #e0effe 45%, #c5e1fd 100%);
+  --hero-border: #bae0fd;
   --hero-shadow-edge: #93c5fd;
   --hero-ink: #1e40af;
   --hero-accent: #2563eb;
@@ -1061,7 +1062,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 #detail-view[data-rarity="rare"],
 .detail-hero[data-rarity="rare"],
 .brawler-card.rarity-rare {
-  --hero-bg: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #86efac 100%);
+  --hero-bg: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 45%, #bbf7d0 100%);
   --hero-border: #bbf7d0;
   --hero-shadow-edge: #86efac;
   --hero-ink: #166534;
@@ -1071,7 +1072,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 #detail-view[data-rarity="super_rare"], #detail-view[data-rarity="super-rare"],
 .detail-hero[data-rarity="super_rare"], .detail-hero[data-rarity="super-rare"],
 .brawler-card.rarity-super-rare, .brawler-card.rarity-super_rare {
-  --hero-bg: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+  --hero-bg: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 45%, #bae6fd 100%);
   --hero-border: #bae6fd;
   --hero-shadow-edge: #7dd3fc;
   --hero-ink: #075985;
@@ -1081,7 +1082,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 #detail-view[data-rarity="epic"],
 .detail-hero[data-rarity="epic"],
 .brawler-card.rarity-epic {
-  --hero-bg: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
+  --hero-bg: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 45%, #e9d5ff 100%);
   --hero-border: #e9d5ff;
   --hero-shadow-edge: #d8b4fe;
   --hero-ink: #581c87;
@@ -1091,7 +1092,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 #detail-view[data-rarity="mythic"],
 .detail-hero[data-rarity="mythic"],
 .brawler-card.rarity-mythic {
-  --hero-bg: linear-gradient(135deg, #ffe4e6 0%, #fecdd3 50%, #fda4af 100%);
+  --hero-bg: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 45%, #fecdd3 100%);
   --hero-border: #fecdd3;
   --hero-shadow-edge: #fda4af;
   --hero-ink: #9f1239;
@@ -1101,18 +1102,18 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 #detail-view[data-rarity="legendary"],
 .detail-hero[data-rarity="legendary"],
 .brawler-card.rarity-legendary {
-  --hero-bg: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%);
-  --hero-border: #fef08a;
-  --hero-shadow-edge: #fde047;
+  --hero-bg: linear-gradient(135deg, #fffdf2 0%, #fef9db 42%, #fde888 100%);
+  --hero-border: #fde047;
+  --hero-shadow-edge: #facc15;
   --hero-ink: #78350f;
   --hero-accent: #b45309;
-  --hero-glow: rgba(234, 179, 8, 0.16);
+  --hero-glow: rgba(234, 179, 8, 0.18);
 }
 #detail-view[data-rarity="ultra_legendary"], #detail-view[data-rarity="ultra-legendary"], #detail-view[data-rarity="ultra"],
 .detail-hero[data-rarity="ultra_legendary"], .detail-hero[data-rarity="ultra-legendary"], .detail-hero[data-rarity="ultra"],
 .brawler-card.rarity-ultra-legendary, .brawler-card.rarity-ultra_legendary, .brawler-card.rarity-ultra {
-  --hero-bg: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 50%, #c4b5fd 100%);
-  --hero-border: #e9d5ff;
+  --hero-bg: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 45%, #ddd6fe 100%);
+  --hero-border: #ddd6fe;
   --hero-shadow-edge: #c084fc;
   --hero-ink: #581c87;
   --hero-accent: #7e22ce;
@@ -1300,20 +1301,31 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .class-icon { width: 17px; height: 17px; object-fit: contain; flex: 0 0 17px; filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
 
 /* Clean Left Stat Pills (Power Level, Current Trophies, Best Trophies) */
-.detail-account-stats { display: flex; gap: 12px; flex-wrap: wrap; margin: 0; }
+.detail-account-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  width: 100%;
+  max-width: 520px;
+}
 .detail-account-stats .stat-pill { 
-  min-width: 110px; 
-  padding: 8px 16px; 
+  min-width: 0;
+  padding: 8px 10px;
   border: 2px solid var(--hero-border, #bfdbfe); 
   border-radius: 14px; 
-  background: rgba(255, 255, 255, 0.82); 
-  box-shadow: 0 3px 0 var(--hero-shadow-edge, #93c5fd), 0 4px 10px rgba(0, 15, 45, 0.06); 
-  backdrop-filter: blur(6px); 
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 15, 45, 0.05);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.detail-account-stats .stat-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 15, 45, 0.08);
 }
 .detail-account-stats .stat-pill span { 
   display: block; 
@@ -1337,11 +1349,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 
 /* Subtle Separator Divider between Identity and Prestige */
 .detail-hero-divider { 
-  align-self: stretch; 
-  width: 1px; 
-  margin: 20px 0; 
-  background: linear-gradient(180deg, transparent 0%, var(--hero-border, #bfdbfe) 20%, var(--hero-border, #bfdbfe) 80%, transparent 100%); 
-  z-index: 2; 
+  display: none !important;
 }
 
 /* Right Column: Clean Visual Prestige Bay */
@@ -1556,127 +1564,101 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 #detail-view[data-theme="steam"] { --element-color: #91aeb5; --element-motif: url('/assets/brawler-effects/steam.svg'); }
 #detail-view[data-theme="money"] { --element-color: #d4ac47; --element-motif: url('/assets/brawler-effects/money.svg'); }
 
-/* Option 5: ability-themed edges around the soft rarity-colored center. */
+/* Clean Luminous Brawler Card & Right-Wing Watermark */
 #detail-view .detail-hero {
-  --cover-energy: color-mix(in srgb, var(--cover-primary, var(--element-color)) 55%, var(--element-color));
-  --cover-sheen: var(--cover-secondary, var(--detail-color-glow));
-  --cover-effect-duration: 7s;
+  position: relative;
+  background: var(--hero-bg);
+  border: 3px solid var(--hero-border);
+  box-shadow: 0 8px 0 var(--hero-shadow-edge), 0 20px 44px rgba(0, 18, 55, 0.12);
 }
-#detail-view[data-theme="fire"] .detail-hero { --cover-effect-duration: 5s; }
-#detail-view[data-theme="frost"] .detail-hero { --cover-effect-duration: 9s; }
-#detail-view[data-theme="electric"] .detail-hero { --cover-effect-duration: 3.6s; }
-#detail-view[data-theme="sonic"] .detail-hero { --cover-effect-duration: 3s; }
-#detail-view[data-theme="shadow"] .detail-hero { --cover-effect-duration: 10s; }
-#detail-view .detail-hero[data-cover-variant="fire-ice"] {
-  --cover-energy: #58c8ee;
-  --cover-left-energy: #ee7935;
-}
+
 #detail-view .detail-hero::before {
-  background:
-    radial-gradient(ellipse at 52% 45%, var(--detail-color-top) 0%, var(--detail-color-middle) 30%, transparent 82%),
-    radial-gradient(ellipse at 0% 0%, color-mix(in srgb, var(--cover-left-energy, var(--cover-energy)) 70%, transparent), transparent 62%),
-    radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--cover-sheen) 28%, white), transparent 70%),
-    var(--detail-design-background);
-}
-#detail-view .panel::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  z-index: -1;
-  background: var(--element-color);
-  opacity: .08;
-  -webkit-mask-image: var(--element-motif);
-  mask-image: var(--element-motif);
-  -webkit-mask-size: 200px 100%;
-  mask-size: 200px 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: right bottom;
-  mask-position: right bottom;
+  z-index: 0;
+  background:
+    radial-gradient(circle 500px at 16% 45%, rgba(255, 255, 255, 0.45) 0%, transparent 65%),
+    radial-gradient(circle 380px at 85% 25%, rgba(255, 255, 255, 0.28) 0%, transparent 60%);
 }
-#detail-view .detail-hero::after, #detail-view .detail-element-edge {
+
+/* Hide legacy motif and edge overlays */
+#detail-view .panel::after,
+#detail-view .detail-element-edge,
+#detail-view .detail-hero::after {
+  display: none !important;
+}
+
+/* Right-Wing Watermark Silhouette */
+.detail-hero-watermark {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  left: auto;
-  width: 33%;
-  height: auto;
-  border-radius: inherit;
+  width: 52%;
+  max-width: 580px;
   pointer-events: none;
-  z-index: -1;
-  background: linear-gradient(145deg, var(--cover-energy) 12%, var(--element-color) 52%, color-mix(in srgb, var(--cover-sheen) 45%, var(--detail-color-bottom)));
-  opacity: .48;
-  -webkit-mask-image: var(--cover-motif, var(--element-motif));
-  mask-image: var(--cover-motif, var(--element-motif));
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: right bottom;
-  mask-position: right bottom;
-  animation: cover-energy-breathe var(--cover-effect-duration) ease-in-out infinite alternate;
-}
-#detail-view .detail-element-edge {
-  left: 0;
-  right: auto;
-  width: 23%;
-  transform: scaleX(-1);
-  -webkit-mask-image: var(--cover-left-motif, var(--element-motif));
-  mask-image: var(--cover-left-motif, var(--element-motif));
-  animation-delay: -2.5s;
-}
-#detail-view .detail-hero[data-cover-variant="fire-ice"] .detail-element-edge {
-  background: linear-gradient(145deg, #f16b27, #ffb54f 55%, #ffe497);
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-/* A few drifting embers, snow glints or energy sparks behind the unchanged art. */
-#detail-view:is([data-theme="fire"], [data-theme="frost"], [data-theme="electric"], [data-theme="arcane"], [data-theme="shadow"]) .detail-art::before {
-  content: '';
+.detail-hero-watermark-art {
   position: absolute;
-  inset: 4% -4%;
-  z-index: -1;
+  right: -4%;
+  top: 52%;
+  transform: translateY(-50%) scale(1.35);
+  height: 125%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: right center;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 7% 78%, var(--cover-sheen) 0 2px, transparent 3px),
-    radial-gradient(circle at 92% 64%, var(--cover-energy) 0 2px, transparent 3px),
-    radial-gradient(circle at 16% 38%, var(--cover-sheen) 0 1.5px, transparent 3px),
-    radial-gradient(circle at 86% 23%, var(--cover-energy) 0 1.5px, transparent 3px),
-    radial-gradient(circle at 45% 6%, var(--cover-sheen) 0 1px, transparent 2.5px);
-  opacity: .55;
-  animation: cover-sparks-drift var(--cover-effect-duration) ease-in-out infinite alternate;
+  opacity: 0.20;
+  mix-blend-mode: multiply;
+  filter: grayscale(1) contrast(1.22);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+  user-select: none;
 }
-@keyframes cover-energy-breathe {
-  from { opacity: .38; }
-  to { opacity: .54; }
+
+.detail-hero:hover .detail-hero-watermark-art {
+  transform: translateY(-50%) scale(1.38);
+  opacity: 0.24;
 }
-@keyframes cover-sparks-drift {
-  from { opacity: .3; transform: translateY(5px); }
-  to { opacity: .65; transform: translateY(-5px); }
-}
-@media (max-width: 768px) {
-  #detail-view .detail-hero::after, #detail-view .detail-element-edge {
-    -webkit-mask-size: 100% clamp(180px, 55vw, 360px);
-    mask-size: 100% clamp(180px, 55vw, 360px);
-  }
-  #detail-view .detail-hero::after { width: 55%; }
-  #detail-view .detail-element-edge {
-    width: 45%;
-    -webkit-mask-size: 100% clamp(160px, 45vw, 300px);
-    mask-size: 100% clamp(160px, 45vw, 300px);
-    -webkit-mask-position: right top;
-    mask-position: right top;
+
+@media (max-width: 900px) {
+  .detail-hero-watermark {
+    width: 65%;
+    max-width: none;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  #detail-view .detail-hero::after, #detail-view .detail-element-edge,
-  #detail-view .detail-art::before { animation: none; }
+
+@media (max-width: 680px) {
+  .detail-hero-watermark {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    top: auto;
+    bottom: 0;
+    right: 0;
+  }
+  .detail-hero-watermark-art {
+    right: -8%;
+    top: auto;
+    bottom: -4%;
+    transform: none;
+    height: 65%;
+    max-height: 260px;
+    opacity: 0.16;
+  }
 }
 
 #detail-view .detail-hero-divider {
-  background: none;
+  display: none !important;
 }
 
 #detail-view .section-heading h2 {
@@ -4122,7 +4104,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   .detail-hero-identity { grid-template-columns: 240px 1fr; padding: 22px; gap: 20px; }
   .detail-art { width: 100%; max-width: 240px; min-height: 280px; height: 280px; margin: 0 auto; }
   .hero-art-stage { width: 100%; max-width: 240px; height: 280px; }
-  .detail-hero-divider { width: 100%; height: 1px; margin: 0; background: linear-gradient(90deg, transparent 0%, var(--hero-border, #bfdbfe) 15%, var(--hero-border, #bfdbfe) 85%, transparent 100%); }
+  .detail-hero-divider { display: none !important; }
   .detail-hero-prestige { padding: 20px; }
 }
 
@@ -4170,12 +4152,17 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   .resource-hero img { width: 160px; height: 160px; }
   .resource-balance-grid { grid-template-columns: repeat(2, 1fr); }
   .detail-hero { grid-template-columns: 1fr; border-radius: 22px; }
-  .detail-hero-identity { grid-template-columns: 210px 1fr; padding: 20px; gap: 16px; }
-  .detail-art { width: 100%; max-width: 210px; min-height: 250px; height: 250px; margin: 0 auto; }
-  .hero-art-stage { width: 100%; max-width: 210px; height: 250px; }
+  .detail-hero-identity { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 22px 18px 16px; gap: 16px; }
+  .detail-art { width: 100%; max-width: 240px; min-height: 240px; height: 240px; margin: 0 auto; }
+  .hero-art-stage { width: 100%; max-width: 240px; height: 240px; }
   .detail-art .hero-art-stage > img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; }
-  .detail-copy { padding: 0; }
-  .detail-hero-divider { width: 100%; height: 1px; margin: 0; background: linear-gradient(90deg, transparent 0%, var(--hero-border, #bfdbfe) 15%, var(--hero-border, #bfdbfe) 85%, transparent 100%); }
+  .detail-copy { padding: 0; align-items: center; text-align: center; width: 100%; }
+  .detail-title-row { justify-content: center; gap: 10px; }
+  .detail-account-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; max-width: 440px; gap: 8px; margin: 4px auto 0; }
+  .detail-account-stats .stat-pill { min-width: 0; padding: 8px 6px; }
+  .detail-account-stats .stat-pill span { font-size: 7.5px; letter-spacing: 0.4px; }
+  .detail-account-stats .stat-pill strong { font-size: 19px; }
+  .detail-hero-divider { display: none !important; }
   .detail-hero-prestige { padding: 20px; }
   .detail-prestige-emblem { width: 84px; height: 84px; }
   .table-mode .brawler-card { grid-template-columns: 85px 1fr; }
@@ -4266,6 +4253,8 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
   .detail-portrait-box { width: 60px; height: 60px; min-width: 60px; border-radius: 16px; }
   .detail-account-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; gap: 6px; }
   .detail-account-stats .stat-pill { min-width: 0; padding: 6px 4px; text-align: center; }
+  .detail-account-stats .stat-pill span { font-size: 7px; letter-spacing: 0.2px; white-space: normal; line-height: 1.15; }
+  .detail-account-stats .stat-pill strong { font-size: 18px; }
   .detail-hero-prestige { padding: 18px 14px; justify-content: center; }
   .prestige-identity-cluster { gap: 8px; margin: 0 auto; }
   .prestige-emblem-wrap { width: 72px; height: 72px; margin: 0; }
@@ -4420,10 +4409,10 @@ img, picture, video, canvas, svg { max-width: 100%; }
   .detail-art { max-width: 210px; min-height: 210px; height: 210px; }
   .hero-art-stage { max-width: 210px; height: 210px; }
   .detail-burst { width: 340px; height: 340px; }
-  .detail-copy { padding: 18px 16px; }
+  .detail-copy { padding: 0; }
   .detail-copy h2 { font-size: clamp(28px, 10.5vw, 36px); overflow-wrap: anywhere; }
-  .detail-account-stats { gap: 7px; }
-  .detail-account-stats div { padding: 9px 8px; }
+  .detail-account-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; width: 100%; }
+  .detail-account-stats .stat-pill { padding: 6px 4px; min-width: 0; }
   .prestige-progress-copy > p { overflow-wrap: anywhere; }
   .equipment-rule-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .equipment-rule-item { min-width: 0; }

@@ -24,6 +24,7 @@ main = importlib.import_module("app.main")
 def test_missing_token_returns_demo_instead_of_server_error(monkeypatch, path):
     for service in (main.battlelog_service, main.events_service, main.rankings_service):
         monkeypatch.setattr(service, "client", None)
+    monkeypatch.setattr(main.events_service, "_cached_events", None)
     with TestClient(main.app) as client:
         response = client.get(path)
     assert response.status_code == 200
