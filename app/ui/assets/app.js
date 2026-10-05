@@ -310,6 +310,8 @@ function configurePage() {
 }
 
 function showView() {
+  const nextView = $(`${state.page}-view`) || $('error-view');
+  const changed = nextView?.classList.contains('hidden');
   const loading = $('loading-state');
   if (loading) loading.classList.add('hidden');
   document.querySelectorAll('.view').forEach((view) => view.classList.add('hidden'));
@@ -332,6 +334,7 @@ function showView() {
   if (state.page === 'battles' && (!state.battles || state.battles.length === 0)) loadBattles();
   if (state.page === 'events' && (!state.events || state.events.length === 0)) loadEvents();
   if (state.page === 'leaderboards' && (!state.rankingsPlayers || state.rankingsPlayers.length === 0)) loadLeaderboards();
+  if (changed) BrawlBuddyMotion.enter(nextView);
 }
 
 async function request(url, options) {
@@ -963,6 +966,7 @@ function renderBattles() {
   const holder = $('battle-cards-list');
   if (!holder) return;
   holder.replaceChildren();
+  BrawlBuddyMotion.enter(holder, true);
 
   const filtered = (state.battles || []).filter((b) => {
     if (state.battleFilter === '3v3') return (b.teams || []).length >= 2;
@@ -1281,6 +1285,7 @@ function renderLeaderboard() {
   const tbody = $('leaderboard-tbody');
   if (!tbody) return;
   tbody.replaceChildren();
+  BrawlBuddyMotion.enter(tbody.closest('.roster-table-wrap'), true);
 
   const isPlayers = state.rankingsType === 'players';
   setText('lb-col-name', isPlayers ? 'Brawler' : 'Club');
@@ -2475,6 +2480,7 @@ function renderBrawlers() {
     holder.classList.toggle('table-mode', state.view === 'table');
     brawlers.forEach((brawler) => holder.append(cardFor(brawler)));
     scheduleBrawlerNameFit(holder);
+    BrawlBuddyMotion.enter(holder, true);
   }
   const empty = $('brawler-empty');
   if (empty) empty.classList.toggle('hidden', brawlers.length > 0);
@@ -2944,6 +2950,7 @@ async function renderMatchups(brawler, matchupsData = null, resetExpanded = true
         toggleLabel.textContent = matchupsExpanded ? 'Show Less Matchups' : 'View All Matchups';
       }
       populateLists(matchupsExpanded);
+      BrawlBuddyMotion.enter($('matchups-columns-grid'), true);
     };
   }
 
@@ -3030,6 +3037,7 @@ function renderDetailArtwork(brawler) {
   const stage = $('hero-art-stage');
   if (!stage) return;
   const hero = $('detail-hero');
+  BrawlBuddyMotion.enter(hero);
   hero?.style.removeProperty('--cover-primary');
   hero?.style.removeProperty('--cover-secondary');
   stage.replaceChildren();
@@ -4170,32 +4178,35 @@ function initializeHeaderNavigation() {
   const menu = $('header-navigation');
   if (!toggle || !menu) return;
 
-  function positionMenu() {
-    const trigger = toggle.getBoundingClientRect();
-    const bounds = menu.getBoundingClientRect();
-    menu.style.left = `${Math.max(12, Math.min(trigger.left, window.innerWidth - bounds.width - 12))}px`;
-    menu.style.top = `${Math.max(12, Math.min(trigger.bottom + 10, window.innerHeight - bounds.height - 12))}px`;
+  const compact = window.matchMedia('(max-width: 900px)');
+  let expanded = false;
+
+  function setExpanded(open, restoreFocus = false) {
+    expanded = compact.matches && open;
+    menu.dataset.expanded = String(expanded);
+    menu.inert = compact.matches && !expanded;
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Hide menu' : 'Show menu');
+    if (restoreFocus) toggle.focus();
   }
 
-  menu.addEventListener('toggle', (event) => {
-    const open = event.newState === 'open';
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Hide menu' : 'Show menu');
-    if (open) positionMenu();
-  });
+  toggle.addEventListener('click', () => setExpanded(!expanded));
   menu.addEventListener('click', (event) => {
-    if (event.target.closest('a[href]')) menu.hidePopover();
+    if (event.target.closest('a[href]')) setExpanded(false);
   });
-  window.addEventListener('resize', () => {
-    if (menu.matches(':popover-open')) positionMenu();
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && expanded && !document.querySelector('dialog[open]')) {
+      event.preventDefault();
+      setExpanded(false, true);
+    }
   });
-  window.addEventListener('scroll', () => {
-    if (menu.matches(':popover-open')) positionMenu();
-  });
-  window.addEventListener('popstate', () => menu.hidePopover());
+  compact.addEventListener('change', () => setExpanded(false));
+  window.addEventListener('popstate', () => setExpanded(false));
+  setExpanded(false);
 }
 
 function bindEvents() {
+  BrawlBuddyMotion.init();
   initializeHeaderNavigation();
   $('connect-button')?.addEventListener('click', () => {
     $('dialog-error')?.classList.add('hidden');
