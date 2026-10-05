@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="/assets/brawler-hero-atmosphere.css?v=9">
   <link rel="stylesheet" href="/assets/ui-motion.css?v=2">
   <link rel="stylesheet" href="/assets/header-navigation.css?v=5">
+  <link rel="stylesheet" href="/assets/section-design.css?v=2">
 </head>
 <body>
   <div class="app-shell">
@@ -62,7 +63,7 @@
         <strong>Loading your BrawlBuddy HQ…</strong>
       </div>
 
-      <section id="overview-view" class="view hidden">
+      <section id="overview-view" class="view section-system hidden">
         <article class="player-hero">
           <div class="hero-burst" aria-hidden="true"></div>
           <div class="player-avatar-card">
@@ -87,10 +88,10 @@
               <span id="hero-level-tag" class="hero-level-tag">🎖 <strong id="hero-level-num">Level 181</strong></span>
             </div>
             <div class="hero-stats">
-              <div><span class="mini-icon trophy-icon">★</span><strong id="trophy-count">—</strong><small>Current Trophies</small></div>
+              <div><span class="mini-icon trophy-icon"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="trophy-count">—</strong><small>Current Trophies</small></div>
               <div><span class="mini-icon best-icon">↗</span><strong id="highest-trophies">—</strong><small>Personal Best</small></div>
-              <div><span class="mini-icon win-icon">⚔</span><strong id="total-victories-count">—</strong><small>Total Victories</small></div>
-              <div><span class="mini-icon prestige-stat-icon">✦</span><strong id="hero-prestige-count" class="prestige-stat-highlight">0</strong><small>Total Prestige</small></div>
+              <div><span class="mini-icon win-icon"><img src="/assets/modes/duels.png" alt="" aria-hidden="true"></span><strong id="total-victories-count">—</strong><small>Total Victories</small></div>
+              <div><span class="mini-icon prestige-stat-icon"><img src="/assets/filter-prestige.png" alt="" aria-hidden="true"></span><strong id="hero-prestige-count" class="prestige-stat-highlight">0</strong><small>Total Prestige</small></div>
               <div><span class="mini-icon champ-stat-icon">🏆</span><strong id="hero-champ-status">Pending</strong><small>Championship</small></div>
             </div>
           </div>
@@ -245,7 +246,7 @@
             </div>
             <div class="event-records-list">
               <div class="event-record-item">
-                <span class="event-icon robo">🤖</span>
+                <span class="event-icon robo"><img src="/assets/modes/boss-fight.png" alt="" aria-hidden="true"></span>
                 <div class="event-info">
                   <strong>Robo Rumble Record</strong>
                   <small>Highest difficulty level cleared</small>
@@ -261,7 +262,7 @@
                 <b id="rec-big-brawler" class="event-badge">Record set</b>
               </div>
               <div class="event-record-item">
-                <span class="event-icon tourney">🏆</span>
+                <span class="event-icon tourney"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span>
                 <div class="event-info">
                   <strong>Championship Challenge</strong>
                   <small>15-win monthly qualification</small>
@@ -288,15 +289,15 @@
             </div>
             <div class="battle-stats-grid">
               <div class="battle-card solo-card">
-                <div class="battle-card-head"><span class="battle-icon solo">☠</span><div><strong>Solo Showdown</strong><small>1st place finishes</small></div></div>
+                <div class="battle-card-head"><span class="battle-icon solo"><img src="/assets/modes/showdown.png" alt="" aria-hidden="true"></span><div><strong>Solo Showdown</strong><small>1st place finishes</small></div></div>
                 <strong id="solo-wins-count" class="battle-count">—</strong>
               </div>
               <div class="battle-card duo-card">
-                <div class="battle-card-head"><span class="battle-icon duo">👥</span><div><strong>Duo Showdown</strong><small>Victories with teammate</small></div></div>
+                <div class="battle-card-head"><span class="battle-icon duo"><img src="/assets/modes/duo-showdown.png" alt="" aria-hidden="true"></span><div><strong>Duo Showdown</strong><small>Victories with teammate</small></div></div>
                 <strong id="duo-wins-count" class="battle-count">—</strong>
               </div>
               <div class="battle-card trio-card">
-                <div class="battle-card-head"><span class="battle-icon trio">⚔</span><div><strong>3v3 Victories</strong><small>Team battle wins</small></div></div>
+                <div class="battle-card-head"><span class="battle-icon trio"><img src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true"></span><div><strong>3v3 Victories</strong><small>Team battle wins</small></div></div>
                 <strong id="victories-3v3-count" class="battle-count">—</strong>
               </div>
             </div>
@@ -465,7 +466,7 @@
       </section>
 
       <!-- Club / Clan Hub View -->
-      <section id="club-view" class="view hidden">
+      <section id="club-view" class="view section-system hidden">
         <article class="player-hero club-hero-banner">
           <div class="hero-burst" aria-hidden="true"></div>
           <div class="player-avatar-card">
@@ -489,7 +490,7 @@
               <span id="club-desc-text" class="club-hero-desc">Top club pushing trophies, Mega Pig & championship qualifiers.</span>
             </div>
             <div class="hero-stats">
-              <div><span class="mini-icon trophy-icon">★</span><strong id="club-total-trophies">—</strong><small>Total Trophies</small></div>
+              <div><span class="mini-icon trophy-icon"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="club-total-trophies">—</strong><small>Total Trophies</small></div>
               <div><span class="mini-icon win-icon">👥</span><strong id="club-member-count">—</strong><small>Members</small></div>
               <div><span class="mini-icon best-icon">🎯</span><strong id="club-required-trophies">—</strong><small>Min Required</small></div>
             </div>
@@ -545,6 +546,7 @@
               <input id="roster-search" class="search-box-input" type="text" placeholder="Search members by name or tag…" aria-label="Search members">
             </div>
           </div>
+          <p id="club-roster-summary" class="section-results" role="status"></p>
           <div class="roster-table-wrap">
             <table class="roster-table">
               <thead>
@@ -564,16 +566,22 @@
       </section>
 
       <!-- Battle Log & Tactical Match Recreator View -->
-      <section id="battles-view" class="view hidden">
+      <section id="battles-view" class="view section-system hidden">
         <div class="collection-banner panel battles-hero">
-          <div>
+          <div class="section-hero-copy">
             <span class="banner-chip pink-chip">ARENA CHRONICLES</span>
-            <h2>Match History &amp;<br><em>Tactical Recreator.</em></h2>
+            <h2>Every battle.<br><em>A better game plan.</em></h2>
             <p>Review your last 25 battles with full team lineups, MVP awards, power differentials, and 2D tactical arena recreation.</p>
           </div>
-          <div class="collection-badge">
-            <strong id="battles-count-badge">25</strong>
-            <span>MATCHES</span>
+          <div class="section-hero-emblem">
+            <img src="/assets/modes/duels.png" alt="" aria-hidden="true">
+            <div class="section-hero-counter"><strong id="battles-count-badge">—</strong><span>RECENT MATCHES</span></div>
+          </div>
+          <div class="section-stat-strip" aria-label="Recent battle summary">
+            <div class="section-stat"><span>VICTORIES</span><strong id="battle-summary-wins">—</strong><small>Recorded results</small></div>
+            <div class="section-stat"><span>DEFEATS</span><strong id="battle-summary-losses">—</strong><small>Recorded results</small></div>
+            <div class="section-stat"><span>WIN RATE</span><strong id="battle-summary-rate">—</strong><small>Decided matches only</small></div>
+            <div class="section-stat"><span>TROPHY CHANGE</span><strong id="battle-summary-trophies">—</strong><small>Net recorded change</small></div>
           </div>
         </div>
 
@@ -589,21 +597,28 @@
               <button class="level-chip" id="battle-filter-sd" type="button">SHOWDOWN</button>
             </div>
           </div>
+          <p id="battle-results-summary" class="section-results" role="status"></p>
           <div id="battle-cards-list" class="battle-cards-list"></div>
         </section>
       </section>
 
       <!-- Event Rotation & Map Tracker View -->
-      <section id="events-view" class="view hidden">
+      <section id="events-view" class="view section-system hidden">
         <div class="collection-banner panel events-hero">
-          <div>
-            <span class="banner-chip yellow-chip">LIVE ROTATION</span>
-            <h2>Active Events &amp;<br><em>Map Strategy.</em></h2>
+          <div class="section-hero-copy">
+            <span id="events-source-chip" class="banner-chip yellow-chip">EVENT ROTATION</span>
+            <h2>Know the map.<br><em>Own the arena.</em></h2>
             <p>Live countdown timers for all active slots, game modifiers, and curated meta brawler picks for every active map.</p>
           </div>
-          <div class="collection-badge">
-            <strong id="events-count-badge">6</strong>
-            <span>ACTIVE</span>
+          <div class="section-hero-emblem section-mode-emblem">
+            <img src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true">
+            <div class="section-hero-counter"><strong id="events-count-badge">—</strong><span>ROTATION SLOTS</span></div>
+          </div>
+          <div class="section-stat-strip" aria-label="Event rotation summary">
+            <div class="section-stat"><span>GAME MODES</span><strong id="event-summary-modes">—</strong><small>In this rotation</small></div>
+            <div class="section-stat"><span>MAPS</span><strong id="event-summary-maps">—</strong><small>Unique arenas</small></div>
+            <div class="section-stat"><span>NEXT ROTATION</span><strong id="event-summary-next">—</strong><small>Time until the next change</small></div>
+            <div class="section-stat"><span>MODIFIED SLOTS</span><strong id="event-summary-modifiers">—</strong><small>Special game rules</small></div>
           </div>
         </div>
 
@@ -613,8 +628,13 @@
               <p class="eyebrow">ROTATION TIMERS</p>
               <h2>Current Active Modes &amp; Map Operations</h2>
             </div>
-            <span class="source-chip official-chip">LIVE ROTATION</span>
+            <span id="events-panel-source" class="source-chip official-chip">ROTATION</span>
           </div>
+          <div class="section-toolbar">
+            <label class="search-box"><span aria-hidden="true">⌕</span><input id="event-search" type="search" placeholder="Search maps or modes" aria-label="Search maps or modes"></label>
+            <label class="section-select"><span>GAME MODE</span><select id="event-mode-filter" aria-label="Filter events by game mode"><option value="all">All modes</option></select></label>
+          </div>
+          <p id="events-results-summary" class="section-results" role="status"></p>
           <div id="events-grid" class="events-grid"></div>
         </section>
 
@@ -632,24 +652,31 @@
       </section>
 
       <!-- Global & Regional Leaderboards View -->
-      <section id="leaderboards-view" class="view hidden">
+      <section id="leaderboards-view" class="view section-system hidden">
         <div class="collection-banner panel leaderboards-hero">
-          <div>
+          <div class="section-hero-copy">
             <span class="banner-chip blue-chip">HALL OF CHAMPIONS</span>
-            <h2>Global &amp; Regional<br><em>Leaderboards.</em></h2>
+            <h2>The trophy chase.<br><em>Meet the champions.</em></h2>
             <p>Track top 200 brawlers and alliances across the world. Click any brawler tag to inspect their full live profile.</p>
           </div>
-          <div class="collection-badge">
-            <strong>#1</strong>
-            <span>RANKINGS</span>
+          <div class="section-hero-emblem">
+            <img src="/assets/icon_trophy.png" alt="" aria-hidden="true">
+            <div class="section-hero-counter"><strong>#1</strong><span>HALL OF CHAMPIONS</span></div>
+          </div>
+          <div class="section-stat-strip" aria-label="Ranking summary">
+            <div class="section-stat"><span>REGION</span><strong id="ranking-summary-region">Global</strong><small>Selected leaderboard</small></div>
+            <div class="section-stat"><span>COMPETITORS</span><strong id="ranking-summary-count">—</strong><small id="ranking-summary-kind">Ranked players</small></div>
+            <div class="section-stat"><span>LEADING SCORE</span><strong id="ranking-summary-top">—</strong><small>Trophies at the top</small></div>
+            <div class="section-stat"><span>DATA SOURCE</span><strong id="ranking-summary-source">—</strong><small>Leaderboard availability</small></div>
           </div>
         </div>
 
         <section class="panel leaderboard-panel">
+          <div class="section-heading"><div><p class="eyebrow">PODIUM &amp; RANKINGS</p><h2>At the top of the game</h2></div><span class="source-chip calculated">TROPHY STANDINGS</span></div>
           <div class="leaderboard-toolbar">
             <div class="ranking-tab-group">
-              <button id="tab-rankings-players" class="primary-button" type="button">Top Brawlers</button>
-              <button id="tab-rankings-clubs" class="subtle-button" type="button">Top Clubs</button>
+              <button id="tab-rankings-players" class="primary-button" type="button" aria-pressed="true">Top Brawlers</button>
+              <button id="tab-rankings-clubs" class="subtle-button" type="button" aria-pressed="false">Top Clubs</button>
             </div>
             <label class="region-select-label">
               <span>REGION</span>
@@ -665,7 +692,8 @@
               </select>
             </label>
           </div>
-
+          <div id="ranking-podium" class="ranking-podium" aria-label="Top three competitors"></div>
+          <p id="ranking-results-summary" class="section-results" role="status"></p>
           <div class="roster-table-wrap" style="margin-top: 18px;">
             <table class="roster-table">
               <thead>
@@ -1292,6 +1320,6 @@
   <script src="/assets/readiness.js?v=25" defer></script>
   <script src="/assets/roster-dropdowns.js?v=11" defer></script>
   <script src="/assets/ui-motion.js?v=1" defer></script>
-  <script src="/assets/app.js?v=143" defer></script>
+  <script src="/assets/app.js?v=145" defer></script>
 </body>
 </html>

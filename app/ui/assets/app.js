@@ -36,6 +36,50 @@ function normalizeKey(str) {
   return String(str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
+function escapeMarkup(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[character]);
+}
+
+function sourceLabel(source) {
+  return ({ LIVE: 'Live data', OFFICIAL_API: 'Official API', CACHE: 'Cached data', DEMO: 'Demo data' })[source] || 'Unavailable';
+}
+
+function eventSecondsRemaining(slot) {
+  if (state.dataSources.events === 'DEMO') return null;
+  const raw = String(slot.end_time || '');
+  const iso = raw.replace(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(.*)$/, '$1-$2-$3T$4:$5:$6$7');
+  const end = Date.parse(iso);
+  return Number.isFinite(end) ? Math.max(0, Math.ceil((end - Date.now()) / 1000)) : null;
+}
+
+function eventCountdownLabel(slot) {
+  const seconds = eventSecondsRemaining(slot);
+  if (seconds == null) return slot.time_remaining_label || 'Time not published';
+  if (!seconds) return 'Awaiting rotation refresh';
+  const minutes = Math.ceil(seconds / 60);
+  return minutes >= 60 ? `${Math.floor(minutes / 60)}h ${minutes % 60}m` : `${minutes}m`;
+}
+
+function updateEventTiming() {
+  const timedSlots = state.events.filter((slot) => eventSecondsRemaining(slot) != null);
+  const upcoming = timedSlots.filter((slot) => eventSecondsRemaining(slot) > 0).sort((a, b) => eventSecondsRemaining(a) - eventSecondsRemaining(b))[0];
+  const demoSlot = state.dataSources.events === 'DEMO' ? [...state.events].filter((slot) => slot.time_remaining_seconds > 0).sort((a, b) => a.time_remaining_seconds - b.time_remaining_seconds)[0] : null;
+  setText('event-summary-next', upcoming ? eventCountdownLabel(upcoming) : demoSlot ? eventCountdownLabel(demoSlot) : timedSlots.length ? 'Refresh due' : '—');
+  document.querySelectorAll('#events-grid [data-event-timer]').forEach((element) => {
+    const slot = state.events.find((item) => String(item.slot_id) === element.dataset.eventTimer);
+    if (slot) element.textContent = `⏳ ${eventCountdownLabel(slot)}`;
+  });
+}
+
+function brawlerNameMarkup(name, className) {
+  const brawler = state.catalog.find((item) => normalizeKey(item.name) === normalizeKey(name));
+  const label = escapeMarkup(name);
+  if (!brawler) return `<span class="${className}">${label}</span>`;
+  return `<a class="${className}" href="/brawlers/${brawler.id}"><img src="${brawlerImage(brawler, true)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='/assets/rarity-skull.svg'">${label}</a>`;
+}
+
 function getUiIconRecord(group, value) {
   const normalized = normalizeKey(value);
   const records = state.visualAssets?.ui_icons?.[group] || {};
@@ -610,7 +654,7 @@ function renderAccount(payload) {
   setText('welcome-name', payload.player.name);
   setText('profile-name', payload.player.name);
   setText('player-tag', payload.player.tag);
-  const freshnessText = payload.freshness?.cache_hit ? 'Cached recently' : 'Live Updated';
+  const freshnessText = payload.player.source === 'DEMO' ? 'Demo account' : payload.freshness?.cache_hit ? 'Cached recently' : 'Live Updated';
   setText('freshness-text', freshnessText);
   if (!$('freshness-text')) setText('freshness', freshnessText);
   setText('trophy-count', format(payload.player.trophies));
@@ -642,7 +686,7 @@ function renderAccount(payload) {
   const isDemo = payload.player.source === 'DEMO';
   const label = $('data-label');
   if (label) {
-    label.textContent = isDemo ? 'OFFICIAL BRAWLER' : 'OFFICIAL BRAWLER';
+    label.textContent = isDemo ? 'DEMO ACCOUNT' : 'OFFICIAL PLAYER';
     label.className = `data-label ${isDemo ? 'demo' : 'official'}`;
   }
 
@@ -742,6 +786,7 @@ function renderFlagshipLoadouts(loadouts) {
           <b>⚡</b> ${hcLabel}
         </span>
       </div>
+      <a class="small-action flagship-guide-link" href="/brawlers/${brawler.id}">Explore loadout <span>→</span></a>
     `;
     holder.append(card);
   });
@@ -882,7 +927,7 @@ function renderPrestigeTiers(analytics, totalBrawlers) {
         <strong>${t.count} <i>(${pct}%)</i></strong>
       </div>
       <div class="tier-bar-track">
-        <div class="tier-bar-fill" style="width: ${Math.max(t.count > 0 ? 8 : 0, pct)}%; background: ${t.color}"></div>
+        <div class="tier-bar-fill" style="width: ${pct}%; background: ${t.color}"></div>
       </div>
     `;
     holder.append(row);
@@ -958,6 +1003,7 @@ async function loadBattles() {
       renderBattles();
     } catch {
       state.battles = [];
+      renderBattles();
     }
   }
 }
@@ -975,9 +1021,18 @@ function renderBattles() {
   });
 
   setText('battles-count-badge', filtered.length);
+  const wins = filtered.filter((battle) => battle.result === 'victory' || battle.rank === 1).length;
+  const losses = filtered.filter((battle) => battle.result === 'defeat').length;
+  const deltas = filtered.filter((battle) => Number.isFinite(battle.trophy_change));
+  const delta = deltas.reduce((sum, battle) => sum + battle.trophy_change, 0);
+  setText('battle-summary-wins', wins);
+  setText('battle-summary-losses', losses);
+  setText('battle-summary-rate', wins + losses ? `${Math.round(wins / (wins + losses) * 100)}%` : '—');
+  setText('battle-summary-trophies', deltas.length ? `${delta > 0 ? '+' : ''}${delta}` : '—');
+  setText('battle-results-summary', `${filtered.length} of ${(state.battles || []).length} recent matches · ${state.battleFilter === 'all' ? 'All modes' : state.battleFilter === '3v3' ? 'Team modes' : 'Showdown modes'}`);
 
   if (filtered.length === 0) {
-    holder.innerHTML = '<p class="empty-state">No recent battles found matching this filter.</p>';
+    holder.innerHTML = '<div class="empty-state"><strong>No battles in this view</strong>Choose another mode or connect a player with recent battles.</div>';
     return;
   }
 
@@ -1004,7 +1059,7 @@ function renderBattles() {
               <div class="player-roster-row ${p.is_star_player ? 'is-mvp' : ''}">
                 <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
                 <div class="roster-player-meta">
-                  <strong>${p.name} ${p.is_star_player ? '⭐' : ''}</strong>
+                  <strong>${escapeMarkup(p.name)} ${p.is_star_player ? '⭐' : ''}</strong>
                   <small>${p.brawler.name} · L${p.brawler.power}</small>
                 </div>
               </div>
@@ -1017,7 +1072,7 @@ function renderBattles() {
               <div class="player-roster-row ${p.is_star_player ? 'is-mvp' : ''}">
                 <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
                 <div class="roster-player-meta">
-                  <strong>${p.name} ${p.is_star_player ? '⭐' : ''}</strong>
+                  <strong>${escapeMarkup(p.name)} ${p.is_star_player ? '⭐' : ''}</strong>
                   <small>${p.brawler.name} · L${p.brawler.power}</small>
                 </div>
               </div>
@@ -1032,7 +1087,7 @@ function renderBattles() {
             <div class="showdown-player-chip">
               <span>#${pIdx + 1}</span>
               <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
-              <strong>${p.name}</strong>
+              <strong>${escapeMarkup(p.name)}</strong>
             </div>
           `).join('')}
         </div>
@@ -1043,16 +1098,17 @@ function renderBattles() {
       <div class="battle-card-top">
         <div class="battle-card-mode">
           <span class="mode-badge">${displayModeMarkup}</span>
-          <strong>${battle.event?.map || 'Battle Arena'}</strong>
+          <strong>${escapeMarkup(battle.event?.map || 'Battle Arena')}</strong>
           <small>${battle.duration ? `${Math.floor(battle.duration / 60)}m ${battle.duration % 60}s` : 'Ranked Match'}</small>
         </div>
         <div class="battle-card-result">
-          <span class="result-badge ${battle.result || 'victory'}">${(battle.result || (battle.rank ? `Rank #${battle.rank}` : 'MATCH')).toUpperCase()}</span>
+          <span class="result-badge ${isVictory ? 'victory' : isDefeat ? 'defeat' : 'draw'}">${escapeMarkup((battle.result || (battle.rank ? `Rank #${battle.rank}` : 'MATCH')).toUpperCase())}</span>
           ${trophyDeltaHtml}
         </div>
       </div>
       ${teamsHtml}
       <div class="battle-card-actions">
+        <span class="battle-card-footnote">${battle.star_player ? `Star player · ${escapeMarkup(battle.star_player.name)}` : 'Team lineups & power comparison'}</span>
         <button class="small-action open-recreator-btn" data-battle-idx="${idx}" type="button">
           <span>🎮</span> Tactical Recreator →
         </button>
@@ -1140,6 +1196,7 @@ function openTacticalRecreator(battle) {
   setText('rec-power-diff', `Blue L${battle.team_a_avg_power || 10.0} vs Red L${battle.team_b_avg_power || 10.0}`);
   setText('rec-power-status', battle.power_advantage === 'blue_favored' ? '+Blue Advantage' : battle.power_advantage === 'red_favored' ? '+Red Advantage' : 'Even Power Levels');
   setText('rec-duration', battle.duration ? `${Math.floor(battle.duration / 60)}m ${battle.duration % 60}s` : 'Standard Duration');
+  setText('rec-outcome-pill', `${battle.result || (battle.rank ? `Rank #${battle.rank}` : 'Match complete')}${battle.trophy_change != null ? ` · ${battle.trophy_change > 0 ? '+' : ''}${battle.trophy_change} trophies` : ''}`);
 
   dialog.showModal();
 }
@@ -1151,15 +1208,27 @@ async function loadEvents() {
   try {
     const payload = await request('/api/events');
     state.events = payload.items || [];
+    state.dataSources.events = payload.source;
     renderEvents();
   } catch (error) {
     try {
       const demo = await request('/api/demo/events');
       state.events = demo.items || [];
+      state.dataSources.events = 'DEMO';
       renderEvents();
     } catch {
       state.events = [];
+      state.dataSources.events = null;
+      renderEvents();
     }
+  }
+
+  const modeFilter = $('event-mode-filter');
+  if (modeFilter) {
+    const selected = modeFilter.value;
+    modeFilter.replaceChildren(new Option('All modes', 'all'));
+    [...new Set(state.events.map((slot) => slot.event.mode))].forEach((mode) => modeFilter.add(new Option(modeLabel(mode), mode)));
+    modeFilter.value = [...modeFilter.options].some((option) => option.value === selected) ? selected : 'all';
   }
 
   // Load meta tierlist
@@ -1168,6 +1237,7 @@ async function loadEvents() {
     renderMetaTierlist();
   } catch {
     state.metaTierlist = {};
+    renderMetaTierlist();
   }
 }
 
@@ -1175,10 +1245,23 @@ function renderEvents() {
   const holder = $('events-grid');
   if (!holder) return;
   holder.replaceChildren();
+  BrawlBuddyMotion.enter(holder, true);
 
   setText('events-count-badge', state.events.length);
+  setText('events-source-chip', sourceLabel(state.dataSources.events).toUpperCase());
+  setText('events-panel-source', sourceLabel(state.dataSources.events).toUpperCase());
+  setText('event-summary-modes', new Set(state.events.map((slot) => slot.event.mode)).size);
+  setText('event-summary-maps', new Set(state.events.map((slot) => slot.event.map)).size);
+  setText('event-summary-modifiers', state.events.filter((slot) => slot.modifiers?.length).length);
+  const search = ($('event-search')?.value || '').trim().toLowerCase();
+  const mode = $('event-mode-filter')?.value || 'all';
+  const slots = state.events.filter((slot) => (mode === 'all' || slot.event.mode === mode) && `${slot.event.map} ${modeLabel(slot.event.mode)}`.toLowerCase().includes(search));
+  setText('events-results-summary', `${slots.length} of ${state.events.length} rotation slots · Select a map to inspect its layout.`);
+  if (!slots.length) {
+    holder.innerHTML = '<div class="empty-state"><strong>No maps in this view</strong>Try another game mode or a different map name.</div>';
+  }
 
-  state.events.forEach((slot) => {
+  slots.forEach((slot) => {
     const card = document.createElement('article');
     card.className = 'event-card panel';
     card.dataset.mapName = slot.event.map;
@@ -1187,32 +1270,41 @@ function renderEvents() {
 
     card.innerHTML = `
       <div class="event-card-banner">
-        <img src="${slot.event.image_url || 'https://cdn.brawlify.com/maps/regular/15000001.png'}" onerror="this.src='/assets/player-mascot.png'" alt="${slot.event.map}">
+        <img src="${escapeMarkup(slot.event.image_url || '/assets/player-mascot.png')}" loading="lazy" onerror="this.onerror=null;this.src='/assets/player-mascot.png'" alt="${escapeMarkup(slot.event.map)}">
         <div class="event-banner-overlay">
           <span class="event-mode-tag">${icon}<span>${displayMode.toUpperCase()}</span></span>
-          <h3>${slot.event.map}</h3>
+          <h3>${escapeMarkup(slot.event.map)}</h3>
         </div>
       </div>
       <div class="event-card-body">
         <div class="event-timer-row">
-          <span class="event-countdown">⏳ ${slot.time_remaining_label || 'Active Rotation'}</span>
+          <span class="event-countdown" data-event-timer="${slot.slot_id}">⏳ ${escapeMarkup(eventCountdownLabel(slot))}</span>
           <span class="event-slot-num">Slot #${slot.slot_id}</span>
         </div>
         ${slot.modifiers && slot.modifiers.length > 0 ? `
           <div class="event-modifiers-row">
-            ${slot.modifiers.map((m) => `<span class="modifier-pill">⚡ ${m}</span>`).join('')}
+            ${slot.modifiers.map((m) => `<span class="modifier-pill">⚡ ${escapeMarkup(m)}</span>`).join('')}
           </div>
         ` : ''}
         <div class="event-meta-picks">
           <small>TOP RECOMMENDED PICKS</small>
           <div class="meta-picks-chips">
-            ${(slot.top_meta_picks || []).map((brawlerName) => `<span class="meta-pick-chip">★ ${brawlerName}</span>`).join('')}
+            ${(slot.top_meta_picks || []).map((name) => brawlerNameMarkup(name, 'meta-pick-chip')).join('') || '<span class="section-results">No curated picks available.</span>'}
           </div>
         </div>
+        <button class="small-action event-card-action" type="button" aria-label="Preview ${escapeMarkup(slot.event.map)} map">Inspect map layout <span aria-hidden="true">↗</span></button>
       </div>
     `;
+    card.querySelector('.event-card-action').addEventListener('click', () => {
+      setImgSrc('map-dialog-img', slot.event.image_url || '/assets/player-mascot.png', '/assets/player-mascot.png');
+      setText('map-dialog-name', slot.event.map);
+      setText('map-dialog-mode', `${displayMode} · ${sourceLabel(state.dataSources.events)}`);
+      $('map-dialog-events-btn').href = `/events?map=${encodeURIComponent(slot.event.map)}`;
+      $('map-preview-dialog').showModal();
+    });
     holder.append(card);
   });
+  updateEventTiming();
 
   const urlParams = new URLSearchParams(location.search);
   const targetMap = urlParams.get('map');
@@ -1240,6 +1332,10 @@ function renderMetaTierlist() {
   const holder = $('meta-tierlist-container');
   if (!holder) return;
   holder.replaceChildren();
+  if (!Object.keys(state.metaTierlist).length) {
+    holder.innerHTML = '<div class="empty-state"><strong>Tier list unavailable</strong>Curated recommendations will appear here when available.</div>';
+    return;
+  }
 
   const tierColors = { S: '#ff0055', A: '#ff8800', B: '#ffd32e', C: '#168cf0', D: '#7183a3' };
   Object.entries(state.metaTierlist).forEach(([tier, brawlers]) => {
@@ -1250,7 +1346,7 @@ function renderMetaTierlist() {
         <strong>${tier}</strong>
       </div>
       <div class="tier-brawlers-chips">
-        ${brawlers.map((b) => `<span class="tier-brawler-chip">${b}</span>`).join('')}
+        ${brawlers.map((name) => brawlerNameMarkup(name, 'tier-brawler-chip')).join('')}
       </div>
     `;
     holder.append(row);
@@ -1262,21 +1358,38 @@ function renderMetaTierlist() {
 // -------------------------------------------------------------
 async function loadLeaderboards() {
   const region = state.rankingsRegion || 'global';
+  state.rankingsLoading = true;
+  renderLeaderboard();
   try {
-    const playersPayload = await request(`/api/rankings/players?country=${encodeURIComponent(region)}`);
+    const [playersPayload, clubsPayload] = await Promise.all([
+      request(`/api/rankings/players?country=${encodeURIComponent(region)}`),
+      request(`/api/rankings/clubs?country=${encodeURIComponent(region)}`),
+    ]);
+    if (region !== state.rankingsRegion) return;
     state.rankingsPlayers = playersPayload.items || [];
-    const clubsPayload = await request(`/api/rankings/clubs?country=${encodeURIComponent(region)}`);
     state.rankingsClubs = clubsPayload.items || [];
+    state.dataSources.rankingPlayers = playersPayload.source;
+    state.dataSources.rankingClubs = clubsPayload.source;
+    state.rankingsLoading = false;
     renderLeaderboard();
   } catch {
     try {
       const demo = await request('/api/demo/rankings');
+      if (region !== state.rankingsRegion) return;
       state.rankingsPlayers = demo.players || [];
       state.rankingsClubs = demo.clubs || [];
+      state.dataSources.rankingPlayers = 'DEMO';
+      state.dataSources.rankingClubs = 'DEMO';
+      state.rankingsLoading = false;
       renderLeaderboard();
     } catch {
+      if (region !== state.rankingsRegion) return;
       state.rankingsPlayers = [];
       state.rankingsClubs = [];
+      state.dataSources.rankingPlayers = null;
+      state.dataSources.rankingClubs = null;
+      state.rankingsLoading = false;
+      renderLeaderboard();
     }
   }
 }
@@ -1292,10 +1405,38 @@ function renderLeaderboard() {
   setText('lb-col-meta', isPlayers ? 'Club / Alliance' : 'Members Capacity');
 
   const items = isPlayers ? state.rankingsPlayers : state.rankingsClubs;
+  const source = isPlayers ? state.dataSources.rankingPlayers : state.dataSources.rankingClubs;
+  const region = $('ranking-region-select')?.selectedOptions[0]?.textContent.replace(/^[^A-Za-z]+/, '') || 'Global';
+  setText('ranking-summary-region', region);
+  setText('ranking-summary-count', state.rankingsLoading ? '—' : items?.length || 0);
+  setText('ranking-summary-kind', isPlayers ? 'Ranked players' : 'Ranked clubs');
+  setText('ranking-summary-top', !state.rankingsLoading && items?.length ? format(items[0].trophies) : '—');
+  setText('ranking-summary-source', state.rankingsLoading ? 'Loading' : sourceLabel(source));
+  setText('ranking-results-summary', state.rankingsLoading ? `Loading ${region} rankings…` : `${items?.length || 0} ${isPlayers ? 'players' : 'clubs'} · ${source === 'DEMO' ? 'Demo standings shown; regional live data is unavailable.' : `${region} trophy standings · Select a tag to inspect a profile.`}`);
+  $('tab-rankings-players')?.setAttribute('aria-pressed', String(isPlayers));
+  $('tab-rankings-clubs')?.setAttribute('aria-pressed', String(!isPlayers));
+  const podium = $('ranking-podium');
+  podium?.replaceChildren();
+  const rankingPortrait = (item) => isPlayers
+    ? `https://cdn.brawlify.com/profile-icons/regular/${item.icon_id || 28000000}.png`
+    : `https://cdn.brawlify.com/club-badges/regular/${item.badge_id || 8000000}.png`;
+  if (!state.rankingsLoading && podium) {
+    (items || []).slice(0, 3).forEach((item) => {
+      const card = document.createElement('article');
+      card.className = `podium-card rank-${item.rank}`;
+      card.innerHTML = `<span class="podium-place">#${item.rank} · ${item.rank === 1 ? 'CHAMPION' : item.rank === 2 ? 'RUNNER UP' : 'THIRD PLACE'}</span>
+        <img class="podium-portrait" src="${rankingPortrait(item)}" alt="" onerror="this.onerror=null;this.src='/assets/roster-all.svg'">
+        <strong>${escapeMarkup(item.name)}</strong><small>${escapeMarkup(isPlayers ? item.club_name || 'No club' : `${item.member_count ?? 0} / 30 members`)}</small>
+        <div class="podium-score"><img src="/assets/icon_trophy.png" alt="Trophies">${format(item.trophies)}</div>
+        <button class="small-action inspect-lb-btn" data-tag="${escapeMarkup(item.tag)}" type="button">Inspect ${isPlayers ? 'player' : 'club'} <span>→</span></button>`;
+      podium.append(card);
+    });
+    BrawlBuddyMotion.enter(podium, true);
+  }
 
-  if (!items || items.length === 0) {
+  if (state.rankingsLoading || !items || items.length === 0) {
     const emptyRow = document.createElement('tr');
-    emptyRow.innerHTML = `<td colspan="5" style="text-align: center; padding: 24px; color: #7183a3;">Loading rankings data…</td>`;
+    emptyRow.innerHTML = `<td colspan="5"><div class="empty-state"><strong>${state.rankingsLoading ? 'Loading the standings' : 'No rankings available'}</strong>${state.rankingsLoading ? 'Fetching players and clubs for the selected region.' : 'Try another region to explore its trophy standings.'}</div></td>`;
     tbody.append(emptyRow);
     return;
   }
@@ -1304,26 +1445,26 @@ function renderLeaderboard() {
     const tr = document.createElement('tr');
     tr.className = 'roster-row';
     const nameColor = isPlayers ? readableNameColor(item.name_color) : '#0c2340';
-    const clubText = isPlayers ? (item.club_name || 'No Club') : `${item.member_count || 30} / 30 Members`;
+    const clubText = isPlayers ? (item.club_name || 'No Club') : `${item.member_count ?? 0} / 30 Members`;
     tr.innerHTML = `
-      <td class="roster-rank">#${item.rank}</td>
+      <td class="roster-rank"><span class="rank-medal rank-${item.rank}">${item.rank}</span></td>
       <td class="roster-name">
-        <strong style="color: ${nameColor}; text-shadow: 0 1px 0 rgba(255,255,255,0.7);">${item.name}</strong>
+        <div class="ranking-person"><img src="${rankingPortrait(item)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='/assets/roster-all.svg'"><strong style="color: ${nameColor};">${escapeMarkup(item.name)}</strong></div>
       </td>
       <td class="roster-club-cell">
-        <span class="roster-club-name">${clubText}</span>
+        <span class="roster-club-name">${escapeMarkup(clubText)}</span>
       </td>
-      <td class="roster-trophies">★ ${format(item.trophies)}</td>
+      <td class="roster-trophies"><img class="table-trophy-icon" src="/assets/icon_trophy.png" alt="Trophies">${format(item.trophies)}</td>
       <td style="text-align: right;">
-        <button class="member-tag-pill inspect-lb-btn" data-tag="${item.tag}" type="button">
-          <span>#</span>${item.tag.replace('#', '')}
+        <button class="member-tag-pill inspect-lb-btn" data-tag="${escapeMarkup(item.tag)}" type="button">
+          <span>#</span>${escapeMarkup(item.tag.replace('#', ''))}
         </button>
       </td>
     `;
     tbody.append(tr);
   });
 
-  tbody.querySelectorAll('.inspect-lb-btn').forEach((btn) => {
+  $('leaderboards-view').querySelectorAll('.inspect-lb-btn').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const tag = e.currentTarget.dataset.tag;
       if (tag) {
@@ -1357,6 +1498,7 @@ function renderClub(payload) {
   setText('club-view-name', payload.club.name);
   setText('club-view-tag', payload.club.tag);
   setText('club-desc-text', payload.club.description || 'No club description provided.');
+  setText('club-freshness', sourceLabel(payload.club.source));
   setText('club-total-trophies', format(payload.club.trophies));
   setText('club-member-count', `${payload.club.members.length} / 30`);
   setText('club-required-trophies', `${format(payload.club.required_trophies)} ★`);
@@ -1474,7 +1616,7 @@ function renderClubTrophyTiers(members) {
         <strong>${t.count} <i>(${pct}%)</i></strong>
       </div>
       <div class="tier-bar-track">
-        <div class="tier-bar-fill" style="width: ${Math.max(t.count > 0 ? 8 : 0, pct)}%; background: ${t.color}"></div>
+        <div class="tier-bar-fill" style="width: ${pct}%; background: ${t.color}"></div>
       </div>
     `;
     holder.append(row);
@@ -1525,10 +1667,12 @@ function renderClubMembers(members) {
   const tbody = $('club-members-tbody');
   if (!tbody) return;
   tbody.replaceChildren();
+  setText('club-roster-summary', `${filtered.length} of ${members?.length || 0} members · Search by name or tag, then inspect a player profile.`);
+  BrawlBuddyMotion.enter(tbody.closest('.roster-table-wrap'), true);
 
   if (filtered.length === 0) {
     const emptyRow = document.createElement('tr');
-    emptyRow.innerHTML = `<td colspan="6" style="text-align: center; padding: 24px; color: #7183a3;">No members matching "${query}"</td>`;
+    emptyRow.innerHTML = '<td colspan="6"><div class="empty-state"><strong>No matching members</strong>Try another name or player tag.</div></td>';
     tbody.append(emptyRow);
     return;
   }
@@ -1539,19 +1683,19 @@ function renderClubMembers(members) {
     const tr = document.createElement('tr');
     tr.className = 'roster-row';
     tr.innerHTML = `
-      <td class="roster-rank">#${rankNum}</td>
+      <td class="roster-rank"><span class="rank-medal rank-${rankNum}">${rankNum}</span></td>
       <td class="roster-name">
-        <strong style="color: ${nameColor}; text-shadow: 0 1px 0 rgba(255,255,255,0.7);">${m.name}</strong>
+        <div class="ranking-person"><img src="https://cdn.brawlify.com/profile-icons/regular/${m.icon_id || 28000000}.png" alt="" loading="lazy" onerror="this.onerror=null;this.src='/assets/roster-all.svg'"><strong style="color: ${nameColor};">${escapeMarkup(m.name)}</strong></div>
       </td>
       <td>${roleBadgeHtml(m.role)}</td>
-      <td class="roster-trophies">★ ${format(m.trophies)}</td>
+      <td class="roster-trophies"><img class="table-trophy-icon" src="/assets/icon_trophy.png" alt="Trophies">${format(m.trophies)}</td>
       <td>
-        <button class="member-tag-pill inspect-member-btn" data-tag="${m.tag}" type="button" title="Inspect ${m.name}'s brawler profile">
-          <span>#</span>${m.tag.replace('#', '')}
+        <button class="member-tag-pill inspect-member-btn" data-tag="${escapeMarkup(m.tag)}" type="button" title="Inspect ${escapeMarkup(m.name)}'s player profile">
+          <span>#</span>${escapeMarkup(m.tag.replace('#', ''))}
         </button>
       </td>
       <td style="text-align: right;">
-        <button class="small-action inspect-member-btn" data-tag="${m.tag}" type="button">Inspect Brawler Profile →</button>
+        <button class="small-action inspect-member-btn" data-tag="${escapeMarkup(m.tag)}" type="button">Inspect Profile →</button>
       </td>
     `;
     tbody.append(tr);
@@ -4247,6 +4391,9 @@ function bindEvents() {
   });
 
   // Leaderboard tabs & regions
+  $('event-search')?.addEventListener('input', renderEvents);
+  $('event-mode-filter')?.addEventListener('change', renderEvents);
+  setInterval(updateEventTiming, 30000);
   $('tab-rankings-players')?.addEventListener('click', () => {
     state.rankingsType = 'players';
     $('tab-rankings-players').className = 'primary-button';
