@@ -353,7 +353,7 @@ function configurePage() {
   });
 }
 
-function showView() {
+function showView(options = {}) {
   const nextView = $(`${state.page}-view`) || $('error-view');
   const changed = nextView?.classList.contains('hidden');
   const loading = $('loading-state');
@@ -378,7 +378,7 @@ function showView() {
   if (state.page === 'battles' && (!state.battles || state.battles.length === 0)) loadBattles();
   if (state.page === 'events' && (!state.events || state.events.length === 0)) loadEvents();
   if (state.page === 'leaderboards' && (!state.rankingsPlayers || state.rankingsPlayers.length === 0)) loadLeaderboards();
-  if (changed) BrawlBuddyMotion.enter(nextView);
+  if (changed && options.animate !== false) BrawlBuddyMotion.enter(nextView);
 }
 
 async function request(url, options) {
@@ -516,6 +516,7 @@ async function loadDemoClub() {
 }
 
 const DEFAULT_PLAYER_TAG = '#9Q889JCR0';
+const DEFAULT_CLUB_TAG = '#2Q0UG28YJ';
 
 async function loadInitialAccount() {
   const cached = sessionStorage.getItem(ACCOUNT_CACHE_KEY);
@@ -542,53 +543,269 @@ async function loadInitialClub() {
   if (cached) {
     try { renderClub(JSON.parse(cached)); return; } catch { sessionStorage.removeItem(CLUB_CACHE_KEY); }
   }
-  await loadDemoClub();
+  try {
+    const payload = await request(`/api/club?tag=${encodeURIComponent(DEFAULT_CLUB_TAG)}`);
+    sessionStorage.setItem(CLUB_CACHE_KEY, JSON.stringify(payload));
+    renderClub(payload);
+  } catch {
+    await loadDemoClub();
+  }
+}
+
+let connectAttempt = 0;
+let connectController = null;
+let connectFailureEffects = [];
+let connectRevealEffect = null;
+const CONNECT_TRANSITION_MS = 800;
+
+function normalizeConnectTag(rawTag) {
+  return `#${String(rawTag || '').trim().toUpperCase().replace(/\s/g, '').replace(/^#/, '').replace(/O/g, '0')}`;
+}
+
+function validateConnectTag(rawTag) {
+  const tag = normalizeConnectTag(rawTag);
+  const value = tag.slice(1);
+  const length = value.length;
+  if (!length) return { tag, length, kind: 'idle', message: '' };
+  const invalid = [...new Set(value.replace(/[0289PYLQGRJCUV]/g, ''))];
+  if (invalid.length) return { tag, length, kind: 'error', message: `Remove ${invalid.map((character) => `“${character}”`).join(', ')}. Use only 0289PYLQGRJCUV.` };
+  if (length < 3) {
+    const remaining = 3 - length;
+    return { tag, length, kind: 'incomplete', message: `Add ${remaining} more character${remaining === 1 ? '' : 's'} (minimum 3).` };
+  }
+  if (length > 14) {
+    const extra = length - 14;
+    return { tag, length, kind: 'error', message: `Remove ${extra} character${extra === 1 ? '' : 's'} (maximum 14).` };
+  }
+  return { tag, length, kind: 'ready', message: 'Format looks good. Press Enter to connect.' };
+}
+
+function setConnectFeedback(kind, message) {
+  const dialog = $('connect-dialog');
+  if (!dialog) return;
+  dialog.dataset.state = kind;
+  if (kind !== 'error') {
+    connectFailureEffects.forEach((effect) => effect.cancel());
+    connectFailureEffects = [];
+  }
+  $('tag-input')?.setAttribute('aria-invalid', String(kind === 'error'));
+  $('dialog-status')?.classList.toggle('hidden', kind === 'error' || kind === 'idle');
+  $('dialog-error')?.classList.toggle('hidden', kind !== 'error');
+  const count = $('dialog-tag-count');
+  if (count) {
+    const length = normalizeConnectTag($('tag-input')?.value).length - 1;
+    count.classList.toggle('hidden', kind === 'idle');
+    count.textContent = `${length} / 14`;
+    count.setAttribute('aria-label', `${length} of 14 maximum tag characters`);
+  }
+  if (kind === 'error') {
+    setText('dialog-error', message);
+  } else {
+    setText('dialog-status-text', message);
+    const icon = dialog.querySelector('.tag-status-icon');
+    if (icon) icon.textContent = kind === 'success' || kind === 'ready' ? '✓' : kind === 'incomplete' ? '…' : '';
+  }
+}
+
+function animateConnectFailure() {
+  connectFailureEffects.forEach((effect) => effect.cancel());
+  connectFailureEffects = [];
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const shell = $('connect-dialog')?.querySelector(':scope > .dialog-shell');
+  const field = $('tag-input')?.closest('.tag-input');
+  if (!shell?.animate || !field) return;
+  connectFailureEffects.push(shell.animate([
+    { transform: 'translateX(0) rotate(0)' },
+    { transform: 'translateX(-7px) rotate(-.5deg)' },
+    { transform: 'translateX(6px) rotate(.4deg)' },
+    { transform: 'translateX(-3px) rotate(-.2deg)' },
+    { transform: 'translateX(0) rotate(0)' },
+  ], { duration: 420, easing: 'ease-out' }));
+  connectFailureEffects.push(field.animate([
+    { boxShadow: '0 0 0 0 rgba(223,109,128,0)' },
+    { boxShadow: '0 0 0 6px rgba(223,109,128,.2)', offset: .35 },
+    { boxShadow: '0 0 0 0 rgba(223,109,128,0)' },
+  ], { duration: 650, easing: 'ease-out' }));
+  const error = $('dialog-error');
+  if (error) connectFailureEffects.push(error.animate([
+    { opacity: .2, transform: 'translateY(-4px)' },
+    { opacity: 1, transform: 'translateY(0)' },
+  ], { duration: 260, easing: 'ease-out' }));
+}
+
+function setTagGuideExpanded(expanded) {
+  const guide = $('tag-guide');
+  const toggle = $('tag-guide-toggle');
+  if (!guide || !toggle) return;
+  guide.hidden = !expanded;
+  toggle.setAttribute('aria-expanded', String(expanded));
+  if (expanded) BrawlBuddyMotion.enter(guide, true);
+}
+
+function updateConnectInput() {
+  const input = $('tag-input');
+  if (!input || input.disabled) return;
+  const prefix = input.value.match(/^\s*#/);
+  if (prefix) {
+    const caret = input.selectionStart;
+    input.value = input.value.slice(prefix[0].length);
+    if (caret != null) input.setSelectionRange(Math.max(0, caret - prefix[0].length), Math.max(0, caret - prefix[0].length));
+  }
+  const feedback = validateConnectTag(input.value);
+  setConnectFeedback(feedback.kind, feedback.message);
+}
+
+function setConnectBusy(busy) {
+  $('connect-form')?.setAttribute('aria-busy', String(busy));
+  ['tag-input', 'load-player', 'tag-guide-toggle'].forEach((id) => {
+    if ($(id)) $(id).disabled = busy;
+  });
+  if (!busy && $('load-player')) $('load-player').innerHTML = 'SEARCH & CONNECT <span>→</span>';
+}
+
+function openConnectDialog() {
+  const dialog = $('connect-dialog');
+  if (!dialog || dialog.open) return;
+  dialog.classList.remove('is-crumbling');
+  setTagGuideExpanded(false);
+  setConnectBusy(false);
+  updateConnectInput();
+  dialog.showModal();
+  $('tag-input')?.focus();
+}
+
+async function crumbleConnectDialog(dialog, attempt, accountView) {
+  if (!dialog?.open || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const shell = dialog.querySelector(':scope > .dialog-shell');
+  if (!shell?.animate) return;
+  const { width, height } = shell.getBoundingClientRect();
+  const columns = 16;
+  const rows = Math.ceil(height / (width / columns));
+  const template = shell.cloneNode(true);
+  template.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'));
+  template.inert = true;
+  template.setAttribute('aria-hidden', 'true');
+  const layer = document.createElement('div');
+  layer.className = 'connect-fragments';
+  layer.setAttribute('aria-hidden', 'true');
+  layer.inert = true;
+  const effects = [];
+  for (let row = 0; row < rows; row++) {
+    for (let column = 0; column < columns; column++) {
+      const x = column * width / columns;
+      const y = row * height / rows;
+      const fragment = document.createElement('div');
+      fragment.className = 'connect-fragment';
+      Object.assign(fragment.style, {
+        left: `${x}px`, top: `${y}px`, width: `${width / columns + .5}px`, height: `${height / rows + .5}px`,
+      });
+      const image = template.cloneNode(true);
+      Object.assign(image.style, { width: `${width}px`, height: `${height}px`, left: `${-x}px`, top: `${-y}px` });
+      fragment.append(image);
+      layer.append(fragment);
+    }
+  }
+  dialog.append(layer);
+  dialog.style.setProperty('--connect-transition-duration', `${CONNECT_TRANSITION_MS}ms`);
+  dialog.classList.add('is-crumbling');
+  try {
+    const startTime = document.timeline.currentTime;
+    if (accountView?.animate) {
+      connectRevealEffect = accountView.animate([
+        { opacity: 0, transform: 'translateY(10px)' },
+        { opacity: 1, transform: 'translateY(0)' },
+      ], { duration: CONNECT_TRANSITION_MS, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'both' });
+      connectRevealEffect.startTime = startTime;
+      effects.push(connectRevealEffect);
+    }
+    [...layer.children].forEach((fragment, index) => {
+      const row = Math.floor(index / columns);
+      const column = index % columns;
+      // Each tile travels away from the center, covering the full 360° circle.
+      const angle = Math.atan2((row + .5) * height / rows - height / 2, (column + .5) * width / columns - width / 2);
+      const distance = 180 + Math.random() * 200;
+      const burstX = Math.cos(angle) * distance;
+      const burstY = Math.sin(angle) * distance;
+      const turn = (Math.random() < .5 ? -1 : 1) * (360 + Math.random() * 180);
+      const delay = Math.random() * 80;
+      const effect = fragment.animate([
+        { transform: 'translate(0, 0) rotate(0) scale(1)', opacity: 1 },
+        { transform: `translate(${burstX * .35}px, ${burstY * .35}px) rotate(${turn * .3}deg) scale(.8)`, opacity: 1, offset: .4 },
+        { transform: `translate(${burstX}px, ${burstY}px) rotate(${turn}deg) scale(.08)`, opacity: 0 },
+      ], { duration: CONNECT_TRANSITION_MS - delay, delay, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' });
+      effect.startTime = startTime;
+      effects.push(effect);
+    });
+    await Promise.allSettled(effects.map((effect) => effect.finished));
+  } finally {
+    effects.forEach((effect) => effect.cancel());
+    connectRevealEffect = null;
+    // Close before restoring the original shell so it cannot flash back on screen.
+    if (dialog.open && attempt === connectAttempt) dialog.close();
+    layer.remove();
+  }
 }
 
 async function loadSmartTag(rawTag) {
-  const tag = rawTag.trim();
-  if (!tag) return;
-  const button = $('load-player');
-  if (button) {
-    button.disabled = true;
-    button.textContent = 'SEARCHING…';
+  if (connectController) return;
+  const feedback = validateConnectTag(rawTag);
+  const tag = feedback.tag;
+  if (feedback.kind !== 'ready') {
+    setConnectFeedback('error', feedback.kind === 'idle' ? 'Please provide a valid player or club tag.' : feedback.message);
+    $('tag-input')?.focus();
+    animateConnectFailure();
+    return;
   }
-  const err = $('dialog-error');
-  if (err) err.classList.add('hidden');
-
+  const attempt = ++connectAttempt;
+  const controller = new AbortController();
+  connectController = controller;
+  const timeout = setTimeout(() => controller.abort(), 30000);
+  const dialog = $('connect-dialog');
+  const current = () => attempt === connectAttempt && dialog?.open;
+  $('tag-input').value = tag.slice(1);
+  setTagGuideExpanded(false);
+  setConnectBusy(true);
+  setConnectFeedback('checking', `Checking ${tag} with Brawl Stars…`);
+  $('load-player').textContent = 'CHECKING TAG…';
   try {
-    const result = await request(`/api/lookup?tag=${encodeURIComponent(tag)}`);
-    const dialog = $('connect-dialog');
+    const result = await request(`/api/lookup?tag=${encodeURIComponent(tag)}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!current()) return;
+    if (!['player', 'club'].includes(result.type) || !result[result.type]?.tag) throw new Error('Tag not found. Please provide a valid player or club tag.');
+    const profile = result[result.type];
+    setConnectFeedback('success', `${result.type === 'player' ? 'Player' : 'Club'} confirmed: ${profile.name} · ${profile.tag}`);
+    $('load-player').textContent = result.type === 'player' ? 'LOADING ACCOUNT…' : 'LOADING CLUB…';
     if (result.type === 'club') {
       sessionStorage.setItem(CLUB_CACHE_KEY, JSON.stringify(result));
       renderClub(result);
-      if (dialog && dialog.open) dialog.close();
-      hideNotice();
-      if (state.page !== 'club') {
-        history.pushState(null, '', `/club/${encodeURIComponent(result.club.tag)}`);
-        configurePage();
-        showView();
-      }
-    } else if (result.type === 'player') {
+      history.pushState(null, '', `/club/${encodeURIComponent(result.club.tag)}`);
+    } else {
       sessionStorage.setItem(ACCOUNT_CACHE_KEY, JSON.stringify(result));
       renderAccount(result);
-      if (dialog && dialog.open) dialog.close();
-      hideNotice();
-      if (state.page !== 'overview' && state.page !== 'brawlers' && state.page !== 'battles') {
-        history.pushState(null, '', '/');
-        configurePage();
-        showView();
-      }
+      history.pushState(null, '', '/');
     }
+    hideNotice();
+    configurePage();
+    showView({ animate: false });
+    window.scrollTo(0, 0);
+    await crumbleConnectDialog(dialog, attempt, $(`${state.page}-view`));
+    if (current()) dialog.close();
+    if (dialog.open) return;
+    // Return keyboard focus to the newly loaded overview.
+    const heading = $('page-title');
+    heading?.setAttribute('tabindex', '-1');
+    heading?.focus({ preventScroll: true });
   } catch (error) {
-    if (err) {
-      setText('dialog-error', error.message || 'Tag not found. Make sure the tag is valid.');
-      err.classList.remove('hidden');
+    if (current()) {
+      const message = /(?:not found|no .* found)/i.test(error.message || '') ? 'No player or club found. Please provide a valid tag and try again.' : error.message;
+      setConnectFeedback('error', error.name === 'AbortError' ? 'The lookup took too long. Please try again.' : message || 'Tag not found. Please provide a valid tag.');
+      animateConnectFailure();
     }
   } finally {
-    if (button) {
-      button.disabled = false;
-      button.innerHTML = 'SEARCH & CONNECT <span>→</span>';
+    clearTimeout(timeout);
+    if (attempt === connectAttempt) {
+      connectController = null;
+      setConnectBusy(false);
     }
   }
 }
@@ -4352,10 +4569,7 @@ function initializeHeaderNavigation() {
 function bindEvents() {
   BrawlBuddyMotion.init();
   initializeHeaderNavigation();
-  $('connect-button')?.addEventListener('click', () => {
-    $('dialog-error')?.classList.add('hidden');
-    $('connect-dialog')?.showModal();
-  });
+  $('connect-button')?.addEventListener('click', openConnectDialog);
 
   $('dialog-close-btn')?.addEventListener('click', () => $('connect-dialog')?.close());
   $('recreator-close-btn')?.addEventListener('click', () => $('recreator-dialog')?.close());
@@ -4415,7 +4629,28 @@ function bindEvents() {
 
   const dialog = $('connect-dialog');
   if (dialog) {
+    dialog.addEventListener('close', () => {
+      connectAttempt++;
+      connectController?.abort();
+      connectController = null;
+      connectRevealEffect?.cancel();
+      connectRevealEffect = null;
+      dialog.querySelectorAll('.connect-fragment').forEach((fragment) => fragment.getAnimations().forEach((effect) => effect.cancel()));
+      dialog.querySelector('.connect-fragments')?.remove();
+      connectFailureEffects.forEach((effect) => effect.cancel());
+      connectFailureEffects = [];
+      setConnectBusy(false);
+      updateConnectInput();
+    });
+    dialog.addEventListener('cancel', (event) => {
+      if (!$('tag-guide')?.hidden) {
+        event.preventDefault();
+        setTagGuideExpanded(false);
+        $('tag-guide-toggle')?.focus();
+      }
+    });
     dialog.addEventListener('click', (e) => {
+      if (e.target !== dialog) return;
       const rect = dialog.getBoundingClientRect();
       const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height
         && rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
@@ -4425,31 +4660,15 @@ function bindEvents() {
 
   $('connect-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
-    const tag = $('tag-input')?.value.trim();
-    if (tag) loadSmartTag(tag);
+    loadSmartTag($('tag-input')?.value || '');
+  });
+  $('tag-input')?.addEventListener('input', updateConnectInput);
+
+  $('tag-guide-toggle')?.addEventListener('click', () => {
+    setTagGuideExpanded($('tag-guide')?.hidden === true);
   });
 
-  $('load-demo')?.addEventListener('click', () => {
-    sessionStorage.removeItem(ACCOUNT_CACHE_KEY);
-    $('connect-dialog')?.close();
-    loadDemo();
-    if (state.page !== 'overview' && state.page !== 'brawlers' && state.page !== 'battles') {
-      history.pushState(null, '', '/');
-      configurePage();
-      showView();
-    }
-  });
-
-  $('load-demo-club')?.addEventListener('click', () => {
-    sessionStorage.removeItem(CLUB_CACHE_KEY);
-    $('connect-dialog')?.close();
-    loadDemoClub();
-  });
-
-  $('error-connect-btn')?.addEventListener('click', () => {
-    $('dialog-error')?.classList.add('hidden');
-    $('connect-dialog')?.showModal();
-  });
+  $('error-connect-btn')?.addEventListener('click', openConnectDialog);
 
   $('roster-search')?.addEventListener('input', () => {
     if (state.club?.members) renderClubMembers(state.club.members);

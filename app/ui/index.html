@@ -11,9 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=631">
+  <link rel="stylesheet" href="/assets/styles.css?v=635">
   <link rel="stylesheet" href="/assets/brawler-hero-atmosphere.css?v=9">
-  <link rel="stylesheet" href="/assets/ui-motion.css?v=2">
+  <link rel="stylesheet" href="/assets/ui-motion.css?v=3">
   <link rel="stylesheet" href="/assets/header-navigation.css?v=5">
   <link rel="stylesheet" href="/assets/section-design.css?v=2">
 </head>
@@ -1265,26 +1265,45 @@
     </div>
   </dialog>
 
-  <dialog id="connect-dialog" class="connect-dialog">
+  <dialog id="connect-dialog" class="connect-dialog" aria-labelledby="connect-title" data-state="idle">
     <div class="dialog-shell">
+      <button id="tag-guide-toggle" class="tag-guide-toggle" type="button" aria-label="Where to find player and club tags" aria-expanded="false" aria-controls="tag-guide">i</button>
       <button id="dialog-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
       <div class="dialog-icon brand-dialog-icon">
         <img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="dialog-brand-logo">
       </div>
       <p class="eyebrow">OFFICIAL BRAWL STARS DATA</p>
-      <h2>Connect Brawler or Club</h2>
-      <p>Enter any <strong>Brawler Tag</strong> (e.g. <code>#9Q889JCR0</code>) or <strong>Club Tag</strong> (e.g. <code>#PQL20</code>). BrawlBuddy will auto-detect and load the full dashboard.</p>
-      <form id="connect-form">
-        <label class="tag-input"><span>#</span><input id="tag-input" type="text" maxlength="20" autocomplete="off" placeholder="9Q889JCR0 or PQL20" aria-label="Brawler or Club tag"></label>
-        <div id="dialog-error" class="dialog-error hidden"></div>
+      <h2 id="connect-title">Connect Player or Club</h2>
+      <p class="dialog-tag-copy">Enter any <strong>Brawler Tag</strong> (e.g. <code>#9Q889JCR0</code>) or <strong>Club Tag</strong> (e.g. <code>#2QOUG28YJ</code>).</p>
+      <div id="tag-guide" class="tag-guide" role="region" aria-label="How to find your tags" hidden>
+        <section>
+          <h3>Player / Brawler Tag</h3>
+          <ol>
+            <li>Open Brawl Stars and tap your profile in the top-left corner.</li>
+            <li>Find the <strong># tag</strong> beneath your profile icon.</li>
+            <li>Copy it and paste it into the field below.</li>
+          </ol>
+        </section>
+        <section>
+          <h3>Club Tag</h3>
+          <ol>
+            <li>Open <strong>Club</strong> from the home screen.</li>
+            <li>Tap the club name or badge to open <strong>Club Info</strong>.</li>
+            <li>Copy the club's <strong># tag</strong> and paste it below.</li>
+          </ol>
+        </section>
+        <p>Use the tag that starts with #, rather than your name or Supercell ID. You can enter it with or without #.</p>
+        <a href="https://support.supercell.com/supercell-id/en/articles/player-tag.html" target="_blank" rel="noopener noreferrer">Official player tag guide ↗</a>
+      </div>
+      <form id="connect-form" novalidate>
+        <label class="tag-input"><span aria-hidden="true">#</span><input id="tag-input" type="text" maxlength="20" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Enter player or club tag" aria-label="Player or Club tag" aria-describedby="dialog-status dialog-error"></label>
+        <div class="dialog-feedback">
+          <div id="dialog-status" class="dialog-status hidden" role="status" aria-live="polite"><span class="tag-status-icon" aria-hidden="true"></span><span id="dialog-status-text"></span></div>
+          <div id="dialog-error" class="dialog-error hidden" role="alert"></div>
+          <span id="dialog-tag-count" class="tag-character-count hidden"></span>
+        </div>
         <button id="load-player" class="primary-button wide" type="submit">SEARCH & CONNECT <span>→</span></button>
       </form>
-      <div class="dialog-demo-actions">
-        <button id="load-demo" class="text-button" type="button">Explore Demo Brawler</button>
-        <span>•</span>
-        <button id="load-demo-club" class="text-button" type="button">Explore Demo Club</button>
-      </div>
-      <small>Public brawler and club data is cached briefly.</small>
     </div>
   </dialog>
 
@@ -1320,6 +1339,6 @@
   <script src="/assets/readiness.js?v=25" defer></script>
   <script src="/assets/roster-dropdowns.js?v=11" defer></script>
   <script src="/assets/ui-motion.js?v=1" defer></script>
-  <script src="/assets/app.js?v=145" defer></script>
+  <script src="/assets/app.js?v=149" defer></script>
 </body>
 </html>

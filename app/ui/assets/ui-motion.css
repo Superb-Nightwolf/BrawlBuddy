@@ -18,6 +18,9 @@
 }
 :is(.connect-dialog, .recreator-dialog, .map-preview-dialog)[open]::backdrop { opacity: 1; }
 
+/* The connect reveal already controls the entire exit duration. */
+.connect-dialog.is-crumbling, .connect-dialog.is-crumbling::backdrop { transition: none; }
+
 .roster-select-menu {
   opacity: 0;
   translate: 0 -8px;
