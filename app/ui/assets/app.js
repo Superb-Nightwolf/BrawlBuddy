@@ -7,6 +7,7 @@ const state = {
   catalog: [],
   ownedBrawlers: [],
   brawlers: [],
+  rosterDirty: true,
   battles: [],
   battleFilter: 'all',
   events: [],
@@ -30,7 +31,8 @@ const ACCOUNT_CACHE_KEY = 'brawlbuddy_account_v4';
 const CLUB_CACHE_KEY = 'brawlbuddy_club_v3';
 
 const $ = (id) => document.getElementById(id);
-const format = (value) => new Intl.NumberFormat().format(value ?? 0);
+const numberFormatter = new Intl.NumberFormat();
+const format = (value) => numberFormatter.format(value ?? 0);
 
 function normalizeKey(str) {
   return String(str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -372,12 +374,8 @@ function showView(options = {}) {
     if (!state.brawlers || state.brawlers.length === 0) {
       state.brawlers = mergeCatalog(state.ownedBrawlers);
     }
-    renderBrawlers();
+    if (state.rosterDirty || changed) renderBrawlers();
   }
-  if (state.page === 'club' && !state.club) loadInitialClub();
-  if (state.page === 'battles' && (!state.battles || state.battles.length === 0)) loadBattles();
-  if (state.page === 'events' && (!state.events || state.events.length === 0)) loadEvents();
-  if (state.page === 'leaderboards' && (!state.rankingsPlayers || state.rankingsPlayers.length === 0)) loadLeaderboards();
   if (changed && options.animate !== false) BrawlBuddyMotion.enter(nextView);
 }
 
@@ -412,7 +410,15 @@ async function loadStatus() {
   }
 }
 
-async function loadCatalog() {
+let catalogPromise = null;
+
+function loadCatalog() {
+  // Startup, navigation and account rendering share one metadata request group.
+  if (!catalogPromise) catalogPromise = fetchCatalog();
+  return catalogPromise;
+}
+
+async function fetchCatalog() {
   try {
     const [catPayload, equipPayload, buffiesPayload, sourcesPayload, visualAssetsPayload, prestigeAssetsPayload] = await Promise.all([
       request('/api/brawlers/catalog'),
@@ -432,11 +438,10 @@ async function loadCatalog() {
     state.visualAssets = visualAssetsPayload || {};
     state.prestigeAssets = prestigeAssetsPayload || {};
     state.brawlers = mergeCatalog(state.ownedBrawlers);
-    if (state.page === 'brawlers') {
-      renderBrawlers();
-    }
+    state.rosterDirty = true;
   } catch (error) {
     state.catalog = [];
+    catalogPromise = null;
   }
 }
 
@@ -493,6 +498,7 @@ function mergeCatalog(ownedBrawlers) {
 async function loadDemo() {
   try {
     const payload = await request('/api/demo/player');
+    await loadCatalog();
     sessionStorage.setItem(ACCOUNT_CACHE_KEY, JSON.stringify(payload));
     renderAccount(payload);
     showNotice('Demo account active — all sample player data is clearly labeled. Connect your tag for live public account data.');
@@ -521,13 +527,19 @@ const DEFAULT_CLUB_TAG = '#2Q0UG28YJ';
 async function loadInitialAccount() {
   const cached = sessionStorage.getItem(ACCOUNT_CACHE_KEY);
   if (cached) {
-    try { renderAccount(JSON.parse(cached)); return; } catch { sessionStorage.removeItem(ACCOUNT_CACHE_KEY); }
+    try {
+      const payload = JSON.parse(cached);
+      await loadCatalog();
+      renderAccount(payload);
+      return;
+    } catch { sessionStorage.removeItem(ACCOUNT_CACHE_KEY); }
   }
   
   // Try loading live player default tag if token is present, else demo
   try {
     const res = await request(`/api/lookup?tag=${encodeURIComponent(DEFAULT_PLAYER_TAG)}`);
     if (res && res.type === 'player') {
+      await loadCatalog();
       sessionStorage.setItem(ACCOUNT_CACHE_KEY, JSON.stringify(res));
       renderAccount(res);
       return;
@@ -821,6 +833,7 @@ async function loadPlayer(tag) {
 
   try {
     const payload = await request(`/api/player?tag=${encodeURIComponent(tag)}`);
+    await loadCatalog();
     sessionStorage.setItem(ACCOUNT_CACHE_KEY, JSON.stringify(payload));
     renderAccount(payload);
     const dialog = $('connect-dialog');
@@ -850,6 +863,7 @@ function renderAccount(payload) {
   state.analytics = payload.analytics || {};
   state.ownedBrawlers = payload.player.brawlers || [];
   state.brawlers = mergeCatalog(state.ownedBrawlers);
+  state.rosterDirty = true;
 
   const expPoints = payload.player.exp_points ?? 143200;
   const expLevel = payload.player.exp_level ?? Math.max(1, Math.round(payload.player.trophies / 350));
@@ -926,7 +940,6 @@ function renderAccount(payload) {
   renderClubCard(payload.player.club);
   renderOverviewMetrics();
   renderQuickBrawlers();
-  renderBrawlers();
   showView();
 }
 
@@ -1969,14 +1982,14 @@ function addImageWithFallback(holder, brawler, className) {
   fallback.className = 'brawler-fallback';
   fallback.textContent = initials(brawler.name);
   const image = document.createElement('img');
+  image.loading = 'lazy';
+  image.decoding = 'async';
   image.className = className;
   const primarySrc = ([16000108, 16000109, 16000110].includes(brawler.id))
     ? brawlerImage(brawler, true)
     : `https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png`;
   image.src = primarySrc;
   image.alt = `${brawler.name} official portrait`;
-  image.loading = 'lazy';
-  image.decoding = 'async';
   let step = 0;
   image.onerror = () => {
     step += 1;
@@ -2188,10 +2201,11 @@ function renderRosterEquipmentLab(holder, brawler) {
   const isHcOwned = Boolean(brawler.owned) && hasHypercharge(brawler);
   const isHcActive = isHcOwned && ((brawler.power || 0) >= 11);
 
-  const gadgetBuffieUrl = state.visualAssets?.brawlers?.[bId]?.buffies?.gadget?.local_url || `/assets/equipment/buffies/${bId}-gadget.png`;
-  const spBuffieUrl = state.visualAssets?.brawlers?.[bId]?.buffies?.star_power?.local_url || `/assets/equipment/buffies/${bId}-star-power.png`;
-  const hcBuffieUrl = state.visualAssets?.brawlers?.[bId]?.buffies?.hypercharge?.local_url || `/assets/equipment/buffies/${bId}-hypercharge.png`;
-  const hcIconUrl = state.visualAssets?.brawlers?.[bId]?.hypercharge?.local_url || `/assets/equipment/hypercharges/${bId}.png`;
+  // Unreleased equipment has no artwork: use its existing placeholder directly.
+  const gadgetBuffieUrl = getBuffieImageSources(brawler, 'gadget')[0];
+  const spBuffieUrl = getBuffieImageSources(brawler, 'star_power')[0];
+  const hcBuffieUrl = getBuffieImageSources(brawler, 'hypercharge')[0];
+  const hcIconUrl = getHyperchargeImageSources(brawler)[0];
 
   // Row 1: Gadgets (centered, consistent capsule width)
   const rowGadgets = document.createElement('div');
@@ -2212,6 +2226,8 @@ function renderRosterEquipmentLab(holder, brawler) {
     const equipSlot = document.createElement('div');
     equipSlot.className = `equip-slot ${isOwned ? 'owned' : 'unowned'}`;
     const equipImg = document.createElement('img');
+    equipImg.loading = 'lazy';
+    equipImg.decoding = 'async';
     equipImg.className = 'equip-icon';
     equipImg.src = getEquipmentImageUrl(g, 'gadget', brawler);
     equipImg.alt = g.name || 'Gadget';
@@ -2222,6 +2238,8 @@ function renderRosterEquipmentLab(holder, brawler) {
     buffieSlot.className = `buffie-slot buffie-gadget ${hasGadgetBuffy ? 'owned' : 'unowned'}`;
     buffieSlot.title = `Gadget Buffie (${hasGadgetBuffy ? 'Owned' : 'Not owned'})`;
     const buffieImg = document.createElement('img');
+    buffieImg.loading = 'lazy';
+    buffieImg.decoding = 'async';
     buffieImg.className = 'buffie-icon';
     buffieImg.src = gadgetBuffieUrl;
     buffieImg.alt = 'Gadget Buffie';
@@ -2251,6 +2269,8 @@ function renderRosterEquipmentLab(holder, brawler) {
     const equipSlot = document.createElement('div');
     equipSlot.className = `equip-slot ${isOwned ? 'owned' : 'unowned'}`;
     const equipImg = document.createElement('img');
+    equipImg.loading = 'lazy';
+    equipImg.decoding = 'async';
     equipImg.className = 'equip-icon';
     equipImg.src = getEquipmentImageUrl(sp, 'star_power', brawler);
     equipImg.alt = sp.name || 'Star Power';
@@ -2261,6 +2281,8 @@ function renderRosterEquipmentLab(holder, brawler) {
     buffieSlot.className = `buffie-slot buffie-sp ${hasSpBuffy ? 'owned' : 'unowned'}`;
     buffieSlot.title = `Star Power Buffie (${hasSpBuffy ? 'Owned' : 'Not owned'})`;
     const buffieImg = document.createElement('img');
+    buffieImg.loading = 'lazy';
+    buffieImg.decoding = 'async';
     buffieImg.className = 'buffie-icon';
     buffieImg.src = spBuffieUrl;
     buffieImg.alt = 'Star Power Buffie';
@@ -2283,6 +2305,8 @@ function renderRosterEquipmentLab(holder, brawler) {
   const hcSlot = document.createElement('div');
   hcSlot.className = `equip-slot ${isHcOwned ? 'owned' : 'unowned'}`;
   const hcImg = document.createElement('img');
+  hcImg.loading = 'lazy';
+  hcImg.decoding = 'async';
   hcImg.className = 'equip-icon hc-icon';
   hcImg.src = hcIconUrl;
   hcImg.alt = 'Hypercharge';
@@ -2293,6 +2317,8 @@ function renderRosterEquipmentLab(holder, brawler) {
   hcBuffieSlot.className = `buffie-slot buffie-hc ${hasHcBuffy ? 'owned' : 'unowned'}`;
   hcBuffieSlot.title = `Hypercharge Buffie (${hasHcBuffy ? 'Owned' : 'Not owned'})`;
   const hcBuffieImg = document.createElement('img');
+  hcBuffieImg.loading = 'lazy';
+  hcBuffieImg.decoding = 'async';
   hcBuffieImg.className = 'buffie-icon';
   hcBuffieImg.src = hcBuffieUrl;
   hcBuffieImg.alt = 'Hypercharge Buffie';
@@ -2319,6 +2345,8 @@ function renderRosterEquipmentLab(holder, brawler) {
     gearSlot.title = `${gear.name} Gear (${isOwned ? 'Owned' : 'Not owned'})`;
 
     const gearImg = document.createElement('img');
+    gearImg.loading = 'lazy';
+    gearImg.decoding = 'async';
     gearImg.className = 'gear-icon';
     gearImg.src = gear.icon;
     gearImg.alt = gear.name;
@@ -2369,10 +2397,13 @@ function cardFor(brawler) {
   progRow.className = `brawler-progression-row${isOwned ? '' : ' locked'}`;
 
   const trophyChip = document.createElement('div'); trophyChip.className = 'brawler-stat-chip trophies-chip'; trophyChip.title = `${brawler.name}: ${displayedTrophies} Trophies${isOwned ? '' : ' (locked)'}`;
-  trophyChip.innerHTML = `<div class="trophy-chip-row"><img class="trophy-chip-img" src="/assets/icon_trophy.png" alt="Trophy" /><span class="trophy-chip-val">${displayedTrophies}</span></div><span class="trophy-chip-lbl">TROPHIES</span>`;
+  trophyChip.innerHTML = `<div class="trophy-chip-row"><img loading="lazy" decoding="async" class="trophy-chip-img" src="/assets/icon_trophy.png" alt="Trophy" /><span class="trophy-chip-val">${displayedTrophies}</span></div><span class="trophy-chip-lbl">TROPHIES</span>`;
 
   const prestigeWrap = document.createElement('div'); prestigeWrap.className = 'brawler-prestige-center-wrap'; prestigeWrap.title = `${brawler.name}: ${prestige.label}${isOwned ? '' : ' Prestige (locked)'}`;
-  const emblemImage = document.createElement('img'); emblemImage.className = 'prestige-card-emblem-img'; emblemImage.alt = `${brawler.name} ${prestige.label} emblem${isOwned ? '' : ' (locked)'}`; applyPrestigeImage(emblemImage, prestigeBrawler);
+  const emblemImage = document.createElement('img');
+  emblemImage.loading = 'lazy';
+  emblemImage.decoding = 'async';
+  emblemImage.className = 'prestige-card-emblem-img'; emblemImage.alt = `${brawler.name} ${prestige.label} emblem${isOwned ? '' : ' (locked)'}`; applyPrestigeImage(emblemImage, prestigeBrawler);
   prestigeWrap.append(emblemImage);
 
   const levelChip = document.createElement('div'); levelChip.className = 'brawler-stat-chip level-chip'; levelChip.title = `${brawler.name}: Level ${displayedLevel}${isOwned ? '' : ' (locked)'}`;
@@ -2699,6 +2730,8 @@ function renderCollectionPrestige() {
     button.disabled = !state.player;
     button.setAttribute('aria-label', `${category.label}: ${state.player ? summary.counts[category.key] : 'unknown'} Brawlers. Filter roster`);
     const image = document.createElement('img');
+    image.loading = 'lazy';
+    image.decoding = 'async';
     image.src = `${base}/${category.assetId < 4 ? 'regular' : 'tiered'}/${category.assetId}.png`;
     image.alt = '';
     image.setAttribute('aria-hidden', 'true');
@@ -2723,6 +2756,7 @@ function renderCollectionPrestige() {
 }
 
 function renderBrawlers() {
+  state.rosterDirty = false;
   globalThis.RosterDropdowns?.sync();
   if (!state.brawlers || state.brawlers.length === 0) {
     state.brawlers = mergeCatalog(state.ownedBrawlers);
@@ -2928,8 +2962,9 @@ function renderGuideProfile(guide, brawler) {
         const iconUrl = getEquipmentImageUrl(item, type, brawler);
         if (iconUrl) {
           const image = document.createElement('img');
-          image.alt = `${item.name} icon`;
           image.loading = 'lazy';
+          image.decoding = 'async';
+          image.alt = `${item.name} icon`;
           const categoryFallback = type === 'gadget'
             ? '/assets/section_gadget.png'
             : type === 'star_power'
@@ -3062,10 +3097,11 @@ function renderUsefulMaps(guide) {
     thumbFrame.title = 'Tap to enlarge map';
 
     const thumbImg = document.createElement('img');
+    thumbImg.loading = 'lazy';
+    thumbImg.decoding = 'async';
     thumbImg.className = 'map-thumb-img';
     thumbImg.src = m.image_url;
     thumbImg.alt = `${m.name} preview`;
-    thumbImg.loading = 'lazy';
     thumbImg.onerror = () => {
       thumbImg.src = '/assets/player-mascot.png';
     };
@@ -3173,8 +3209,9 @@ function createMatchupCard(item, category) {
   avatar.className = 'matchup-brawler-avatar';
 
   const img = document.createElement('img');
-  img.className = 'matchup-avatar-img';
   img.loading = 'lazy';
+  img.decoding = 'async';
+  img.className = 'matchup-avatar-img';
   img.alt = item.name;
   img.src = ([16000108, 16000109, 16000110].includes(item.id))
     ? brawlerImage(item, true)
@@ -3403,8 +3440,8 @@ function renderDetailArtwork(brawler) {
   hero?.style.removeProperty('--cover-secondary');
   stage.replaceChildren();
   const image = new Image();
-  image.alt = `${brawler.name} character artwork`;
   image.decoding = 'async';
+  image.alt = `${brawler.name} character artwork`;
   const crop = document.createElement('div');
   crop.className = 'hero-art-crop';
   crop.append(image);
@@ -3941,6 +3978,8 @@ function createHyperchargeEmblem(brawler, hypercharge) {
   emblem.className = 'official-hypercharge-emblem';
   emblem.title = hypercharge?.name || 'Hypercharge';
   const image = document.createElement('img');
+  image.loading = 'lazy';
+  image.decoding = 'async';
   image.alt = `${brawler?.name || 'Brawler'} Hypercharge`;
   image.className = 'ability-icon-img hyper-icon-img';
   setAssetImageSources(
@@ -4393,6 +4432,8 @@ function createAbilityBuffie(brawler, type, ability, abilityOwned) {
   const iconBadgeClass = (isActive || isStored) ? `${type}-buffie-badge` : 'disabled-buffie-badge';
   iconBadge.className = `buffie-icon-badge ${iconBadgeClass}`;
   const image = document.createElement('img');
+  image.loading = 'lazy';
+  image.decoding = 'async';
   image.alt = `${label} icon`;
   image.className = 'buffie-fandom-icon';
   setAssetImageSources(
@@ -4477,9 +4518,10 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
 
     if (imgUrl) {
       const iconImg = document.createElement('img');
+      iconImg.loading = 'lazy';
+      iconImg.decoding = 'async';
       iconImg.className = 'ability-icon-img';
       iconImg.alt = item.name;
-      iconImg.loading = 'lazy';
       const categoryFallback = type === 'gadget'
         ? '/assets/section_gadget.png'
         : type === 'star_power'
@@ -4794,17 +4836,16 @@ async function handleRoute(options = {}) {
   const urlParams = new URLSearchParams(location.search);
   const playerParam = urlParams.get('player') || urlParams.get('tag');
 
-  if (playerParam) {
-    await loadPlayer(playerParam);
-  } else if (!state.player) {
-    await loadInitialAccount();
-  }
+  // Fetch account and shared metadata together instead of serializing them.
+  const catalogReady = loadCatalog();
+  const accountReady = playerParam ? loadPlayer(playerParam) : !state.player ? loadInitialAccount() : Promise.resolve();
+  await Promise.all([catalogReady, accountReady]);
 
   if (state.page === 'brawlers') {
     if (!state.brawlers || state.brawlers.length === 0) {
       state.brawlers = mergeCatalog(state.ownedBrawlers);
     }
-    renderBrawlers();
+    if (state.rosterDirty) renderBrawlers();
   } else if (state.page === 'detail') {
     await renderDetail();
   } else if (state.page === 'club') {
@@ -4834,6 +4875,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   configurePage();
   bindEvents();
   globalThis.RosterDropdowns?.init();
-  await Promise.all([loadStatus(), loadCatalog()]);
+  // The footer's content date must never delay the account or route.
+  loadStatus();
   await handleRoute({ isPop: false });
 });

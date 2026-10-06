@@ -5,6 +5,7 @@ import json
 import mimetypes
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import AsyncIterator
 
@@ -13,8 +14,10 @@ mimetypes.add_type('image/png', '.png')
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.concurrency import run_in_threadpool
 
 from app.clients.brawl_stars import BrawlStarsClient
 from app.core.config import PROJECT_ROOT, get_settings
@@ -107,6 +110,9 @@ if prestige_assets_path.exists():
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     logger.info("Starting %s", settings.app.name)
+    # Scan published files once, before serving traffic, rather than on every visit.
+    _content_last_updated.cache_clear()
+    await run_in_threadpool(_content_last_updated)
     yield
     if client:
         await client.close()
@@ -118,6 +124,7 @@ app = FastAPI(
     description="Account intelligence API for Brawl Stars progression planning.",
     lifespan=lifespan,
 )
+app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.app.cors_origins,
@@ -129,6 +136,26 @@ assets = PROJECT_ROOT / "app" / "ui" / "assets"
 app.mount("/assets", StaticFiles(directory=assets), name="assets")
 
 
+@app.middleware("http")
+async def browser_cache_policy(request: Request, call_next):
+    response = await call_next(request)
+    if request.method not in {"GET", "HEAD"} or response.status_code not in {200, 304}:
+        return response
+    path = request.url.path
+    if path.startswith("/assets/"):
+        # Reuse artwork/scripts across pages; ETags still support revalidation.
+        response.headers["Cache-Control"] = "public, max-age=3600"
+    elif path in {
+        "/api/brawlers/catalog", "/api/equipment", "/api/buffies",
+        "/api/data-sources", "/api/visual-assets", "/api/prestige/assets",
+    }:
+        response.headers["Cache-Control"] = "public, max-age=3600"
+    elif response.headers.get("content-type", "").startswith("text/html"):
+        response.headers["Cache-Control"] = "no-cache"
+    return response
+
+
+@lru_cache(maxsize=1)
 def _content_last_updated() -> str:
     """Return the newest published data/UI timestamp without a manual date edit."""
     published_files = list((PROJECT_ROOT / "data").glob("*.json"))
@@ -340,7 +367,7 @@ async def smart_lookup(tag: str = Query(min_length=3, max_length=20)) -> dict:
             "analytics": _player_analytics(player),
             "freshness": {"fetched_at": player.fetched_at.isoformat(), "cache_hit": cache_hit},
         }
-    except Exception:
+    except Exception as player_error:
         # Fallback to club
         try:
             club, cache_hit = await club_service.get_club(clean_tag)
@@ -361,9 +388,8 @@ async def smart_lookup(tag: str = Query(min_length=3, max_length=20)) -> dict:
                 "freshness": {"fetched_at": club.fetched_at.isoformat(), "cache_hit": cache_hit},
             }
         except Exception:
-            # If both fail, raise the player exception
-            player, cache_hit = await player_service.get_player(clean_tag)
-            return {}
+            # Preserve the original failure without repeating the player request.
+            raise player_error
 
 
 @app.get("/api/resources/{player_tag}")

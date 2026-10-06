@@ -1,5 +1,9 @@
 /* Navigation lives in the header's document flow at every screen size. */
 .header-container.topbar {
+  /* Its opaque gradients already hide the backdrop. Avoid a filtered header
+     layer so content paints normally when scrolling and changing pages. */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-areas: 'brand copy actions' 'navigation navigation navigation';

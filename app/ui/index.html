@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#123a78">
   <meta name="description" content="BrawlBuddy — your personal Brawl Stars progression companion.">
   <title>BrawlBuddy</title>
-  <link rel="icon" href="/assets/app-logo.png" type="image/png">
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/assets/app-logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="/assets/styles.css?v=635">
   <link rel="stylesheet" href="/assets/brawler-hero-atmosphere.css?v=9">
   <link rel="stylesheet" href="/assets/ui-motion.css?v=3">
-  <link rel="stylesheet" href="/assets/header-navigation.css?v=5">
+  <link rel="stylesheet" href="/assets/header-navigation.css?v=6">
   <link rel="stylesheet" href="/assets/section-design.css?v=2">
 </head>
 <body>
@@ -23,8 +23,8 @@
       <header class="topbar header-container">
         <div class="topbar-heading">
           <a class="brand header-brand" href="/" aria-label="BrawlBuddy home">
-            <span class="brand-mark"><svg class="brand-logo-img" viewBox="124 124 823 778" aria-hidden="true"><image href="/assets/app-logo.png" width="1024" height="1024"/></svg></span>
-            <span class="brand-copy"><svg class="brand-text-logo-img" viewBox="40 79 947 208" aria-hidden="true"><image href="/assets/app-logo-text.png" width="1024" height="341"/></svg></span>
+            <span class="brand-mark"><svg class="brand-logo-img" viewBox="124 124 823 778" aria-hidden="true"><image href="/assets/app-logo.webp" width="1024" height="1024"/></svg></span>
+            <span class="brand-copy"><svg class="brand-text-logo-img" viewBox="40 79 947 208" aria-hidden="true"><image href="/assets/app-logo-text.webp" width="1024" height="341"/></svg></span>
           </a>
           <button id="header-menu-toggle" class="header-menu-toggle" type="button" aria-label="Show menu" aria-controls="header-navigation" aria-expanded="false">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -44,10 +44,10 @@
           <div class="header-navigation-inner">
             <div class="nav-list">
               <a class="nav-item" data-nav="overview" href="/"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="#173162" stroke-width="2.2" stroke-linejoin="round"><path d="M3 15 16 4l13 11-3 3v10H6V18Z" fill="#65c8ff"/><path d="M12 28V18h8v10" fill="#fff4ab"/><path d="m3 15 13-11 13 11" stroke-width="3"/></svg></span><span>Overview</span></a>
-              <a class="nav-item" data-nav="brawlers" href="/brawlers"><span class="nav-icon" aria-hidden="true"><img src="/assets/rarity-skull.svg" alt=""></span><span>Brawlers</span></a>
+              <a class="nav-item" data-nav="brawlers" href="/brawlers"><span class="nav-icon" aria-hidden="true"><img loading="lazy" src="/assets/rarity-skull.svg" alt=""></span><span>Brawlers</span></a>
               <a class="nav-item" data-nav="events" href="/events"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="#173162" stroke-width="2.2" stroke-linejoin="round"><path d="m3 8 8-4 10 4 8-4v21l-8 4-10-4-8 4Z" fill="#8addc5"/><path d="M11 4v21m10-17v21"/><path d="M21 3a5 5 0 0 1 5 5c0 4-5 8-5 8s-5-4-5-8a5 5 0 0 1 5-5Z" fill="#ffca47"/><circle cx="21" cy="8" r="1.5" fill="#173162" stroke="none"/></svg></span><span>Events &amp; Maps</span></a>
-              <a class="nav-item" data-nav="leaderboards" href="/leaderboards"><span class="nav-icon" aria-hidden="true"><img src="/assets/icon_trophy.png" alt=""></span><span>Leaderboards</span></a>
-              <a class="nav-item" data-nav="battles" href="/battles"><span class="nav-icon" aria-hidden="true"><img src="/assets/modes/duels.png" alt=""></span><span>Battle Log</span></a>
+              <a class="nav-item" data-nav="leaderboards" href="/leaderboards"><span class="nav-icon" aria-hidden="true"><img loading="lazy" src="/assets/icon_trophy.png" alt=""></span><span>Leaderboards</span></a>
+              <a class="nav-item" data-nav="battles" href="/battles"><span class="nav-icon" aria-hidden="true"><img loading="lazy" src="/assets/modes/duels.png" alt=""></span><span>Battle Log</span></a>
               <a class="nav-item" data-nav="club" href="/club"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="#173162" stroke-width="2.2" stroke-linejoin="round"><path d="m16 3 12 4v9c0 7-12 13-12 13S4 23 4 16V7Z" fill="#c3a2ff"/><circle cx="16" cy="12" r="3" fill="#fff4ab"/><path d="M10 22v-2c0-3 2-5 6-5s6 2 6 5v2" fill="#fff4ab"/></svg></span><span>Club Hub</span></a>
             </div>
           </div>
@@ -57,9 +57,9 @@
       <div id="notice" class="notice hidden" role="status"></div>
       <div id="loading-state" class="loading-state">
         <div class="loading-logo-box">
-          <img src="/assets/app-logo.png" alt="Loading" class="loading-logo-img">
+          <img src="/assets/app-logo.webp" alt="Loading" class="loading-logo-img">
         </div>
-        <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="loading-logo-text">
+        <img src="/assets/app-logo-text.webp" alt="BrawlBuddy" class="loading-logo-text">
         <strong>Loading your BrawlBuddy HQ…</strong>
       </div>
 
@@ -68,7 +68,7 @@
           <div class="hero-burst" aria-hidden="true"></div>
           <div class="player-avatar-card">
             <div class="avatar-frame">
-              <img id="player-art" src="/assets/brawlers/16000000.png" alt="BrawlBuddy official brawler mascot">
+              <img loading="lazy" id="player-art" src="/assets/brawlers/thumbs/16000000.webp" alt="BrawlBuddy official brawler mascot">
               <span id="exp-badge" class="exp-badge">LVL <strong id="exp-level">181</strong></span>
             </div>
           </div>
@@ -88,10 +88,10 @@
               <span id="hero-level-tag" class="hero-level-tag">🎖 <strong id="hero-level-num">Level 181</strong></span>
             </div>
             <div class="hero-stats">
-              <div><span class="mini-icon trophy-icon"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="trophy-count">—</strong><small>Current Trophies</small></div>
+              <div><span class="mini-icon trophy-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="trophy-count">—</strong><small>Current Trophies</small></div>
               <div><span class="mini-icon best-icon">↗</span><strong id="highest-trophies">—</strong><small>Personal Best</small></div>
-              <div><span class="mini-icon win-icon"><img src="/assets/modes/duels.png" alt="" aria-hidden="true"></span><strong id="total-victories-count">—</strong><small>Total Victories</small></div>
-              <div><span class="mini-icon prestige-stat-icon"><img src="/assets/filter-prestige.png" alt="" aria-hidden="true"></span><strong id="hero-prestige-count" class="prestige-stat-highlight">0</strong><small>Total Prestige</small></div>
+              <div><span class="mini-icon win-icon"><img loading="lazy" src="/assets/modes/duels.png" alt="" aria-hidden="true"></span><strong id="total-victories-count">—</strong><small>Total Victories</small></div>
+              <div><span class="mini-icon prestige-stat-icon"><img loading="lazy" src="/assets/filter-prestige.png" alt="" aria-hidden="true"></span><strong id="hero-prestige-count" class="prestige-stat-highlight">0</strong><small>Total Prestige</small></div>
               <div><span class="mini-icon champ-stat-icon">🏆</span><strong id="hero-champ-status">Pending</strong><small>Championship</small></div>
             </div>
           </div>
@@ -246,7 +246,7 @@
             </div>
             <div class="event-records-list">
               <div class="event-record-item">
-                <span class="event-icon robo"><img src="/assets/modes/boss-fight.png" alt="" aria-hidden="true"></span>
+                <span class="event-icon robo"><img loading="lazy" src="/assets/modes/boss-fight.png" alt="" aria-hidden="true"></span>
                 <div class="event-info">
                   <strong>Robo Rumble Record</strong>
                   <small>Highest difficulty level cleared</small>
@@ -262,7 +262,7 @@
                 <b id="rec-big-brawler" class="event-badge">Record set</b>
               </div>
               <div class="event-record-item">
-                <span class="event-icon tourney"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span>
+                <span class="event-icon tourney"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span>
                 <div class="event-info">
                   <strong>Championship Challenge</strong>
                   <small>15-win monthly qualification</small>
@@ -289,15 +289,15 @@
             </div>
             <div class="battle-stats-grid">
               <div class="battle-card solo-card">
-                <div class="battle-card-head"><span class="battle-icon solo"><img src="/assets/modes/showdown.png" alt="" aria-hidden="true"></span><div><strong>Solo Showdown</strong><small>1st place finishes</small></div></div>
+                <div class="battle-card-head"><span class="battle-icon solo"><img loading="lazy" src="/assets/modes/showdown.png" alt="" aria-hidden="true"></span><div><strong>Solo Showdown</strong><small>1st place finishes</small></div></div>
                 <strong id="solo-wins-count" class="battle-count">—</strong>
               </div>
               <div class="battle-card duo-card">
-                <div class="battle-card-head"><span class="battle-icon duo"><img src="/assets/modes/duo-showdown.png" alt="" aria-hidden="true"></span><div><strong>Duo Showdown</strong><small>Victories with teammate</small></div></div>
+                <div class="battle-card-head"><span class="battle-icon duo"><img loading="lazy" src="/assets/modes/duo-showdown.png" alt="" aria-hidden="true"></span><div><strong>Duo Showdown</strong><small>Victories with teammate</small></div></div>
                 <strong id="duo-wins-count" class="battle-count">—</strong>
               </div>
               <div class="battle-card trio-card">
-                <div class="battle-card-head"><span class="battle-icon trio"><img src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true"></span><div><strong>3v3 Victories</strong><small>Team battle wins</small></div></div>
+                <div class="battle-card-head"><span class="battle-icon trio"><img loading="lazy" src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true"></span><div><strong>3v3 Victories</strong><small>Team battle wins</small></div></div>
                 <strong id="victories-3v3-count" class="battle-count">—</strong>
               </div>
             </div>
@@ -359,7 +359,7 @@
             <div class="collection-prestige-total" aria-label="Account Total Prestige">
               <div class="collection-prestige-emblem">
                 <span class="collection-prestige-rays" aria-hidden="true"></span>
-                <img src="/assets/total-prestige-emblem-hd.png" width="1254" height="1254" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
+                <img loading="lazy" src="/assets/total-prestige-emblem-hd.webp" width="1254" height="1254" alt="" aria-hidden="true" decoding="async">
                 <strong id="collection-prestige-total">—</strong>
               </div>
               <span>TOTAL PRESTIGE</span>
@@ -444,13 +444,13 @@
           <div class="ownership-toolbar">
             <div class="roster-filter-tiles">
               <div id="ownership-filter" class="ownership-filter" role="group" aria-label="Brawler ownership">
-                <button class="ownership-chip active" data-ownership="all" type="button" aria-pressed="true"><img src="/assets/roster-all.svg?v=2" class="ownership-filter-icon" alt="" aria-hidden="true"><span>All</span><span class="ownership-count" id="ownership-all-count">—</span></button>
-                <button class="ownership-chip" data-ownership="unlocked" type="button" aria-pressed="false"><img src="/assets/roster-unlocked.svg" class="ownership-filter-icon" alt="" aria-hidden="true"><span>Unlocked</span><span class="ownership-count" id="ownership-unlocked-count">—</span></button>
-                <button class="ownership-chip" data-ownership="locked" type="button" aria-pressed="false"><img src="/assets/roster-locked.svg" class="ownership-filter-icon" alt="" aria-hidden="true"><span>Locked</span><span class="ownership-count" id="ownership-locked-count">—</span></button>
+                <button class="ownership-chip active" data-ownership="all" type="button" aria-pressed="true"><img loading="lazy" src="/assets/roster-all.svg?v=2" class="ownership-filter-icon" alt="" aria-hidden="true"><span>All</span><span class="ownership-count" id="ownership-all-count">—</span></button>
+                <button class="ownership-chip" data-ownership="unlocked" type="button" aria-pressed="false"><img loading="lazy" src="/assets/roster-unlocked.svg" class="ownership-filter-icon" alt="" aria-hidden="true"><span>Unlocked</span><span class="ownership-count" id="ownership-unlocked-count">—</span></button>
+                <button class="ownership-chip" data-ownership="locked" type="button" aria-pressed="false"><img loading="lazy" src="/assets/roster-locked.svg" class="ownership-filter-icon" alt="" aria-hidden="true"><span>Locked</span><span class="ownership-count" id="ownership-locked-count">—</span></button>
               </div>
               <div id="buffie-availability-filter" class="buffie-availability-filter" role="group" aria-label="Released Buffie availability">
-                <button class="ownership-chip buffie-availability-chip" data-buffie-availability="buffies_available" type="button" aria-pressed="false" title="Brawlers with released Buffies. Select again to clear."><img src="/assets/buffie_icon.webp" class="buffie-filter-icon" alt="" aria-hidden="true"><span>Buffie Brawlers</span><span class="ownership-count" id="buffie-available-count">—</span></button>
-                <button class="ownership-chip buffie-availability-chip buffie-unavailable-chip" data-buffie-availability="buffies_not_available" type="button" aria-pressed="false" title="Brawlers without released Buffies. Select again to clear."><img src="/assets/buffie_icon.webp" class="buffie-filter-icon" alt="" aria-hidden="true"><span>Non-Buffie Brawlers</span><span class="ownership-count" id="buffie-unavailable-count">—</span></button>
+                <button class="ownership-chip buffie-availability-chip" data-buffie-availability="buffies_available" type="button" aria-pressed="false" title="Brawlers with released Buffies. Select again to clear."><img loading="lazy" src="/assets/buffie_icon.webp" class="buffie-filter-icon" alt="" aria-hidden="true"><span>Buffie Brawlers</span><span class="ownership-count" id="buffie-available-count">—</span></button>
+                <button class="ownership-chip buffie-availability-chip buffie-unavailable-chip" data-buffie-availability="buffies_not_available" type="button" aria-pressed="false" title="Brawlers without released Buffies. Select again to clear."><img loading="lazy" src="/assets/buffie_icon.webp" class="buffie-filter-icon" alt="" aria-hidden="true"><span>Non-Buffie Brawlers</span><span class="ownership-count" id="buffie-unavailable-count">—</span></button>
               </div>
             </div>
             <span id="roster-ownership-summary" class="roster-ownership-summary"></span>
@@ -472,7 +472,7 @@
           <div class="player-avatar-card">
             <div class="avatar-frame club-badge-frame">
               <span id="club-hero-badge-icon" class="club-badge-symbol">🛡</span>
-              <img id="club-hero-badge-img" class="club-badge-img hidden" src="" alt="Club Emblem">
+              <img loading="lazy" id="club-hero-badge-img" class="club-badge-img hidden" src="" alt="Club Emblem">
               <span id="club-capacity-pill" class="exp-badge">30 / 30</span>
             </div>
           </div>
@@ -490,7 +490,7 @@
               <span id="club-desc-text" class="club-hero-desc">Top club pushing trophies, Mega Pig & championship qualifiers.</span>
             </div>
             <div class="hero-stats">
-              <div><span class="mini-icon trophy-icon"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="club-total-trophies">—</strong><small>Total Trophies</small></div>
+              <div><span class="mini-icon trophy-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="club-total-trophies">—</strong><small>Total Trophies</small></div>
               <div><span class="mini-icon win-icon">👥</span><strong id="club-member-count">—</strong><small>Members</small></div>
               <div><span class="mini-icon best-icon">🎯</span><strong id="club-required-trophies">—</strong><small>Min Required</small></div>
             </div>
@@ -574,7 +574,7 @@
             <p>Review your last 25 battles with full team lineups, MVP awards, power differentials, and 2D tactical arena recreation.</p>
           </div>
           <div class="section-hero-emblem">
-            <img src="/assets/modes/duels.png" alt="" aria-hidden="true">
+            <img loading="lazy" src="/assets/modes/duels.png" alt="" aria-hidden="true">
             <div class="section-hero-counter"><strong id="battles-count-badge">—</strong><span>RECENT MATCHES</span></div>
           </div>
           <div class="section-stat-strip" aria-label="Recent battle summary">
@@ -611,7 +611,7 @@
             <p>Live countdown timers for all active slots, game modifiers, and curated meta brawler picks for every active map.</p>
           </div>
           <div class="section-hero-emblem section-mode-emblem">
-            <img src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true">
+            <img loading="lazy" src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true">
             <div class="section-hero-counter"><strong id="events-count-badge">—</strong><span>ROTATION SLOTS</span></div>
           </div>
           <div class="section-stat-strip" aria-label="Event rotation summary">
@@ -660,7 +660,7 @@
             <p>Track top 200 brawlers and alliances across the world. Click any brawler tag to inspect their full live profile.</p>
           </div>
           <div class="section-hero-emblem">
-            <img src="/assets/icon_trophy.png" alt="" aria-hidden="true">
+            <img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true">
             <div class="section-hero-counter"><strong>#1</strong><span>HALL OF CHAMPIONS</span></div>
           </div>
           <div class="section-stat-strip" aria-label="Ranking summary">
@@ -714,7 +714,7 @@
       <section id="detail-view" class="view hidden">
         <div class="detail-hero panel" id="detail-hero">
           <div class="detail-hero-watermark" id="detail-hero-watermark" aria-hidden="true">
-            <img id="detail-hero-watermark-art" class="detail-hero-watermark-art" alt="" aria-hidden="true">
+            <img loading="lazy" id="detail-hero-watermark-art" class="detail-hero-watermark-art" alt="" aria-hidden="true">
           </div>
           <div class="detail-element-edge" aria-hidden="true"></div>
           <!-- Left Wing: Brawler Identity -->
@@ -726,12 +726,12 @@
             <div class="detail-copy">
               <div class="label-row">
                 <span id="detail-rarity" class="rarity-badge epic">EPIC</span>
-                <span id="detail-class" class="class-badge"><img class="class-icon" src="/assets/classes/damage-dealer.png" alt="" aria-hidden="true"><span>DAMAGE DEALER</span></span>
+                <span id="detail-class" class="class-badge"><img loading="lazy" class="class-icon" src="/assets/classes/damage-dealer.png" alt="" aria-hidden="true"><span>DAMAGE DEALER</span></span>
                 <span id="detail-account-status" class="data-label demo">OWNED IN ACCOUNT</span>
               </div>
               <div class="detail-title-row">
                 <div class="detail-portrait-box">
-                  <img id="detail-portrait-icon" src="/assets/brawlers/thumbs/16000000.webp" alt="Official in-game brawler portrait">
+                  <img loading="lazy" id="detail-portrait-icon" src="/assets/brawlers/thumbs/16000000.webp" alt="Official in-game brawler portrait">
                 </div>
                 <h2 id="detail-name">Brawler</h2>
               </div>
@@ -761,7 +761,7 @@
             <div class="prestige-identity-cluster">
               <!-- Top: Prestige Icon -->
               <div class="prestige-emblem-wrap">
-                <img id="detail-prestige-emblem" class="detail-prestige-emblem" alt="Brawler Prestige emblem">
+                <img loading="lazy" id="detail-prestige-emblem" class="detail-prestige-emblem" alt="Brawler Prestige emblem">
                 <span id="detail-prestige-visual-note" class="prestige-visual-note hidden"></span>
               </div>
 
@@ -797,7 +797,7 @@
             </div>
             <article class="ability-card attack">
               <div class="ability-header-group">
-                <span class="ability-icon"><img src="/assets/attack_icon.png?v=503" alt="Main Attack" class="ability-card-icon-img" width="52" height="52"></span>
+                <span class="ability-icon"><img loading="lazy" src="/assets/attack_icon.png?v=503" alt="Main Attack" class="ability-card-icon-img" width="52" height="52"></span>
                 <div class="ability-copy">
                   <small>MAIN ATTACK</small>
                   <h3 id="attack-name">Attack</h3>
@@ -806,7 +806,7 @@
               </div>
               <div class="ability-ammo-strip">
                 <div class="ability-ammo-badge" id="attack-ammo-chip">
-                  <img src="/assets/ammo_icon.svg?v=1" alt="Ammo" class="ammo-badge-icon" width="20" height="20">
+                  <img loading="lazy" src="/assets/ammo_icon.svg?v=1" alt="Ammo" class="ammo-badge-icon" width="20" height="20">
                   <span class="ammo-badge-label">AMMO:</span>
                   <strong id="attack-ammo-val">3 Slots</strong>
                 </div>
@@ -822,7 +822,7 @@
             </div>
             <article class="ability-card super">
               <div class="ability-header-group">
-                <span class="ability-icon"><img src="/assets/super_icon.png?v=503" alt="Super" class="ability-card-icon-img" width="52" height="52"></span>
+                <span class="ability-icon"><img loading="lazy" src="/assets/super_icon.png?v=503" alt="Super" class="ability-card-icon-img" width="52" height="52"></span>
                 <div class="ability-copy">
                   <small>SUPER</small>
                   <h3 id="super-name">Super</h3>
@@ -997,7 +997,7 @@
                 <span class="fact-kicker">⚡ HYPERCHARGE</span>
                 <div class="hc-summary-name-row">
                   <div class="official-hypercharge-emblem hc-summary-emblem" aria-hidden="true">
-                    <img alt="Hypercharge" class="ability-icon-img hyper-icon-img">
+                    <img loading="lazy" alt="Hypercharge" class="ability-icon-img hyper-icon-img">
                   </div>
                   <h3 id="hypercharge-name">—</h3>
                 </div>
@@ -1178,8 +1178,8 @@
           <!-- BrawlBuddy branding -->
           <div class="footer-brand-col">
             <a href="/" class="footer-brand-link" aria-label="BrawlBuddy Home">
-              <img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="footer-brand-logo">
-              <img src="/assets/app-logo-text.png" alt="BrawlBuddy" class="footer-brand-wordmark">
+              <img loading="lazy" src="/assets/app-logo.webp" alt="BrawlBuddy Logo" class="footer-brand-logo">
+              <img loading="lazy" src="/assets/app-logo-text.webp" alt="BrawlBuddy" class="footer-brand-wordmark">
             </a>
           </div>
 
@@ -1231,7 +1231,7 @@
           <!-- Neutral Objective Center -->
           <div class="arena-center">
             <div class="objective-core">
-              <span id="arena-objective-icon"><img class="arena-mode-icon" src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true"></span>
+              <span id="arena-objective-icon"><img loading="lazy" class="arena-mode-icon" src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true"></span>
               <small id="arena-objective-label">CENTER ARENA</small>
             </div>
             <div class="advantage-pill" id="arena-advantage-pill">BALANCED MATCHUP</div>
@@ -1270,7 +1270,7 @@
       <button id="tag-guide-toggle" class="tag-guide-toggle" type="button" aria-label="Where to find player and club tags" aria-expanded="false" aria-controls="tag-guide">i</button>
       <button id="dialog-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
       <div class="dialog-icon brand-dialog-icon">
-        <img src="/assets/app-logo.png" alt="BrawlBuddy Logo" class="dialog-brand-logo">
+        <img src="/assets/app-logo.webp" alt="BrawlBuddy Logo" class="dialog-brand-logo">
       </div>
       <p class="eyebrow">OFFICIAL BRAWL STARS DATA</p>
       <h2 id="connect-title">Connect Player or Club</h2>
@@ -1310,7 +1310,7 @@
   <!-- Desktop Map Hover Preview -->
   <div id="map-hover-preview" class="map-hover-preview hidden" aria-hidden="true">
     <div class="map-hover-img-wrap">
-      <img id="map-hover-img" src="" alt="Map preview">
+      <img loading="lazy" id="map-hover-img" src="" alt="Map preview">
     </div>
     <div class="map-hover-footer">
       <span id="map-hover-title" class="map-hover-title"></span>
@@ -1322,7 +1322,7 @@
     <div class="dialog-shell map-dialog-shell">
       <button id="map-dialog-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
       <div class="map-dialog-img-frame">
-        <img id="map-dialog-img" src="" alt="Enlarged map">
+        <img loading="lazy" id="map-dialog-img" src="" alt="Enlarged map">
       </div>
       <div class="map-dialog-body">
         <span id="map-dialog-mode" class="map-card-mode"></span>
@@ -1339,6 +1339,6 @@
   <script src="/assets/readiness.js?v=25" defer></script>
   <script src="/assets/roster-dropdowns.js?v=11" defer></script>
   <script src="/assets/ui-motion.js?v=1" defer></script>
-  <script src="/assets/app.js?v=149" defer></script>
+  <script src="/assets/app.js?v=151" defer></script>
 </body>
 </html>

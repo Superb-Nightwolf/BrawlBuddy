@@ -47,6 +47,7 @@ const context = {
   isBuffieReleased(b) {return b.buffiesReleased ?? b.id % 2 === 1;},
   format(value) {return String(value);}, setText(id, value) {counts[id] = value;},
   cardFor(b) {return b;}, scheduleBrawlerNameFit() {}, renderCollectionPrestige() {},
+  BrawlBuddyMotion: {enter() {}},
 };
 vm.createContext(context);
 vm.runInContext(render, context);
