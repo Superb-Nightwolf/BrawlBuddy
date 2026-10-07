@@ -28,7 +28,7 @@ const state = {
 };
 
 const ACCOUNT_CACHE_KEY = 'brawlbuddy_account_v5';
-const CLUB_CACHE_KEY = 'brawlbuddy_club_v3';
+const CLUB_CACHE_KEY = 'brawlbuddy_club_v4';
 
 const $ = (id) => document.getElementById(id);
 const numberFormatter = new Intl.NumberFormat();
@@ -361,7 +361,7 @@ function configurePage() {
     events: ['LIVE ROTATION & MAPS', 'Event Rotation', 'Active modes, countdown timers, modifiers, and curated meta brawler picks'],
     leaderboards: ['HALL OF CHAMPIONS', 'Leaderboards', 'Top 200 global & regional players and clubs with 1-click inspection'],
     brawlers: ['ROSTER LAB', 'Brawlers', 'Filter every exact power level and inspect your owned loadouts'],
-    club: ['🛡 ALLIANCE COMMAND CENTER', `Club Hub: ${state.club?.name || 'Alliance'}`, 'Inspect club roster, roles, trophy requirements, and syndicate power'],
+    club: ['CLUB COMMAND CENTER', `Club Hub`, 'Your roster, shared trophies and the next goal to work towards'],
     detail: ['BRAWLER GUIDE', '', 'Combat guidance, power journey, and account readiness'],
     error: ['⚠️ ARENA OUTPOST', 'Lost in the Arena', 'Page or tag not found in the Brawl Stars database'],
   }[state.page] || ['⚡ BRAWL COMMAND CENTER', 'Overview', 'Progression companion'];
@@ -575,16 +575,40 @@ async function loadInitialAccount() {
 }
 
 async function loadInitialClub() {
+  const routeTag = location.pathname.startsWith('/club/')
+    ? decodeURIComponent(location.pathname.slice('/club/'.length).split('/')[0]) : '';
+  const requestedTag = normalizeConnectTag(routeTag || state.player?.club?.tag || state.club?.tag || DEFAULT_CLUB_TAG);
   const cached = sessionStorage.getItem(CLUB_CACHE_KEY);
   if (cached) {
-    try { renderClub(JSON.parse(cached)); return; } catch { sessionStorage.removeItem(CLUB_CACHE_KEY); }
+    try {
+      const payload = JSON.parse(cached);
+      if (payload.club?.tag?.toUpperCase() === requestedTag && payload.analytics?.rows) {
+        payload.freshness = {...payload.freshness, cache_hit:true};
+        renderClub(payload);
+        return;
+      }
+    } catch { sessionStorage.removeItem(CLUB_CACHE_KEY); }
   }
   try {
-    const payload = await request(`/api/club?tag=${encodeURIComponent(DEFAULT_CLUB_TAG)}`);
+    const payload = await request(`/api/club?tag=${encodeURIComponent(requestedTag)}`);
     sessionStorage.setItem(CLUB_CACHE_KEY, JSON.stringify(payload));
     renderClub(payload);
-  } catch {
-    await loadDemoClub();
+  } catch (error) {
+    if (!routeTag && state.player?.source === 'DEMO') {await loadDemoClub();return;}
+    state.club = null;
+    state.clubAnalytics = null;
+    setText('club-view-name','Club could not be loaded');
+    setText('club-view-tag',requestedTag);
+    setText('club-desc-text',error.message);
+    setText('club-data-label','UNAVAILABLE');
+    ['club-total-trophies','club-member-count','club-required-trophies','club-capacity-pill','club-freshness'].forEach(id=>setText(id,'—'));
+    $('club-hero-badge-img')?.classList.add('hidden');
+    $('club-hero-badge-icon')?.classList.remove('hidden');
+    $('club-dashboard').innerHTML = `${globalThis.DashboardUI?.empty(error.message) || ''}<button class="subtle-button" type="button" id="club-retry">Try again</button>`;
+    $('club-members-tbody').innerHTML = '';
+    setText('roster-count-label','—');
+    setText('club-roster-summary','Load a club to inspect its members');
+    $('club-refresh').disabled = true;
   }
 }
 
@@ -1736,10 +1760,10 @@ function renderClub(payload) {
   state.clubAnalytics = payload.analytics || {};
 
   const title = $('page-title');
-  if (title) {
+  if (title && state.page === 'club') {
     title.textContent = 'Club Hub';
   }
-  setText('page-subtitle', `${payload.club.name} (${payload.club.tag}) • ${payload.club.members.length}/30 Members • ${format(payload.club.trophies)} Total Club Trophies • Min ${format(payload.club.required_trophies)}`);
+  if (state.page === 'club') setText('page-subtitle', `${payload.club.name} (${payload.club.tag}) • ${payload.club.members.length}/30 Members • ${format(payload.club.trophies)} Total Club Trophies • Min ${format(payload.club.required_trophies)}`);
 
   setText('club-view-name', payload.club.name);
   setText('club-view-tag', payload.club.tag);
@@ -1751,7 +1775,7 @@ function renderClub(payload) {
   setText('club-capacity-pill', `${payload.club.members.length} / 30`);
 
   const prestigeBadge = $('club-prestige-badge');
-  if (prestigeBadge) prestigeBadge.textContent = (state.clubAnalytics.prestige_tier || 'ALLIANCE').toUpperCase();
+  if (prestigeBadge) prestigeBadge.textContent = 'CLUB SNAPSHOT';
 
   const typeBadge = $('club-type-badge');
   if (typeBadge) typeBadge.textContent = `${(payload.club.type || 'OPEN').toUpperCase()} CLUB`;
@@ -1763,16 +1787,16 @@ function renderClub(payload) {
     dataLabel.className = `data-label ${isDemo ? 'demo' : 'official'}`;
   }
 
-  setText('club-avg-trophies', `${format(state.clubAnalytics.average_trophies)}`);
-  setText('club-top-member-name', state.clubAnalytics.top_member_name || '—');
-  setText('club-top-member-trophies', `${format(state.clubAnalytics.top_member_trophies)}`);
-  setText('club-leadership-count', `1 Pres, ${state.clubAnalytics.vice_presidents_count || 0} VP, ${state.clubAnalytics.seniors_count || 0} Senior`);
-  setText('club-capacity-status', payload.club.members.length >= 30 ? 'Full (30/30)' : `${30 - payload.club.members.length} spots open`);
   setText('roster-count-label', payload.club.members.length);
 
   // Badge handling
   const badgeImg = $('club-hero-badge-img');
   const badgeIcon = $('club-hero-badge-icon');
+  if (badgeImg && badgeIcon) {
+    badgeImg.classList.add('hidden');
+    badgeIcon.classList.remove('hidden');
+    badgeIcon.innerHTML = globalThis.DashboardUI?.icon('team','section-emblem-icon') || '';
+  }
   if (payload.club.badge_id && badgeImg && badgeIcon) {
     badgeImg.src = `https://cdn.brawlify.com/club-badges/regular/${payload.club.badge_id}.png`;
     badgeImg.classList.remove('hidden');
@@ -1783,98 +1807,7 @@ function renderClub(payload) {
     };
   }
 
-  renderClubRoleDonut(payload.club.members);
-  renderClubTrophyTiers(payload.club.members);
-  renderClubMembers(payload.club.members);
-}
-
-function renderClubRoleDonut(members) {
-  const roles = {
-    president: { label: 'President', color: '#ffd32e', count: 0 },
-    vicePresident: { label: 'Vice Presidents', color: '#ff5964', count: 0 },
-    senior: { label: 'Seniors', color: '#32d6ff', count: 0 },
-    member: { label: 'Members', color: '#40d990', count: 0 },
-  };
-
-  (members || []).forEach((m) => {
-    const r = m.role || 'member';
-    if (r.toLowerCase() === 'president') roles.president.count++;
-    else if (r.toLowerCase().includes('vice')) roles.vicePresident.count++;
-    else if (r.toLowerCase() === 'senior') roles.senior.count++;
-    else roles.member.count++;
-  });
-
-  const total = (members || []).length || 1;
-  setText('club-donut-count', (members || []).length);
-
-  let currentDeg = 0;
-  const stops = [];
-  const legend = $('club-role-legend');
-  if (legend) legend.replaceChildren();
-
-  Object.values(roles).forEach((r) => {
-    const pct = (r.count / total) * 100;
-    const spanDeg = (pct / 100) * 360;
-    const start = currentDeg;
-    const end = currentDeg + spanDeg;
-    stops.push(`${r.color} ${start}deg ${end}deg`);
-    currentDeg = end;
-
-    if (legend) {
-      const item = document.createElement('div');
-      item.className = 'donut-legend-item';
-      item.innerHTML = `
-        <span class="legend-dot" style="background: ${r.color}"></span>
-        <div class="legend-info">
-          <strong>${r.label}</strong>
-          <span>${r.count} (${Math.round(pct)}%)</span>
-        </div>
-      `;
-      legend.append(item);
-    }
-  });
-
-  const donut = $('club-role-donut');
-  if (donut) donut.style.background = `conic-gradient(${stops.join(', ')})`;
-}
-
-function renderClubTrophyTiers(members) {
-  const total = (members || []).length || 1;
-  const tiers = [
-    { label: '30,000+ (Elite)', count: (members || []).filter((m) => m.trophies >= 30000).length, color: 'linear-gradient(90deg, #ff0077, #ff5964)' },
-    { label: '28,000–29,999 (Diamond)', count: (members || []).filter((m) => m.trophies >= 28000 && m.trophies < 30000).length, color: 'linear-gradient(90deg, #be8209, #ffd32e)' },
-    { label: '26,000–27,999 (Gold)', count: (members || []).filter((m) => m.trophies >= 26000 && m.trophies < 28000).length, color: 'linear-gradient(90deg, #168cf0, #00d5ff)' },
-    { label: '24,000–25,999 (Silver)', count: (members || []).filter((m) => m.trophies >= 24000 && m.trophies < 26000).length, color: 'linear-gradient(90deg, #2b9348, #55a630)' },
-    { label: '< 24,000 (Cadet)', count: (members || []).filter((m) => m.trophies < 24000).length, color: 'linear-gradient(90deg, #5d7297, #8da4c4)' },
-  ];
-
-  const holder = $('club-trophy-bars');
-  if (!holder) return;
-  holder.replaceChildren();
-
-  tiers.forEach((t) => {
-    const pct = Math.round((t.count / total) * 100);
-    const row = document.createElement('div');
-    row.className = 'rank-tier-row';
-    row.innerHTML = `
-      <div class="tier-label-row">
-        <span>${t.label}</span>
-        <strong>${t.count} <i>(${pct}%)</i></strong>
-      </div>
-      <div class="tier-bar-track">
-        <div class="tier-bar-fill" style="width: ${pct}%; background: ${t.color}"></div>
-      </div>
-    `;
-    holder.append(row);
-  });
-}
-
-function roleBadgeHtml(role) {
-  const r = (role || 'member').toLowerCase();
-  if (r === 'president') return `<span class="role-badge role-president">${sectionIconMarkup('icon_trophy.png')} PRESIDENT</span>`;
-  if (r.includes('vice')) return `<span class="role-badge role-vp">${sectionIconMarkup('classes/tank.png')} VICE PRES</span>`;
-  if (r === 'senior') return `<span class="role-badge role-senior">${sectionIconMarkup('classes/damage-dealer.png')} SENIOR</span>`;
-  return `<span class="role-badge role-member">${sectionIconMarkup('rarity-skull.svg')} MEMBER</span>`;
+  globalThis.ClubDashboard?.render(payload);
 }
 
 function hexColorFromSupercell(hex) {
@@ -1907,55 +1840,8 @@ function readableNameColor(hex) {
   return formatted;
 }
 
-function renderClubMembers(members) {
-  const query = ($('roster-search')?.value || '').trim().toLowerCase();
-  const filtered = (members || []).filter((m) => m.name.toLowerCase().includes(query) || m.tag.toLowerCase().includes(query));
-  const tbody = $('club-members-tbody');
-  if (!tbody) return;
-  tbody.replaceChildren();
-  setText('club-roster-summary', `${filtered.length} of ${members?.length || 0} members · Search by name or tag, then inspect a player profile`);
-  BrawlBuddyMotion.enter(tbody.closest('.roster-table-wrap'), true);
-
-  if (filtered.length === 0) {
-    const emptyRow = document.createElement('tr');
-    emptyRow.innerHTML = '<td colspan="6"><div class="empty-state"><strong>No matching members</strong>Try another name or player tag</div></td>';
-    tbody.append(emptyRow);
-    return;
-  }
-
-  filtered.forEach((m) => {
-    const rankNum = members.indexOf(m) + 1;
-    const nameColor = readableNameColor(m.name_color);
-    const tr = document.createElement('tr');
-    tr.className = 'roster-row';
-    tr.innerHTML = `
-      <td class="roster-rank"><span class="rank-medal rank-${rankNum}">${rankNum}</span></td>
-      <td class="roster-name">
-        <div class="ranking-person"><img src="https://cdn.brawlify.com/profile-icons/regular/${m.icon_id || 28000000}.png" alt="" loading="lazy" onerror="this.onerror=null;this.src='/assets/roster-all.svg'"><strong style="color: ${nameColor};">${escapeMarkup(m.name)}</strong></div>
-      </td>
-      <td>${roleBadgeHtml(m.role)}</td>
-      <td class="roster-trophies"><img class="table-trophy-icon" src="/assets/icon_trophy.png" alt="Trophies">${format(m.trophies)}</td>
-      <td>
-        <button class="member-tag-pill inspect-member-btn" data-tag="${escapeMarkup(m.tag)}" type="button" title="Inspect ${escapeMarkup(m.name)}'s player profile">
-          <span>#</span>${escapeMarkup(m.tag.replace('#', ''))}
-        </button>
-      </td>
-      <td style="text-align: right;">
-        <button class="small-action inspect-member-btn" data-tag="${escapeMarkup(m.tag)}" type="button">Inspect Profile →</button>
-      </td>
-    `;
-    tbody.append(tr);
-  });
-
-  tbody.querySelectorAll('.inspect-member-btn').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      const tag = e.currentTarget.dataset.tag;
-      if (tag) {
-        loadPlayer(tag);
-        history.pushState(null, '', `/?player=${encodeURIComponent(tag)}`);
-      }
-    });
-  });
+function renderClubMembers() {
+  globalThis.ClubDashboard?.renderRoster();
 }
 
 function renderOverviewMetrics() {

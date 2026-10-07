@@ -161,7 +161,7 @@ Trophy and Prestige milestone targets need maintained game rules or a clearly la
 | Recent mode usage | Count sampled battles by mode | Recent sample, not lifetime preference |
 | Team Power comparison | Team brawler Power snapshots | Describes Power difference, not predicted winner |
 | Club position | Sort club member trophies | Exact within returned club roster |
-| Club trophy contribution | Player trophies / returned club trophies × 100 | Same observation window where possible |
+| Club trophy contribution | Member trophies / sum of returned member trophies × 100 | Reported club total is shown separately when totals differ |
 | Club capacity | Member count versus current maximum | Maintained capacity rule |
 | Class and rarity coverage | Maintained brawler class/rarity catalogue | Not returned by the official brawler list |
 | Build readiness | Profile ownership + exact chosen build + unlock rules | Custom progression score, not official skill |
@@ -237,6 +237,9 @@ Keep these compact or expandable so Overview stays focused on account progressio
 The redesigned Overview now implements items 1–9 for the data it displays — existing legacy analytics aliases remain for compatibility but are no longer used to present fake leagues or records
 
 Historical snapshot storage in item 10 remains a future addition — the dashboard only charts available profile and recent-battle data
+
+Club Hub now implements roster-only analytics with role, capacity and entry-setting donuts, a trophy-band histogram, contribution bars, a cumulative contribution curve, quartiles and planning scenarios
+See [Club analytics](club-analytics.md) for formulas, empty states and boundaries
 
 ## Suggested implementation order
 

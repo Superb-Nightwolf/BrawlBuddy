@@ -16,7 +16,8 @@
   <link rel="stylesheet" href="/assets/ui-motion.css?v=3">
   <link rel="stylesheet" href="/assets/header-navigation.css?v=6">
   <link rel="stylesheet" href="/assets/section-design.css?v=4">
-  <link rel="stylesheet" href="/assets/overview.css?v=3">
+  <link rel="stylesheet" href="/assets/overview.css?v=4">
+  <link rel="stylesheet" href="/assets/club-dashboard.css?v=1">
 </head>
 <body>
   <div class="app-shell">
@@ -85,13 +86,13 @@
             <h2 id="profile-name">Loading brawler</h2>
             <div class="profile-meta">
               <span id="player-tag" class="meta-tag">—</span>
-              <span id="club-pill" class="club-pill"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/classes/tank.png" alt="" aria-hidden="true"> <strong id="club-name">—</strong> <span id="club-tag" class="club-tag-small">—</span></span>
+              <span id="club-pill" class="club-pill"><span class="section-inline-icon" data-dashboard-icon="team"></span> <strong id="club-name">—</strong> <span id="club-tag" class="club-tag-small">—</span></span>
               <span id="hero-level-tag" class="hero-level-tag"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/rarity-skull.svg" alt="" aria-hidden="true"> <strong id="hero-level-num">—</strong></span>
             </div>
             <div class="hero-stats">
               <div><span class="mini-icon trophy-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="trophy-count">—</strong><small>Current Trophies</small></div>
               <div><span class="mini-icon best-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="highest-trophies">—</strong><small>Personal Best</small></div>
-              <div><span class="mini-icon win-icon"><img loading="lazy" src="/assets/modes/duels.png" alt="" aria-hidden="true"></span><strong id="total-victories-count">—</strong><small>Total Victories</small></div>
+              <div><span class="mini-icon win-icon" data-dashboard-icon="wins"></span><strong id="total-victories-count">—</strong><small>Total Victories</small></div>
               <div><span class="mini-icon prestige-stat-icon"><img loading="lazy" src="/assets/filter-prestige.png" alt="" aria-hidden="true"></span><strong id="hero-prestige-count" class="prestige-stat-highlight">0</strong><small>Total Prestige</small></div>
               <div><span class="mini-icon champ-stat-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="hero-ranked-rating">—</strong><small id="hero-ranked-label">Ranked rating</small></div>
             </div>
@@ -101,12 +102,12 @@
 
         <div class="ov-toolbar">
           <nav class="ov-jump-nav" aria-label="Overview sections">
-            <a href="#ov-collection" aria-current="location"><img src="/assets/brawl-stars-symbol-official.png" alt="" aria-hidden="true">Collection</a>
+            <a href="#ov-collection" aria-current="location"><span data-dashboard-icon="collection"></span>Collection</a>
             <a href="#ov-trophies"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true">Trophies</a>
-            <a href="#ov-equipment"><img src="/assets/section_gadget.png" alt="" aria-hidden="true">Equipment</a>
-            <a href="#ov-competitive"><img src="/assets/ranked/masters.png" alt="" aria-hidden="true">Competitive</a>
-            <a href="#ov-recent"><img src="/assets/modes/duels.png" alt="" aria-hidden="true">Recent play</a>
-            <a href="#ov-context"><img src="/assets/modes/duo-showdown.png" alt="" aria-hidden="true">Club &amp; events</a>
+            <a href="#ov-equipment"><span data-dashboard-icon="equipment"></span>Equipment</a>
+            <a href="#ov-competitive"><span data-dashboard-icon="wins"></span>Competitive</a>
+            <a href="#ov-recent"><span data-dashboard-icon="battle"></span>Recent play</a>
+            <a href="#ov-context"><span data-dashboard-icon="team"></span>Club &amp; events</a>
             <a href="#ov-goals"><img src="/assets/currencies/coins.png" alt="" aria-hidden="true">Next goals</a>
           </nav>
           <button id="overview-refresh" class="subtle-button" type="button">Refresh data</button>
@@ -238,83 +239,61 @@
           <div class="hero-burst" aria-hidden="true"></div>
           <div class="player-avatar-card">
             <div class="avatar-frame club-badge-frame">
-              <span id="club-hero-badge-icon" class="club-badge-symbol"><img class="section-emblem-icon" loading="lazy" decoding="async" src="/assets/classes/tank.png" alt="" aria-hidden="true"></span>
+              <span id="club-hero-badge-icon" class="club-badge-symbol" data-dashboard-icon="team"></span>
               <img loading="lazy" id="club-hero-badge-img" class="club-badge-img hidden" src="" alt="Club Emblem">
-              <span id="club-capacity-pill" class="exp-badge">30 / 30</span>
+              <span id="club-capacity-pill" class="exp-badge">—</span>
             </div>
           </div>
           <div class="player-hero-copy">
             <div class="label-row">
               <span id="club-data-label" class="data-label demo">DEMO CLUB</span>
-              <span id="club-prestige-badge" class="prestige-tier-badge">LEGENDARY ALLIANCE</span>
+              <span id="club-prestige-badge" class="banner-chip">CLUB SNAPSHOT</span>
               <span id="club-type-badge" class="banner-chip">OPEN CLUB</span>
               <span id="club-freshness" class="freshness">Updated now</span>
             </div>
-            <h2 id="club-view-name">Starrbound Alliance</h2>
+            <h2 id="club-view-name">Loading club</h2>
             <div class="profile-meta">
-              <span id="club-view-tag" class="meta-tag">#PQL20</span>
+              <span id="club-view-tag" class="meta-tag">—</span>
               <span>•</span>
-              <span id="club-desc-text" class="club-hero-desc">Top club pushing trophies, Mega Pig & championship qualifiers</span>
+              <span id="club-desc-text" class="club-hero-desc">The returned club description appears here</span>
             </div>
             <div class="hero-stats">
-              <div><span class="mini-icon trophy-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="club-total-trophies">—</strong><small>Total Trophies</small></div>
-              <div><span class="mini-icon win-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/modes/duo-showdown.png" alt="" aria-hidden="true"></span><strong id="club-member-count">—</strong><small>Members</small></div>
+              <div><span class="mini-icon trophy-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="club-total-trophies">—</strong><small>Reported club trophies</small></div>
+              <div><span class="mini-icon win-icon" data-dashboard-icon="team"></span><strong id="club-member-count">—</strong><small>Members</small></div>
               <div><span class="mini-icon best-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="club-required-trophies">—</strong><small>Min Required</small></div>
             </div>
           </div>
-          <a class="hero-collection-link" id="copy-club-hero-tag" href="#roster"><span>ACTION</span><strong class="copy-tag-symbol" aria-hidden="true">⧉</strong><small>Copy Tag</small></a>
+          <a class="hero-collection-link" id="copy-club-hero-tag" href="#roster"><span>ACTION</span><span class="copy-tag-symbol" data-dashboard-icon="copy" aria-hidden="true"></span><small>Copy Tag</small></a>
         </article>
 
-        <section class="prestige-bar panel" aria-label="Club highlights">
-          <div class="prestige-item"><span class="prestige-icon exp-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><div><small>AVG TROPHIES</small><strong id="club-avg-trophies">—</strong><span>Per member</span></div></div>
-          <div class="prestige-item"><span class="prestige-icon rank30-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/filter-prestige.png" alt="" aria-hidden="true"></span><div><small>TOP BRAWLER</small><strong id="club-top-member-name">—</strong><span id="club-top-member-trophies">—</span></div></div>
-          <div class="prestige-item"><span class="prestige-icon rank25-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/classes/tank.png" alt="" aria-hidden="true"></span><div><small>LEADERSHIP</small><strong id="club-leadership-count">—</strong><span>President & VPs</span></div></div>
-          <div class="prestige-item"><span class="prestige-icon champ-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/modes/duo-showdown.png" alt="" aria-hidden="true"></span><div><small>ALLIANCE STATUS</small><strong id="club-capacity-status">Full (30/30)</strong><span>Active Syndicate</span></div></div>
-        </section>
-
-        <div class="analytics-charts-grid">
-          <!-- Club Chart 1: Role Composition Donut Chart -->
-          <section class="panel chart-card">
-            <div class="section-heading">
-              <div><p class="eyebrow">COMMAND HIERARCHY</p><h2><img class="section-title-icon" loading="lazy" decoding="async" src="/assets/classes/support.png" alt="" aria-hidden="true">Leadership & Roles</h2></div>
-              <span class="source-chip official-chip">ROSTER SPECTRUM</span>
-            </div>
-            <div class="donut-chart-layout">
-              <div class="donut-visual-wrap">
-                <div id="club-role-donut" class="donut-chart">
-                  <div class="donut-hole">
-                    <strong id="club-donut-count">30</strong>
-                    <small>MEMBERS</small>
-                  </div>
-                </div>
-              </div>
-              <div id="club-role-legend" class="donut-legend-grid"></div>
-            </div>
-          </section>
-
-          <!-- Club Chart 2: Trophy Tier Spectrum -->
-          <section class="panel chart-card">
-            <div class="section-heading">
-              <div><p class="eyebrow">TROPHY SPECTRUM</p><h2><img class="section-title-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true">Member Trophy Tiers</h2></div>
-              <span class="source-chip calculated">DISTRIBUTION</span>
-            </div>
-            <div id="club-trophy-bars" class="rank-tier-bars"></div>
-          </section>
+        <div class="ov-toolbar club-toolbar">
+          <nav class="ov-jump-nav" aria-label="Club sections">
+            <a href="#club-composition"><span data-dashboard-icon="team"></span>Club snapshot</a>
+            <a href="#club-distribution"><span data-dashboard-icon="trophy"></span>Trophy spread</a>
+            <a href="#club-contributions"><span data-dashboard-icon="chart"></span>Contributions</a>
+            <a href="#club-planning"><span data-dashboard-icon="target"></span>Next target</a>
+            <a href="#roster"><span data-dashboard-icon="team"></span>Member roster</a>
+          </nav>
+          <button id="club-refresh" class="subtle-button" type="button">Refresh club</button>
         </div>
+        <p id="club-refresh-status" class="club-refresh-status" role="status"></p>
+        <div id="club-dashboard"><div class="ov-loading" role="status"><span class="ov-loading-dot"></span>Building your club snapshot</div></div>
 
         <!-- Club Member Roster Table -->
         <section class="panel club-roster-panel" id="roster">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">ALLIANCE ROSTER</p>
-              <h2><img class="section-title-icon" loading="lazy" decoding="async" src="/assets/modes/duo-showdown.png" alt="" aria-hidden="true"><span>Club Members Leaderboard (<span id="roster-count-label">30</span>)</span></h2>
+              <p class="eyebrow">CLUB ROSTER</p>
+              <h2><span class="section-title-icon" data-dashboard-icon="team"></span><span>Member contributions (<span id="roster-count-label">—</span>)</span></h2>
             </div>
             <div class="roster-toolbar">
-              <input id="roster-search" class="search-box-input" type="text" placeholder="Search members by name or tag…" aria-label="Search members">
+              <input id="roster-search" class="search-box-input" type="search" placeholder="Search name or player tag" aria-label="Search club members">
+              <label class="club-filter">Role <select id="club-role-filter"><option value="all">All roles</option><option value="president">President</option><option value="vicepresident">Vice president</option><option value="senior">Senior</option><option value="member">Member</option><option value="unknown">Other roles</option></select></label>
+              <label class="club-filter">Sort <select id="club-roster-sort"><option value="trophies">Most trophies</option><option value="trophies_asc">Fewest trophies</option><option value="name">Name A–Z</option></select></label>
             </div>
           </div>
           <p id="club-roster-summary" class="section-results" role="status"></p>
-          <div class="roster-table-wrap">
+          <div class="roster-table-wrap" role="region" aria-label="Member contribution table" tabindex="0">
             <table class="roster-table">
               <thead>
                 <tr>
@@ -322,7 +301,7 @@
                   <th>Member</th>
                   <th>Role</th>
                   <th>Trophies</th>
-                  <th>Brawler Tag</th>
+                  <th>Roster share</th><th>Versus mean</th><th>Player tag</th>
                   <th style="text-align: right;">Action</th>
                 </tr>
               </thead>
@@ -1106,7 +1085,9 @@
   <script src="/assets/readiness.js?v=26" defer></script>
   <script src="/assets/roster-dropdowns.js?v=11" defer></script>
   <script src="/assets/ui-motion.js?v=1" defer></script>
-  <script src="/assets/app.js?v=158" defer></script>
-  <script src="/assets/overview.js?v=3" defer></script>
+  <script src="/assets/app.js?v=159" defer></script>
+  <script src="/assets/dashboard-ui.js?v=1" defer></script>
+  <script src="/assets/club-dashboard.js?v=1" defer></script>
+  <script src="/assets/overview.js?v=4" defer></script>
 </body>
 </html>

@@ -1,7 +1,10 @@
-#overview-view { --ov-ink: #19365b; --ov-muted: #617895; --ov-line: #c5daf0; }
+#overview-view, #club-view { --ov-ink: #19365b; --ov-muted: #617895; --ov-line: #c5daf0; }
 #overview-view .hero-stats { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-/* The original skull artwork includes transparent padding around the mark */
-#overview-view img[src$="/brawl-stars-symbol-official.png"] { transform: scale(3); pointer-events: none; }
+.ov-art { display: inline-block; width: 30px; height: 30px; object-fit: contain; vertical-align: middle; }
+.ov-ui-symbol { color: var(--ov-group-accent,#315f98); }
+.ov-stat .ov-ui-symbol { color: var(--stat-color); }
+[data-dashboard-icon] > .ov-art { width: 100%; height: 100%; }
+.ov-jump-nav [data-dashboard-icon] { display: inline-grid; width: 20px; height: 20px; flex-shrink: 0; }
 .ov-group { --ov-group-tint: #eaf3ff; --ov-group-line: #c3d9f0; --ov-group-accent: #2872b9; position: relative; isolation: isolate; margin-top: 32px; padding: 26px; border: 2px solid var(--ov-group-line); border-radius: 28px; background: radial-gradient(ellipse at 100% 0,#ffffffb0,transparent 55%),linear-gradient(145deg,#f9fcff,var(--ov-group-tint)); box-shadow: 0 6px 0 var(--ov-group-line),0 12px 28px #17345d07,inset 0 1px 0 #fff; }
 .ov-group::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--roster-dot-pattern) 0 0 / 20px 20px; opacity: .45; z-index: -1; pointer-events: none; }
 .ov-tone-gold { --ov-group-tint: #fff4d5; --ov-group-line: #e8d7a5; --ov-group-accent: #966719; }
@@ -9,12 +12,12 @@
 .ov-tone-pink { --ov-group-tint: #fce8f0; --ov-group-line: #e9c5d4; --ov-group-accent: #a54872; }
 .ov-tone-green { --ov-group-tint: #e6f6ef; --ov-group-line: #bfded1; --ov-group-accent: #258668; }
 .ov-section-emblem { position: relative; display: grid; place-items: center; width: 64px; height: 64px; flex-shrink: 0; background: linear-gradient(145deg,#fff,var(--ov-group-tint)); border: 2px solid #fff; border-radius: 19px; box-shadow: 0 4px 0 var(--ov-group-line),0 6px 12px #17345d09; }
-.ov-section-emblem > img { width: 42px; height: 42px; object-fit: contain; filter: drop-shadow(0 3px 1px #17345d20); }
+.ov-section-emblem > :is(img,svg) { width: 42px; height: 42px; object-fit: contain; filter: drop-shadow(0 3px 1px #17345d20); }
 .ov-section-emblem small { position: absolute; right: -5px; bottom: -5px; display: grid; place-items: center; min-width: 24px; height: 21px; padding: 0 4px; background: #fff; border: 1.5px solid var(--ov-group-line); border-radius: 7px; color: var(--ov-group-accent); font-size: 9px; font-weight: 900; }
 .ov-section-copy { min-width: 0; }
 .ov-section-kicker { display: block; margin-bottom: 5px; color: var(--ov-group-accent); font-size: 9px; font-weight: 900; letter-spacing: 1.2px; }
 .ov-card-emblem { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; background: linear-gradient(145deg,#fff,var(--ov-group-tint)); border: 1.5px solid var(--ov-group-line); border-radius: 13px; box-shadow: 0 2px 0 var(--ov-group-line); }
-.ov-card-emblem img { width: 30px; height: 30px; object-fit: contain; }
+.ov-card-emblem :is(img,svg) { width: 30px; height: 30px; object-fit: contain; }
 .ov-row-name { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
 .ov-row-icon { width: 22px; height: 22px; flex: 0 0 22px; object-fit: contain; }
 .ov-row-name img[src*="/classes/"], .ov-card-emblem img[src*="/classes/"] { filter: invert(21%) sepia(27%) saturate(1279%) hue-rotate(179deg) brightness(93%); }
@@ -53,6 +56,14 @@
 .ov-stat-green { --stat-color: #218d70; --stat-tint: #e6f7f0; --stat-border: #b5dfd0; }
 .ov-stat-purple { --stat-color: #7e58bd; --stat-tint: #f0eaff; --stat-border: #d4c5ed; }
 .ov-stat-orange { --stat-color: #b4773a; --stat-tint: #fff0e1; --stat-border: #e9cfb6; }
+.ov-insight-links { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 22px; }
+.ov-insight-links a { display: flex; align-items: center; gap: 12px; padding: 15px 17px; text-decoration: none; border: 1.5px solid #d2e1f1; border-radius: 16px; background: #ffffffc9; box-shadow: 0 3px 0 #dce7f3; color: var(--ov-ink); }
+.ov-insight-links a:hover { border-color: #81b7eb; background: #f5faff; }
+.ov-insight-links .ov-art { width: 27px; height: 27px; flex-shrink: 0; }
+.ov-insight-links span { min-width: 0; }
+.ov-insight-links small { display: block; margin-bottom: 5px; color: #6483a4; font-size: 8px; font-weight: 900; letter-spacing: .6px; }
+.ov-insight-links strong { display: block; font-size: 11px; line-height: 1.65; }
+.ov-insight-links b { margin-left: auto; color: #719bc3; }
 .ov-section-heading { display: flex; align-items: center; gap: 14px; margin: 0 0 22px; padding-bottom: 20px; border-bottom: 1px solid var(--ov-group-line); scroll-margin-top: 22px; }
 .ov-section-heading h2 { margin: 0; font: 800 clamp(21px,2.2vw,28px)/1.25 var(--font-heading); letter-spacing: -.4px; color: var(--ov-ink); }
 .ov-section-heading p { margin: 5px 0 0; font-size: 11px; line-height: 1.6; color: var(--ov-muted); }
@@ -60,6 +71,9 @@
 .ov-grid { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 20px; }
 .ov-card { display: flex; flex-direction: column; background: linear-gradient(160deg,#fff,#f8fcff); border: 2px solid color-mix(in srgb,var(--ov-group-line),white 15%); border-radius: 23px; padding: 23px; color: var(--ov-ink); min-width: 0; box-shadow: 0 4px 0 color-mix(in srgb,var(--ov-group-line),white 5%),0 8px 20px #20406a04, inset 0 1px 0 #fff; }
 .ov-card-body { min-width: 0; margin-bottom: 18px; }
+.ov-prestige-layout { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px; align-items: center; }
+.ov-prestige-layout .ov-mini-stats { margin-top: 0; }
+#ov-trophies + .ov-grid > .ov-card:nth-child(3) { grid-row: span 2; }
 .ov-span-4 { grid-column: span 4; }
 .ov-span-6 { grid-column: span 6; }
 .ov-span-8 { grid-column: span 8; }
@@ -119,7 +133,7 @@
 .ov-chart-key i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; }
 .ov-equipment-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; }
 .ov-equipment-tile { padding: 19px; background: linear-gradient(145deg,#fff,var(--equipment-tint,#f3f7fe)); border: 2px solid var(--equipment-line,#d4dff1); border-radius: 18px; box-shadow: 0 3px 0 var(--equipment-line,#d4dff1); min-width: 0; }
-.ov-equipment-tile > img { width: 58px; height: 58px; object-fit: contain; margin-bottom: 9px; }
+.ov-equipment-tile > :is(img,svg) { width: 58px; height: 58px; object-fit: contain; margin-bottom: 9px; }
 .ov-equipment-tile h4 { font: 800 18px var(--font-heading); margin: 0 0 11px; }
 .ov-equipment-tile > strong { display: block; font: 800 26px var(--font-heading); margin-bottom: 17px; }
 .ov-equipment-tile strong small { display: block; font: 600 9px var(--font-main); color: var(--ov-muted); margin-top: 4px; }
@@ -221,7 +235,7 @@
 .ov-loading { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 240px; color: #637f9d; border: 1px solid #d7e4f2; background: #f9fcff; border-radius: 20px; font-size: 13px; }
 .ov-loading-dot { height: 15px; width: 15px; border: 2px solid #d0e1f6; border-top-color: #2585ee; border-radius: 50%; animation: ov-spin .8s linear infinite; }
 @keyframes ov-spin { to { transform: rotate(360deg); } }
-#overview-view :is(button,a,input,select,summary):focus-visible { outline: 3px solid #2585ee; outline-offset: 3px; }
+#overview-view :is(button,a,input,select,summary):focus-visible, #club-view :is(button,a,input,select,summary):focus-visible { outline: 3px solid #2585ee; outline-offset: 3px; }
 @media (max-width: 1200px) {
   .ov-stats-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
   .ov-donut-layout { gap: 15px; }
@@ -245,14 +259,18 @@
   .ov-jump-nav a { font-size: 10px; padding: 8px 10px; }
 }
 @media (max-width: 640px) {
+  .ov-prestige-layout { grid-template-columns: 1fr; gap: 20px; }
+  #ov-trophies + .ov-grid > .ov-card:nth-child(3) { grid-row: auto; }
+  .ov-insight-links { grid-template-columns: 1fr; gap: 9px; }
+  .ov-insight-links a { padding: 12px 15px; }
   .ov-group { padding: 13px; border-radius: 23px; margin-top: 26px; }
   .ov-section-emblem { width: 48px; height: 48px; border-radius: 14px; }
-  .ov-section-emblem > img { width: 32px; height: 32px; }
+  .ov-section-emblem > :is(img,svg) { width: 32px; height: 32px; }
   .ov-section-emblem small { font-size: 8px; height: 18px; min-width: 20px; }
   .ov-section-heading p { line-height: 1.6; }
   .ov-section-kicker { font-size: 8px; }
   .ov-card-emblem { width: 36px; height: 36px; border-radius: 11px; }
-  .ov-card-emblem img { width: 26px; height: 26px; }
+  .ov-card-emblem :is(img,svg) { width: 26px; height: 26px; }
   .ov-card-heading > div { min-width: 0; }
   .ov-jump-nav { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; padding: 2px 2px 5px; scrollbar-width: thin; }
   .ov-jump-nav a { flex-shrink: 0; min-height: 44px; }
@@ -289,7 +307,7 @@
   .ov-equipment-tile { padding: 13px; }
   .ov-equipment-tile h4 { font-size: 14px; }
   .ov-equipment-tile strong { font-size: 23px; }
-  .ov-equipment-tile > img { height: 35px; width: 35px; }
+  .ov-equipment-tile > :is(img,svg) { height: 35px; width: 35px; }
   .ov-equipment-tile .ov-bar-label { flex-wrap: wrap; gap: 3px; }
   .ov-target > img { height: 38px; width: 38px; }
   .ov-target { gap: 10px; }

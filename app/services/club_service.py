@@ -67,8 +67,10 @@ class ClubService:
         self._cache_seconds = cache_seconds
         self._cache: dict[str, tuple[float, ClubProfile]] = {}
 
-    async def get_club(self, raw_tag: str) -> tuple[ClubProfile, bool]:
+    async def get_club(self, raw_tag: str, refresh: bool = False) -> tuple[ClubProfile, bool]:
         tag = normalize_club_tag(raw_tag)
+        if refresh:
+            self._cache.pop(tag, None)
         cached = self._cache.get(tag)
         if cached and time.monotonic() - cached[0] <= self._cache_seconds:
             logger.info("Club cache hit for %s", tag)

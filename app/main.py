@@ -28,6 +28,7 @@ from app.models.player import PlayerResources
 from app.models.readiness import ReadinessRequest
 from app.services.battlelog_service import BattleLogService
 from app.services.club_service import ClubService
+from app.services.club_analytics_service import summarize_club_roster
 from app.services.events_service import EventsService
 from app.services.matchup_service import MatchupService
 from app.services.player_service import PlayerService
@@ -381,21 +382,11 @@ async def get_overview(tag: str = Query(min_length=3, max_length=20), demo: bool
 
 
 @app.get("/api/club")
-async def get_club(tag: str = Query(min_length=3, max_length=20)) -> dict:
-    club, cache_hit = await club_service.get_club(tag)
+async def get_club(tag: str = Query(min_length=3, max_length=20), refresh: bool = False) -> dict:
+    club, cache_hit = await club_service.get_club(tag, refresh=refresh)
     return {
         "club": club.model_dump(mode="json"),
-        "analytics": {
-            "member_count": club.member_count,
-            "capacity_percent": club.capacity_percent,
-            "average_trophies": club.average_trophies,
-            "top_member_name": club.top_member.name if club.top_member else None,
-            "top_member_trophies": club.top_member.trophies if club.top_member else 0,
-            "vice_presidents_count": club.vice_presidents_count,
-            "seniors_count": club.seniors_count,
-            "regular_members_count": club.regular_members_count,
-            "prestige_tier": club.prestige_tier,
-        },
+        "analytics": summarize_club_roster(club),
         "freshness": {"fetched_at": club.fetched_at.isoformat(), "cache_hit": cache_hit},
     }
 
@@ -407,17 +398,7 @@ async def get_demo_club() -> dict:
     club = club_service.get_demo_club()
     return {
         "club": club.model_dump(mode="json"),
-        "analytics": {
-            "member_count": club.member_count,
-            "capacity_percent": club.capacity_percent,
-            "average_trophies": club.average_trophies,
-            "top_member_name": club.top_member.name if club.top_member else None,
-            "top_member_trophies": club.top_member.trophies if club.top_member else 0,
-            "vice_presidents_count": club.vice_presidents_count,
-            "seniors_count": club.seniors_count,
-            "regular_members_count": club.regular_members_count,
-            "prestige_tier": club.prestige_tier,
-        },
+        "analytics": summarize_club_roster(club),
         "freshness": {"fetched_at": club.fetched_at.isoformat(), "cache_hit": False},
     }
 
@@ -446,17 +427,7 @@ async def smart_lookup(tag: str = Query(min_length=3, max_length=20)) -> dict:
             return {
                 "type": "club",
                 "club": club.model_dump(mode="json"),
-                "analytics": {
-                    "member_count": club.member_count,
-                    "capacity_percent": club.capacity_percent,
-                    "average_trophies": club.average_trophies,
-                    "top_member_name": club.top_member.name if club.top_member else None,
-                    "top_member_trophies": club.top_member.trophies if club.top_member else 0,
-                    "vice_presidents_count": club.vice_presidents_count,
-                    "seniors_count": club.seniors_count,
-                    "regular_members_count": club.regular_members_count,
-                    "prestige_tier": club.prestige_tier,
-                },
+                "analytics": summarize_club_roster(club),
                 "freshness": {"fetched_at": club.fetched_at.isoformat(), "cache_hit": cache_hit},
             }
         except Exception:

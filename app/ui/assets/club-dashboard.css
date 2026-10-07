@@ -1,0 +1,60 @@
+/* Club Hub uses the same chart hierarchy as the account Overview */
+#club-view { --section-accent: #7650a4; --section-soft: #eee5fb; --section-line: #d4c2ec; --section-shadow: #cec1e1; --section-top: #fbf8ff; --section-bottom: #ede4fc; }
+#club-dashboard .ov-stat > strong { font-size: clamp(21px,2vw,29px); }
+.club-toolbar { border-color: #d6c7ee; background: linear-gradient(180deg,#fff,#f0eaff); box-shadow: 0 4px 0 #ded3ef; }
+.club-refresh-status { color: #795b9d; font-size: 11px; line-height: 1.6; margin: -8px 0 16px; }
+.club-refresh-status:empty { display: none; }
+.club-data-note { padding: 16px 18px; border: 1.5px solid #e7d295; border-radius: 13px; background: #fff7da; color: #84652c; font-size: 11px; line-height: 1.8; margin-bottom: 16px; }
+.club-target-control { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 20px; color: #547666; font-size: 12px; font-weight: 800; }
+.club-target-control input { width: 180px; max-width: 55%; min-height: 44px; padding: 10px 12px; border: 1.5px solid #b9dacb; border-radius: 12px; background: #f5fcf8; color: #214c3b; font-size: 15px; font-weight: 800; }
+.club-plan-values { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; padding: 22px; border: 2px solid #c7e0d3; border-radius: 19px; background: linear-gradient(135deg,#fafffc,#eaf7ee); box-shadow: 0 3px 0 #c7e0d3; }
+.club-plan-values > div { display: flex; flex-direction: column; gap: 8px; }
+.club-plan-values small { font-size: 9px; font-weight: 900; letter-spacing: .8px; color: #5d8c75; }
+.club-plan-values strong { font: 800 clamp(22px,2.5vw,32px)/1.2 var(--font-heading); color: #214c3b; font-variant-numeric: tabular-nums; }
+.club-plan-values > span { margin-left: auto; color: #258668; font: 800 25px var(--font-heading); }
+.club-personal-name { display: flex; align-items: center; gap: 14px; color: var(--ov-ink); text-decoration: none; }
+.club-position { display: grid; place-items: center; min-width: 48px; height: 48px; background: #fff0c9; border: 2px solid #edd492; border-radius: 13px; font: 800 21px var(--font-heading); color: #926d1c; box-shadow: 0 3px 0 #edd492; }
+.club-personal-name strong { font: 800 20px var(--font-heading); overflow-wrap: anywhere; }
+.club-role-caption { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 800; color: #527966; }
+#club-contributions + .ov-grid > .ov-card:first-child { grid-row: span 2; }
+.club-badge-symbol > .ov-art { width: 70px; height: 70px; }
+.club-role-president { color: #886012; background: #fff0c8; border-color: #ebd392; }
+.club-role-vicepresident { color: #7750a8; background: #eee4fc; border-color: #d9c8ee; }
+.club-role-senior { color: #236f8f; background: #e0f3fb; border-color: #bcdee9; }
+.club-role-member { color: #2e7858; background: #e1f5e8; border-color: #bcdfc9; }
+.club-role-unknown { color: #697d97; background: #edf2f8; border-color: #d1dce9; }
+#club-view .club-roster-panel { margin-top: 32px; background: linear-gradient(145deg,#fff,#f4effc); }
+#club-view .club-roster-panel .section-heading { gap: 20px; flex-wrap: wrap; }
+#club-view .roster-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; flex-wrap: wrap; }
+.club-filter { display: flex; align-items: center; gap: 7px; color: #735b96; font-size: 10px; font-weight: 800; }
+.club-filter select { min-height: 44px; max-width: 100%; padding: 8px 11px; background: #fff; border: 1.5px solid #d6c9eb; border-radius: 11px; font-size: 11px; font-weight: 800; color: #4d3870; box-shadow: 0 2px 0 #e1d8ee; }
+#club-view .roster-toolbar input { min-height: 44px; width: 240px; max-width: 100%; }
+#club-view .roster-table { min-width: 1020px; }
+#club-view .roster-table-wrap { max-height: 720px; overflow: auto; scrollbar-width: thin; scrollbar-color: #c6b7dd #f7f3fc; border: 1.5px solid #dfd3ee; border-radius: 15px; }
+#club-view .roster-table thead { position: sticky; top: 0; z-index: 2; background: #f0eafa; }
+#club-view .roster-table .ranking-person { text-decoration: none; }
+#club-view .roster-table .member-tag-pill, #club-view .roster-table .small-action { text-decoration: none; display: inline-flex; align-items: center; }
+#club-view .table-trophy-icon { width: 20px; height: 20px; object-fit: contain; vertical-align: middle; margin-right: 6px; }
+.club-share-cell { min-width: 115px; }
+.club-share-cell strong { display: block; font-size: 11px; margin-bottom: 7px; color: #7950b5; }
+.club-share-cell .ov-track { display: block; height: 5px; width: 80px; }
+.club-hero-banner .copy-tag-symbol { display: grid; place-items: center; width: 45px; height: 45px; }
+.club-hero-banner .copy-tag-symbol .ov-art { width: 36px; height: 36px; color: #73521a; }
+@media (max-width:900px) {
+  #club-contributions + .ov-grid > .ov-card:nth-child(n+4) { grid-column: span 12; }
+  #club-view .roster-toolbar { justify-content: flex-start; }
+  #club-view .club-roster-panel .section-heading { align-items: flex-start; }
+}
+@media (max-width:640px) {
+  #club-contributions + .ov-grid > .ov-card:first-child { grid-row: auto; }
+  .club-plan-values { padding: 16px; gap: 18px; }
+  .club-plan-values > span { margin-left: 0; }
+  .club-target-control { font-size: 11px; gap: 10px; }
+  .club-target-control input { font-size: 13px; }
+  #club-view .club-roster-panel { padding: 18px 15px; border-radius: 23px; }
+  #club-view .roster-toolbar { width: 100%; }
+  #club-view .roster-toolbar input { width: 100%; }
+  #club-view .roster-table-wrap { max-height: 540px; }
+  .club-filter { flex: 1; min-width: 120px; }
+  .club-filter select { flex: 1; min-width: 0; }
+}
