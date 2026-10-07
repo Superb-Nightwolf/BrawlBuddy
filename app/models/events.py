@@ -6,6 +6,7 @@ class EventMap(BaseModel):
     id: int
     mode: str
     map: str
+    mode_id: int | None = None
     image_url: Optional[str] = None
 
 

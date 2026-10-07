@@ -309,7 +309,7 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
 
 .overview-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 18px 0; }
 .metric-card { min-height: 132px; position: relative; overflow: hidden; padding: 18px 19px; color: #fff; border: 3px solid #fff; border-radius: 19px; box-shadow: 0 7px 0 rgba(19,50,95,.13); }
-.metric-card::after { content: "★"; position: absolute; right: -8px; bottom: -23px; opacity: .18; font-size: 85px; transform: rotate(-14deg); }
+.metric-card::after { content: none; }
 .metric-card.blue { background: linear-gradient(145deg,#168ef0,#0870cf); }
 .metric-card.yellow { color: var(--navy); background: linear-gradient(145deg,#ffe45d,#ffc520); }
 .metric-card.pink { background: linear-gradient(145deg,#ff68aa,#e93983); }

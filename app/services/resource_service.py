@@ -46,6 +46,15 @@ class ResourceService:
             return PlayerResources(player_tag=tag)
         return PlayerResources(**dict(row))
 
+    def get_saved(self, raw_tag: str) -> PlayerResources | None:
+        """An absent wallet is unknown, rather than a confirmed zero balance."""
+        tag = normalize_player_tag(raw_tag)
+        with closing(self._connect()) as connection:
+            row = connection.execute(
+                "SELECT * FROM player_resources WHERE player_tag = ?", (tag,)
+            ).fetchone()
+        return PlayerResources(**dict(row)) if row else None
+
     def save(self, resources: PlayerResources) -> PlayerResources:
         resources.player_tag = normalize_player_tag(resources.player_tag)
         resources.updated_at = datetime.now(UTC)

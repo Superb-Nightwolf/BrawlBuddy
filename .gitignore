@@ -9,3 +9,5 @@ __pycache__/
 firebase-debug.log
 data/brawl_advisor.db
 
+# Generated local Overview browser previews
+/data/overview-preview/

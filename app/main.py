@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import logging
+import asyncio
+import time
 import json
 import mimetypes
 from contextlib import asynccontextmanager
@@ -33,6 +35,7 @@ from app.services.rankings_service import RankingsService
 from app.services.resource_service import ResourceService
 from app.services.upgrade_service import UpgradeService
 from app.services.readiness_service import ReadinessService
+from app.services.overview_service import OverviewService, summarize_battles, summarize_club, event_timing
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 logger = logging.getLogger(__name__)
@@ -91,6 +94,8 @@ if buffies_path.exists():
         buffies_db = json.load(handle)
 visual_asset_manifest = {}
 readiness_service = ReadinessService(brawler_guides, equipment_db, buffies_db)
+overview_service = OverviewService(brawler_catalog, readiness_service)
+_overview_catalog: tuple[float, list[dict]] | None = None
 visual_asset_manifest_path = PROJECT_ROOT / "data" / "visual_asset_manifest.json"
 if visual_asset_manifest_path.exists():
     with visual_asset_manifest_path.open("r", encoding="utf-8") as handle:
@@ -306,6 +311,73 @@ async def get_demo_player() -> dict:
         "analytics": _player_analytics(player),
         "freshness": {"fetched_at": player.fetched_at.isoformat(), "cache_hit": False},
     }
+
+
+async def _overview_official_catalog() -> list[dict] | None:
+    global _overview_catalog
+    if _overview_catalog and time.monotonic() - _overview_catalog[0] < settings.cache.brawlers_seconds:
+        return _overview_catalog[1]
+    if client is None:
+        return None
+    try:
+        payload = await client.get_brawlers()
+        items = payload.get("items", [])
+        if items:
+            _overview_catalog = (time.monotonic(), items)
+            return items
+    except BrawlAdvisorError:
+        pass
+    return None
+
+
+@app.get("/api/overview")
+async def get_overview(tag: str = Query(min_length=3, max_length=20), demo: bool = False,
+                       refresh: bool = False) -> dict:
+    if demo:
+        if not settings.app.demo_mode:
+            raise HTTPException(status_code=404, detail="Demo mode is disabled")
+        player = player_service.get_demo_player()
+    else:
+        if refresh:
+            from app.services.player_service import normalize_player_tag
+            normalized_tag = normalize_player_tag(tag)
+            player_service._cache.pop(normalized_tag, None)
+            battlelog_service._cache.pop(normalized_tag, None)
+            events_service._cached_events = None
+        player, _ = await player_service.get_player(tag)
+
+    async def battle_data():
+        if demo:
+            return battlelog_service.load_demo(), "DEMO"
+        entries, source = await battlelog_service.get_battlelog(player.tag)
+        return (entries, source) if source != "DEMO" else ([], "UNAVAILABLE")
+
+    async def event_data():
+        if demo:
+            return events_service.load_demo(), "DEMO"
+        events, source = await events_service.get_events()
+        return (events, source) if source != "DEMO" else ([], "UNAVAILABLE")
+
+    async def club_data():
+        if not player.club or not player.club.tag:
+            return None
+        try:
+            club = club_service.get_demo_club() if demo else (await club_service.get_club(player.club.tag))[0]
+            if club.tag.upper() != player.club.tag.upper():
+                return None
+            return summarize_club(club, player.tag)
+        except BrawlAdvisorError:
+            return None
+
+    battle_result, event_result, club, catalog = await asyncio.gather(
+        battle_data(), event_data(), club_data(), _overview_official_catalog() if not demo else asyncio.sleep(0, result=None))
+    resources = resource_service.get_saved(player.tag) if not demo else None
+    summary = await run_in_threadpool(overview_service.summarize, player, catalog, resources)
+    return {"summary": summary, "player": player.model_dump(mode="json"), "analytics": _player_analytics(player),
+            "battles": {"source": battle_result[1], **summarize_battles(battle_result[0], player.tag)},
+            "events": {"source": event_result[1], "items": [event_timing(e) for e in event_result[0]]},
+            "club": club, "resources": resources.model_dump(mode="json") if resources else None,
+            "generated_at": datetime.now(timezone.utc).isoformat()}
 
 
 @app.get("/api/club")

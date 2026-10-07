@@ -27,7 +27,7 @@ const state = {
   prestigeAssets: {},
 };
 
-const ACCOUNT_CACHE_KEY = 'brawlbuddy_account_v4';
+const ACCOUNT_CACHE_KEY = 'brawlbuddy_account_v5';
 const CLUB_CACHE_KEY = 'brawlbuddy_club_v3';
 
 const $ = (id) => document.getElementById(id);
@@ -75,11 +75,23 @@ function updateEventTiming() {
   });
 }
 
+function officialBrawlerIconSource(brawler) {
+  const id = Number(brawler?.id);
+  if (!Number.isInteger(id) || id < 16000000) return '/assets/rarity-skull.svg';
+  // The newest portraits are already bundled with the reference roster.
+  if ([16000108, 16000109, 16000110].includes(id)) return brawlerImage({id}, true);
+  return `/assets/brawlers/portraits/${id}.webp`;
+}
+
+function brawlerIconMarkup(brawler, className = 'official-brawler-icon') {
+  return `<img class="${className}" src="${officialBrawlerIconSource(brawler)}" alt="${escapeMarkup(brawler?.name || 'Brawler')} official portrait" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/assets/rarity-skull.svg'">`;
+}
+
 function brawlerNameMarkup(name, className) {
   const brawler = state.catalog.find((item) => normalizeKey(item.name) === normalizeKey(name));
   const label = escapeMarkup(name);
   if (!brawler) return `<span class="${className}">${label}</span>`;
-  return `<a class="${className}" href="/brawlers/${brawler.id}"><img src="${brawlerImage(brawler, true)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='/assets/rarity-skull.svg'">${label}</a>`;
+  return `<a class="${className}" href="/brawlers/${brawler.id}">${brawlerIconMarkup(brawler)}${label}</a>`;
 }
 
 function getUiIconRecord(group, value) {
@@ -91,10 +103,15 @@ function getUiIconRecord(group, value) {
   }) || null;
 }
 
-function uiIconMarkup(group, value, className, fallback = '★') {
+function uiIconMarkup(group, value, className, fallback = '') {
   const record = getUiIconRecord(group, value);
   if (!record?.local_url) return `<span class="${className} ui-icon-fallback">${fallback}</span>`;
   return `<img class="${className}" src="${record.local_url}" alt="" aria-hidden="true" onerror="this.onerror=null;this.replaceWith(document.createTextNode('${fallback}'))">`;
+}
+
+// Reuse the game's artwork in the HQ without fetching another icon library.
+function sectionIconMarkup(asset, className = 'section-inline-icon') {
+  return `<img class="${className}" loading="lazy" decoding="async" src="/assets/${asset}" alt="" aria-hidden="true">`;
 }
 
 function modeLabel(value) {
@@ -295,9 +312,16 @@ function buffieUseState(brawler, type, abilityOwned = baseEquipmentOwned(brawler
   return { key: 'active', label: 'ACTIVE', className: 'owned-status', unlockLevel };
 }
 
+function formatUiCopy(value) {
+  return String(value ?? '')
+    .replace(/e\.g\./gi, 'for example')
+    .replace(/i\.e\./gi, 'that is')
+    .replace(/\.(?=\s|$|[)\]])/g, '');
+}
+
 function setText(id, value) {
   const el = $(id);
-  if (el) el.textContent = value == null ? '—' : String(value);
+  if (el) el.textContent = value == null ? '—' : formatUiCopy(value);
 }
 
 function setImgSrc(id, src, fallbackSrc = null) {
@@ -332,15 +356,15 @@ function pageFromPath() {
 function configurePage() {
   state.page = pageFromPath();
   const copy = {
-    overview: ['BRAWL COMMAND CENTER', 'Command HQ', `Holding ${format(state.player?.trophies)} trophies across ${state.player?.brawlers?.length || 0} brawlers • ${format(state.analytics?.total_victories || 0)} victories • Next tier: ${format(state.analytics?.next_trophy_milestone || 0)} ★`],
-    battles: ['ARENA TELEMETRY', 'Battle Log & Recreator', 'Inspect your 25 recent arena encounters with interactive 2D tactical breakdowns.'],
-    events: ['LIVE ROTATION & MAPS', 'Event Rotation', 'Active modes, countdown timers, modifiers, and curated meta brawler picks.'],
-    leaderboards: ['HALL OF CHAMPIONS', 'Leaderboards', 'Top 200 global & regional players and clubs with 1-click inspection.'],
-    brawlers: ['ROSTER LAB', 'Brawlers', 'Filter every exact power level and inspect your owned loadouts.'],
-    club: ['🛡 ALLIANCE COMMAND CENTER', `Club Hub: ${state.club?.name || 'Alliance'}`, 'Inspect club roster, roles, trophy requirements, and syndicate power.'],
-    detail: ['BRAWLER GUIDE', '', 'Combat guidance, power journey, and account readiness.'],
-    error: ['⚠️ ARENA OUTPOST', 'Lost in the Arena', 'Page or tag not found in the Brawl Stars database.'],
-  }[state.page] || ['⚡ BRAWL COMMAND CENTER', 'Overview', 'Progression companion.'];
+    overview: ['BRAWL COMMAND CENTER', 'Command HQ', 'Your account, every angle — collection, competition and the next step forward'],
+    battles: ['ARENA TELEMETRY', 'Battle Log & Recreator', 'Inspect your 25 recent arena encounters with interactive 2D tactical breakdowns'],
+    events: ['LIVE ROTATION & MAPS', 'Event Rotation', 'Active modes, countdown timers, modifiers, and curated meta brawler picks'],
+    leaderboards: ['HALL OF CHAMPIONS', 'Leaderboards', 'Top 200 global & regional players and clubs with 1-click inspection'],
+    brawlers: ['ROSTER LAB', 'Brawlers', 'Filter every exact power level and inspect your owned loadouts'],
+    club: ['🛡 ALLIANCE COMMAND CENTER', `Club Hub: ${state.club?.name || 'Alliance'}`, 'Inspect club roster, roles, trophy requirements, and syndicate power'],
+    detail: ['BRAWLER GUIDE', '', 'Combat guidance, power journey, and account readiness'],
+    error: ['⚠️ ARENA OUTPOST', 'Lost in the Arena', 'Page or tag not found in the Brawl Stars database'],
+  }[state.page] || ['⚡ BRAWL COMMAND CENTER', 'Overview', 'Progression companion'];
 
   setText('page-eyebrow', copy[0]);
   const title = $('page-title');
@@ -501,7 +525,7 @@ async function loadDemo() {
     await loadCatalog();
     sessionStorage.setItem(ACCOUNT_CACHE_KEY, JSON.stringify(payload));
     renderAccount(payload);
-    showNotice('Demo account active — all sample player data is clearly labeled. Connect your tag for live public account data.');
+    showNotice('Demo account active — all sample player data is clearly labeled Connect your tag for live public account data');
   } catch (error) { showNotice(error.message, 'error'); }
 }
 
@@ -512,7 +536,7 @@ async function loadDemoClub() {
     renderClub(payload);
     const dialog = $('connect-dialog');
     if (dialog && dialog.open) dialog.close();
-    showNotice('Demo club active — all sample alliance data is clearly labeled. Connect your club tag for live data.');
+    showNotice('Demo club active — all sample alliance data is clearly labeled Connect your club tag for live data');
     if (state.page !== 'club') {
       history.pushState(null, '', '/club');
       configurePage();
@@ -580,16 +604,16 @@ function validateConnectTag(rawTag) {
   const length = value.length;
   if (!length) return { tag, length, kind: 'idle', message: '' };
   const invalid = [...new Set(value.replace(/[0289PYLQGRJCUV]/g, ''))];
-  if (invalid.length) return { tag, length, kind: 'error', message: `Remove ${invalid.map((character) => `“${character}”`).join(', ')}. Use only 0289PYLQGRJCUV.` };
+  if (invalid.length) return { tag, length, kind: 'error', message: `Remove ${invalid.map((character) => `“${character}”`).join(', ')} Use only 0289PYLQGRJCUV` };
   if (length < 3) {
     const remaining = 3 - length;
-    return { tag, length, kind: 'incomplete', message: `Add ${remaining} more character${remaining === 1 ? '' : 's'} (minimum 3).` };
+    return { tag, length, kind: 'incomplete', message: `Add ${remaining} more character${remaining === 1 ? '' : 's'} (minimum 3)` };
   }
   if (length > 14) {
     const extra = length - 14;
-    return { tag, length, kind: 'error', message: `Remove ${extra} character${extra === 1 ? '' : 's'} (maximum 14).` };
+    return { tag, length, kind: 'error', message: `Remove ${extra} character${extra === 1 ? '' : 's'} (maximum 14)` };
   }
-  return { tag, length, kind: 'ready', message: 'Format looks good. Press Enter to connect.' };
+  return { tag, length, kind: 'ready', message: 'Format looks good Press Enter to connect' };
 }
 
 function setConnectFeedback(kind, message) {
@@ -763,7 +787,7 @@ async function loadSmartTag(rawTag) {
   const feedback = validateConnectTag(rawTag);
   const tag = feedback.tag;
   if (feedback.kind !== 'ready') {
-    setConnectFeedback('error', feedback.kind === 'idle' ? 'Please provide a valid player or club tag.' : feedback.message);
+    setConnectFeedback('error', feedback.kind === 'idle' ? 'Please provide a valid player or club tag' : feedback.message);
     $('tag-input')?.focus();
     animateConnectFailure();
     return;
@@ -783,7 +807,7 @@ async function loadSmartTag(rawTag) {
     const result = await request(`/api/lookup?tag=${encodeURIComponent(tag)}`, { signal: controller.signal });
     clearTimeout(timeout);
     if (!current()) return;
-    if (!['player', 'club'].includes(result.type) || !result[result.type]?.tag) throw new Error('Tag not found. Please provide a valid player or club tag.');
+    if (!['player', 'club'].includes(result.type) || !result[result.type]?.tag) throw new Error('Tag not found Please provide a valid player or club tag');
     const profile = result[result.type];
     setConnectFeedback('success', `${result.type === 'player' ? 'Player' : 'Club'} confirmed: ${profile.name} · ${profile.tag}`);
     $('load-player').textContent = result.type === 'player' ? 'LOADING ACCOUNT…' : 'LOADING CLUB…';
@@ -809,8 +833,8 @@ async function loadSmartTag(rawTag) {
     heading?.focus({ preventScroll: true });
   } catch (error) {
     if (current()) {
-      const message = /(?:not found|no .* found)/i.test(error.message || '') ? 'No player or club found. Please provide a valid tag and try again.' : error.message;
-      setConnectFeedback('error', error.name === 'AbortError' ? 'The lookup took too long. Please try again.' : message || 'Tag not found. Please provide a valid tag.');
+      const message = /(?:not found|no .* found)/i.test(error.message || '') ? 'No player or club found Please provide a valid tag and try again' : error.message;
+      setConnectFeedback('error', error.name === 'AbortError' ? 'The lookup took too long Please try again' : message || 'Tag not found Please provide a valid tag');
       animateConnectFailure();
     }
   } finally {
@@ -857,7 +881,7 @@ async function loadPlayer(tag) {
   }
 }
 
-function renderAccount(payload) {
+function renderAccount(payload, options = {}) {
   if (!payload || !payload.player) return;
   state.player = payload.player;
   state.analytics = payload.analytics || {};
@@ -865,8 +889,8 @@ function renderAccount(payload) {
   state.brawlers = mergeCatalog(state.ownedBrawlers);
   state.rosterDirty = true;
 
-  const expPoints = payload.player.exp_points ?? 143200;
-  const expLevel = payload.player.exp_level ?? Math.max(1, Math.round(payload.player.trophies / 350));
+  const expPoints = payload.player.exp_points;
+  const expLevel = payload.player.exp_level;
   const brawlerPrestige = payload.player.total_prestige_level
     ?? state.analytics.total_prestige_level
     ?? (payload.player.brawlers || []).reduce((acc, b) => acc + getPrestigeLevel(b), 0);
@@ -878,7 +902,7 @@ function renderAccount(payload) {
     if (title) {
       title.textContent = 'Command HQ';
     }
-    setText('page-subtitle', `Holding ${format(payload.player.trophies)} trophies across ${payload.player.brawlers.length} brawlers • ${format(state.analytics.total_victories)} victories • Next tier: ${format(state.analytics.next_trophy_milestone)} ★`);
+    setText('page-subtitle', 'Your account, every angle — collection, competition and the next step forward');
   }
 
   // Hero Card
@@ -891,16 +915,18 @@ function renderAccount(payload) {
   setText('trophy-count', format(payload.player.trophies));
   setText('highest-trophies', format(payload.player.highest_trophies));
   setText('total-victories-count', format(state.analytics.total_victories));
-  setText('hero-brawler-count', `${payload.player.brawlers.length} / ${state.catalog.length || 105}`);
+  setText('hero-brawler-count', `${payload.player.brawlers.length} / ${state.catalog.length || '—'}`);
   setText('club-name', payload.player.club?.name || 'No club');
   setText('club-tag', payload.player.club?.tag || '—');
 
   setText('exp-level', expLevel);
-  setText('hero-level-num', `Level ${expLevel}`);
-  setText('hero-xp-points', format(expPoints));
+  setText('hero-level-num', expLevel == null ? 'Level unavailable' : `Level ${expLevel}`);
+  setText('hero-xp-points', expPoints == null ? '—' : format(expPoints));
   setText('brawler-prestige-val', brawlerPrestige);
   setText('hero-prestige-count', `${brawlerPrestige}`);
   setText('hero-champ-status', isChamp ? 'Qualified ✓' : '15-Win Challenge');
+  setText('hero-ranked-rating', payload.player.ranked_elo == null ? '—' : format(payload.player.ranked_elo));
+  setText('hero-ranked-label', payload.player.ranked_rank_name || 'Ranked rating');
 
   const champBadge = $('champ-badge');
   if (champBadge) {
@@ -911,8 +937,8 @@ function renderAccount(payload) {
   const iconId = payload.player.icon_id || payload.player.icon?.id || 28000000;
   const iconSrc = `https://cdn.brawlify.com/profile-icons/regular/${iconId}.png`;
   const topBrawler = [...payload.player.brawlers].sort((a, b) => b.trophies - a.trophies)[0];
-  const brawlerMascotSrc = topBrawler ? `/assets/brawlers/${topBrawler.id}.png` : '/assets/brawlers/16000000.png';
-  setImgSrc('player-art', iconSrc, brawlerMascotSrc);
+  const portraitFallback = officialBrawlerIconSource(topBrawler || {id: 16000000});
+  setImgSrc('player-art', iconSrc, portraitFallback);
 
   const isDemo = payload.player.source === 'DEMO';
   const label = $('data-label');
@@ -924,27 +950,17 @@ function renderAccount(payload) {
   const prestigeBadge = $('prestige-tier-badge');
   if (prestigeBadge) {
     const source = payload.player.total_prestige_source === 'OFFICIAL_API' ? 'OFFICIAL API' : 'DERIVED FALLBACK';
-    prestigeBadge.textContent = `✦ PRESTIGE BATTLE CARD · ${source}`;
+    prestigeBadge.innerHTML = `${sectionIconMarkup('filter-prestige.png')} PRESTIGE BATTLE CARD · ${source}`;
   }
 
 
-  // Visual modules
-  renderArchetypeStrip(state.analytics, payload.player);
-  renderFlagshipLoadouts(state.analytics.top_loadouts || []);
-  renderTrophyRoad(payload.player.trophies, payload.player.highest_trophies, state.analytics.next_trophy_milestone);
-  renderRoleDonut(payload.player.brawlers);
-  renderEquipmentVault(payload.player.brawlers);
-  renderPrestigeTiers(state.analytics, payload.player.brawlers.length);
-  renderSpecialEvents(payload.player);
-  renderBattleRecords(payload.player);
-  renderClubCard(payload.player.club);
   renderOverviewMetrics();
-  renderQuickBrawlers();
+  if (state.page === 'overview' && !options.skipOverview) globalThis.OverviewDashboard?.load();
   showView();
 }
 
 function renderArchetypeStrip(analytics, player) {
-  setText('combat-archetype-text', `⚔ ${analytics.combat_archetype || 'Versatile Combatant'}`);
+  setText('combat-archetype-text', analytics.combat_archetype || 'Versatile Combatant');
   const archetypeDescMap = {
     '3v3 Team Tactician': 'Dominates team coordination, lane control & objective timing',
     'Showdown Lone Wolf': 'Specializes in high-survival 1v1 duels & gas zone rotations',
@@ -971,7 +987,7 @@ function renderFlagshipLoadouts(loadouts) {
   holder.replaceChildren();
 
   if (!loadouts || loadouts.length === 0) {
-    holder.innerHTML = '<p class="equipment-empty">Unlock brawlers to display your tactical flagship builds.</p>';
+    holder.innerHTML = '<p class="equipment-empty">Unlock brawlers to display your tactical flagship builds</p>';
     return;
   }
 
@@ -985,35 +1001,35 @@ function renderFlagshipLoadouts(loadouts) {
     if (ownsHc) {
       if (isP11) {
         hcChipClass = 'owned hc-active';
-        hcLabel = `${brawler.hypercharge} ⚡`;
+        hcLabel = brawler.hypercharge;
       } else {
         hcChipClass = 'stored hc-stored';
-        hcLabel = `${brawler.hypercharge} 🔒 (L11)`;
+        hcLabel = `${brawler.hypercharge} (Requires L11)`;
       }
     }
     card.innerHTML = `
       <div class="flagship-head">
         <div class="flagship-visual">
-          <img src="${brawlerImage(brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${brawler.id}.png'" alt="${brawler.name}">
+          ${brawlerIconMarkup(brawler)}
           <span class="power-badge power-${brawler.power}">LVL${brawler.power}</span>
         </div>
         <div class="flagship-title">
           <strong>${brawler.name}</strong>
-          <span>★ ${format(brawler.trophies)} total · ${getPrestigeState(brawler).label}</span>
+          <span>${sectionIconMarkup('icon_trophy.png')} ${format(brawler.trophies)} total · ${getPrestigeState(brawler).label}</span>
         </div>
       </div>
       <div class="flagship-equipment">
         <span class="equipment-chip ${brawler.gadget ? 'owned' : 'missing'}">
-          <b>G</b> ${brawler.gadget || 'No Gadget'}
+          ${sectionIconMarkup('section_gadget.png')} ${brawler.gadget || 'No Gadget'}
         </span>
         <span class="equipment-chip ${brawler.star_power ? 'owned' : 'missing'}">
-          <b>★</b> ${brawler.star_power || 'No Star Power'}
+          ${sectionIconMarkup('section_star_power.png')} ${brawler.star_power || 'No Star Power'}
         </span>
         <span class="equipment-chip ${brawler.gears?.length ? 'owned' : 'missing'}">
-          <b>◆</b> ${brawler.gears?.length ? brawler.gears.join(', ') : 'No Gears'}
+          ${sectionIconMarkup('section_gear.png')} ${brawler.gears?.length ? brawler.gears.join(', ') : 'No Gears'}
         </span>
         <span class="equipment-chip ${hcChipClass}">
-          <b>⚡</b> ${hcLabel}
+          ${sectionIconMarkup('section_hypercharge.png')} ${hcLabel}
         </span>
       </div>
       <a class="small-action flagship-guide-link" href="/brawlers/${brawler.id}">Explore loadout <span>→</span></a>
@@ -1084,7 +1100,7 @@ function renderRoleDonut(brawlers) {
       const item = document.createElement('div');
       item.className = 'donut-legend-item';
       item.innerHTML = `
-        <span class="legend-dot" style="background: ${info.color}"></span>
+        <span class="legend-class-icon" style="background: ${info.color}">${uiIconMarkup('classes', info.label, 'section-inline-icon', '')}</span>
         <div class="legend-info">
           <strong>${info.label}</strong>
           <span>${count} (${Math.round(pct)}%)</span>
@@ -1179,7 +1195,7 @@ function renderSpecialEvents(player) {
   }
 
   const qualified = player.is_qualified_from_championship_challenge;
-  setText('rec-championship', qualified ? 'Qualified ★' : 'Stage 1');
+  setText('rec-championship', qualified ? 'Qualified' : 'Stage 1');
 
   const expPoints = player.exp_points ?? 143200;
   setText('rec-xp-points', `${format(expPoints)} Total XP`);
@@ -1262,7 +1278,7 @@ function renderBattles() {
   setText('battle-results-summary', `${filtered.length} of ${(state.battles || []).length} recent matches · ${state.battleFilter === 'all' ? 'All modes' : state.battleFilter === '3v3' ? 'Team modes' : 'Showdown modes'}`);
 
   if (filtered.length === 0) {
-    holder.innerHTML = '<div class="empty-state"><strong>No battles in this view</strong>Choose another mode or connect a player with recent battles.</div>';
+    holder.innerHTML = '<div class="empty-state"><strong>No battles in this view</strong>Choose another mode or connect a player with recent battles</div>';
     return;
   }
 
@@ -1276,7 +1292,7 @@ function renderBattles() {
     const displayModeMarkup = `${uiIconMarkup('modes', battle.mode, 'mode-icon-img')}<span>${displayMode}</span>`;
 
     const trophyDeltaHtml = battle.trophy_change != null
-      ? `<span class="trophy-delta ${battle.trophy_change >= 0 ? 'pos' : 'neg'}">${battle.trophy_change >= 0 ? `+${battle.trophy_change}` : battle.trophy_change} ★</span>`
+      ? `<span class="trophy-delta ${battle.trophy_change >= 0 ? 'pos' : 'neg'}">${sectionIconMarkup('icon_trophy.png')}${battle.trophy_change >= 0 ? `+${battle.trophy_change}` : battle.trophy_change}</span>`
       : '';
 
     let teamsHtml = '';
@@ -1287,9 +1303,9 @@ function renderBattles() {
             <span class="team-header">BLUE TEAM (Avg L${battle.team_a_avg_power})</span>
             ${battle.teams[0].map((p) => `
               <div class="player-roster-row ${p.is_star_player ? 'is-mvp' : ''}">
-                <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+                ${brawlerIconMarkup(p.brawler)}
                 <div class="roster-player-meta">
-                  <strong>${escapeMarkup(p.name)} ${p.is_star_player ? '⭐' : ''}</strong>
+                  <strong>${escapeMarkup(p.name)} ${p.is_star_player ? sectionIconMarkup('prestige-accent-star.svg') : ''}</strong>
                   <small>${p.brawler.name} · L${p.brawler.power}</small>
                 </div>
               </div>
@@ -1300,9 +1316,9 @@ function renderBattles() {
             <span class="team-header">RED TEAM (Avg L${battle.team_b_avg_power})</span>
             ${battle.teams[1].map((p) => `
               <div class="player-roster-row ${p.is_star_player ? 'is-mvp' : ''}">
-                <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+                ${brawlerIconMarkup(p.brawler)}
                 <div class="roster-player-meta">
-                  <strong>${escapeMarkup(p.name)} ${p.is_star_player ? '⭐' : ''}</strong>
+                  <strong>${escapeMarkup(p.name)} ${p.is_star_player ? sectionIconMarkup('prestige-accent-star.svg') : ''}</strong>
                   <small>${p.brawler.name} · L${p.brawler.power}</small>
                 </div>
               </div>
@@ -1316,7 +1332,7 @@ function renderBattles() {
           ${battle.players.slice(0, 5).map((p, pIdx) => `
             <div class="showdown-player-chip">
               <span>#${pIdx + 1}</span>
-              <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+              ${brawlerIconMarkup(p.brawler)}
               <strong>${escapeMarkup(p.name)}</strong>
             </div>
           `).join('')}
@@ -1374,7 +1390,7 @@ function openTacticalRecreator(battle) {
       const node = document.createElement('div');
       node.className = `spawn-node blue-node ${p.is_star_player ? 'is-mvp' : ''}`;
       node.innerHTML = `
-        <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+        ${brawlerIconMarkup(p.brawler)}
         <strong>${p.name}</strong>
         <small>L${p.brawler.power}</small>
       `;
@@ -1391,7 +1407,7 @@ function openTacticalRecreator(battle) {
       const node = document.createElement('div');
       node.className = `spawn-node red-node ${p.is_star_player ? 'is-mvp' : ''}`;
       node.innerHTML = `
-        <img src="${brawlerImage(p.brawler, true)}" onerror="this.src='https://cdn.brawlify.com/brawlers/borders/${p.brawler.id}.png'" alt="${p.brawler.name}">
+        ${brawlerIconMarkup(p.brawler)}
         <strong>${p.name}</strong>
         <small>L${p.brawler.power}</small>
       `;
@@ -1486,9 +1502,9 @@ function renderEvents() {
   const search = ($('event-search')?.value || '').trim().toLowerCase();
   const mode = $('event-mode-filter')?.value || 'all';
   const slots = state.events.filter((slot) => (mode === 'all' || slot.event.mode === mode) && `${slot.event.map} ${modeLabel(slot.event.mode)}`.toLowerCase().includes(search));
-  setText('events-results-summary', `${slots.length} of ${state.events.length} rotation slots · Select a map to inspect its layout.`);
+  setText('events-results-summary', `${slots.length} of ${state.events.length} rotation slots · Select a map to inspect its layout`);
   if (!slots.length) {
-    holder.innerHTML = '<div class="empty-state"><strong>No maps in this view</strong>Try another game mode or a different map name.</div>';
+    holder.innerHTML = '<div class="empty-state"><strong>No maps in this view</strong>Try another game mode or a different map name</div>';
   }
 
   slots.forEach((slot) => {
@@ -1519,7 +1535,7 @@ function renderEvents() {
         <div class="event-meta-picks">
           <small>TOP RECOMMENDED PICKS</small>
           <div class="meta-picks-chips">
-            ${(slot.top_meta_picks || []).map((name) => brawlerNameMarkup(name, 'meta-pick-chip')).join('') || '<span class="section-results">No curated picks available.</span>'}
+            ${(slot.top_meta_picks || []).map((name) => brawlerNameMarkup(name, 'meta-pick-chip')).join('') || '<span class="section-results">No curated picks available</span>'}
           </div>
         </div>
         <button class="small-action event-card-action" type="button" aria-label="Preview ${escapeMarkup(slot.event.map)} map">Inspect map layout <span aria-hidden="true">↗</span></button>
@@ -1563,7 +1579,7 @@ function renderMetaTierlist() {
   if (!holder) return;
   holder.replaceChildren();
   if (!Object.keys(state.metaTierlist).length) {
-    holder.innerHTML = '<div class="empty-state"><strong>Tier list unavailable</strong>Curated recommendations will appear here when available.</div>';
+    holder.innerHTML = '<div class="empty-state"><strong>Tier list unavailable</strong>Curated recommendations will appear here when available</div>';
     return;
   }
 
@@ -1642,7 +1658,7 @@ function renderLeaderboard() {
   setText('ranking-summary-kind', isPlayers ? 'Ranked players' : 'Ranked clubs');
   setText('ranking-summary-top', !state.rankingsLoading && items?.length ? format(items[0].trophies) : '—');
   setText('ranking-summary-source', state.rankingsLoading ? 'Loading' : sourceLabel(source));
-  setText('ranking-results-summary', state.rankingsLoading ? `Loading ${region} rankings…` : `${items?.length || 0} ${isPlayers ? 'players' : 'clubs'} · ${source === 'DEMO' ? 'Demo standings shown; regional live data is unavailable.' : `${region} trophy standings · Select a tag to inspect a profile.`}`);
+  setText('ranking-results-summary', state.rankingsLoading ? `Loading ${region} rankings…` : `${items?.length || 0} ${isPlayers ? 'players' : 'clubs'} · ${source === 'DEMO' ? 'Demo standings shown; regional live data is unavailable' : `${region} trophy standings · Select a tag to inspect a profile`}`);
   $('tab-rankings-players')?.setAttribute('aria-pressed', String(isPlayers));
   $('tab-rankings-clubs')?.setAttribute('aria-pressed', String(!isPlayers));
   const podium = $('ranking-podium');
@@ -1666,7 +1682,7 @@ function renderLeaderboard() {
 
   if (state.rankingsLoading || !items || items.length === 0) {
     const emptyRow = document.createElement('tr');
-    emptyRow.innerHTML = `<td colspan="5"><div class="empty-state"><strong>${state.rankingsLoading ? 'Loading the standings' : 'No rankings available'}</strong>${state.rankingsLoading ? 'Fetching players and clubs for the selected region.' : 'Try another region to explore its trophy standings.'}</div></td>`;
+    emptyRow.innerHTML = `<td colspan="5"><div class="empty-state"><strong>${state.rankingsLoading ? 'Loading the standings' : 'No rankings available'}</strong>${state.rankingsLoading ? 'Fetching players and clubs for the selected region' : 'Try another region to explore its trophy standings'}</div></td>`;
     tbody.append(emptyRow);
     return;
   }
@@ -1723,19 +1739,19 @@ function renderClub(payload) {
   if (title) {
     title.textContent = 'Club Hub';
   }
-  setText('page-subtitle', `${payload.club.name} (${payload.club.tag}) • ${payload.club.members.length}/30 Members • ${format(payload.club.trophies)} Total Club Trophies • Min ${format(payload.club.required_trophies)} ★`);
+  setText('page-subtitle', `${payload.club.name} (${payload.club.tag}) • ${payload.club.members.length}/30 Members • ${format(payload.club.trophies)} Total Club Trophies • Min ${format(payload.club.required_trophies)}`);
 
   setText('club-view-name', payload.club.name);
   setText('club-view-tag', payload.club.tag);
-  setText('club-desc-text', payload.club.description || 'No club description provided.');
+  setText('club-desc-text', payload.club.description || 'No club description provided');
   setText('club-freshness', sourceLabel(payload.club.source));
   setText('club-total-trophies', format(payload.club.trophies));
   setText('club-member-count', `${payload.club.members.length} / 30`);
-  setText('club-required-trophies', `${format(payload.club.required_trophies)} ★`);
+  setText('club-required-trophies', `${format(payload.club.required_trophies)}`);
   setText('club-capacity-pill', `${payload.club.members.length} / 30`);
 
   const prestigeBadge = $('club-prestige-badge');
-  if (prestigeBadge) prestigeBadge.textContent = `⚡ ${(state.clubAnalytics.prestige_tier || 'ALLIANCE').toUpperCase()}`;
+  if (prestigeBadge) prestigeBadge.textContent = (state.clubAnalytics.prestige_tier || 'ALLIANCE').toUpperCase();
 
   const typeBadge = $('club-type-badge');
   if (typeBadge) typeBadge.textContent = `${(payload.club.type || 'OPEN').toUpperCase()} CLUB`;
@@ -1747,9 +1763,9 @@ function renderClub(payload) {
     dataLabel.className = `data-label ${isDemo ? 'demo' : 'official'}`;
   }
 
-  setText('club-avg-trophies', `${format(state.clubAnalytics.average_trophies)} ★`);
+  setText('club-avg-trophies', `${format(state.clubAnalytics.average_trophies)}`);
   setText('club-top-member-name', state.clubAnalytics.top_member_name || '—');
-  setText('club-top-member-trophies', `${format(state.clubAnalytics.top_member_trophies)} ★`);
+  setText('club-top-member-trophies', `${format(state.clubAnalytics.top_member_trophies)}`);
   setText('club-leadership-count', `1 Pres, ${state.clubAnalytics.vice_presidents_count || 0} VP, ${state.clubAnalytics.seniors_count || 0} Senior`);
   setText('club-capacity-status', payload.club.members.length >= 30 ? 'Full (30/30)' : `${30 - payload.club.members.length} spots open`);
   setText('roster-count-label', payload.club.members.length);
@@ -1825,11 +1841,11 @@ function renderClubRoleDonut(members) {
 function renderClubTrophyTiers(members) {
   const total = (members || []).length || 1;
   const tiers = [
-    { label: '30,000+ ★ (Elite)', count: (members || []).filter((m) => m.trophies >= 30000).length, color: 'linear-gradient(90deg, #ff0077, #ff5964)' },
-    { label: '28,000–29,999 ★ (Diamond)', count: (members || []).filter((m) => m.trophies >= 28000 && m.trophies < 30000).length, color: 'linear-gradient(90deg, #be8209, #ffd32e)' },
-    { label: '26,000–27,999 ★ (Gold)', count: (members || []).filter((m) => m.trophies >= 26000 && m.trophies < 28000).length, color: 'linear-gradient(90deg, #168cf0, #00d5ff)' },
-    { label: '24,000–25,999 ★ (Silver)', count: (members || []).filter((m) => m.trophies >= 24000 && m.trophies < 26000).length, color: 'linear-gradient(90deg, #2b9348, #55a630)' },
-    { label: '< 24,000 ★ (Cadet)', count: (members || []).filter((m) => m.trophies < 24000).length, color: 'linear-gradient(90deg, #5d7297, #8da4c4)' },
+    { label: '30,000+ (Elite)', count: (members || []).filter((m) => m.trophies >= 30000).length, color: 'linear-gradient(90deg, #ff0077, #ff5964)' },
+    { label: '28,000–29,999 (Diamond)', count: (members || []).filter((m) => m.trophies >= 28000 && m.trophies < 30000).length, color: 'linear-gradient(90deg, #be8209, #ffd32e)' },
+    { label: '26,000–27,999 (Gold)', count: (members || []).filter((m) => m.trophies >= 26000 && m.trophies < 28000).length, color: 'linear-gradient(90deg, #168cf0, #00d5ff)' },
+    { label: '24,000–25,999 (Silver)', count: (members || []).filter((m) => m.trophies >= 24000 && m.trophies < 26000).length, color: 'linear-gradient(90deg, #2b9348, #55a630)' },
+    { label: '< 24,000 (Cadet)', count: (members || []).filter((m) => m.trophies < 24000).length, color: 'linear-gradient(90deg, #5d7297, #8da4c4)' },
   ];
 
   const holder = $('club-trophy-bars');
@@ -1855,10 +1871,10 @@ function renderClubTrophyTiers(members) {
 
 function roleBadgeHtml(role) {
   const r = (role || 'member').toLowerCase();
-  if (r === 'president') return '<span class="role-badge role-president">👑 PRESIDENT</span>';
-  if (r.includes('vice')) return '<span class="role-badge role-vp">🛡 VICE PRES</span>';
-  if (r === 'senior') return '<span class="role-badge role-senior">⚔ SENIOR</span>';
-  return '<span class="role-badge role-member">👤 MEMBER</span>';
+  if (r === 'president') return `<span class="role-badge role-president">${sectionIconMarkup('icon_trophy.png')} PRESIDENT</span>`;
+  if (r.includes('vice')) return `<span class="role-badge role-vp">${sectionIconMarkup('classes/tank.png')} VICE PRES</span>`;
+  if (r === 'senior') return `<span class="role-badge role-senior">${sectionIconMarkup('classes/damage-dealer.png')} SENIOR</span>`;
+  return `<span class="role-badge role-member">${sectionIconMarkup('rarity-skull.svg')} MEMBER</span>`;
 }
 
 function hexColorFromSupercell(hex) {
@@ -1897,12 +1913,12 @@ function renderClubMembers(members) {
   const tbody = $('club-members-tbody');
   if (!tbody) return;
   tbody.replaceChildren();
-  setText('club-roster-summary', `${filtered.length} of ${members?.length || 0} members · Search by name or tag, then inspect a player profile.`);
+  setText('club-roster-summary', `${filtered.length} of ${members?.length || 0} members · Search by name or tag, then inspect a player profile`);
   BrawlBuddyMotion.enter(tbody.closest('.roster-table-wrap'), true);
 
   if (filtered.length === 0) {
     const emptyRow = document.createElement('tr');
-    emptyRow.innerHTML = '<td colspan="6"><div class="empty-state"><strong>No matching members</strong>Try another name or player tag.</div></td>';
+    emptyRow.innerHTML = '<td colspan="6"><div class="empty-state"><strong>No matching members</strong>Try another name or player tag</div></td>';
     tbody.append(emptyRow);
     return;
   }
@@ -1943,24 +1959,14 @@ function renderClubMembers(members) {
 }
 
 function renderOverviewMetrics() {
-  const metrics = [
-    { label: 'AVERAGE POWER', value: state.analytics?.average_power ?? '—', desc: 'Roster combat level' },
-    { label: 'MAX POWER 11', value: state.analytics?.power_11_count ?? 0, desc: 'Peak hypercharge ready' },
-    { label: 'PRESTIGED BRAWLERS', value: state.analytics?.prestige_brawler_count ?? 0, desc: 'Permanent Brawler Prestige' },
-    { label: 'TOTAL SHOWDOWN', value: format(state.analytics?.total_showdown_victories ?? 0), desc: 'Solo & duo survivor wins' },
-  ];
-  const holder = $('overview-metrics');
-  if (!holder) return;
-  holder.replaceChildren();
-  metrics.forEach((metric) => {
-    const card = document.createElement('article');
-    card.className = 'metric-card';
-    const label = document.createElement('span'); label.textContent = metric.label;
-    const value = document.createElement('strong'); value.textContent = metric.value;
-    const desc = document.createElement('small'); desc.textContent = metric.desc;
-    card.append(label, value, desc);
-    holder.append(card);
-  });
+  // Update the framed tiles in place so their artwork and labels stay intact.
+  const brawlers = state.player?.brawlers || [];
+  setText('brawler-count', format(brawlers.length));
+  setText('average-power', state.analytics?.average_power ?? '—');
+  setText('power-eleven', format(state.analytics?.power_11_count || 0));
+  setText('equipped-count', format(brawlers.filter((brawler) =>
+    (brawler.star_powers || []).length || (brawler.gadgets || []).length
+  ).length));
 }
 
 function brawlerImage(brawler, thumbnail = false) {
@@ -2013,7 +2019,7 @@ function renderQuickBrawlers() {
   holder.replaceChildren();
   [...state.ownedBrawlers].sort((a, b) => b.trophies - a.trophies).slice(0, 4).forEach((brawler) => {
     const link = document.createElement('a'); link.href = `/brawlers/${brawler.id}`; link.className = 'quick-brawler';
-    const visual = document.createElement('div'); visual.className = 'quick-visual'; addImageWithFallback(visual, brawler, 'quick-image');
+    const visual = document.createElement('div'); visual.className = 'quick-visual'; visual.innerHTML = brawlerIconMarkup(brawler, 'quick-image');
     const copy = document.createElement('div'); const name = document.createElement('strong'); name.textContent = brawler.name; const meta = document.createElement('span'); meta.textContent = `Power ${brawler.power} · ${format(brawler.trophies)} trophies`; copy.append(name, meta);
     const arrow = document.createElement('b'); arrow.textContent = '→'; link.append(visual, copy, arrow); holder.append(link);
   });
@@ -2728,7 +2734,7 @@ function renderCollectionPrestige() {
     button.classList.toggle('active', active);
     button.setAttribute('aria-pressed', String(active));
     button.disabled = !state.player;
-    button.setAttribute('aria-label', `${category.label}: ${state.player ? summary.counts[category.key] : 'unknown'} Brawlers. Filter roster`);
+    button.setAttribute('aria-label', `${category.label}: ${state.player ? summary.counts[category.key] : 'unknown'} Brawlers Filter roster`);
     const image = document.createElement('img');
     image.loading = 'lazy';
     image.decoding = 'async';
@@ -2801,7 +2807,7 @@ function renderBrawlers() {
     button.classList.toggle('active', selected);
     button.setAttribute('aria-pressed', String(selected));
     const label = button.dataset.buffieAvailability === 'buffies_available' ? 'Buffie Brawlers' : 'Non-Buffie Brawlers';
-    button.setAttribute('aria-label', `${label}: ${buffieCounts[button.dataset.buffieAvailability]} ${ownership === 'all' ? 'catalog' : ownership} Brawlers. Select again to clear`);
+    button.setAttribute('aria-label', `${label}: ${buffieCounts[button.dataset.buffieAvailability]} ${ownership === 'all' ? 'catalog' : ownership} Brawlers Select again to clear`);
   });
   setText('buffie-available-count', format(buffieCounts.buffies_available));
   setText('buffie-unavailable-count', format(buffieCounts.buffies_not_available));
@@ -2925,10 +2931,10 @@ function renderGuideProfile(guide, brawler) {
 
   if (!guide.hypercharge || guide.hypercharge.released === false || guide.hypercharge.name?.toLowerCase() === 'unreleased') {
     setText('hypercharge-name', 'Not Yet Released');
-    setText('hypercharge-description', 'Supercell has not yet introduced an official Hypercharge for this brawler.');
+    setText('hypercharge-description', 'Supercell has not yet introduced an official Hypercharge for this brawler');
   } else {
     setText('hypercharge-name', guide.hypercharge.name);
-    setText('hypercharge-description', guide.hypercharge.description || 'Hypercharge ability for this brawler.');
+    setText('hypercharge-description', guide.hypercharge.description || 'Hypercharge ability for this brawler');
   }
 
   const buildHolder = $('recommended-build');
@@ -2958,7 +2964,7 @@ function renderGuideProfile(guide, brawler) {
         iconWrap.className = 'build-spec-icon';
         const fallback = document.createElement('span');
         fallback.className = 'build-spec-icon-fallback';
-        fallback.textContent = type === 'gadget' ? 'G' : type === 'star_power' ? '★' : '◆';
+        fallback.textContent = type === 'gadget' ? 'G' : type === 'star_power' ? 'SP' : '◆';
         const iconUrl = getEquipmentImageUrl(item, type, brawler);
         if (iconUrl) {
           const image = document.createElement('img');
@@ -2992,7 +2998,7 @@ function renderGuideProfile(guide, brawler) {
     if (build.note) {
       const noteCard = document.createElement('div');
       noteCard.className = 'build-spec-note';
-      noteCard.innerHTML = `<p>${build.note}</p>`;
+      noteCard.innerHTML = `<p>${escapeMarkup(formatUiCopy(build.note))}</p>`;
       buildHolder.append(noteCard);
     }
   }
@@ -3005,7 +3011,7 @@ function renderGuideProfile(guide, brawler) {
       li.className = 'field-note-item strength-item';
       li.innerHTML = `
         <span class="field-note-bullet strength-bullet">✔</span>
-        <span class="field-note-text">${item}</span>
+        <span class="field-note-text">${escapeMarkup(formatUiCopy(item))}</span>
       `;
       strengthList.append(li);
     });
@@ -3019,7 +3025,7 @@ function renderGuideProfile(guide, brawler) {
       li.className = 'field-note-item caution-item';
       li.innerHTML = `
         <span class="field-note-bullet caution-bullet">!</span>
-        <span class="field-note-text">${item}</span>
+        <span class="field-note-text">${escapeMarkup(formatUiCopy(item))}</span>
       `;
       cautionList.append(li);
     });
@@ -3301,8 +3307,8 @@ async function renderMatchups(brawler, matchupsData = null, resetExpanded = true
     : data ? 'DATA UNAVAILABLE' : 'LOAD FAILED');
   setText('matchups-empty-title', data ? 'Matchup data unavailable' : 'Could not load matchup data');
   setText('matchups-empty-description', data
-    ? `Verified matchup and teammate win rates for ${brawler.name || 'this brawler'} are not available in the current dataset. Rankings will appear here once a verified sample is added.`
-    : 'Try the refresh button to load matchup and teammate data again.');
+    ? `Verified matchup and teammate win rates for ${brawler.name || 'this brawler'} are not available in the current dataset Rankings will appear here once a verified sample is added`
+    : 'Try the refresh button to load matchup and teammate data again');
 
   const favTitle = $('favorable-col-title');
   if (favTitle) {
@@ -3772,7 +3778,7 @@ async function renderDetail() {
     statusEl.className = `data-label ${brawler.owned ? '' : 'demo'}`;
   }
 
-  setText('detail-intro', guide.intro || (brawler.owned ? `${brawler.name} is Power ${brawler.power} on this account. Progression and owned equipment below come from the loaded player data.` : `${brawler.name} is part of the ${state.catalog.length}-brawler catalog but is not present in this account. Use the level journey below to preview future progression.`));
+  setText('detail-intro', guide.intro || (brawler.owned ? `${brawler.name} is Power ${brawler.power} on this account Progression and owned equipment below come from the loaded player data` : `${brawler.name} is part of the ${state.catalog.length}-brawler catalog but is not present in this account Use the level journey below to preview future progression`));
   setText('detail-power', brawler.owned ? brawler.power : '—');
   setText('detail-trophies', brawler.owned ? format(brawler.trophies) : '—');
   const bestTrophies = brawler.owned
@@ -3781,9 +3787,9 @@ async function renderDetail() {
   setText('detail-best-trophies', brawler.owned ? format(bestTrophies) : '—');
   renderPrestigeProgress(brawler);
   setText('attack-name', guide.attack?.name || 'Main attack');
-  setText('attack-description', guide.attack?.description || 'Detailed combat notes are not curated yet.');
+  setText('attack-description', guide.attack?.description || 'Detailed combat notes are not curated yet');
   setText('super-name', guide.super?.name || 'Super');
-  setText('super-description', guide.super?.description || 'Detailed combat notes are not curated yet.');
+  setText('super-description', guide.super?.description || 'Detailed combat notes are not curated yet');
   renderCombatKitStats(brawler, guide);
 
   const portraitEl = $('detail-portrait-icon');
@@ -3802,16 +3808,17 @@ async function renderDetail() {
   const howTo = $('how-to-list');
   if (howTo) {
     howTo.replaceChildren();
-    const steps = (guide.how_to_use || guide.how_to || [brawler.owned ? 'Review the current equipment and complete the highest-priority gap shown here.' : 'Unlock this brawler before planning account-specific equipment upgrades.']);
+    const steps = (guide.how_to_use || guide.how_to || [brawler.owned ? 'Review the current equipment and complete the highest-priority gap shown here' : 'Unlock this brawler before planning account-specific equipment upgrades']);
     setText('how-to-counter', `${steps.length} TIPS`);
     steps.forEach((text, index) => {
       const li = document.createElement('li');
       li.className = 'how-to-item';
-      let formattedText = text;
-      const colonIdx = text.indexOf(':');
+      const copy = formatUiCopy(text);
+      let formattedText = escapeMarkup(copy);
+      const colonIdx = copy.indexOf(':');
       if (colonIdx > 0 && colonIdx <= 30) {
-        const lead = text.slice(0, colonIdx).trim();
-        const rest = text.slice(colonIdx + 1).trim();
+        const lead = escapeMarkup(copy.slice(0, colonIdx).trim());
+        const rest = escapeMarkup(copy.slice(colonIdx + 1).trim());
         formattedText = `<strong>${lead}:</strong> ${rest}`;
       }
       li.innerHTML = `
@@ -3826,31 +3833,31 @@ async function renderDetail() {
 
   renderGuideProfile(guide, brawler);
   renderPowerLadder(brawler.owned ? brawler.power : 0, guide);
-  renderEquipment('gadget-list', guide.gadgets || [], brawler.gadgets, brawler.owned ? 'No Gadget data recorded.' : 'Unlock this brawler to track Gadgets.', 'gadget', brawler, guide);
-  renderEquipment('star-power-list', guide.star_powers || [], brawler.star_powers, brawler.owned ? 'No Star Power data recorded.' : 'Unlock this brawler to track Star Powers.', 'star_power', brawler, guide);
+  renderEquipment('gadget-list', guide.gadgets || [], brawler.gadgets, brawler.owned ? 'No Gadget data recorded' : 'Unlock this brawler to track Gadgets', 'gadget', brawler, guide);
+  renderEquipment('star-power-list', guide.star_powers || [], brawler.star_powers, brawler.owned ? 'No Star Power data recorded' : 'Unlock this brawler to track Star Powers', 'star_power', brawler, guide);
   const gearDescriptions = {
-    'SPEED': 'Increases movement speed by 15% when moving inside bushes.',
-    'HEALTH': 'Recover health 50% more effectively and quickly.',
-    'DAMAGE': 'Deals 15% extra damage when brawler health falls below 50%.',
-    'VISION': 'Reveals hidden opponents for 2.0 seconds after dealing damage to them.',
-    'SHIELD': 'Grants +900 extra consumable shield health (regenerates in 10s at max health).',
-    'GADGET COOLDOWN': 'Reduces Gadget cooldown by 15%.',
-    'RELOAD SPEED': 'Increases brawler basic attack reload speed by +15%.',
-    'SUPER CHARGE': 'Increases Super attack charge rate by +10%.',
-    'PET POWER': 'Spawnables and pets deal +25% extra damage or healing.',
-    'QUADRUPLETS': "Eve's Baby Boom Super hatches 4 alien hatchlings instead of 3.",
-    'THICC HEAD': "Tick's Head gains +1,000 extra health.",
-    'TALK TO THE HAND': "Increases Gene's Super hand range by 1 tile.",
-    'EXHAUSTING STORM': "Enemies inside Sandy's Sandstorm deal 20% less damage.",
-    'SUPER TURRET': "Mama's Kiss turret healing power is increased by +20%.",
-    'STICKY OIL': "Amber's oil puddles slow enemies down by 10%.",
+    'SPEED': 'Increases movement speed by 15% when moving inside bushes',
+    'HEALTH': 'Recover health 50% more effectively and quickly',
+    'DAMAGE': 'Deals 15% extra damage when brawler health falls below 50%',
+    'VISION': 'Reveals hidden opponents for 2.0 seconds after dealing damage to them',
+    'SHIELD': 'Grants +900 extra consumable shield health (regenerates in 10s at max health)',
+    'GADGET COOLDOWN': 'Reduces Gadget cooldown by 15%',
+    'RELOAD SPEED': 'Increases brawler basic attack reload speed by +15%',
+    'SUPER CHARGE': 'Increases Super attack charge rate by +10%',
+    'PET POWER': 'Spawnables and pets deal +25% extra damage or healing',
+    'QUADRUPLETS': "Eve's Baby Boom Super hatches 4 alien hatchlings instead of 3",
+    'THICC HEAD': "Tick's Head gains +1,000 extra health",
+    'TALK TO THE HAND': "Increases Gene's Super hand range by 1 tile",
+    'EXHAUSTING STORM': "Enemies inside Sandy's Sandstorm deal 20% less damage",
+    'SUPER TURRET': "Mama's Kiss turret healing power is increased by +20%",
+    'STICKY OIL': "Amber's oil puddles slow enemies down by 10%",
   };
 
   const gearGuide = (guide.gears || []).map((name) => ({
     name,
-    description: gearDescriptions[name] || gearDescriptions[name.toUpperCase()] || 'Available Gear option; confirm current unlock requirements in-game.'
+    description: gearDescriptions[name] || gearDescriptions[name.toUpperCase()] || 'Available Gear option; confirm current unlock requirements in-game'
   }));
-  renderEquipment('gear-list', gearGuide, brawler.gears, brawler.owned ? 'No Gear data recorded.' : 'Unlock this brawler to track Gears.', 'gear', brawler, guide);
+  renderEquipment('gear-list', gearGuide, brawler.gears, brawler.owned ? 'No Gear data recorded' : 'Unlock this brawler to track Gears', 'gear', brawler, guide);
   const liveHypercharge = Array.isArray(brawler.hypercharges) ? brawler.hypercharges[0] : null;
   const hyperchargeForDisplay = liveHypercharge
     ? { ...(guide.hypercharge || {}), ...liveHypercharge, released: true }
@@ -4124,7 +4131,7 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
         <span class="missing-status">COMING SOON</span>
       </div>
       <p style="margin:6px 0 0; color:#788ea8; font-size:11px; line-height:1.5;">
-        Supercell has not yet released an official Hypercharge for this brawler. Stay tuned for future Brawl Talk update releases!
+        Supercell has not yet released an official Hypercharge for this brawler Stay tuned for future Brawl Talk update releases!
       </p>
     `;
     holder.append(unreleasedCard);
@@ -4166,7 +4173,7 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
 
   // Description
   const description = document.createElement('p');
-  description.textContent = hypercharge.description || 'Official Hypercharge ability for this brawler.';
+  description.textContent = formatUiCopy(hypercharge.description || 'Official Hypercharge ability for this brawler');
 
   // Integrated Buffie Subfield for Hypercharge
   const buffieReleased = isBuffieReleased(brawler);
@@ -4178,8 +4185,8 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
   const buffieStatus = buffieReleased ? buffieState.label : 'COMING SOON';
   const buffieStatusClass = buffieReleased ? buffieState.className : 'unreleased-rank-pill';
   const buffieDescription = buffieReleased
-    ? (hypercharge.buffie_description || 'The exact Hypercharge Buffy effect is not available in the verified data snapshot.')
-    : `Buffies have not been released for ${brawler.name || 'this brawler'}.`;
+    ? (hypercharge.buffie_description || 'The exact Hypercharge Buffy effect is not available in the verified data snapshot')
+    : `Buffies have not been released for ${brawler.name || 'this brawler'}`;
   buffieBox.className = `buffie-subfield hypercharge-buffie ${buffieVisualState}`;
   buffieBox.innerHTML = `
     <div class="buffie-header-row">
@@ -4189,7 +4196,7 @@ function renderHypercharge(targetId, hypercharge, brawler, guide = null) {
       </div>
       <span class="buffie-rank-pill ${buffieStatusClass}">${buffieStatus}</span>
     </div>
-    <p class="buffie-effect">${buffieDescription}</p>
+    <p class="buffie-effect">${escapeMarkup(formatUiCopy(buffieDescription))}</p>
   `;
   setAssetImageSources(
     buffieBox.querySelector('.buffie-fandom-icon'),
@@ -4275,11 +4282,11 @@ function renderCombatStats(maxStats, level) {
       if (numericValue[2].trim()) {
         const detail = document.createElement('span');
         detail.className = 'stat-value-detail';
-        detail.textContent = numericValue[2].trim();
+        detail.textContent = formatUiCopy(numericValue[2].trim());
         valueEl.append(document.createTextNode(' '), detail);
       }
     } else {
-      valueEl.textContent = scaledValue;
+      valueEl.textContent = formatUiCopy(scaledValue);
     }
 
     const header = document.createElement('div');
@@ -4295,7 +4302,7 @@ function renderCombatStats(maxStats, level) {
     track.setAttribute('aria-valuemin', '0');
     track.setAttribute('aria-valuemax', '100');
     track.setAttribute('aria-valuenow', String(progress));
-    track.setAttribute('aria-valuetext', `${scaledValue}. ${isLevelScaled ? `${progress}% of the Level 11 value` : 'Unchanged by power level'}`);
+    track.setAttribute('aria-valuetext', `${scaledValue} ${isLevelScaled ? `${progress}% of the Level 11 value` : 'Unchanged by power level'}`);
     track.title = isLevelScaled
       ? `${progress}% of the Level 11 value`
       : 'This stat does not change with power level';
@@ -4351,7 +4358,7 @@ function renderPowerLadder(current, guide) {
     let unlockBadge = '';
     if (level === 7) unlockBadge = '<small class="milestone-badge">GADGET</small>';
     else if (level === 8) unlockBadge = '<small class="milestone-badge">GEAR SLOT 1</small>';
-    else if (level === 9) unlockBadge = '<small class="milestone-badge">STAR ★</small>';
+    else if (level === 9) unlockBadge = '<small class="milestone-badge">STAR</small>';
     else if (level === 10) unlockBadge = '<small class="milestone-badge">GEAR SLOT 2</small>';
     else if (level === 11) unlockBadge = '<small class="milestone-badge">HYPER ⚡</small>';
     
@@ -4454,9 +4461,9 @@ function createAbilityBuffie(brawler, type, ability, abilityOwned) {
 
   const description = document.createElement('p');
   description.className = 'buffie-effect';
-  description.textContent = released
-    ? (ability?.buffie_description || 'The exact Buffy effect is not available in the verified data snapshot.')
-    : `Buffies have not been released for ${brawlerName}.`;
+  description.textContent = formatUiCopy(released
+    ? (ability?.buffie_description || 'The exact Buffy effect is not available in the verified data snapshot')
+    : `Buffies have not been released for ${brawlerName}`);
 
   card.append(header, description);
   return card;
@@ -4536,7 +4543,7 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
     } else {
       const emblem = document.createElement('span');
       emblem.className = `ability-emblem ${type}-emblem`;
-      emblem.textContent = type === 'gadget' ? 'G' : type === 'star_power' ? '★' : '◆';
+      emblem.textContent = type === 'gadget' ? 'G' : type === 'star_power' ? 'SP' : '◆';
       emblemWrap.append(emblem);
     }
 
@@ -4565,7 +4572,7 @@ function renderEquipment(targetId, available, owned, emptyMessage, type, brawler
 
     // Ability Description
     const description = document.createElement('p');
-    description.textContent = item.description || 'Equipment recorded for this brawler.';
+    description.textContent = formatUiCopy(item.description || 'Equipment recorded for this brawler');
 
     row.append(header, description);
 
@@ -4841,7 +4848,9 @@ async function handleRoute(options = {}) {
   const accountReady = playerParam ? loadPlayer(playerParam) : !state.player ? loadInitialAccount() : Promise.resolve();
   await Promise.all([catalogReady, accountReady]);
 
-  if (state.page === 'brawlers') {
+  if (state.page === 'overview') {
+    globalThis.OverviewDashboard?.load();
+  } else if (state.page === 'brawlers') {
     if (!state.brawlers || state.brawlers.length === 0) {
       state.brawlers = mergeCatalog(state.ownedBrawlers);
     }

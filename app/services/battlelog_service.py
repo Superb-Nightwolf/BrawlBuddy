@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from pathlib import Path
 from typing import Any, Optional
 
@@ -14,6 +15,7 @@ class BattleLogService:
         self.client = client
         self.demo_path = demo_path or Path(__file__).resolve().parent.parent.parent / "data" / "demo_battlelog.json"
         self._cache: dict[str, list[BattleLogEntry]] = {}
+        self._cache_times: dict[str, float] = {}
 
     def parse_entry(self, raw: dict[str, Any]) -> BattleLogEntry:
         event_raw = raw.get("event", {})
@@ -125,7 +127,7 @@ class BattleLogService:
         if not tag.startswith("#"):
             tag = f"#{tag}"
 
-        if tag in self._cache:
+        if tag in self._cache and time.monotonic() - self._cache_times.get(tag, 0) < 60:
             return self._cache[tag], "CACHE"
 
         if self.client is None or not self.client.api_key:
@@ -136,6 +138,7 @@ class BattleLogService:
             raw_data = await self.client.get_battlelog(tag)
             items = [self.parse_entry(item) for item in raw_data.get("items", [])]
             self._cache[tag] = items
+            self._cache_times[tag] = time.monotonic()
             return items, "LIVE"
         except Exception as e:
             logger.warning(f"Failed to fetch live battle log for {tag}: {e}. Falling back to demo.")

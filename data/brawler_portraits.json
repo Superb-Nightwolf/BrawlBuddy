@@ -1,0 +1,950 @@
+{
+  "checked_at": "2026-10-06",
+  "portraits": {
+    "16000000": {
+      "name": "SHELLY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000000.png",
+      "local_url": "/assets/brawlers/portraits/16000000.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "48e8d4f00907527ae92d007419ccb95839a6fec1bff6b2a321438527b07861bf",
+      "local_sha256": "ccfe34dc3fd39a626b3d09d4c0e8a6dea0ec8948aa6d01a25027f32c4565855a"
+    },
+    "16000001": {
+      "name": "COLT",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000001.png",
+      "local_url": "/assets/brawlers/portraits/16000001.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "8b4ad099212735f45f90176fabc53506de89d4b38ab2bc0e17178cea2b95b792",
+      "local_sha256": "7b9e079df4f1e61ce4229c4814cbb22fde4ce8246e7a10a15d3e8fa25d16b481"
+    },
+    "16000002": {
+      "name": "BULL",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000002.png",
+      "local_url": "/assets/brawlers/portraits/16000002.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "2300a1cc741caad4ae1e7788300e08cbb71e7296929baeba25f7f5703f309f52",
+      "local_sha256": "70d064ae556073b72990e3d7ef0e420a819243c853832b0007967faa0440617c"
+    },
+    "16000003": {
+      "name": "BROCK",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000003.png",
+      "local_url": "/assets/brawlers/portraits/16000003.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "5ca8f35cf78422b1c31667dfb6c5e3567766f25dcbbf467a8b9d8b69bb8b09c2",
+      "local_sha256": "585fd88058a15b812b2f1e52873d2b488434c29a3de8ee08f2ffb0632d92e1d4"
+    },
+    "16000004": {
+      "name": "RICO",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000004.png",
+      "local_url": "/assets/brawlers/portraits/16000004.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "0313408737ab61d02b66cc9ac70d501f1ae4223950e0afc732faa52603af9efd",
+      "local_sha256": "5681a9ab994b0f22202d93c8355b81b4aa78a4a33f99794bdbb4e9f795303e3e"
+    },
+    "16000005": {
+      "name": "SPIKE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000005.png",
+      "local_url": "/assets/brawlers/portraits/16000005.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "b615c94376b7d5b38410cb6801aad17686333eaa5b9f512cd71f706ff239c439",
+      "local_sha256": "058e363fa1710f6ebf8033d32c4e4564a32491ae5177f53942685d34ce1c85eb"
+    },
+    "16000006": {
+      "name": "BARLEY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000006.png",
+      "local_url": "/assets/brawlers/portraits/16000006.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "5ab192c0c415834a9595cd4a9a06d56c0ba2990e486c1af584a7ea847bc094e1",
+      "local_sha256": "41aaed99411854ab2c86c4b873bebd8912a43675f41cd1cf9c0c3d0f167ef718"
+    },
+    "16000007": {
+      "name": "JESSIE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000007.png",
+      "local_url": "/assets/brawlers/portraits/16000007.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "3e3ae6edc9171174284bdab823eb0adb57c5d3d89c181e61bd6bd2ea8938f45c",
+      "local_sha256": "cba2f369d7ef24ea319b37c9f4e3153dc674e69457870a85748675d48ddd13c0"
+    },
+    "16000008": {
+      "name": "NITA",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000008.png",
+      "local_url": "/assets/brawlers/portraits/16000008.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "fc47a3aff9fa27478c15802bd77d032089af37dce8cc7fcbc8e62199ea4a46b2",
+      "local_sha256": "5e28b8259112450bbe1c2d220c15872f7d989e86dff73872fabf398bf8760f0c"
+    },
+    "16000009": {
+      "name": "DYNAMIKE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000009.png",
+      "local_url": "/assets/brawlers/portraits/16000009.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "73243c613d00cdfc8ce076e3620fd273c603c6566d83809d3ca7ccfff13d0765",
+      "local_sha256": "19b115465f73022eb34b1d6b55344c4b11b066d80a3877cbbf8323f3ed0de513"
+    },
+    "16000010": {
+      "name": "EL PRIMO",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000010.png",
+      "local_url": "/assets/brawlers/portraits/16000010.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "852353d332c8d75d69ef900c980511edcf071e97e1fa52b83fba8b9ba827192a",
+      "local_sha256": "da3ab41055827c6c62f7ee4a4c71a05440c18e0edffd6cb61a83d378a8a70e4d"
+    },
+    "16000011": {
+      "name": "MORTIS",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000011.png",
+      "local_url": "/assets/brawlers/portraits/16000011.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "9ca07719c53db354c11a326bae68f440a121f3eb6e84efdbb3f6cab56b6f0eaa",
+      "local_sha256": "2f0249e642d84db6380068a9579357d422a2edfb1baa0b0d1061cfcc6b757798"
+    },
+    "16000012": {
+      "name": "CROW",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000012.png",
+      "local_url": "/assets/brawlers/portraits/16000012.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "d2200b8a2ac541f75ad2c7f67f6f4b09bb7be29af1a0a5e8aa5dc2b49f28c6fe",
+      "local_sha256": "3164d27a7926c0765df9d96f4b59661de2e6c8ef086edb53939a8db38cc10ec4"
+    },
+    "16000013": {
+      "name": "POCO",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000013.png",
+      "local_url": "/assets/brawlers/portraits/16000013.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "ac1a1f7f92e4d29cb7e642d4c7a4c28ce699201be62d9eb06cbf22721fe0aa29",
+      "local_sha256": "39c118119059a2323fbca7b22fd738d1503d1aed949d28bbaa3601ab15e04343"
+    },
+    "16000014": {
+      "name": "BO",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000014.png",
+      "local_url": "/assets/brawlers/portraits/16000014.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "002352bdb82080c0aff12d1ef46feca66cf9019afd5455cbd3623faaf03da86e",
+      "local_sha256": "4969cae583fb767480dc51d97eefeb9b7812b0cebfe075c7a02a0e6b735b8336"
+    },
+    "16000015": {
+      "name": "PIPER",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000015.png",
+      "local_url": "/assets/brawlers/portraits/16000015.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "2978902adff06d265263534ca8d2c0398942f4fc3b8c7e6529f4777f01e120d2",
+      "local_sha256": "33e9d46f9bae8e81e870c63e757094cac093cebf9948c912a77730f4dec0a3f8"
+    },
+    "16000016": {
+      "name": "PAM",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000016.png",
+      "local_url": "/assets/brawlers/portraits/16000016.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "54d31402850ca262d674a9bd3fecfd379a9f3d3135d44b677468b0f81287bc45",
+      "local_sha256": "1ab0936443ed850b60c489ca6b643db455d28df2560418a40bbc25bd7b8e4164"
+    },
+    "16000017": {
+      "name": "TARA",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000017.png",
+      "local_url": "/assets/brawlers/portraits/16000017.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "abf9f8c47680057715ea259aa5b4e5698a8b8f7db5b350c562a0e31b504f00df",
+      "local_sha256": "3706d915668dc90e692fa14524ecd10b0f0ec9f418219c1ffa66b0c34710acc3"
+    },
+    "16000018": {
+      "name": "DARRYL",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000018.png",
+      "local_url": "/assets/brawlers/portraits/16000018.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "914bbd08dd4d6fb9b7b95994de19f356558e027e60e2e81bb5cf6d9c9562414c",
+      "local_sha256": "00144c09157dc333059dedb70bb253554d77e8054dbc29781c6ed3bca37a9ceb"
+    },
+    "16000019": {
+      "name": "PENNY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000019.png",
+      "local_url": "/assets/brawlers/portraits/16000019.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "2605ee86aa305f7116da4cce926f2f34f40d4685b66de6d4d93ab1a9261fd102",
+      "local_sha256": "da83a349509595bee9b2c5d4ed76b8e495e52025b21a0bbf0de160b36d596e5b"
+    },
+    "16000020": {
+      "name": "FRANK",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000020.png",
+      "local_url": "/assets/brawlers/portraits/16000020.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "b092dd86b61128b4aa29718769d51f3cb54968ba46f8a5d73ba58800d540af2c",
+      "local_sha256": "62da390d6a4de0c575b4e3434ef7ec27f7d68ca8133696cd87fce5f3efcbb997"
+    },
+    "16000021": {
+      "name": "GENE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000021.png",
+      "local_url": "/assets/brawlers/portraits/16000021.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "7d4bbd68d7fdd2062db4754cecf4f7759b7225508dcd523d5ae5ce44199f8fb3",
+      "local_sha256": "074a2d246b88e8af3ae16c7328bce8b99b208808561e0db793131e7417455249"
+    },
+    "16000022": {
+      "name": "TICK",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000022.png",
+      "local_url": "/assets/brawlers/portraits/16000022.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "9dc41f7e3bdbc6e00eb390cfcf8f004871dc0cfea0023fc3df8e9fd98bfd7eec",
+      "local_sha256": "8463241a1aef11f8059c28d72dce00ad47368f8ac6c4ed9bbaacd61be6ad3fd7"
+    },
+    "16000023": {
+      "name": "LEON",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000023.png",
+      "local_url": "/assets/brawlers/portraits/16000023.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "a8f90180ca8d946c24d1b26f026b8282ce4fd66a9bd732703362095ab1bf4fb8",
+      "local_sha256": "704ef2d6942c31f96dfcf83ecfd292145163500e9c595eeb69c13126791faee2"
+    },
+    "16000024": {
+      "name": "ROSA",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000024.png",
+      "local_url": "/assets/brawlers/portraits/16000024.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "3492a41e00f8a6db1e1c07f436155c41224f73b1b774815b2e0760dd7f288391",
+      "local_sha256": "aca90258f4cb34f8a2bfae380e4edea6e9aec502ead36ee13f032c5123f47442"
+    },
+    "16000025": {
+      "name": "CARL",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000025.png",
+      "local_url": "/assets/brawlers/portraits/16000025.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "473cf818fa5241ef0f094b90df82e8ffecac441e987285bb51e7c8acc8de87dd",
+      "local_sha256": "6bd0479121309473a4ff7373258480ce1b3e9edf1f6a12843aad903ed4d043eb"
+    },
+    "16000026": {
+      "name": "BIBI",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000026.png",
+      "local_url": "/assets/brawlers/portraits/16000026.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "0538e42837bb35206608ad21b4f8710f3f0488f9db6ae8dceed3ed15d27714ec",
+      "local_sha256": "f60e9e095a5e4ec98a6fd827dd1e1ed93ca6d759535f167e29c8702366b85814"
+    },
+    "16000027": {
+      "name": "8-BIT",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000027.png",
+      "local_url": "/assets/brawlers/portraits/16000027.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "297605ff88a18e64412cc9a11b892780480661cb7c76f44ba0d47bffd8e0af60",
+      "local_sha256": "8eae653e427d671a1cd450c86ac7b7cf5f3f06800fb6e94a0f415860aada6438"
+    },
+    "16000028": {
+      "name": "SANDY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000028.png",
+      "local_url": "/assets/brawlers/portraits/16000028.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "d577ec6192078c11d75572170adf312262af87c3327fe4e0dbe11edc95b9bbe6",
+      "local_sha256": "1047a61c2af640b7636120c0b471dcf3f0b96485cfac2cd3f8cf2981e47423dc"
+    },
+    "16000029": {
+      "name": "BEA",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000029.png",
+      "local_url": "/assets/brawlers/portraits/16000029.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "711882c6886682ce6b4c2ad4d78b41e8fefffb57f98dbf6b1e44218f1bd6439d",
+      "local_sha256": "091326db4e6e748262a07a318b08881f1a4d9ddbfaa31de3371d39aae4118901"
+    },
+    "16000030": {
+      "name": "EMZ",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000030.png",
+      "local_url": "/assets/brawlers/portraits/16000030.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "7517dbfbd33aaed595fe25b62df6637626d648ad381d96a77b5204792773f74a",
+      "local_sha256": "5739150a359f997a5f8c73d30e1892343c6bae4bc0f8f2f901d6fa8238b1b25f"
+    },
+    "16000031": {
+      "name": "MR. P",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000031.png",
+      "local_url": "/assets/brawlers/portraits/16000031.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "9b3ec92ee7396f214c7f7ccd92667de124976e3d73aa6221b78264cd8a0afbf9",
+      "local_sha256": "039f5c86734627d59cc6be44f509d060a4bb2dce7d0ca5d71a3f1993106ef6aa"
+    },
+    "16000032": {
+      "name": "MAX",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000032.png",
+      "local_url": "/assets/brawlers/portraits/16000032.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "04d1afc143be0a7fd66292d0b85279a113a1c278b6265b84392d78f7233810fa",
+      "local_sha256": "4350e77dbd0f7787903dedd9c1271cf0eb91a78df445c5f4ae6834402e33001f"
+    },
+    "16000034": {
+      "name": "JACKY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000034.png",
+      "local_url": "/assets/brawlers/portraits/16000034.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "2cfa74141be3da88efdce14309b30834c4346f2d9230ac751e2ff89c2cb2de56",
+      "local_sha256": "47718dc7a7984db9e8133bd3ac6faf714966f34b36ec443357d5fea56ee90a81"
+    },
+    "16000035": {
+      "name": "GALE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000035.png",
+      "local_url": "/assets/brawlers/portraits/16000035.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "f2d6ab08c31b888615a92f7efa99bf1ea96eb5591257d584930c7097f3952450",
+      "local_sha256": "84e4e9fb060b25ab47eb4ae65f1547cdaf7bcba2516001740f0aaffdf47c1682"
+    },
+    "16000036": {
+      "name": "NANI",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000036.png",
+      "local_url": "/assets/brawlers/portraits/16000036.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "dc8e747359503c6d3357fb21bb0c0a98f78d8fd60358cb889d9552a83645ac79",
+      "local_sha256": "ad61294a8a4009e22689089844a4b95cdb0f86e92eef5b497e7f7a803873944a"
+    },
+    "16000037": {
+      "name": "SPROUT",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000037.png",
+      "local_url": "/assets/brawlers/portraits/16000037.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "383c87ad1089cc7499748501df5767accae15f38e0b7270f374d7210e9c83249",
+      "local_sha256": "832c814cc4e6b42ae4759af150036550e4d40e146cc2269232239e5802e64265"
+    },
+    "16000038": {
+      "name": "SURGE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000038.png",
+      "local_url": "/assets/brawlers/portraits/16000038.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "fae33f0f848c9b83fa0f24c3d6087f99d457de83c829c308f5d14cb1f81b3cd5",
+      "local_sha256": "0f3961d51d500986d136cc34d68b0e9e5c4d1762310393255484c50b5a376430"
+    },
+    "16000039": {
+      "name": "COLETTE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000039.png",
+      "local_url": "/assets/brawlers/portraits/16000039.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "ab9465181b63e71f7811c775d04bf3756dde4b71155dac2f4023bfd9976d0718",
+      "local_sha256": "a49ae1b837d0aecd0267e02761c5d8979f1590df72b807193e3ba4731ce5ee1c"
+    },
+    "16000040": {
+      "name": "AMBER",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000040.png",
+      "local_url": "/assets/brawlers/portraits/16000040.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "979d6e884eefcd9afca6ee556cfef318dcacecb3bede750cecf6ff2844d4e462",
+      "local_sha256": "bed38fb4920774cf64b3428512a8c82eb1e315cd39d3f4a56edbb3af936e9c40"
+    },
+    "16000041": {
+      "name": "LOU",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000041.png",
+      "local_url": "/assets/brawlers/portraits/16000041.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "0856638ae416f963ad529d99d5f9714379c9f3802ccc11188bfba0ecc2d8b364",
+      "local_sha256": "b07a87e4cc131223fdf7a5d58440f679b8fe37d8b4ff36e334d521bd459b0dbd"
+    },
+    "16000042": {
+      "name": "BYRON",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000042.png",
+      "local_url": "/assets/brawlers/portraits/16000042.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "965c5871d9110f0194faac4f8724a09d8270f805cdb40908d98960f42af63e50",
+      "local_sha256": "e2783e7792dee8d12bf098dafa4f86ef10bd18c4eafbc4449d6d85eea0daeba3"
+    },
+    "16000043": {
+      "name": "EDGAR",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000043.png",
+      "local_url": "/assets/brawlers/portraits/16000043.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "d610fcc456b9da8fde5229cca1cff84d7d6d85b459f1c733b53868c7e7d9615b",
+      "local_sha256": "368eb2f52f347d60ea4883ec6b710f5acca1d9424cdeee28eae4757afcab7ff4"
+    },
+    "16000044": {
+      "name": "RUFFS",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000044.png",
+      "local_url": "/assets/brawlers/portraits/16000044.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "e143eea4d831d72932a93ade9c0faa2561772cb6bccaf59d7a5168ebba087dff",
+      "local_sha256": "af4dfecbd413747bf0f362f0880293456e168ce9a9fad19e5766736102ee4d02"
+    },
+    "16000045": {
+      "name": "STU",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000045.png",
+      "local_url": "/assets/brawlers/portraits/16000045.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "d56f617427173a332b33a44ba09ce34d27fde943ac72291d80e9bdb89e37e500",
+      "local_sha256": "711595e2bc4608b6a89c799a587723c8f00980ccfbc7b49f4bc933a3cba0f27f"
+    },
+    "16000046": {
+      "name": "BELLE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000046.png",
+      "local_url": "/assets/brawlers/portraits/16000046.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "6875ff65f3a99b1da7264abea4a8841bd2f76b1f098994cb3daa419b85853e6e",
+      "local_sha256": "b75787d9c6af5eeb3994d441f56127b84afd6ebd2549dc97a31a4bb0787d43f4"
+    },
+    "16000047": {
+      "name": "SQUEAK",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000047.png",
+      "local_url": "/assets/brawlers/portraits/16000047.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "8908d0331c6aaad7a0b456a3f66ef5d95d354718e0d3f1575fc4e5ee050eba70",
+      "local_sha256": "7ab55f47c173d067e969017230a16d102edd7f8695a9e66b623a88178540fff6"
+    },
+    "16000048": {
+      "name": "GROM",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000048.png",
+      "local_url": "/assets/brawlers/portraits/16000048.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "1394a4abebb80edbe60f5241f9f82fb04cd514708db9d8f86d8b473489a2bbcd",
+      "local_sha256": "b604e5d5792c65db2574efea2e16e62352ab64bf5deae1a306af35ba7ca67625"
+    },
+    "16000049": {
+      "name": "BUZZ",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000049.png",
+      "local_url": "/assets/brawlers/portraits/16000049.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "bb111ab68ab58880968c9f0ab2408c3fd8a5588b7720ed6b7e92e29aa52ca981",
+      "local_sha256": "f8e899ff55793cc8cee5d721889de55f3a2e7416b99d426421207caa1fba494b"
+    },
+    "16000050": {
+      "name": "GRIFF",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000050.png",
+      "local_url": "/assets/brawlers/portraits/16000050.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "dcd583608829ce488e26081dc44cdeb227cec6335297704d3241086835192b57",
+      "local_sha256": "ecc130f4dcb91aa8b73d5c33e33ca2fd2d9be51e317cf91c96b6e3a6ce087b4a"
+    },
+    "16000051": {
+      "name": "ASH",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000051.png",
+      "local_url": "/assets/brawlers/portraits/16000051.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "ee3c9a4e8bb6f22dc0c7edfd8e0646aa1f1a22f07edf5a3ce2993e66875c63c2",
+      "local_sha256": "cec8c0d3fd44d9070caaa974d36d653174ba526fe72679a8bc1bb408f2caa850"
+    },
+    "16000052": {
+      "name": "MEG",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000052.png",
+      "local_url": "/assets/brawlers/portraits/16000052.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "7943a6cfba471bb254d362b336244dbd6281b73d33fef8fa5f92aa23b261cf1e",
+      "local_sha256": "ec132b0daf020e4a00d201648503ac968c66444a6e86932132686f6509562523"
+    },
+    "16000053": {
+      "name": "LOLA",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000053.png",
+      "local_url": "/assets/brawlers/portraits/16000053.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "2462e81b6f0a9d72c138209c57391a4e8eaa982fe4dc7d467ae360ca322ce0b2",
+      "local_sha256": "a26329993971031197644ec0e5f11b17374945ca8dc12729b87329ff42557fe2"
+    },
+    "16000054": {
+      "name": "FANG",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000054.png",
+      "local_url": "/assets/brawlers/portraits/16000054.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "fbd3290b261a22ebd8977f23192b9a7f38b232bf6e606a9c00738acac47f3ce5",
+      "local_sha256": "a35879f4cb1ce9af840f41afaca103c20c88b631702ee4e391f5298b7e2618c9"
+    },
+    "16000056": {
+      "name": "EVE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000056.png",
+      "local_url": "/assets/brawlers/portraits/16000056.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "adfc0ce662a061ee66552690129b25ba3c123f05502b5dc944a696d74d875528",
+      "local_sha256": "48988e9035bae3784697ec5dbfef958136a617a7a6711b661628b8b14ba56250"
+    },
+    "16000057": {
+      "name": "JANET",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000057.png",
+      "local_url": "/assets/brawlers/portraits/16000057.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "0adde30e30b7b9929ba9fc9818b429a0cd6e2a3193f8699676519404f62d1469",
+      "local_sha256": "6a4fd3b73df4eaa0810241f8fabcfa6a3e70364202900b22dae227ebc722f888"
+    },
+    "16000058": {
+      "name": "BONNIE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000058.png",
+      "local_url": "/assets/brawlers/portraits/16000058.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "b9d8e9a22e6acd8dff4bb2b6097cf103717ac25ccbd37e39d84811b32bc35c76",
+      "local_sha256": "cdf03882f099d596dd497c06964bb768fc0fc559e326cb36f9147d5fb299e65a"
+    },
+    "16000059": {
+      "name": "OTIS",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000059.png",
+      "local_url": "/assets/brawlers/portraits/16000059.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "15335add62545220e4444130bdd4d5e40df942f52df744e0c390e3c6fdcfe2a7",
+      "local_sha256": "2bcccf7fc5f191bb18514efecc112058807e7185d773add03f47c6ac7f781688"
+    },
+    "16000060": {
+      "name": "SAM",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000060.png",
+      "local_url": "/assets/brawlers/portraits/16000060.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "591e50430872a93c88390c5cf7eaea8418cdb63e993d071963c708544036c662",
+      "local_sha256": "5e06c746be63299b4957fefbf56f47f84cebbca0999ac5f76c8ae311018a7217"
+    },
+    "16000061": {
+      "name": "GUS",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000061.png",
+      "local_url": "/assets/brawlers/portraits/16000061.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "3d66b8b160b33fcf21929244f4c5589ca48edfa81a1c9d90abca6b651ea0f359",
+      "local_sha256": "784b055e4d23d21f056e62e6f77f555d284b393538b1a39fcb3856f55e861002"
+    },
+    "16000062": {
+      "name": "BUSTER",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000062.png",
+      "local_url": "/assets/brawlers/portraits/16000062.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "95f57534071edaa8c97da9c2463d253be39b3fa69fbb809705e9bde6b04ed265",
+      "local_sha256": "3f8bcca299f215833ed52df0a800ee768fb430604fdbc2c06cb84b8a71617ae8"
+    },
+    "16000063": {
+      "name": "CHESTER",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000063.png",
+      "local_url": "/assets/brawlers/portraits/16000063.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "75f1510aadf6ba9b3dfab0b01633395bcb2caf71ebb0f71a956db15207472a53",
+      "local_sha256": "2267db7e5d27552cb78e2fbe0ad6c91a3ca63d9b189018be26a48571d538cd43"
+    },
+    "16000064": {
+      "name": "GRAY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000064.png",
+      "local_url": "/assets/brawlers/portraits/16000064.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "56b072e815fe65ab85356262a73d2c6c5f8f1383d0fb96600f02e004f5456f9a",
+      "local_sha256": "3b68208d40e0840b799e34c1909bfc16d41aab1f922fb29b7f478e51ccb5b59c"
+    },
+    "16000065": {
+      "name": "MANDY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000065.png",
+      "local_url": "/assets/brawlers/portraits/16000065.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "65b9efdf9ee8457c2b9907aa621d85a06cd6d77def41633900c082bf88b99e22",
+      "local_sha256": "00de6f4e64cee7dcfe534c4be7d17e712da3d26fd3f76b665d5664f771be2315"
+    },
+    "16000066": {
+      "name": "R-T",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000066.png",
+      "local_url": "/assets/brawlers/portraits/16000066.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "d8162cc92e8fa1d9e95bd53983d3a44421e240dce2412c1a246fa6e8115750c0",
+      "local_sha256": "63ab4c325da11f0f05205d541a0b6562e64297d8c0518d59f806fc02a1397d9d"
+    },
+    "16000067": {
+      "name": "WILLOW",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000067.png",
+      "local_url": "/assets/brawlers/portraits/16000067.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "420913bfc97b5290f97f5d80a8b46edfce9c534cb6f5a594375c59048b019b5b",
+      "local_sha256": "38c4c296724c9e69991539f8adeebb8deb113143a58eb1d631df680807ffbf77"
+    },
+    "16000068": {
+      "name": "MAISIE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000068.png",
+      "local_url": "/assets/brawlers/portraits/16000068.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "0eb3623f444d02973d0a0cecf747a7d0a599c4d6858331c7dcf03961ff54f2b2",
+      "local_sha256": "5e7c887b7af2f11f5ca44c8f8aa01167e4690b7146d86b9558bb2d64c130b139"
+    },
+    "16000069": {
+      "name": "HANK",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000069.png",
+      "local_url": "/assets/brawlers/portraits/16000069.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "82293d8b5c3e385c5b56afc75cabd5ea424f529dd633bc39f59e6f17ddbea356",
+      "local_sha256": "46fd09e25ebbff5974362e6b5454bcb4c899e6031ea4d5a5fe64e1ff3d6ee9c1"
+    },
+    "16000070": {
+      "name": "CORDELIUS",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000070.png",
+      "local_url": "/assets/brawlers/portraits/16000070.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "39861ede1c8c653e6e4eb87dbe45169f044f0ea8c4da2f10c841746620b07cbc",
+      "local_sha256": "c36d85761538c5d95a0d53f7af24b387232702d7fd0a3fa59450c0977bda638f"
+    },
+    "16000071": {
+      "name": "DOUG",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000071.png",
+      "local_url": "/assets/brawlers/portraits/16000071.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "7953c9c6a4365ac04ea79a6b36a8fddb7eb5335f39e93de1b7e24ab83b95ad4b",
+      "local_sha256": "71426d483b490129ff437c448ef016ab671b73a88b3fc7ce43274d9c6381b558"
+    },
+    "16000072": {
+      "name": "PEARL",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000072.png",
+      "local_url": "/assets/brawlers/portraits/16000072.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "d56d5c5f401ae589689121f581c06d7af2c182bf782143bdbba33affd689a518",
+      "local_sha256": "25cdf7e3939f263516f632f38eb370930ad34043541d004d1e671090389a944d"
+    },
+    "16000073": {
+      "name": "CHUCK",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000073.png",
+      "local_url": "/assets/brawlers/portraits/16000073.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "ec7e9a1b4237f0f76d72df5b938cd100baa19b090df551bc7e732b901c9af4ff",
+      "local_sha256": "4c4bfd390ab407c7ceed17144f6054ab7fd01d460d0be3084583e175be9a6c3f"
+    },
+    "16000074": {
+      "name": "CHARLIE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000074.png",
+      "local_url": "/assets/brawlers/portraits/16000074.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "7c76e0af8750d378ecf12cd8aaa87c1294f10dcf4755d38a282555e7e38b22a5",
+      "local_sha256": "f672c7af68f552add2fa7377755ae53dbfd642c9f0a741d10c18dc6261dc9b22"
+    },
+    "16000075": {
+      "name": "MICO",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000075.png",
+      "local_url": "/assets/brawlers/portraits/16000075.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "c2aa04e882d710d653ca6d351f72e547368a63d1611bac5fd2b9cb458313b58c",
+      "local_sha256": "1b74b26ccc8acd316e4a15e3948ff3fa9cb7f00e024ffdcd48cb70e09c249f5c"
+    },
+    "16000076": {
+      "name": "KIT",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000076.png",
+      "local_url": "/assets/brawlers/portraits/16000076.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "94391d556638e483b55d896f7618b304435a47b18d6eb31173076d709feda9f9",
+      "local_sha256": "38ba7f9dc29fe8d988566b4e0d13e18642d83de29db7492d003798908eadffb6"
+    },
+    "16000077": {
+      "name": "LARRY & LAWRIE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000077.png",
+      "local_url": "/assets/brawlers/portraits/16000077.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "0a405a508ae650381c125f5485679fbeb92aa8523094172d42d6ca1c5362e3c7",
+      "local_sha256": "d84741276c6fa13e462a630af6afbaacb20351896f2ffa6b8625c6695adbb5b7"
+    },
+    "16000078": {
+      "name": "MELODIE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000078.png",
+      "local_url": "/assets/brawlers/portraits/16000078.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "095515ff17ae58f14219062f97759e2f4955668cbd6d38541350e2921ec687c7",
+      "local_sha256": "462a983b62e18f1371ec119180f9f9525d003bb19ef3dfee7c1bcd83f50ac61a"
+    },
+    "16000079": {
+      "name": "ANGELO",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000079.png",
+      "local_url": "/assets/brawlers/portraits/16000079.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "32c74020c24cd8fc95acd4fbcaa41b40f506b6ca217c870eb95e873842faa1da",
+      "local_sha256": "9882a11fb0d470ad6126d0c5e49af95df9504d18f6f0c6ba3fdccf6da0db2d7c"
+    },
+    "16000080": {
+      "name": "DRACO",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000080.png",
+      "local_url": "/assets/brawlers/portraits/16000080.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "6b0aebfd2414974b068e3898cba87de172da0259dcba3273493ab1103dfa3a27",
+      "local_sha256": "1db17a40a6788d4381afefd55cd3fbd6f2c507222550b4bca4ea7fc9f56ab3f8"
+    },
+    "16000081": {
+      "name": "LILY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000081.png",
+      "local_url": "/assets/brawlers/portraits/16000081.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "aa115a4c81291a2a7204442b92464120bf1dd14f47034380ceead9bcd2bd7410",
+      "local_sha256": "b89ae034a0cf6f60040101355696d94374f8a14bd659c91ca109adf3d2a6fe67"
+    },
+    "16000082": {
+      "name": "BERRY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000082.png",
+      "local_url": "/assets/brawlers/portraits/16000082.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "fac73b3d06a4f3a9fb4ba521bfd5ede3222c0412ac3e0e57f7de92fedacb4634",
+      "local_sha256": "749f5ff8c0ebbc44a5f2d68f0d7a8391cf5cbdc1f7ede701e3880a671a1c6d1c"
+    },
+    "16000083": {
+      "name": "CLANCY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000083.png",
+      "local_url": "/assets/brawlers/portraits/16000083.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "907d9c2468cb2b93e09f6f22f4e2fe24d2ed7a5beb70be34c1ae3b84bb27c347",
+      "local_sha256": "1928e7697bd5323e441d71f0f599e7c8d149c1b589b4f3a0d1788274ead454cc"
+    },
+    "16000084": {
+      "name": "MOE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000084.png",
+      "local_url": "/assets/brawlers/portraits/16000084.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "1b06f4e3aff02108d30866e486867c0a774338b9b4a490471cc17ff7bcf4d354",
+      "local_sha256": "37946c3ab5c29dddec97d840500db718e5d4fd129e063ffc62801a044668ab59"
+    },
+    "16000085": {
+      "name": "KENJI",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000085.png",
+      "local_url": "/assets/brawlers/portraits/16000085.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "7607daf803970d52ea7b87d03e03093d53a7d5c3255f33f24232980e41a63250",
+      "local_sha256": "6b89b3f03b5b00e2312223689b663ebf13b6efbab085172dd4bcf68f9a97360e"
+    },
+    "16000086": {
+      "name": "SHADE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000086.png",
+      "local_url": "/assets/brawlers/portraits/16000086.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "e1898bc82906fb7844c143eaa50971a1709416853272ddc58fde234f0d82540d",
+      "local_sha256": "91f97b0562178f335ec504afe336762b562a68ce01e6af37bced56f2f229acd9"
+    },
+    "16000087": {
+      "name": "JUJU",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000087.png",
+      "local_url": "/assets/brawlers/portraits/16000087.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "deeee1c16412aad4e3b2f356b3fa573c66fd9c92c1a052c113a605945a1a08d8",
+      "local_sha256": "e692b028caddc5ae832b76c7aa809129925a743790af51244ecbee49b8dfe4bc"
+    },
+    "16000089": {
+      "name": "MEEPLE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000089.png",
+      "local_url": "/assets/brawlers/portraits/16000089.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "a954c8d26203ce3ab7e7ce3cd3da195e4adfa13d15a68d581b4bc47b0979a98a",
+      "local_sha256": "202f9dacf3b7aadd6f6b2e5e602cbfbe4d1915e84505fcd17629dce4fdaa4226"
+    },
+    "16000090": {
+      "name": "OLLIE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000090.png",
+      "local_url": "/assets/brawlers/portraits/16000090.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "1899e25a67297bca3ed5fb79112656bc23dd557a7f4abc0b9f8c2d795d75a47e",
+      "local_sha256": "6c2c8a2a521c079c150e554ade508603d960b50a749967a295a59903f812d30b"
+    },
+    "16000091": {
+      "name": "LUMI",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000091.png",
+      "local_url": "/assets/brawlers/portraits/16000091.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "e9a6c978754bbbb0c8fdc2f678f3fb07cbc1de6a4f66a664dcb8ac440e72d5a6",
+      "local_sha256": "b86b9b0dfc88ea85b59232df4ddb61a1d921c5c9ab4c117cb04189041cfb7eb7"
+    },
+    "16000092": {
+      "name": "FINX",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000092.png",
+      "local_url": "/assets/brawlers/portraits/16000092.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "2fe4f22ff988b80f06743b6bd79b13f3ff982e128c93edc26c55554c7cec4745",
+      "local_sha256": "7385e870229a581a186e77f8e6a80f50dc04166381ff1137b46966cf33c6c00d"
+    },
+    "16000093": {
+      "name": "JAE-YONG",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000093.png",
+      "local_url": "/assets/brawlers/portraits/16000093.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "1d86b8ac85f92beaaa8c2bc3082e252fa7dc7b193a4e9576e3e135ba2e12091f",
+      "local_sha256": "65a877038be699aed31526bae913c779a4570e63c2925ff566f4aec07cb4c1a6"
+    },
+    "16000094": {
+      "name": "KAZE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000094.png",
+      "local_url": "/assets/brawlers/portraits/16000094.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "4778b1767b78990ab4aff3bc91fcc5829b81b658e1daf94a118a4bdcec81bca3",
+      "local_sha256": "793783ac0f6a0edd485c90c24c51762c4194c1ae7886909fde8f08024c8ae18a"
+    },
+    "16000095": {
+      "name": "ALLI",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000095.png",
+      "local_url": "/assets/brawlers/portraits/16000095.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "f14130a751a8495b2a419cad7a011255ce208983e2b86776a0819353be72e4ec",
+      "local_sha256": "03f08873ac18ee597e7dccc88552e2465e12264f4d8c9c57319de835dadbde2c"
+    },
+    "16000096": {
+      "name": "TRUNK",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000096.png",
+      "local_url": "/assets/brawlers/portraits/16000096.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "69935816ee5b0b80e6d4646cbfcb0f187bafa9380fdbff75da140bc853d278b3",
+      "local_sha256": "982730b597c0b1ebb2eed9a794ee3e153cf5fd7640b5cab2c8531a66f45a3b3e"
+    },
+    "16000097": {
+      "name": "MINA",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000097.png",
+      "local_url": "/assets/brawlers/portraits/16000097.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "96cfc1bd7c4b140a2b858637adbf9ef08f0a211b59b75e74e2e79a00eb1d9601",
+      "local_sha256": "163fc43bfcf735d961b05d365cc164e9cd6fc3262d28028367d3771e0b3b642b"
+    },
+    "16000098": {
+      "name": "ZIGGY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000098.png",
+      "local_url": "/assets/brawlers/portraits/16000098.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "c1a3e178ae57a606f265aebf1bc2f8e4f1dc9a6f5ed55e4ecd6f2b5b71327d29",
+      "local_sha256": "20ebff84908b4a3680447e591b33a7bc912254d1cd344d874a85e09d8d9a8b60"
+    },
+    "16000099": {
+      "name": "PIERCE",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000099.png",
+      "local_url": "/assets/brawlers/portraits/16000099.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "b85b1afadb619d6013dd497bd2732254224c167be02f56a4d516f845c6382f3b",
+      "local_sha256": "fa11fab7b978116712660dcdb4c8fd70b95a9110a50d65c2e3454884f97fcaa9"
+    },
+    "16000100": {
+      "name": "GIGI",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000100.png",
+      "local_url": "/assets/brawlers/portraits/16000100.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "fe82868551ea55b3839576bb276ef02395e3b4e3c0a51152f9d620a40b3677f8",
+      "local_sha256": "5a6dc87d0bd85fc5ce72656f656156d2a4d936c15246d973ce2207cd696fe628"
+    },
+    "16000101": {
+      "name": "GLOWY",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000101.png",
+      "local_url": "/assets/brawlers/portraits/16000101.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "781052ad8888c4aecf66c8933806741742130d3276a0b27126bf0b37046ce121",
+      "local_sha256": "cd32412d5ec5f1bc273e2786956e6ca62d26509188dff50aa727935c215197b5"
+    },
+    "16000102": {
+      "name": "SIRIUS",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000102.png",
+      "local_url": "/assets/brawlers/portraits/16000102.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "b1746b7dd1245e5ea20c606b6b250a38aaa34b4775aae8f3b2fec4d50784db01",
+      "local_sha256": "f9f29a581f2b24e6216efa82c648f0302b511331d1ac3ba65e5241858085c5bd"
+    },
+    "16000103": {
+      "name": "NAJIA",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000103.png",
+      "local_url": "/assets/brawlers/portraits/16000103.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "b6638a76411a1f1f22e78a48fb47376deaf3bafbca9c5d45148cc284ed63dd65",
+      "local_sha256": "7eb3c3344401fa42b34118843b3001c9bcbcec490125a9a3acf2a47113eaf157"
+    },
+    "16000104": {
+      "name": "DAMIAN",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000104.png",
+      "local_url": "/assets/brawlers/portraits/16000104.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "503c20d40ec8bddca3943e3b3668c7b990ab0cc44b38444b6cbfd1b0a01870e8",
+      "local_sha256": "9d4874224bb286ca596fff1b296d46e14bd3f2e82ab8de4631ec4830513eed4a"
+    },
+    "16000105": {
+      "name": "STARR NOVA",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000105.png",
+      "local_url": "/assets/brawlers/portraits/16000105.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "2afb8e7e6acc70432625c65f1dbae5b80be3a6b6a8d80f29b6e796021accd9c8",
+      "local_sha256": "22eea7b92237c99f22af6e1964b2ecb11b765fc2fca6c7c155dd5475b6455331"
+    },
+    "16000106": {
+      "name": "BOLT",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000106.png",
+      "local_url": "/assets/brawlers/portraits/16000106.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "89bdd65d73eba9c5a8b09a72bbb0401bcea86ee0a86998277ebb49fc6756b625",
+      "local_sha256": "8d1271d3753f3ede8fc9dd261269912660dcd8b98c8bc9536d7524b8bf463622"
+    },
+    "16000107": {
+      "name": "NORI",
+      "source_url": "https://cdn.brawlify.com/brawlers/borders/16000107.png",
+      "local_url": "/assets/brawlers/portraits/16000107.webp",
+      "width": 200,
+      "height": 200,
+      "source_sha256": "3d1a6ec36d9feab688da34c90f804eeeaf663144c7d0ee0f991941e7f18b9ce2",
+      "local_sha256": "deec27540ed78b86f8d171136785890138021409f9b549c6bc18b70bf958e4bd"
+    }
+  }
+}

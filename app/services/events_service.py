@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from pathlib import Path
 from typing import Any, Optional
 
@@ -34,6 +35,7 @@ class EventsService:
         self.client = client
         self.demo_path = demo_path or Path(__file__).resolve().parent.parent.parent / "data" / "demo_events.json"
         self._cached_events: Optional[list[EventSlot]] = None
+        self._cached_at = 0.0
 
     def parse_event(self, raw: dict[str, Any], slot_idx: int = 1) -> EventSlot:
         event_info = raw.get("event", {})
@@ -43,18 +45,20 @@ class EventsService:
 
         image_url = event_info.get("image_url") or f"https://cdn.brawlify.com/maps/regular/{map_id}.png" if map_id else None
 
-        modifiers = [str(m).upper() for m in raw.get("modifiers", [])]
+        modifiers = [str(m.get("name", m.get("id", "Unknown")) if isinstance(m, dict) else m)
+                     for m in event_info.get("modifiers", raw.get("modifiers", []))]
         meta_picks = META_MAP_PICKS.get(map_name, ["Shelly", "Colt", "Brock", "Spike", "Piper"])
 
         start_time = raw.get("startTime", raw.get("start_time", ""))
         end_time = raw.get("endTime", raw.get("end_time", ""))
 
         return EventSlot(
-            slot_id=raw.get("slot_id", slot_idx),
+            slot_id=raw.get("slotId", raw.get("slot_id", slot_idx)),
             event=EventMap(
                 id=map_id,
                 mode=mode_name,
                 map=map_name,
+                mode_id=event_info.get("modeId"),
                 image_url=image_url
             ),
             start_time=start_time,
@@ -73,7 +77,7 @@ class EventsService:
         return [self.parse_event(item, idx + 1) for idx, item in enumerate(data)]
 
     async def get_events(self) -> tuple[list[EventSlot], str]:
-        if self._cached_events:
+        if self._cached_events and time.monotonic() - self._cached_at < 60:
             return self._cached_events, "CACHE"
 
         if self.client is None or not self.client.api_key:
@@ -84,6 +88,7 @@ class EventsService:
             raw_events = await self.client.get_events()
             events = [self.parse_event(item, idx + 1) for idx, item in enumerate(raw_events)]
             self._cached_events = events
+            self._cached_at = time.monotonic()
             return events, "LIVE"
         except Exception as e:
             logger.warning(f"Failed to fetch live event rotation: {e}. Falling back to demo.")

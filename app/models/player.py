@@ -67,6 +67,10 @@ class PlayerBrawler(BaseModel):
     gears: list[EquipmentItem] = Field(default_factory=list)
     hypercharges: list[EquipmentItem] = Field(default_factory=list)
     buffies: BuffieFlags = Field(default_factory=BuffieFlags)
+    current_win_streak: int | None = Field(default=None, ge=0)
+    max_win_streak: int | None = Field(default=None, ge=0)
+    skin: EquipmentItem | None = None
+    available_fields: list[str] = Field(default_factory=list)
     source: DataSource = DataSource.OFFICIAL_API
 
     @property
@@ -104,6 +108,19 @@ class PlayerProfile(BaseModel):
     best_robo_rumble_time: int | None = None
     best_time_as_big_brawler: int | None = None
     highest_power_play_points: int | None = None
+    fame: int | None = Field(default=None, ge=0)
+    fame_tier_name: str | None = None
+    ranked_season_id: int | None = None
+    ranked_rank: int | None = None
+    ranked_rank_name: str | None = None
+    ranked_elo: int | None = None
+    highest_season_ranked_rank: int | None = None
+    highest_season_ranked_rank_name: str | None = None
+    highest_season_ranked_elo: int | None = None
+    highest_all_time_ranked_rank: int | None = None
+    highest_all_time_ranked_rank_name: str | None = None
+    highest_all_time_ranked_elo: int | None = None
+    available_fields: list[str] = Field(default_factory=list)
     club: ClubSummary | None = None
     brawlers: list[PlayerBrawler] = Field(default_factory=list)
     total_prestige_level: int | None = Field(default=None, ge=0)
