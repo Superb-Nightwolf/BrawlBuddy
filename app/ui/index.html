@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="/assets/ui-motion.css?v=3">
   <link rel="stylesheet" href="/assets/header-navigation.css?v=6">
   <link rel="stylesheet" href="/assets/section-design.css?v=4">
-  <link rel="stylesheet" href="/assets/overview.css?v=2">
+  <link rel="stylesheet" href="/assets/overview.css?v=3">
 </head>
 <body>
   <div class="app-shell">
@@ -101,9 +101,15 @@
 
         <div class="ov-toolbar">
           <nav class="ov-jump-nav" aria-label="Overview sections">
-            <a href="#ov-collection">Collection</a><a href="#ov-trophies">Trophies</a><a href="#ov-equipment">Equipment</a><a href="#ov-competitive">Competitive</a><a href="#ov-recent">Recent play</a><a href="#ov-goals">Next goals</a>
+            <a href="#ov-collection" aria-current="location"><img src="/assets/brawl-stars-symbol-official.png" alt="" aria-hidden="true">Collection</a>
+            <a href="#ov-trophies"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true">Trophies</a>
+            <a href="#ov-equipment"><img src="/assets/section_gadget.png" alt="" aria-hidden="true">Equipment</a>
+            <a href="#ov-competitive"><img src="/assets/ranked/masters.png" alt="" aria-hidden="true">Competitive</a>
+            <a href="#ov-recent"><img src="/assets/modes/duels.png" alt="" aria-hidden="true">Recent play</a>
+            <a href="#ov-context"><img src="/assets/modes/duo-showdown.png" alt="" aria-hidden="true">Club &amp; events</a>
+            <a href="#ov-goals"><img src="/assets/currencies/coins.png" alt="" aria-hidden="true">Next goals</a>
           </nav>
-          <button id="overview-refresh" class="subtle-button" type="button">↻ Refresh data</button>
+          <button id="overview-refresh" class="subtle-button" type="button">Refresh data</button>
         </div>
         <div id="overview-dashboard" aria-busy="true">
           <div class="ov-loading" role="status"><span class="ov-loading-dot"></span> Building your account analytics</div>
@@ -1101,6 +1107,6 @@
   <script src="/assets/roster-dropdowns.js?v=11" defer></script>
   <script src="/assets/ui-motion.js?v=1" defer></script>
   <script src="/assets/app.js?v=158" defer></script>
-  <script src="/assets/overview.js?v=2" defer></script>
+  <script src="/assets/overview.js?v=3" defer></script>
 </body>
 </html>

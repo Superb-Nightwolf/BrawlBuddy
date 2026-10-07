@@ -83,8 +83,26 @@ async def main():
                 print("Desktop cards:", await evaluate("document.querySelectorAll('#overview-dashboard .ov-card').length"))
                 assert not await evaluate("document.documentElement.scrollWidth > innerWidth"), "Desktop overflow"
                 assert await evaluate("document.querySelectorAll('#overview-dashboard .ov-section-heading').length") == 7
+                assert await evaluate("document.querySelectorAll('#overview-dashboard .ov-group').length") == 7
+                assert await evaluate("document.querySelectorAll('.ov-group .ov-card').length") == 30
+                await evaluate("document.querySelectorAll('#overview-dashboard img').forEach(img=>img.loading='eager');Promise.race([Promise.all([...document.querySelectorAll('#overview-dashboard img')].map(img=>img.decode().catch(()=>{}))),new Promise(resolve=>setTimeout(resolve,10000))])", True)
+                assert not await evaluate("[...document.querySelectorAll('#overview-dashboard img')].filter(img=>!img.naturalWidth).map(img=>img.src)"), "Broken Overview artwork"
+                assert not await evaluate("document.querySelector('#overview-view').innerText.includes('★')"), "Star character returned"
                 assert not await evaluate("[...document.querySelectorAll('[id]')].map(e=>e.id).filter((v,i,a)=>a.indexOf(v)!==i).length"), "Duplicate IDs"
                 await screenshot("desktop-top.png")
+                for route, page_name, condition in (
+                    ("/brawlers", "reference-roster.png", "document.querySelectorAll('#brawler-grid .brawler-card').length > 0"),
+                    ("/brawlers/16000000", "reference-detail.png", "state.page === 'detail' && !document.querySelector('#detail-view').classList.contains('hidden')"),
+                ):
+                    await send("Page.navigate", {"url": "http://127.0.0.1:8000" + route})
+                    for _ in range(120):
+                        if await evaluate(condition):
+                            break
+                        await asyncio.sleep(.2)
+                    await asyncio.sleep(.6)
+                    await screenshot(page_name)
+                await send("Page.navigate", {"url": "http://127.0.0.1:8000/"})
+                await ready()
                 await screenshot("desktop-collection.png", "ov-collection")
                 await screenshot("desktop-equipment.png", "ov-equipment")
                 await screenshot("desktop-ranked.png", "ov-competitive")
@@ -100,7 +118,7 @@ async def main():
                 await evaluate("OverviewDashboard.load(true)", True)
                 await ready()
                 assert not await evaluate("document.querySelector('#overview-refresh').disabled")
-                for width in (390, 768):
+                for width in (360, 390, 768):
                     await send("Emulation.setDeviceMetricsOverride", {"width": width, "height": 900,
                                 "deviceScaleFactor": 1, "mobile": width == 390})
                     await asyncio.sleep(.3)
@@ -111,6 +129,7 @@ async def main():
                 await evaluate("loadDemo().then(()=>OverviewDashboard.load())", True)
                 await ready()
                 assert await evaluate("state.player.source") == "DEMO"
+                assert await evaluate("document.querySelector('#overview-view .champ-stat-icon img').src.endsWith('/assets/icon_trophy.png')"), "Previous account's Ranked badge persisted"
                 assert await evaluate("document.querySelector('#overview-dashboard').innerText.includes('Ranked information was not returned')")
                 assert not await evaluate("document.documentElement.scrollWidth > innerWidth"), "Demo overflow"
                 print("Demo states verified")
@@ -121,7 +140,7 @@ async def main():
                 await evaluate("window.fetch=window.originalOverviewFetch;OverviewDashboard.load(true)", True)
                 await ready()
                 assert not errors, errors
-                print("Sorting, search, refresh, failure recovery, desktop, tablet and mobile checks passed")
+                print("Artwork, sorting, search, refresh, failure recovery, desktop, tablet and mobile checks passed")
                 print("Screenshots:", OUTPUT)
         finally:
             process.terminate()

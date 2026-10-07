@@ -1,0 +1,63 @@
+{
+  "checked_at": "2026-10-07",
+  "provenance": "In-game Ranked league artwork mirrored by Brawlify CDN",
+  "repository": "https://github.com/Brawlify/CDN",
+  "ranked": {
+    "Bronze": {
+      "local_url": "/assets/ranked/bronze.png",
+      "source_url": "https://raw.githubusercontent.com/Brawlify/CDN/master/ranked/regular/Bronze.png",
+      "sha256": "d967c3cd56be79996a3daa22353e0583754a7889aa43e5f25bfd19db0708185e",
+      "width": 225,
+      "height": 254
+    },
+    "Silver": {
+      "local_url": "/assets/ranked/silver.png",
+      "source_url": "https://raw.githubusercontent.com/Brawlify/CDN/master/ranked/regular/Silver.png",
+      "sha256": "003749b0ff6040896c63d16861319d7733372d65a331efec00a45742c4d87819",
+      "width": 248,
+      "height": 257
+    },
+    "Gold": {
+      "local_url": "/assets/ranked/gold.png",
+      "source_url": "https://raw.githubusercontent.com/Brawlify/CDN/master/ranked/regular/Gold.png",
+      "sha256": "2dfe4bc01c92ad70f074875dc7965ce56a55049747bc21f49762c8a85a0f0dcc",
+      "width": 254,
+      "height": 269
+    },
+    "Diamond": {
+      "local_url": "/assets/ranked/diamond.png",
+      "source_url": "https://raw.githubusercontent.com/Brawlify/CDN/master/ranked/regular/Diamond.png",
+      "sha256": "1e438405f5bc2a12ccb164f96cf7b34c8396ba3b8e6e1122481ea0ddd77b385a",
+      "width": 256,
+      "height": 262
+    },
+    "Mythic": {
+      "local_url": "/assets/ranked/mythic.png",
+      "source_url": "https://raw.githubusercontent.com/Brawlify/CDN/master/ranked/regular/Mythic.png",
+      "sha256": "64cfe94622a6afa677690ffdb031ad6676417562ed81a1aeef0d9057010ff32f",
+      "width": 211,
+      "height": 278
+    },
+    "Legendary": {
+      "local_url": "/assets/ranked/legendary.png",
+      "source_url": "https://raw.githubusercontent.com/Brawlify/CDN/master/ranked/regular/Legendary.png",
+      "sha256": "1cc1ce8f99146ba13bc97dbebfc653b1ee9599077523a49ce293fdf9c1588294",
+      "width": 314,
+      "height": 267
+    },
+    "Masters": {
+      "local_url": "/assets/ranked/masters.png",
+      "source_url": "https://raw.githubusercontent.com/Brawlify/CDN/master/ranked/regular/Masters.png",
+      "sha256": "b36390ea300e1ecdbd16013892bc2cac2e186491aa138038bc3fbb2915160276",
+      "width": 265,
+      "height": 277
+    },
+    "Pro": {
+      "local_url": "/assets/ranked/pro.png",
+      "source_url": "https://raw.githubusercontent.com/Brawlify/CDN/master/ranked/regular/Pro.png",
+      "sha256": "0e644b47636130fd7cd8d4458cd0f7a061e7bd221a1cb8de7257628a8787f2c9",
+      "width": 334,
+      "height": 294
+    }
+  }
+}

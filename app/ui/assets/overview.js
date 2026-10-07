@@ -12,25 +12,76 @@
   let trophySort = 'trophies';
   let rosterSort = 'trophies';
   let rosterSearch = '';
+  let sectionObserver = null;
+
+  const sections = {
+    'ov-collection': {art:'brawl-stars-symbol-official.png', label:'ROSTER LAB', tone:'blue'},
+    'ov-trophies': {art:'icon_trophy.png', label:'TROPHY ROAD', tone:'gold'},
+    'ov-equipment': {art:'section_hypercharge.png', label:'COMBAT KIT', tone:'purple'},
+    'ov-competitive': {art:'ranked/masters.png', label:'PLAYER RECORDS', tone:'purple'},
+    'ov-recent': {art:'modes/duels.png', label:'ARENA REPORT', tone:'pink'},
+    'ov-context': {art:'modes/duo-showdown.png', label:'BRAWL TOGETHER', tone:'blue'},
+    'ov-goals': {art:'currencies/coins.png', label:'YOUR NEXT MOVE', tone:'green'},
+  };
+  const cardArtwork = {
+    'Power distribution':'currencies/power-points.png', 'Collection completion':'brawl-stars-symbol-official.png',
+    'Combat roles':'classes/damage-dealer.png', 'Rarity mix':'brawl-stars-symbol-official.png',
+    'Permanent Prestige':'filter-prestige.png', 'Your next account target':'icon_trophy.png',
+    'Trophy distribution':'icon_trophy.png', 'Your top 10 brawlers':'icon_trophy.png',
+    'Power versus trophies':'currencies/power-points.png', 'Lifetime victory composition':'modes/duels.png',
+    'Trophy concentration':'icon_trophy.png', 'Win streak records':'modes/wipeout.png',
+    'Inventory coverage':'section_gadget.png', 'Hypercharge inventory':'section_hypercharge.png',
+    'Buffies by category':'buffies/generic.png', 'Ranked rating comparison':'ranked/masters.png',
+    'Account records':'brawl-stars-symbol-official.png', 'Recent outcomes':'modes/duels.png',
+    'Modes played':'modes/brawl-ball.png', 'Brawlers played':'brawl-stars-symbol-official.png',
+    'Your recent run':'modes/wipeout.png', 'Trophy movement in the sample':'icon_trophy.png',
+    'Your club':'modes/duo-showdown.png', 'Live arena rotation':'modes/brawl-ball.png',
+    'What remains to complete your chosen builds':'currencies/coins.png', 'Build readiness':'section_gear.png',
+    'Readiness distribution':'section_gear.png', 'Closest trophy milestones':'filter-prestige.png',
+    'Six practical next steps':'currencies/power-points.png', 'Your resource balances':'currencies/coins.png',
+    'Recent performance':'modes/duels.png',
+  };
+  const metricArtwork = {
+    'COLLECTION':'brawl-stars-symbol-official.png', 'AVERAGE POWER':'currencies/power-points.png',
+    'POWER 11':'section_hypercharge.png', 'EQUIPPED':'section_gadget.png',
+    'BUILD READY':'section_gear.png', 'BEST WIN STREAK':'modes/wipeout.png',
+  };
+  const currencyArtwork = {'Coins':'currencies/coins.png', 'Power Points':'currencies/power-points.png',
+    'Direct Buffie Gems':'currencies/gems.png', 'Gems':'currencies/gems.png'};
+  const art = (asset, className = 'ov-art') => sectionIconMarkup(asset, className);
+
+  function rankAsset(name) {
+    const key = normalizeKey(name);
+    const league = ['bronze','silver','gold','diamond','mythic','legendary','masters','pro'].find((value) => key.startsWith(value));
+    return league ? `ranked/${league}.png` : null;
+  }
+
+  function rowLabel(row) {
+    const icon = row.art ? art(row.art, 'ov-row-icon')
+      : row.iconGroup ? uiIconMarkup(row.iconGroup, row.iconValue || row.label, 'ov-row-icon') : '';
+    return `<span class="ov-row-name">${icon}<span>${esc(row.label)}</span></span>`;
+  }
 
   function empty(message = 'This information was not returned for this account') {
-    return `<div class="ov-empty"><span>◇</span><p>${esc(message)}</p></div>`;
+    return `<div class="ov-empty">${art('brawl-stars-symbol-official.png', 'ov-empty-art')}<p>${esc(message)}</p></div>`;
   }
 
   function head(number, id, title, subtitle, badge = 'Calculated') {
-    return `<div class="ov-section-heading" id="${id}"><span class="ov-section-number">${number}</span><div><h2>${title}</h2><p>${subtitle}</p></div><span class="ov-source">${badge}</span></div>`;
+    const section = sections[id];
+    return `<section class="ov-group ov-tone-${section.tone}" aria-labelledby="${id}-title"><div class="ov-section-heading" id="${id}"><span class="ov-section-emblem">${art(section.art)}<small>${number}</small></span><div class="ov-section-copy"><span class="ov-section-kicker">${section.label}</span><h2 id="${id}-title">${title}</h2><p>${subtitle}</p></div><span class="ov-source">${badge}</span></div>`;
   }
 
   function card(title, body, note = '', span = 6, kicker = '') {
-    return `<article class="ov-card ov-span-${span}"><div class="ov-card-heading"><div>${kicker ? `<span class="ov-kicker">${kicker}</span>` : ''}<h3>${title}</h3></div></div>${body}${note ? `<p class="ov-note">${esc(note)}</p>` : ''}</article>`;
+    const icon = cardArtwork[title];
+    return `<article class="ov-card ov-span-${span}"><div class="ov-card-heading"><div>${kicker ? `<span class="ov-kicker">${kicker}</span>` : ''}<h3>${title}</h3></div>${icon ? `<span class="ov-card-emblem">${art(icon)}</span>` : ''}</div><div class="ov-card-body">${body}</div>${note ? `<p class="ov-note">${esc(note)}</p>` : ''}</article>`;
   }
 
   function metric(label, value, detail, color = 'blue', id = '') {
-    return `<article class="ov-stat ov-stat-${color}"><span>${label}</span><strong ${id ? `id="${id}"` : ''}>${value}</strong><small>${esc(detail)}</small></article>`;
+    return `<article class="ov-stat ov-stat-${color}"><div class="ov-stat-heading"><span>${label}</span>${art(metricArtwork[label], 'ov-stat-art')}</div><strong ${id ? `id="${id}"` : ''}>${value}</strong><small>${esc(detail)}</small></article>`;
   }
 
   function stats(items) {
-    return `<div class="ov-mini-stats">${items.map(([label, value]) => `<div><span>${esc(label)}</span><strong>${value}</strong></div>`).join('')}</div>`;
+    return `<div class="ov-mini-stats">${items.map(([label, value]) => `<div><span>${currencyArtwork[label] ? art(currencyArtwork[label], 'ov-resource-icon') : ''}${esc(label)}</span><strong>${value}</strong></div>`).join('')}</div>`;
   }
 
   function donut(rows, center, label) {
@@ -43,14 +94,14 @@
       return `${row.color || colors[i % colors.length]} ${start}deg ${angle}deg`;
     });
     const description = rows.map((r) => `${r.label} ${num(r.value)}`).join(', ');
-    return `<div class="ov-donut-layout"><div class="ov-donut" role="img" aria-label="${esc(description)}" style="--ov-gradient:${total ? `conic-gradient(${stops.join(',')})` : '#e8eef6'}"><div><strong>${center}</strong><span>${label}</span></div></div><div class="ov-legend">${rows.map((r, i) => `<div><i style="--ov-color:${r.color || colors[i % colors.length]}"></i><span>${esc(r.label)}</span><strong>${num(r.value)}</strong><small>${total && r.value != null ? pct(r.value / total * 100) : '—'}</small></div>`).join('')}</div></div>`;
+    return `<div class="ov-donut-layout"><div class="ov-donut" role="img" aria-label="${esc(description)}" style="--ov-gradient:${total ? `conic-gradient(${stops.join(',')})` : '#e8eef6'}"><div><strong>${center}</strong><span>${label}</span></div></div><div class="ov-legend">${rows.map((r, i) => `<div><i style="--ov-color:${r.color || colors[i % colors.length]}"></i>${rowLabel(r)}<strong>${num(r.value)}</strong><small>${total && r.value != null ? pct(r.value / total * 100) : '—'}</small></div>`).join('')}</div></div>`;
   }
 
   function bars(rows, options = {}) {
     const max = options.max || Math.max(1, ...rows.map((r) => r.value || 0));
     if (!rows.length) return empty();
     return `<div class="ov-bars ${options.compact ? 'ov-bars-compact' : ''}">${rows.map((r, i) => {
-      const label = r.id ? `<a href="/brawlers/${r.id}">${brawlerIconMarkup(r)}<span>${esc(r.label)}</span></a>` : `<span>${esc(r.label)}</span>`;
+      const label = r.id ? `<a href="/brawlers/${r.id}">${brawlerIconMarkup(r)}<span>${esc(r.label)}</span></a>` : rowLabel(r);
       return `<div class="ov-bar-row"><div class="ov-bar-label">${label}<strong>${options.percent ? pct(r.value) : num(r.value)}${options.suffix || ''}</strong></div><div class="ov-track"><i style="width:${Math.min(100, Math.max(0, (r.value || 0) / max * 100))}%;--ov-color:${r.color || colors[i % colors.length]}"></i></div>${r.sub ? `<small>${esc(r.sub)}</small>` : ''}</div>`;
     }).join('')}</div>`;
   }
@@ -89,7 +140,8 @@
   }
 
   function equipmentRows(s) {
-    return `<div class="ov-equipment-grid">${s.equipment.map((e, i) => `<div class="ov-equipment-tile"><img src="/assets/${['section_gadget.png','section_star_power.png','section_gear.png','section_hypercharge.png'][i]}" alt=""><h4>${e.label}</h4><strong>${num(e.owned)} <small>items owned</small></strong><div class="ov-bar-label"><span>Brawler coverage</span><b>${pct(e.coverage_pct)}</b></div><div class="ov-track"><i style="width:${e.coverage_pct || 0}%;--ov-color:${colors[i]}"></i></div><p>${e.covered} / ${e.known} observed brawlers have at least one</p><div class="ov-equipment-completion"><span>Item collection</span><b>${pct(e.completion_pct)}</b></div><small>${e.available == null ? 'Catalogue total unavailable' : `${e.owned} owned items · ${e.available} available for observed brawlers`}${e.unknown ? ` · ${e.unknown} inventories unknown` : ''}</small></div>`).join('')}</div>`;
+    const equipmentColors = ['#31b46f','#e3ac23','#2585ee','#9560de'];
+    return `<div class="ov-equipment-grid">${s.equipment.map((e, i) => `<div class="ov-equipment-tile"><img src="/assets/${['section_gadget.png','section_star_power.png','section_gear.png','section_hypercharge.png'][i]}" alt=""><h4>${e.label}</h4><strong>${num(e.owned)} <small>items owned</small></strong><div class="ov-bar-label"><span>Brawler coverage</span><b>${pct(e.coverage_pct)}</b></div><div class="ov-track"><i style="width:${e.coverage_pct || 0}%;--ov-color:${equipmentColors[i]}"></i></div><p>${e.covered} / ${e.known} observed brawlers have at least one</p><div class="ov-equipment-completion"><span>Item collection</span><b>${pct(e.completion_pct)}</b></div><small>${e.available == null ? 'Catalogue total unavailable' : `${e.owned} owned items · ${e.available} available for observed brawlers`}${e.unknown ? ` · ${e.unknown} inventories unknown` : ''}</small></div>`).join('')}</div>`;
   }
 
   function recentSection(b) {
@@ -100,7 +152,7 @@
       {label:'Draws',value:b.draws,color:'#e7ad27'}, {label:'Placements / unknown',value:b.placements+b.unknown,color:'#8395af'}];
     let markup = card('Recent outcomes', donut(resultRows, pct(b.win_rate), 'WIN RATE'),
       `${b.decisive} result-bearing matches · Draws and placements excluded from win rate`, 4, `${b.count} MATCH SAMPLE`);
-    markup += card('Modes played', bars(b.modes.map((r) => ({...r,label:modeLabel(r.label)})), {compact:true}), 'Match counts in this returned window', 4);
+    markup += card('Modes played', bars(b.modes.map((r) => ({...r,label:modeLabel(r.label),iconGroup:'modes',iconValue:r.label})), {compact:true}), 'Match counts in this returned window', 4);
     markup += card('Brawlers played', bars(b.brawlers.slice(0,5), {compact:true}), 'Most used in this sample', 4);
     const timeline = b.samples.map((r) => `<a href="/brawlers/${r.id}" class="ov-result ov-result-${r.result}" title="${esc(`${r.brawler} · ${modeLabel(r.mode)} · ${r.map} · ${battleDate(r.time)} · ${r.result}${r.rank ? ` #${r.rank}` : ''}`)}" aria-label="${esc(`${r.brawler} ${r.result} on ${r.map}`)}">${r.result === 'victory' ? 'W' : r.result === 'defeat' ? 'L' : r.result === 'draw' ? 'D' : r.rank ? `#${r.rank}` : '?'}</a>`).join('');
     markup += card('Your recent run', `<div class="ov-run-label"><span>${esc(battleDate(b.oldest))}</span><span>${esc(battleDate(b.newest))} →</span></div><div class="ov-result-timeline">${timeline}</div>` + stats([
@@ -121,7 +173,7 @@
 
   function contextSection() {
     const c = data.club;
-    let club = c ? `<div class="ov-club-header"><span class="ov-club-emblem">♜</span><div><h4>${esc(c.name)}</h4><span>${esc(c.tag)} · ${esc(c.type)}</span></div><a href="/club/${encodeURIComponent(c.tag)}">Open club →</a></div>` + stats([
+    let club = c ? `<div class="ov-club-header"><span class="ov-club-emblem">${c.badge_id ? `<img src="https://cdn.brawlify.com/club-badges/regular/${Number(c.badge_id)}.png" alt="" onerror="this.onerror=null;this.src='/assets/modes/duo-showdown.png'">` : art('modes/duo-showdown.png')}</span><div><h4>${esc(c.name)}</h4><span>${esc(c.tag)} · ${esc(c.type)}</span></div><a href="/club/${encodeURIComponent(c.tag)}">Open club →</a></div>` + stats([
       ['Club trophies',num(c.trophies)], ['Members',num(c.members)], ['Your position',c.position ? `#${c.position}` : '—'],
       ['Your role',esc(c.role || 'Unavailable')], ['Average trophies',num(c.average)], ['Required trophies',num(c.required_trophies)]])
       + (c.contribution != null ? `<div class="ov-bar-label"><span>Your trophy contribution</span><strong>${pct(c.contribution)}</strong></div><div class="ov-track"><i style="width:${Math.min(100,c.contribution)}%;--ov-color:#8d63d7"></i></div>` : '')
@@ -140,8 +192,8 @@
     const powerCoins=b.power_cost.coins;
     const buildCoins=b.goals.length ? 'Recommended items' : 'Known chosen builds';
     let markup=card('What remains to complete your chosen builds',cost + bars([
-      {label:'Power upgrades across the roster',value:powerCoins,color:'#2585ee'},
-      {label:buildCoins,value:b.build_coin_cost,color:'#8d63d7'}]),
+      {label:'Power upgrades across the roster',value:powerCoins,color:'#2585ee',art:'currencies/power-points.png'},
+      {label:buildCoins,value:b.build_coin_cost,color:'#8d63d7',art:'section_gear.png'}]),
       `${b.known}/${s.collection.owned} brawlers have observed inventory and build data · ${b.all_costs_complete ? 'Complete cost coverage' : 'Known requirements only'} · Direct Buffie purchases shown separately in Gems`,8,'COIN COST BREAKDOWN');
     markup+=card('Build readiness',donut([{label:'Complete',value:b.complete,color:'#29b18d'},
       {label:'In progress',value:b.known-b.complete,color:'#2585ee'}, {label:'Unknown',value:s.collection.owned-b.known,color:'#cbd6e5'}],num(b.complete),'COMPLETE')
@@ -149,11 +201,11 @@
       'Calculated against maintained recommended builds — a progression measure',4);
     markup+=card('Readiness distribution',columns(b.histogram,colors),`${b.known} brawlers with known inventory · Power, chosen equipment and available Buffies`,6);
     markup+=card('Closest trophy milestones',`<div class="ov-milestones">${s.milestones.map((r) => `<a href="/brawlers/${r.id}">${brawlerIconMarkup(r)}<span><strong>${esc(r.name)}</strong><small>${esc(r.target)}${r.source === 'INFERRED' ? ' · estimated path' : ''}</small></span><b>${num(r.remaining)}<small>trophies away</small></b></a>`).join('') || empty('No brawler milestones available')}</div>`,'Targets use the maintained Prestige rules',6);
-    const goals=b.goals.map((r) => `<a class="ov-goal" href="/brawlers/${r.id}"><div class="ov-goal-title">${brawlerIconMarkup(r)}<div><strong>${esc(r.name)}</strong><span>Power ${r.power} → 11</span></div><b>${pct(r.progress)}</b></div><div class="ov-track"><i style="width:${r.progress || 0}%;--ov-color:#29b18d"></i></div><p>${esc(r.missing.slice(0,3).join(' · ') || 'Finish the remaining Power upgrades')}${r.missing.length > 3 ? ` +${r.missing.length-3} more` : ''}</p><div class="ov-cost-chips"><span>${num(r.cost.coins)} Coins</span><span>${num(r.cost.powerPoints)} PP</span>${r.cost.gems ? `<span>${num(r.cost.gems)} Gems</span>` : ''}</div><small>${r.affordable === true ? 'Within your saved balances' : r.affordable === false ? 'Above your saved balances' : r.costs_complete ? 'Open the full build plan →' : 'Some prices or build requirements are unavailable'}</small></a>`).join('');
+    const goals=b.goals.map((r) => `<a class="ov-goal" href="/brawlers/${r.id}"><div class="ov-goal-title">${brawlerIconMarkup(r)}<div><strong>${esc(r.name)}</strong><span>Power ${r.power} → 11</span></div><b>${pct(r.progress)}</b></div><div class="ov-track"><i style="width:${r.progress || 0}%;--ov-color:#29b18d"></i></div><p>${esc(r.missing.slice(0,3).join(' · ') || 'Finish the remaining Power upgrades')}${r.missing.length > 3 ? ` +${r.missing.length-3} more` : ''}</p><div class="ov-cost-chips"><span>${art('currencies/coins.png')}${num(r.cost.coins)} Coins</span><span>${art('currencies/power-points.png')}${num(r.cost.powerPoints)} PP</span>${r.cost.gems ? `<span>${art('currencies/gems.png')}${num(r.cost.gems)} Gems</span>` : ''}</div><small>${r.affordable === true ? 'Within your saved balances' : r.affordable === false ? 'Above your saved balances' : r.costs_complete ? 'Open the full build plan →' : 'Some prices or build requirements are unavailable'}</small></a>`).join('');
     markup+=card('Six practical next steps',`<div class="ov-goals">${goals || empty('All observed chosen builds are complete')}</div>`,
       'Ordered by known remaining Coin cost — each card is a separate plan, rather than a combined spending budget',12,'LOWEST REMAINING COST');
     const resources=data.resources;
-    const walletForm=`<details class="ov-wallet-editor"><summary>${resources ? 'Update your balances' : 'Enter your balances'}</summary><form id="ov-wallet-form"><div class="ov-wallet-fields">${[['coins','Coins'],['power_points','Power Points'],['gems','Gems'],['credits','Credits'],['bling','Bling']].map(([key,label])=>`<label>${label}<input name="${key}" type="number" min="0" max="100000000" step="1" required value="${resources?.[key] ?? ''}" ${s.source === 'DEMO' ? 'disabled' : ''}></label>`).join('')}</div><p id="ov-wallet-status" role="status">${s.source === 'DEMO' ? 'Connect your player tag to save your own balances' : 'Enter your current in-game balances — these values are stored as manual input'}</p><button class="subtle-button" type="submit" ${s.source === 'DEMO' ? 'disabled' : ''}>Save balances</button></form></details>`;
+    const walletForm=`<details class="ov-wallet-editor"><summary>${resources ? 'Update your balances' : 'Enter your balances'}</summary><form id="ov-wallet-form"><div class="ov-wallet-fields">${[['coins','Coins'],['power_points','Power Points'],['gems','Gems'],['credits','Credits'],['bling','Bling']].map(([key,label])=>`<label><span>${currencyArtwork[label] ? art(currencyArtwork[label], 'ov-resource-icon') : ''}${label}</span><input name="${key}" type="number" min="0" max="100000000" step="1" required value="${resources?.[key] ?? ''}" ${s.source === 'DEMO' ? 'disabled' : ''}></label>`).join('')}</div><p id="ov-wallet-status" role="status">${s.source === 'DEMO' ? 'Connect your player tag to save your own balances' : 'Enter your current in-game balances — these values are stored as manual input'}</p><button class="subtle-button" type="submit" ${s.source === 'DEMO' ? 'disabled' : ''}>Save balances</button></form></details>`;
     // Keep balance entry in the Overview so the user can immediately check their goals
     markup+=card('Your resource balances',(resources ? stats([['Coins',num(resources.coins)],['Power Points',num(resources.power_points)],
       ['Gems',num(resources.gems)],['Credits',num(resources.credits)],['Bling',num(resources.bling)]])
@@ -172,8 +224,11 @@
     if (!data || state.page !== 'overview') return;
     const s=data.summary;
     const rows=s.rows;
-    const classColors = {'Damage Dealer':'#ed6587','Assassin':'#8d63d7','Tank':'#2585ee','Marksman':'#e7ad27','Controller':'#41b5d2','Support':'#29b18d','Artillery':'#f08c47'};
+    const classColors = Object.fromEntries(Object.values(BRAWLER_CLASSES).map((r) => [r.label, r.color]));
+    const rarityOrder = ['common','rare','superrare','epic','mythic','legendary','ultralegendary'];
+    const rarityColors = {'common':'var(--rarity-common)','rare':'var(--rarity-rare)','superrare':'var(--rarity-super-rare)','epic':'var(--rarity-epic)','mythic':'var(--rarity-mythic)','legendary':'var(--rarity-legendary)','ultralegendary':'var(--rarity-ultra)'};
     const rank=s.ranked.rows[0];
+    cardArtwork['Ranked rating comparison'] = rankAsset(rank.rank) || 'brawl-stars-symbol-official.png';
     let html=`<div class="ov-snapshot-meta"><span><i></i>${s.source === 'DEMO' ? 'Demo account' : 'Account snapshot'} · ${esc(new Date(s.fetched_at).toLocaleString())}</span><span>Hover charts for details · Open brawlers to explore</span></div><div class="ov-stats-grid">`
       +metric('COLLECTION',`${num(s.collection.unlocked)}<em> / ${num(s.collection.total)}</em>`,`${pct(s.collection.pct)} unlocked`,'blue','brawler-count')
       +metric('AVERAGE POWER',num(s.power.average),`Median ${num(s.power.median)} · ${s.power.remaining_levels} levels to max`,'yellow','average-power')
@@ -188,11 +243,11 @@
     html+=card('Collection completion',donut([{label:'Unlocked',value:s.collection.unlocked,color:'#2585ee'},
       {label:'Locked',value:s.collection.locked,color:'#dce6f3'}],pct(s.collection.pct),'UNLOCKED'),
       `${num(s.collection.total)} in the ${s.collection.catalog_source === 'OFFICIAL_API' ? 'live official' : 'maintained'} catalogue${s.collection.unknown_catalog_ids ? ` · ${s.collection.unknown_catalog_ids} owned IDs not yet matched` : ''}`,4);
-    html+=card('Combat roles',donut(s.classes.map((r)=>({...r,color:classColors[r.label]})),num(s.collection.owned),'BRAWLERS'),'Classes use maintained game metadata',4);
-    html+=card('Rarity mix',bars(s.rarities,{compact:true}),'Owned brawlers by rarity from game metadata',4);
+    html+=card('Combat roles',donut(s.classes.map((r)=>({...r,color:classColors[r.label],iconGroup:'classes'})),num(s.collection.owned),'BRAWLERS'),'Classes use maintained game metadata',4);
+    html+=card('Rarity mix',bars([...s.rarities].sort((a,b)=>(rarityOrder.indexOf(normalizeKey(a.label)) < 0 ? 99 : rarityOrder.indexOf(normalizeKey(a.label)))-(rarityOrder.indexOf(normalizeKey(b.label)) < 0 ? 99 : rarityOrder.indexOf(normalizeKey(b.label)))).map((r)=>({...r,color:rarityColors[normalizeKey(r.label)] || '#8395af'})),{compact:true}),'Owned brawlers by rarity from game metadata',4);
     html+=card('Permanent Prestige',bars(s.prestige.bars,{compact:true})+stats([['Total Prestige',num(s.prestige.total)],['Prestiged brawlers',num(s.prestige.brawlers)]]),
       `${s.prestige.known}/${s.collection.owned} brawlers have reported Prestige · Total source ${s.prestige.source === 'INFERRED' ? 'derived' : s.prestige.source === 'DEMO' ? 'demo' : 'official'}`,4);
-    html+='</div>'+head('02','ov-trophies','Trophies & battle identity','Where your trophies sit and how your victories are distributed');
+    html+='</div></section>'+head('02','ov-trophies','Trophies & battle identity','Where your trophies sit and how your victories are distributed');
     html+='<div class="ov-grid">';
     html+=card('Your next account target',`<div class="ov-target"><img src="/assets/icon_trophy.png" alt=""><div><span>Next 5,000-trophy target</span><strong>${num(s.trophies.next_goal)}</strong><small>${num(s.trophies.to_goal)} trophies to go</small></div><b>${pct(s.trophies.goal_pct)}</b></div><div class="ov-track ov-track-large"><i style="width:${s.trophies.goal_pct || 0}%;--ov-color:#e7ad27"></i></div>`
       +stats([['Current trophies',num(s.trophies.current)],['Personal best',num(s.trophies.best)],['Gap to best',num(s.trophies.gap)],['Average / brawler',num(s.trophies.average)],['Median / brawler',num(s.trophies.median)]]),
@@ -208,7 +263,7 @@
     const streakRows=[...rows].filter((r)=>r.best_streak != null).sort((a,b)=>b.best_streak-a.best_streak).slice(0,5);
     html+=card('Win streak records',streakRows.length ? bars(streakRows.map((r)=>({id:r.id,name:r.name,label:r.name,value:r.best_streak,sub:`Current streak ${num(r.current_streak)}`})),{compact:true})
       : empty('Win streaks were not returned for this account'),`Highest current streak ${num(s.streaks.current_max)} · ${s.streaks.known} brawlers observed`,6);
-    html+='</div>'+head('03','ov-equipment','The equipment vault','Ownership, coverage and the next missing pieces');
+    html+='</div></section>'+head('03','ov-equipment','The equipment vault','Ownership, coverage and the next missing pieces');
     html+='<div class="ov-grid">'+card('Inventory coverage',equipmentRows(s),'Coverage counts brawlers once · Item completion uses exact available IDs where a catalogue is available',12);
     html+=card('Hypercharge inventory',donut([{label:'Active at Power 11',value:s.hypercharges.active,color:'#8d63d7'},
       {label:'Stored below Power 11',value:s.hypercharges.stored,color:'#e7ad27'},
@@ -219,31 +274,43 @@
       sub:`${r.owned} owned / ${r.known} observed eligible brawlers${r.unknown ? ` · ${r.unknown} unknown` : ''}${!r.eligible ? ' · not applicable' : ''}`})),{max:100,percent:true})
       +stats([['Gadget Buffies',num(s.buffies[0].owned)],['Star Power Buffies',num(s.buffies[1].owned)],['Hypercharge Buffies',num(s.buffies[2].owned)]]),
       'Only brawlers with released category Buffies enter the denominator',8);
-    html+='</div>'+head('04','ov-competitive','Competitive & personal records','Official Ranked ratings, Fame and profile records','Official API');
+    html+='</div></section>'+head('04','ov-competitive','Competitive & personal records','Official Ranked ratings, Fame and profile records','Official API');
     html+='<div class="ov-grid">';
     html+=card('Ranked rating comparison',s.ranked.rows.some((r)=>r.value != null)
-      ? `<div class="ov-ranked-current"><span>${esc(rank.rank || 'Rank unavailable')}</span><strong>${num(rank.value)} <small>Elo</small></strong><b>Season ${num(s.ranked.season)}</b></div>`
-        +bars(s.ranked.rows.map((r)=>({...r,sub:r.rank || 'Rank unavailable'}))) : empty('Ranked information was not returned for this account'),
+      ? `<div class="ov-ranked-current">${rankAsset(rank.rank) ? art(rankAsset(rank.rank), 'ov-rank-badge') : ''}<span>${esc(rank.rank || 'Rank unavailable')}</span><strong>${num(rank.value)} <small>Elo</small></strong><b>Season ${num(s.ranked.season)}</b></div>`
+        +bars(s.ranked.rows.map((r)=>({...r,sub:r.rank || 'Rank unavailable',art:rankAsset(r.rank)}))) : empty('Ranked information was not returned for this account'),
       'Current, season best and all-time best share the same rating scale',8);
     html+=card('Fame',s.fame.value == null ? empty('Fame information was not returned for this account')
-      : `<div class="ov-fame"><span class="ov-fame-star">✦</span><strong>${num(s.fame.value)}</strong><span>${esc(s.fame.tier || 'Tier unavailable')}</span></div>`,'Profile Fame — separate from spendable Credits',4);
+      : `<div class="ov-fame"><span class="ov-fame-label">PROFILE FAME</span><strong>${num(s.fame.value)}</strong><span>${esc(s.fame.tier || 'Tier unavailable')}</span></div>`,'Profile Fame — separate from spendable Credits',4);
     html+=card('Account records',stats([['Experience level',num(s.records.level)],['Experience points',num(s.records.xp)],
       ['Championship',s.records.championship == null ? 'Unavailable' : s.records.championship ? 'Qualified' : 'Not qualified'],
       ['Robo Rumble record',s.records.robo ? `API record ${s.records.robo}` : 'Not reported'],
       ['Big Brawler survival',s.records.big_brawler ? timeLabel(s.records.big_brawler) : 'Not reported'],
       ['Historic Power Play',s.records.power_play == null ? 'Not reported' : num(s.records.power_play)]]),
       'Legacy records are shown only when returned — no placeholder achievements',12);
-    html+='</div>'+head('05','ov-recent','Your recent arena activity','Results and habits in the returned battle window',data.battles.source === 'DEMO' ? 'Demo sample' : 'Recent API sample');
-    html+='<div class="ov-grid">'+recentSection(data.battles)+'</div>';
+    html+='</div></section>'+head('05','ov-recent','Your recent arena activity','Results and habits in the returned battle window',data.battles.source === 'DEMO' ? 'Demo sample' : 'Recent API sample');
+    html+='<div class="ov-grid">'+recentSection(data.battles)+'</div></section>';
     html+=head('06','ov-context','Club & live context','Your team and the arenas currently in rotation','Live context');
-    html+='<div class="ov-grid">'+contextSection()+'</div>';
+    html+='<div class="ov-grid">'+contextSection()+'</div></section>';
     html+=head('07','ov-goals','Make your next upgrade count','Progression costs and practical goals based on your inventory');
-    html+='<div class="ov-grid">'+goalsSection(s)+'</div>';
-    html+=`<details class="ov-ledger"><summary><span><small>EVERY BRAWLER, EVERY DETAIL</small><strong>Explore the full account inventory</strong></span><b>${rows.length} brawlers <i>＋</i></b></summary><div class="ov-ledger-controls"><label>Search <input id="ov-roster-search" type="search" placeholder="Brawler, role or rarity" value="${esc(rosterSearch)}"></label><label>Sort <select id="ov-roster-sort">${[['trophies','Current trophies'],['highest_trophies','Personal best'],['power','Power'],['prestige','Prestige'],['best_streak','Best streak'],['name','Name']].map(([v,label])=>`<option value="${v}" ${rosterSort === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div><div id="ov-roster-table" class="ov-table-scroll" role="region" aria-label="Brawler inventory table" tabindex="0">${rosterTable()}</div><p class="ov-note">G / SP / Gear / HC are owned item counts · — means unknown · Returned skin is not the full cosmetic collection</p></details>`;
+    html+='<div class="ov-grid">'+goalsSection(s)+'</div></section>';
+    html+=`<details class="ov-ledger"><summary>${art('brawl-stars-symbol-official.png', 'ov-ledger-art')}<span><small>EVERY BRAWLER, EVERY DETAIL</small><strong>Explore the full account inventory</strong></span><b>${rows.length} brawlers <i>＋</i></b></summary><div class="ov-ledger-controls"><label>Search <input id="ov-roster-search" type="search" placeholder="Brawler, role or rarity" value="${esc(rosterSearch)}"></label><label>Sort <select id="ov-roster-sort">${[['trophies','Current trophies'],['highest_trophies','Personal best'],['power','Power'],['prestige','Prestige'],['best_streak','Best streak'],['name','Name']].map(([v,label])=>`<option value="${v}" ${rosterSort === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div><div id="ov-roster-table" class="ov-table-scroll" role="region" aria-label="Brawler inventory table" tabindex="0">${rosterTable()}</div><p class="ov-note">G / SP / Gear / HC are owned item counts · — means unknown · Returned skin is not the full cosmetic collection</p></details>`;
     html+=`<p class="ov-footer-note">Account data comes from the player API · Roles, rarity, prices and chosen builds use maintained game data · Historical trends need saved observations</p>`;
     $('overview-dashboard').innerHTML=html;
     $('overview-dashboard').setAttribute('aria-busy','false');
     renderOverviewMetrics();
+    const heroRankIcon = document.querySelector('#overview-view .champ-stat-icon img');
+    if (heroRankIcon) heroRankIcon.src = `/assets/${rankAsset(rank.rank) || 'icon_trophy.png'}`;
+    sectionObserver?.disconnect();
+    sectionObserver = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a,b) => a.boundingClientRect.top-b.boundingClientRect.top)[0];
+      if (!visible) return;
+      document.querySelectorAll('.ov-jump-nav a').forEach((link) => {
+        if (link.hash === `#${visible.target.id}`) link.setAttribute('aria-current','location');
+        else link.removeAttribute('aria-current');
+      });
+    }, {rootMargin:'-10% 0px -65% 0px'});
+    document.querySelectorAll('.ov-section-heading').forEach((heading) => sectionObserver.observe(heading));
     setText('hero-brawler-count', `${s.collection.unlocked} / ${s.collection.total}`);
   }
 
@@ -259,7 +326,7 @@
     activeKey=key;
     if(changed) data=null;
     const button=$('overview-refresh');
-    if(button) {button.disabled=true;button.textContent='↻ Updating';}
+    if(button) {button.disabled=true;button.textContent='Updating';}
     const holder=$('overview-dashboard');
     holder?.setAttribute('aria-busy','true');
     if(!data && holder) holder.innerHTML='<div class="ov-loading" role="status"><span class="ov-loading-dot"></span> Building your account analytics</div>';
@@ -281,7 +348,7 @@
         if(activeKey===key && !signal.aborted) {
           pending=null;
           holder?.setAttribute('aria-busy','false');
-          if(button) {button.disabled=false;button.textContent='↻ Refresh data';}
+          if(button) {button.disabled=false;button.textContent='Refresh data';}
         }
       }
     })();

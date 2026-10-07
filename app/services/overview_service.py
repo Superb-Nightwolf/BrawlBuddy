@@ -256,7 +256,7 @@ def summarize_club(club, tag: str) -> dict:
     members = sorted(club.members, key=lambda m: m.trophies, reverse=True)
     position = next((i + 1 for i, member in enumerate(members) if member.tag.upper() == tag.upper()), None)
     own = next((m for m in members if m.tag.upper() == tag.upper()), None)
-    return {"name": club.name, "tag": club.tag, "description": club.description,
+    return {"name": club.name, "tag": club.tag, "description": club.description, "badge_id": club.badge_id,
             "trophies": club.trophies, "members": len(members), "position": position,
             "required_trophies": club.required_trophies, "type": club.type,
             "role": own.role if own else None, "own_trophies": own.trophies if own else None,
