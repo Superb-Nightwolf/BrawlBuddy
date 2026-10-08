@@ -29,7 +29,7 @@
 }
 .section-system .collection-banner {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, .6fr); gap: 20px 40px;
-  padding: 30px 36px 26px; min-height: 300px; isolation: isolate;
+  padding: 20px 28px; min-height: 0; isolation: isolate;
   background: radial-gradient(ellipse at 85% 0, #d6eaff9c, transparent 55%), linear-gradient(120deg, var(--section-top), var(--section-bottom));
 }
 .section-system .collection-banner::before {
@@ -40,9 +40,9 @@
   width: 850px; height: 850px; right: -250px; top: -310px; opacity: .035;
   background: repeating-conic-gradient(var(--section-accent) 0deg 6deg, transparent 6deg 18deg);
 }
-.section-system .collection-banner h2 { color: var(--section-ink); font-size: clamp(30px, 3.3vw, 46px); line-height: 1.08; letter-spacing: -1.1px; margin: 16px 0 12px; }
+.section-system .collection-banner h2 { color: var(--section-ink); font-size: clamp(30px, 3.3vw, 46px); line-height: 1.08; letter-spacing: -1.1px; margin: 8px 0 6px; }
 .section-system .collection-banner h2 em { color: var(--section-accent); }
-.section-system .collection-banner p { display: block; max-width: 570px; color: #5e708a; font-size: 12px; line-height: 1.7; margin-top: 12px; }
+.section-system .collection-banner p { display: block; max-width: 570px; color: #5e708a; font-size: 12px; line-height: 1.5; margin-top: 8px; }
 .section-hero-copy { position: relative; z-index: 1; }
 .section-hero-emblem { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; z-index: 1; }
 .section-hero-emblem::before { content: ''; position: absolute; width: 180px; height: 180px; border-radius: 50%; background: #ffffff75; box-shadow: 0 0 0 16px #ffffff30, 0 0 0 34px #ffffff20; z-index: -1; }
@@ -51,8 +51,8 @@
 .section-hero-counter { display: flex; align-items: center; gap: 9px; padding: 8px 15px; border: 2px solid #fff; border-radius: 13px; background: var(--section-soft); color: var(--section-accent); box-shadow: 0 3px 0 var(--section-shadow); }
 .section-hero-counter strong { font-family: var(--font-heading); font-size: 28px; line-height: 1; font-variant-numeric: tabular-nums; }
 .section-hero-counter span { max-width: 85px; font-size: 8px; font-weight: 900; letter-spacing: .7px; line-height: 1.5; }
-.section-stat-strip { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding-top: 20px; border-top: 1px solid var(--section-line); z-index: 1; }
-.section-stat { display: flex; flex-direction: column; gap: 5px; min-width: 0; padding: 13px 15px; border: 1.5px solid var(--section-line); border-radius: 14px; background: #ffffff91; box-shadow: 0 3px 0 var(--section-shadow); }
+.section-stat-strip { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding-top: 12px; border-top: 1px solid var(--section-line); z-index: 1; }
+.section-stat { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 8px 12px; border: 1.5px solid var(--section-line); border-radius: 14px; background: #ffffff91; box-shadow: 0 3px 0 var(--section-shadow); }
 .section-stat > span { font-size: 8px; font-weight: 900; letter-spacing: .8px; color: var(--section-accent); }
 .section-stat strong { font: 800 clamp(20px, 2vw, 27px)/1.15 var(--font-heading); color: var(--section-ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .section-stat small { color: #687b96; font-size: 9px; line-height: 1.4; }
@@ -288,6 +288,18 @@
 .section-system .event-timer-row { box-shadow: 0 2px 0 #c6dbd1; }
 .section-system .ranking-tab-group button, .section-system .battle-filter-tabs .level-chip { border-radius: 12px; }
 
+/* Keep each page's opening banner as compact as the account summary. */
+@media (min-width: 1181px) {
+  .section-system .player-hero,
+  .section-system .collection-banner,
+  #brawlers-view .prestige-collection { height: var(--section-banner-height); min-height: var(--section-banner-height); }
+  .section-system .collection-banner,
+  #brawlers-view .prestige-collection { grid-template-rows: minmax(0, 1fr) auto; row-gap: 12px; }
+  #brawlers-view .prestige-collection { row-gap: 8px; }
+  .section-hero-emblem { gap: 6px; }
+  .section-hero-emblem > img { width: 90px; height: 90px; }
+  .section-hero-emblem::before { width: 120px; height: 120px; }
+}
 @media (max-width: 1100px) {
   .section-system .player-hero { grid-template-columns: 130px minmax(0, 1fr); }
   .section-system .hero-collection-link { grid-column: 1 / -1; min-height: 54px; flex-direction: row; justify-content: space-between; gap: 10px; padding: 10px 16px; }

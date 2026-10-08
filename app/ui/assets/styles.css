@@ -37,6 +37,7 @@
   --shadow: 0 10px 0 rgba(11, 35, 78, 0.05), 0 20px 36px rgba(16, 52, 105, 0.12);
   --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --section-banner-height: 300px;
 }
 
 * { box-sizing: border-box; }
@@ -410,8 +411,8 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
 #brawlers-view .prestige-collection {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 24px;
-  padding: 12px 32px 28px;
+  gap: 8px;
+  padding: 12px 32px 16px;
   min-height: 0;
   isolation: isolate;
   color: #30265b;
@@ -427,8 +428,8 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
 #brawlers-view .prestige-collection::after {
   content: none;
 }
-.collection-prestige-hero { display: flex; align-items: center; justify-content: flex-start; gap: 24px; min-width: 0; transform: translateX(-5%); }
-.collection-prestige-copy { position: relative; z-index: 1; flex: 0 1 auto; min-width: 0; max-width: 540px; margin-inline-start: 10%; align-self: center; text-align: left; }
+.collection-prestige-hero { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-width: 0; }
+.collection-prestige-copy { position: relative; z-index: 1; flex: 1 1 auto; min-width: 0; max-width: 650px; align-self: center; text-align: left; }
 .collection-prestige-identity { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .prestige-collection .banner-chip { background: #e4d8ff; border-color: #cbb5f7; color: #624293; box-shadow: none; }
 .collection-prestige-source { color: #665480; font-size: 9px; font-weight: 800; letter-spacing: .7px; }
@@ -438,11 +439,11 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
 #brawlers-view .prestige-collection p { display: block; color: #524570; margin: 8px 0 0; max-width: 650px; font-size: 12px; line-height: 1.55; overflow-wrap: anywhere; }
 #brawlers-view .prestige-collection .collection-prestige-summary { font-size: 11px; color: #6a5b82; }
 .collection-prestige-total {
-  flex: 1 1 520px;
+  flex: 0 0 40%;
   align-self: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
   min-width: 0; color: #574078; text-align: center;
 }
-.collection-prestige-emblem { position: relative; width: 52%; max-width: 300px; aspect-ratio: 1; display: grid; place-items: center; container-type: inline-size; }
+.collection-prestige-emblem { position: relative; width: clamp(156px, 13vw, 172px); max-width: 100%; aspect-ratio: 1; display: grid; place-items: center; container-type: inline-size; }
 .collection-prestige-rays {
   position: absolute; z-index: -1; left: 50%; top: 54%;
   width: max(1600px, 800cqw); aspect-ratio: 1; transform: translate(-50%, -50%);
@@ -469,15 +470,15 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
 }
 .collection-prestige-total strong.has-long-total { font-size: clamp(24px, 16cqw, 48px); letter-spacing: -1.5px; }
 .collection-prestige-total > span { position: relative; margin-top: -14px; font-size: 11px; font-weight: 900; letter-spacing: 1.1px; }
-.collection-prestige-categories { position: relative; z-index: 1; grid-column: 1 / -1; min-width: 0; padding-top: 17px; border-top: 1px solid rgba(104,77,148,.16); }
-.collection-prestige-category-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.collection-prestige-categories { position: relative; z-index: 1; grid-column: 1 / -1; min-width: 0; padding-top: 10px; border-top: 1px solid rgba(104,77,148,.16); }
+.collection-prestige-category-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .collection-prestige-category-heading > span { font-size: 9px; font-weight: 900; letter-spacing: .8px; color: #65517d; }
 .collection-prestige-category-heading small { font-size: 10px; color: #75648d; }
 .collection-prestige-category-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
 .collection-prestige-category {
   --tier-bg: #f0e9dd; --tier-ink: #705836; --tier-line: #d4c3aa;
   position: relative; display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: center;
-  gap: 0 5px; min-width: 0; padding: 10px 8px; border: 1.5px solid var(--tier-line); border-radius: 14px;
+  gap: 0 5px; min-width: 0; padding: 6px 8px; border: 1.5px solid var(--tier-line); border-radius: 14px;
   color: var(--tier-ink); background: var(--tier-bg); cursor: pointer; text-align: left;
   box-shadow: 0 3px 0 color-mix(in srgb, var(--tier-line) 65%, transparent); transition: transform .15s, box-shadow .15s;
 }

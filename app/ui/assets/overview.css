@@ -1,4 +1,14 @@
 #overview-view, #club-view { --ov-ink: #19365b; --ov-muted: #617895; --ov-line: #c5daf0; }
+#overview-view .player-avatar-card { padding: 0; align-self: center; }
+#overview-view .avatar-frame { width: 180px; height: 180px; margin: 0; }
+#overview-view .avatar-frame img { max-width: none; max-height: none; }
+@media (min-width: 541px) and (max-width: 1100px) {
+  #overview-view .player-hero { grid-template-columns: 152px minmax(0, 1fr); }
+  #overview-view .avatar-frame { width: 152px; height: 152px; }
+}
+@media (max-width: 540px) {
+  #overview-view .avatar-frame { width: 136px; height: 136px; }
+}
 #overview-view .hero-stats { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .ov-art { display: inline-block; width: 30px; height: 30px; object-fit: contain; vertical-align: middle; }
 .ov-ui-symbol { color: var(--ov-group-accent,#315f98); }
