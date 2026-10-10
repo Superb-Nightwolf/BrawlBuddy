@@ -189,6 +189,31 @@ def test_hyper_buffie_flag_is_not_base_hypercharge_ownership():
     assert next(row for row in result["breakdown"] if row["key"] == "hypercharge")["cost"]["coins"] == 5000
 
 
+@pytest.mark.parametrize("owns_shield", [False, True])
+def test_griff_recommends_two_available_gears_and_counts_shield_ownership(owns_shield):
+    gears = [{"id": 62000002, "name": "DAMAGE"}]
+    if owns_shield:
+        gears.append({"id": 62000004, "name": "SHIELD"})
+    with TestClient(app) as client:
+        guide = client.get("/api/guides/16000050").json()
+        response = client.post("/api/brawlers/16000050/readiness", json={"brawlers": [
+            {"id": 16000050, "name": "GRIFF", "power": 11, "gears": gears}
+        ]})
+    assert guide["recommended_build"]["gears"] == ["DAMAGE", "SHIELD"]
+    assert set(guide["recommended_build"]["gears"]) <= set(guide["gears"])
+    assert "RELOAD SPEED" not in guide["gears"]
+    assert response.status_code == 200
+    result = response.json()
+    assert result["categoryProgress"]["gears"] == {
+        "owned": 2 if owns_shield else 1, "total": 2,
+        "progress": 100.0 if owns_shield else 50.0,
+    }
+    assert result["missing"]["gears"] == ([] if owns_shield else [62000004])
+    gear_rows = [row for row in result["breakdown"] if row["key"].startswith("gear-")]
+    assert len(gear_rows) == 2
+    assert [row["cost"]["coins"] for row in gear_rows] == [0, 0 if owns_shield else 1000]
+
+
 def test_central_gear_prices_and_removed_gears():
     service = fixture_service(buffies=False)
     service.guides["1"]["recommended_build"]["gears"] = ["PET POWER", "THICC HEAD"]

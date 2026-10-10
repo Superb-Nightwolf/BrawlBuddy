@@ -8422,9 +8422,10 @@
       "gadget": "PIGGY BANK",
       "star_power": "BUSINESS RESILIENCE",
       "gears": [
-        "DAMAGE"
+        "DAMAGE",
+        "SHIELD"
       ],
-      "note": "Business Resilience provides steady health sustain, while Piggy Bank breaks key walls for easier Super sightlines."
+      "note": "Business Resilience provides steady health sustain, while Piggy Bank breaks key walls for easier Super sightlines. Damage boosts low-health attacks, and Shield adds protection when fully healed. The gear pair was checked against TopBrawl's Griff gear usage on 2026-10-11."
     },
     "gears": [
       "SPEED",
@@ -8439,6 +8440,10 @@
       {
         "label": "Brawl Stars Wiki — Griff",
         "url": "https://brawlstars.fandom.com/wiki/Griff"
+      },
+      {
+        "label": "TopBrawl — Griff gear usage (checked 2026-10-11)",
+        "url": "https://topbrawl.com/brawlers/griff"
       },
       {
         "label": "Brawl Stars Wiki — home",
