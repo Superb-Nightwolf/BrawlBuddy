@@ -22,6 +22,7 @@
   --paper: #f0f6ff;
   --panel: #ffffff;
   --line: #d8e6f5;
+  --inline-game-icon-size: 22px;
   --roster-dot-pattern: radial-gradient(circle, rgba(70, 117, 179, .12) 1px, transparent 1.5px);
   --detail-color-top: #fff9dc;
   --detail-color-middle: #fef6d1;
@@ -32,12 +33,13 @@
   --detail-color-accent: #734819;
   --detail-color-shadow: #eed26c;
   --detail-design-border: #f5d140;
-  --chrome-background: radial-gradient(ellipse at top left, rgba(113, 169, 255, .17), transparent 72%), radial-gradient(ellipse at top right, rgba(94, 210, 239, .14), transparent 72%), linear-gradient(180deg, #f5f9ff 0%, #eaf2ff 100%);
+  --chrome-background: radial-gradient(ellipse at 10% 0, #d9e9ffb3, transparent 60%), radial-gradient(ellipse at 90% 100%, #e7dcff80, transparent 60%), linear-gradient(135deg, #f5f9ff, #eaf3ff 65%, #f2efff);
   --chrome-border: #d8e6f5;
   --shadow: 0 10px 0 rgba(11, 35, 78, 0.05), 0 20px 36px rgba(16, 52, 105, 0.12);
   --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   --section-banner-height: 300px;
+  --profile-cover-height: 400px;
 }
 
 * { box-sizing: border-box; }
@@ -127,7 +129,8 @@ a { color: inherit; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: var(--roster-dot-pattern) 0 0 / 20px 20px repeat;
+  background: url('/assets/brawl-chrome-pattern.svg') 20px 0 / 210px 164px repeat;
+  opacity: .65;
   pointer-events: none;
 }
 .header-container::after, .footer-container::after {
@@ -160,7 +163,8 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container) {
   box-shadow: 0 8px 24px #34260e14;
 }
 body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::before {
-  content: none;
+  content: "";
+  opacity: .4;
 }
 .footer-layout { position: relative; z-index: 1; }
 .topbar .eyebrow { color: #096fcf; }
@@ -411,9 +415,9 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
 #brawlers-view .prestige-collection {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 8px;
-  padding: 12px 32px 16px;
-  min-height: 0;
+  gap: 20px;
+  padding: 24px 40px 28px;
+  min-height: 380px;
   isolation: isolate;
   color: #30265b;
   border-color: #efe7ff;
@@ -443,7 +447,7 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
   align-self: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
   min-width: 0; color: #574078; text-align: center;
 }
-.collection-prestige-emblem { position: relative; width: clamp(156px, 13vw, 172px); max-width: 100%; aspect-ratio: 1; display: grid; place-items: center; container-type: inline-size; }
+.collection-prestige-emblem { position: relative; width: clamp(200px, 16vw, 220px); max-width: 100%; aspect-ratio: 1; display: grid; place-items: center; container-type: inline-size; }
 .collection-prestige-rays {
   position: absolute; z-index: -1; left: 50%; top: 54%;
   width: max(1600px, 800cqw); aspect-ratio: 1; transform: translate(-50%, -50%);
@@ -470,15 +474,15 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
 }
 .collection-prestige-total strong.has-long-total { font-size: clamp(24px, 16cqw, 48px); letter-spacing: -1.5px; }
 .collection-prestige-total > span { position: relative; margin-top: -14px; font-size: 11px; font-weight: 900; letter-spacing: 1.1px; }
-.collection-prestige-categories { position: relative; z-index: 1; grid-column: 1 / -1; min-width: 0; padding-top: 10px; border-top: 1px solid rgba(104,77,148,.16); }
-.collection-prestige-category-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.collection-prestige-categories { position: relative; z-index: 1; grid-column: 1 / -1; min-width: 0; padding-top: 17px; border-top: 1px solid rgba(104,77,148,.16); }
+.collection-prestige-category-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
 .collection-prestige-category-heading > span { font-size: 9px; font-weight: 900; letter-spacing: .8px; color: #65517d; }
 .collection-prestige-category-heading small { font-size: 10px; color: #75648d; }
 .collection-prestige-category-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
 .collection-prestige-category {
   --tier-bg: #f0e9dd; --tier-ink: #705836; --tier-line: #d4c3aa;
   position: relative; display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: center;
-  gap: 0 5px; min-width: 0; padding: 6px 8px; border: 1.5px solid var(--tier-line); border-radius: 14px;
+  gap: 0 5px; min-width: 0; padding: 10px 8px; border: 1.5px solid var(--tier-line); border-radius: 14px;
   color: var(--tier-ink); background: var(--tier-bg); cursor: pointer; text-align: left;
   box-shadow: 0 3px 0 color-mix(in srgb, var(--tier-line) 65%, transparent); transition: transform .15s, box-shadow .15s;
 }
@@ -499,7 +503,7 @@ body:has(#detail-view:not(.hidden)) :is(.header-container, .footer-container)::b
   .collection-prestige-category-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
-  #brawlers-view .prestige-collection { padding: 12px 16px 20px; gap: 20px; }
+  #brawlers-view .prestige-collection { padding: 22px 16px 24px; gap: 20px; }
   .collection-prestige-hero { flex-direction: column; gap: 4px; }
   .collection-prestige-copy { align-self: stretch; }
   .collection-prestige-identity { justify-content: flex-start; }
@@ -1788,10 +1792,8 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-category .readiness-ring::before { inset: 6px; }
 .readiness-category > strong { display: grid; align-content: center; min-height: 30px; font-size: 10px; line-height: 1.4; color: #243954; }
 .readiness-category > small { font-size: 9px; color: #64789d; }
-.readiness-currency-icon { display: inline-flex; width: 19px; height: 19px; flex: 0 0 19px; vertical-align: middle; }
-.readiness-currency-icon img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.readiness-currency-icon.currency-powerPoints { justify-content: center; }
-.readiness-currency-icon.currency-powerPoints img { width: auto; max-width: none; }
+.readiness-currency-icon { display: inline-flex; width: var(--inline-game-icon-size); height: var(--inline-game-icon-size); flex: 0 0 var(--inline-game-icon-size); vertical-align: middle; }
+.readiness-currency-icon > :is(img, svg) { display: block; width: 100%; height: 100%; object-fit: contain; }
 .readiness-item-icon { display: inline-grid; place-items: center; width: 30px; height: 30px; flex: 0 0 30px; color: #8b5ce7; background: #eff4ff; border-radius: 8px; }
 .readiness-item-icon img { width: 26px; height: 26px; object-fit: contain; }
 .readiness-item-icon .readiness-currency-icon { width: 26px; height: 26px; flex-basis: 26px; }
@@ -1885,7 +1887,7 @@ img[src^="/assets/brawlers/thumbs/16000109.webp"] { background-color: #000; }
 .readiness-buffie-table thead th:nth-child(2) { width: 22%; }
 .readiness-buffie-table thead th:last-child { width: 35%; }
 .readiness-table .readiness-row-cost { display: grid; grid-template-columns: 82px 104px; gap: 8px; justify-content: center; font-variant-numeric: tabular-nums; }
-.readiness-table .readiness-cost-part { display: grid; grid-template-columns: 19px minmax(0, 1fr); gap: 5px; }
+.readiness-table .readiness-cost-part { display: grid; grid-template-columns: var(--inline-game-icon-size) minmax(0, 1fr); gap: 5px; }
 .readiness-table .readiness-cost-part > span:last-child { text-align: right; }
 .readiness-table .cost-powerPoints > span:last-child { text-align: center; }
 .readiness-table .cost-powerPoints { grid-column: 1; }
