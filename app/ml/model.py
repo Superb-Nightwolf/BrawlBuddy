@@ -19,9 +19,17 @@ from sklearn.ensemble import (
 )
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, brier_score_loss, log_loss, roc_auc_score
-from sklearn.model_selection import StratifiedKFold
-import lightgbm as lgb
-import xgboost as xgb
+from sklearn.base import clone
+from sklearn.model_selection import TimeSeriesSplit
+from threadpoolctl import threadpool_limits
+try:
+    import lightgbm as lgb
+except ImportError:
+    lgb = None
+try:
+    import xgboost as xgb
+except ImportError:
+    xgb = None
 
 from app.ml.database import MetaDatabase
 from app.ml.meta_engine import StatisticalMetaEngine
@@ -68,7 +76,9 @@ class BrawlerOutcomePredictor:
         self.baseline_metrics: Optional[ModelMetrics] = None
         self.benchmark_results: list[dict[str, Any]] = []
         self.feature_importances: dict[str, Any] = {}
-        self.version = "lgbm_v2"
+        self.map_to_idx: dict[str, int] = {}
+        self.validation: dict[str, Any] = {}
+        self.version = "outcome_v3"
 
 
     def _extract_dataset(self) -> pd.DataFrame:
@@ -93,7 +103,8 @@ class BrawlerOutcomePredictor:
                     p.is_winner
                 FROM matches m
                 JOIN match_participants p ON m.match_fingerprint = p.match_fingerprint
-                WHERE m.team_a_avg_power > 0 AND p.team_index IN (0, 1)
+                WHERE m.ingestion_version=2 AND m.team_a_avg_power > 0 AND m.team_b_avg_power > 0
+                    AND m.result IN ('victory', 'defeat') AND p.team_index IN (0, 1)
                 ORDER BY m.battle_time ASC
             """
             rows = conn.execute(query).fetchall()
@@ -114,9 +125,11 @@ class BrawlerOutcomePredictor:
                     "team_0_brawlers": [],
                     "team_1_brawlers": [],
                     "team_0_winner": None,
+                    "labels": {0: [], 1: []},
                 }
             t_idx = r["team_index"]
             b_id = r["brawler_id"]
+            matches_dict[mf]["labels"][t_idx].append(r["is_winner"])
             if t_idx == 0:
                 matches_dict[mf]["team_0_brawlers"].append(b_id)
                 if r["is_winner"] is not None:
@@ -130,14 +143,17 @@ class BrawlerOutcomePredictor:
             t0 = m["team_0_brawlers"]
             t1 = m["team_1_brawlers"]
             winner = m["team_0_winner"]
-            # We require standard teams (at least 2 brawlers per team, typically 3)
-            if len(t0) < 2 or len(t1) < 2 or winner is None:
+            # Require complete 3v3 teams and consistent opposite outcomes
+            if (len(t0) != 3 or len(t1) != 3 or not all(t0 + t1) or winner is None
+                    or any(v != winner for v in m["labels"][0])
+                    or any(v != 1 - winner for v in m["labels"][1])):
                 continue
 
             power_diff = m["team_a_avg_power"] - m["team_b_avg_power"]
 
             # Perspective A (Team 0 vs Team 1)
             records.append({
+                "match_fingerprint": m["match_fingerprint"],
                 "battle_time": m["battle_time"],
                 "mode": m["mode"],
                 "map": m["map"],
@@ -150,6 +166,7 @@ class BrawlerOutcomePredictor:
 
             # Perspective B (Team 1 vs Team 0, symmetrical with negated power diff & flipped target)
             records.append({
+                "match_fingerprint": m["match_fingerprint"],
                 "battle_time": m["battle_time"],
                 "mode": m["mode"],
                 "map": m["map"],
@@ -181,14 +198,15 @@ class BrawlerOutcomePredictor:
 
             modes = sorted(list(df["mode"].unique()))
             self.mode_to_idx = {m: i for i, m in enumerate(modes)}
+            self.map_to_idx = {m: i for i, m in enumerate(sorted(df["map"].unique()))}
 
         n_samples = len(df)
         n_brawlers = len(self.brawler_ids)
         n_modes = len(self.mode_to_idx)
 
         # Feature layout:
-        # [Allies one-hot (n_brawlers)] + [Enemies one-hot (n_brawlers)] + [Modes one-hot (n_modes)] + [power_diff (1)]
-        X = np.zeros((n_samples, (n_brawlers * 2) + n_modes + 1), dtype=np.float32)
+        # Ally and enemy indicators, mode and map indicators, then average power difference.
+        X = np.zeros((n_samples, (n_brawlers * 2) + n_modes + len(self.map_to_idx) + 1), dtype=np.float32)
 
         for i, row in df.reset_index(drop=True).iterrows():
             # Allies
@@ -203,189 +221,110 @@ class BrawlerOutcomePredictor:
             m_idx = self.mode_to_idx.get(row["mode"])
             if m_idx is not None:
                 X[i, (n_brawlers * 2) + m_idx] = 1.0
+            map_idx = self.map_to_idx.get(row["map"])
+            if map_idx is not None:
+                X[i, n_brawlers * 2 + n_modes + map_idx] = 1.0
             # Power difference
             X[i, -1] = float(row.get("power_diff", 0.0))
 
         y = df["target"].values.astype(np.int32)
         return X, y
 
+    def _model_probabilities(self, model, features: np.ndarray) -> np.ndarray:
+        # The same symmetrization is used in validation and serving.
+        n = len(self.brawler_ids)
+        swapped = features.copy()
+        swapped[:, :n], swapped[:, n:n*2] = features[:, n:n*2], features[:, :n]
+        swapped[:, -1] = -features[:, -1]
+        return .5 * (model.predict_proba(features)[:, 1] + 1 - model.predict_proba(swapped)[:, 1])
+
     def train_and_evaluate(self, n_splits: int = 5) -> dict[str, Any]:
-        """Train and benchmark multiple model frameworks with 5-fold cross-validation.
-        
-        Evaluates:
-          1. Baseline Logistic Regression (L2)
-          2. Random Forest (Ensemble Trees)
-          3. HistGradientBoosting (Histogram GBDT)
-          4. XGBoost (Extreme Gradient Boosting)
-          5. LightGBM (Tuned GBDT)
-          6. Stacking/Voting Ensemble (Multi-Framework Blend)
-          
-        Picks the best-performing model to maximize accuracy and ROC-AUC.
-        """
+        """Select on expanding temporal folds, then report an untouched latest-time holdout."""
         import time
-
         df = self._extract_dataset()
-        if len(df) < 50:
-            logger.warning("Dataset too small for reliable ML training (%d samples).", len(df))
-            return {"status": "insufficient_data", "samples": len(df)}
-
-        # Temporal split: 80% earlier matches for training, 20% latest matches for testing
-        split_idx = int(len(df) * 0.8)
-        train_df = df.iloc[:split_idx]
-        test_df = df.iloc[split_idx:]
-
-        X_train, y_train = self._build_feature_matrix(train_df, is_training=True)
-        X_test, y_test = self._build_feature_matrix(test_df, is_training=False)
-
-        # 5-Fold Stratified Cross-Validation
-        cv = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
-
-        candidate_frameworks = {
-            "Baseline Logistic Regression": LogisticRegression(C=0.5, max_iter=250, random_state=42),
-            "Random Forest": RandomForestClassifier(n_estimators=120, max_depth=12, min_samples_split=4, random_state=42, n_jobs=-1),
-            "HistGradientBoosting": HistGradientBoostingClassifier(max_iter=120, learning_rate=0.05, l2_regularization=0.1, random_state=42),
-            "XGBoost": xgb.XGBClassifier(n_estimators=120, max_depth=5, learning_rate=0.05, subsample=0.8, colsample_bytree=0.8, eval_metric="logloss", random_state=42),
-            "LightGBM (Tuned)": lgb.LGBMClassifier(n_estimators=120, max_depth=6, num_leaves=35, learning_rate=0.04, subsample=0.8, colsample_bytree=0.8, reg_alpha=0.1, reg_lambda=0.1, random_state=42, verbosity=-1),
+        if df.empty or df['match_fingerprint'].nunique() < 25:
+            return {"status": "insufficient_data", "samples": len(df),
+                    "message": "Collect at least 25 verified complete 3v3 matches before training."}
+        times = np.array(sorted(df['battle_time'].unique()))
+        if len(times) < 6:
+            return {"status": "insufficient_data", "samples": len(df),
+                    "message": "Training needs at least six distinct match timestamps."}
+        split_idx = max(3, int(len(times) * .8))
+        train_times, test_times = times[:split_idx], times[split_idx:]
+        train_df = df[df.battle_time.isin(train_times)]
+        test_df = df[df.battle_time.isin(test_times)]
+        cv = TimeSeriesSplit(n_splits=min(n_splits, len(train_times) - 1))
+        folds = list(cv.split(train_times))
+        frameworks = {
+            "Baseline Logistic Regression": LogisticRegression(C=.5, max_iter=400, random_state=42),
+            "Random Forest": RandomForestClassifier(n_estimators=80, max_depth=10, min_samples_leaf=3, n_jobs=1, random_state=42),
+            "HistGradientBoosting": HistGradientBoostingClassifier(max_iter=80, l2_regularization=.1, random_state=42),
         }
-
-        # Add Voting Ensemble
-        ensemble = VotingClassifier(
-            estimators=[
-                ("rf", RandomForestClassifier(n_estimators=120, max_depth=12, min_samples_split=4, random_state=42, n_jobs=-1)),
-                ("lgbm", lgb.LGBMClassifier(n_estimators=120, max_depth=6, num_leaves=35, learning_rate=0.04, subsample=0.8, colsample_bytree=0.8, reg_alpha=0.1, reg_lambda=0.1, random_state=42, verbosity=-1)),
-                ("xgb", xgb.XGBClassifier(n_estimators=120, max_depth=5, learning_rate=0.05, subsample=0.8, colsample_bytree=0.8, eval_metric="logloss", random_state=42)),
-                ("lr", LogisticRegression(C=0.5, max_iter=250, random_state=42)),
-            ],
-            voting="soft",
-            weights=[2.0, 1.5, 1.5, 1.0],
-        )
-        candidate_frameworks["Ensemble (Multi-Framework Blend)"] = ensemble
-
-        benchmark_list = []
-        best_score = -1.0
-        best_model_name = ""
-        best_model_obj = None
-
-        for name, clf in candidate_frameworks.items():
-            t0 = time.time()
-            cv_acc, cv_auc, cv_loss, cv_brier = [], [], [], []
-
-            for tr_idx, val_idx in cv.split(X_train, y_train):
-                fold_clf = clf
-                fold_clf.fit(X_train[tr_idx], y_train[tr_idx])
-                probs = fold_clf.predict_proba(X_train[val_idx])[:, 1]
-                preds = (probs >= 0.5).astype(int)
-
-                cv_acc.append(float(accuracy_score(y_train[val_idx], preds)))
-                cv_auc.append(float(roc_auc_score(y_train[val_idx], probs)))
-                cv_loss.append(float(log_loss(y_train[val_idx], probs)))
-                cv_brier.append(float(brier_score_loss(y_train[val_idx], probs)))
-
-            # Train on full train split and evaluate on holdout test set
-            clf.fit(X_train, y_train)
-            test_probs = clf.predict_proba(X_test)[:, 1]
-            test_preds = (test_probs >= 0.5).astype(int)
-            elapsed = time.time() - t0
-
-            t_acc = round(float(accuracy_score(y_test, test_preds)), 4)
-            t_auc = round(float(roc_auc_score(y_test, test_probs)), 4)
-            t_loss = round(float(log_loss(y_test, test_probs)), 4)
-            t_brier = round(float(brier_score_loss(y_test, test_probs)), 4)
-
-            cv_acc_m = round(float(np.mean(cv_acc)), 4)
-            cv_acc_s = round(float(np.std(cv_acc)), 4)
-            cv_auc_m = round(float(np.mean(cv_auc)), 4)
-            cv_auc_s = round(float(np.std(cv_auc)), 4)
-
-            selection_score = (t_acc * 0.5) + (t_auc * 0.5)
-            if selection_score > best_score:
-                best_score = selection_score
-                best_model_name = name
-                best_model_obj = clf
-
-            result_entry = {
-                "name": name,
-                "framework": "scikit-learn" if "Baseline" in name or "Random" in name or "Hist" in name or "Ensemble" in name else ("LightGBM" if "LightGBM" in name else "XGBoost"),
-                "cv_accuracy": f"{cv_acc_m*100:.2f}% ± {cv_acc_s*100:.2f}%",
-                "cv_accuracy_mean": cv_acc_m,
-                "cv_accuracy_std": cv_acc_s,
-                "cv_roc_auc": f"{cv_auc_m:.4f} ± {cv_auc_s:.4f}",
-                "cv_roc_auc_mean": cv_auc_m,
-                "cv_roc_auc_std": cv_auc_s,
-                "cv_log_loss_mean": round(float(np.mean(cv_loss)), 4),
-                "cv_brier_score_mean": round(float(np.mean(cv_brier)), 4),
-                "test_accuracy": t_acc,
-                "test_roc_auc": t_auc,
-                "test_log_loss": t_loss,
-                "test_brier_score": t_brier,
-                "train_time_seconds": round(elapsed, 2),
-                "is_best": False,
-            }
-            benchmark_list.append(result_entry)
-
-            if "Baseline" in name:
-                self.baseline_lr = clf
-                self.baseline_metrics = ModelMetrics(
-                    model_name=name,
-                    train_samples=len(train_df),
-                    test_samples=len(test_df),
-                    accuracy=t_acc,
-                    roc_auc=t_auc,
-                    log_loss=t_loss,
-                    brier_score=t_brier,
-                    trained_at=datetime.now(UTC).isoformat(),
-                    cv_accuracy=f"{cv_acc_m*100:.2f}% ± {cv_acc_s*100:.2f}%",
-                    cv_roc_auc=f"{cv_auc_m:.4f} ± {cv_auc_s:.4f}",
-                )
-
-        # Mark best model
-        for b in benchmark_list:
-            if b["name"] == best_model_name:
-                b["is_best"] = True
-                self.metrics = ModelMetrics(
-                    model_name=b["name"],
-                    train_samples=len(train_df),
-                    test_samples=len(test_df),
-                    accuracy=b["test_accuracy"],
-                    roc_auc=b["test_roc_auc"],
-                    log_loss=b["test_log_loss"],
-                    brier_score=b["test_brier_score"],
-                    trained_at=datetime.now(UTC).isoformat(),
-                    cv_accuracy=b["cv_accuracy"],
-                    cv_roc_auc=b["cv_roc_auc"],
-                )
-
-        self.model = best_model_obj
-        self.benchmark_results = benchmark_list
-
-        # Extract Feature Importances
+        if lgb is not None:
+            frameworks['LightGBM'] = lgb.LGBMClassifier(n_estimators=80, num_leaves=15, n_jobs=1, verbosity=-1, random_state=42)
+        if xgb is not None:
+            frameworks['XGBoost'] = xgb.XGBClassifier(n_estimators=80, max_depth=4, n_jobs=1, eval_metric='logloss', random_state=42)
+        frameworks['Soft Voting Ensemble'] = VotingClassifier(
+            estimators=[('lr', clone(frameworks['Baseline Logistic Regression'])),
+                        ('rf', clone(frameworks['Random Forest']))], voting='soft', n_jobs=1)
+        benchmarks, fitted = [], {}
+        # Bound native CPU pools so UI requests can keep running during training.
+        with threadpool_limits(limits=1):
+            for name, estimator in frameworks.items():
+                started = time.monotonic()
+                acc, auc, loss, brier = [], [], [], []
+                for tr_idx, val_idx in folds:
+                    tr = train_df[train_df.battle_time.isin(train_times[tr_idx])]
+                    val = train_df[train_df.battle_time.isin(train_times[val_idx])]
+                    X, y = self._build_feature_matrix(tr, is_training=True)
+                    V, vy = self._build_feature_matrix(val, is_training=False)
+                    fold = clone(estimator).fit(X, y)
+                    probs = self._model_probabilities(fold, V)
+                    acc.append(float(accuracy_score(vy, probs >= .5)))
+                    auc.append(float(roc_auc_score(vy, probs)))
+                    loss.append(float(log_loss(vy, probs, labels=[0, 1])))
+                    brier.append(float(brier_score_loss(vy, probs)))
+                X, y = self._build_feature_matrix(train_df, is_training=True)
+                T, ty = self._build_feature_matrix(test_df, is_training=False)
+                model = clone(estimator).fit(X, y)
+                probs = self._model_probabilities(model, T)
+                fitted[name] = model
+                benchmarks.append({
+                    'name': name, 'framework': 'LightGBM' if name == 'LightGBM' else 'XGBoost' if name == 'XGBoost' else 'scikit-learn',
+                    'cv_accuracy': f"{np.mean(acc)*100:.2f}% ± {np.std(acc)*100:.2f}%",
+                    'cv_accuracy_mean': float(np.mean(acc)), 'cv_accuracy_std': float(np.std(acc)),
+                    'cv_roc_auc': f"{np.mean(auc):.4f} ± {np.std(auc):.4f}",
+                    'cv_roc_auc_mean': float(np.mean(auc)), 'cv_roc_auc_std': float(np.std(auc)),
+                    'cv_log_loss_mean': float(np.mean(loss)), 'cv_brier_score_mean': float(np.mean(brier)),
+                    'test_accuracy': float(accuracy_score(ty, probs >= .5)),
+                    'test_roc_auc': float(roc_auc_score(ty, probs)),
+                    'test_log_loss': float(log_loss(ty, probs, labels=[0, 1])),
+                    'test_brier_score': float(brier_score_loss(ty, probs)),
+                    'train_time_seconds': round(time.monotonic() - started, 2), 'is_best': False,
+                })
+        # Do not choose a champion using the final test labels.
+        best = min(benchmarks, key=lambda row: row['cv_log_loss_mean'])
+        best['is_best'] = True
+        self.model = fitted[best['name']]
+        self.baseline_lr = fitted['Baseline Logistic Regression']
+        def metrics(row):
+            return ModelMetrics(row['name'], len(train_df), len(test_df), row['test_accuracy'],
+                                row['test_roc_auc'], row['test_log_loss'], row['test_brier_score'],
+                                datetime.now(UTC).isoformat(), row['cv_accuracy'], row['cv_roc_auc'])
+        self.metrics = metrics(best)
+        self.baseline_metrics = metrics(benchmarks[0])
+        self.benchmark_results = benchmarks
+        self.validation = {'method': 'expanding temporal folds grouped by timestamp and match',
+                           'folds': len(folds), 'selection_metric': 'cv_log_loss',
+                           'train_matches': int(train_df.match_fingerprint.nunique()),
+                           'test_matches': int(test_df.match_fingerprint.nunique()),
+                           'train_latest': str(train_times[-1]), 'test_earliest': str(test_times[0]),
+                           'probabilities_calibrated': False}
         self._extract_feature_importances()
-
         self.save_model()
-
-        lgbm_entry = next((b for b in benchmark_list if "LightGBM" in b["name"]), {})
-        lr_entry = next((b for b in benchmark_list if "Logistic" in b["name"]), {})
-
-        return {
-            "status": "success",
-            "samples": len(df),
-            "best_model": best_model_name,
-            "metrics": self.metrics.to_dict() if self.metrics else {},
-            "lgbm": {
-                "accuracy": lgbm_entry.get("test_accuracy", 0.0),
-                "roc_auc": lgbm_entry.get("test_roc_auc", 0.0),
-                "log_loss": lgbm_entry.get("test_log_loss", 0.0),
-                "brier_score": lgbm_entry.get("test_brier_score", 0.0),
-            },
-            "baseline_lr": {
-                "accuracy": lr_entry.get("test_accuracy", 0.0),
-                "roc_auc": lr_entry.get("test_roc_auc", 0.0),
-                "log_loss": lr_entry.get("test_log_loss", 0.0),
-                "brier_score": lr_entry.get("test_brier_score", 0.0),
-            },
-            "benchmark": benchmark_list,
-            "feature_importances": self.feature_importances,
-        }
+        return {'status': 'success', 'samples': len(df), 'best_model': best['name'],
+                'metrics': self.metrics.to_dict(), 'benchmark': benchmarks,
+                'validation': self.validation, 'feature_importances': self.feature_importances}
 
     def _extract_feature_importances(self) -> None:
         """Extract top ally assets, enemy threats, and feature weights."""
@@ -393,7 +332,7 @@ class BrawlerOutcomePredictor:
             return
 
         n_brawlers = len(self.brawler_ids)
-        importances = np.zeros(len(self.brawler_ids) * 2 + len(self.mode_to_idx) + 1)
+        importances = np.zeros(len(self.brawler_ids) * 2 + len(self.mode_to_idx) + len(self.map_to_idx) + 1)
 
         # Pull importance weights from active model
         if hasattr(self.model, "feature_importances_"):
@@ -409,8 +348,12 @@ class BrawlerOutcomePredictor:
             if sub_imps:
                 avg_imp = np.mean(sub_imps, axis=0)
                 importances = avg_imp / (np.sum(avg_imp) + 1e-9)
-        elif self.baseline_lr and hasattr(self.baseline_lr, "coef_"):
-            importances = np.abs(self.baseline_lr.coef_[0])
+        elif hasattr(self.model, "coef_"):
+            importances = np.abs(self.model.coef_[0])
+            importances = importances / (np.sum(importances) + 1e-9)
+        else:
+            self.feature_importances = {"available": False, "message": "This model does not expose native feature weights"}
+            return
 
         ally_imps = importances[:n_brawlers]
         enemy_imps = importances[n_brawlers : n_brawlers * 2]
@@ -454,19 +397,18 @@ class BrawlerOutcomePredictor:
         power_diff: float = 0.0,
     ) -> dict[str, Any]:
         """Predict win probability for complete or partial draft compositions."""
-        if self.model is None or not self.brawler_to_idx:
-            # Fallback to statistical prior
-            return {
-                "win_probability": 0.50,
-                "confidence": "LOW",
-                "source": "statistical_fallback",
-                "model_version": "none",
-            }
+        all_picks = team_brawlers + enemy_brawlers
+        supported = (self.model is not None and len(team_brawlers) == len(enemy_brawlers) == 3
+                     and all(b in self.brawler_to_idx for b in all_picks)
+                     and mode in self.mode_to_idx and map_name in self.map_to_idx)
+        if not supported:
+            return {"win_probability": .5, "confidence": "LOW", "source": "statistical_fallback",
+                    "model_version": "none", "message": "No learned probability for this partial or unsupported matchup."}
 
         # Build feature vector for single match
         n_brawlers = len(self.brawler_ids)
         n_modes = len(self.mode_to_idx)
-        x = np.zeros((1, (n_brawlers * 2) + n_modes + 1), dtype=np.float32)
+        x = np.zeros((1, (n_brawlers * 2) + n_modes + len(self.map_to_idx) + 1), dtype=np.float32)
 
         for b in team_brawlers:
             if b in self.brawler_to_idx:
@@ -480,22 +422,18 @@ class BrawlerOutcomePredictor:
         if m_idx is not None:
             x[0, (n_brawlers * 2) + m_idx] = 1.0
 
+        x[0, n_brawlers * 2 + n_modes + self.map_to_idx[map_name]] = 1.0
         x[0, -1] = float(power_diff)
 
-        prob = float(self.model.predict_proba(x)[0, 1])
+        prob = float(self._model_probabilities(self.model, x)[0])
 
-        # Confidence based on brawlers known in training pool
-        known_team = sum(1 for b in team_brawlers if b in self.brawler_to_idx)
-        known_enemy = sum(1 for b in enemy_brawlers if b in self.brawler_to_idx)
-        total_picks = len(team_brawlers) + len(enemy_brawlers)
-        known_picks = known_team + known_enemy
-        
-        confidence = "HIGH" if (known_picks >= 4 and total_picks >= 4) else ("MEDIUM" if total_picks >= 2 else "LOW")
+        confidence = "MEDIUM"  # Coverage is not calibrated confidence in the outcome.
 
         return {
             "win_probability": round(prob, 4),
             "confidence": confidence,
-            "source": "lgbm_model",
+            "probabilities_calibrated": False,
+            "source": "outcome_model",
             "model_version": self.version,
         }
 
@@ -512,17 +450,21 @@ class BrawlerOutcomePredictor:
         team = team_brawlers or []
         enemies = enemy_brawlers or []
         already_picked = set(team + enemies)
+        if len(team) >= 3:
+            return []
 
         # 1. Fetch statistical baseline for map/mode
         meta_stats = self.meta_engine.compute_brawler_stats(mode=mode, map_name=map_name)
         stats_by_id = {s["brawler_id"]: s for s in meta_stats}
 
         # Candidate pool: all known brawlers not yet picked
-        candidates = [b_id for b_id in self.brawler_ids if b_id not in already_picked]
+        candidates = [b_id for b_id in set(stats_by_id) if b_id not in already_picked]
         if owned_brawlers is not None:
             owned_set = set(owned_brawlers)
             candidates = [b for b in candidates if b in owned_set]
 
+        interactions = self.meta_engine.compute_interactions(mode, map_name)
+        neutral_pair = {'paired_matches': 0, 'matches_faced': 0, 'smoothed_win_rate': .5}
         recommendations = []
         for cand_id in candidates:
             cand_stat = stats_by_id.get(cand_id)
@@ -545,7 +487,7 @@ class BrawlerOutcomePredictor:
             synergy_delta = 0.0
             synergy_reasons = []
             for ally_id in team:
-                syn = self.meta_engine.compute_pair_synergy(cand_id, ally_id, mode=mode)
+                syn = interactions.get((True, cand_id, ally_id), neutral_pair)
                 if syn["paired_matches"] >= 3:
                     diff = syn["smoothed_win_rate"] - 0.50
                     synergy_delta += diff
@@ -556,7 +498,7 @@ class BrawlerOutcomePredictor:
             counter_delta = 0.0
             counter_reasons = []
             for enemy_id in enemies:
-                h2h = self.meta_engine.compute_head_to_head_counter(cand_id, enemy_id, mode=mode)
+                h2h = interactions.get((False, cand_id, enemy_id), neutral_pair)
                 if h2h["matches_faced"] >= 3:
                     diff = h2h["smoothed_win_rate"] - 0.50
                     counter_delta += diff
@@ -579,7 +521,7 @@ class BrawlerOutcomePredictor:
             reasons.extend(counter_reasons[:1])
             reasons.extend(synergy_reasons[:1])
             if not reasons:
-                reasons.append(f"Reliable pick with {sample_count} tracked matches")
+                reasons.append(f"Observed in {sample_count} labeled picks")
 
             recommendations.append({
                 "brawler_id": cand_id,
@@ -591,8 +533,9 @@ class BrawlerOutcomePredictor:
                 "sample_count": sample_count,
                 "tier": cand_stat["tier"] if cand_stat else "B",
                 "confidence": ml_pred["confidence"],
-                "explanation": " • ".join(reasons),
-                "model_version": self.version,
+                "explanation": " â€¢ ".join(reasons),
+                "model_version": ml_pred["model_version"],
+                "prediction_source": ml_pred["source"],
             })
 
         recommendations.sort(key=lambda r: r["score"], reverse=True)
@@ -613,7 +556,7 @@ class BrawlerOutcomePredictor:
         meta_stats = self.meta_engine.compute_brawler_stats(mode=mode, map_name=map_name)
         stats_by_id = {s["brawler_id"]: s for s in meta_stats}
 
-        candidates = [b for b in self.brawler_ids if b not in already_picked]
+        candidates = [b for b in set(stats_by_id) if b not in already_picked]
         if owned_brawlers is not None:
             owned_set = set(owned_brawlers)
             candidates = [b for b in candidates if b in owned_set]
@@ -623,6 +566,10 @@ class BrawlerOutcomePredictor:
         base_win_prob = base_pred["win_probability"]
 
         is_ally_slot = active_slot.startswith("ally")
+        if active_slot == "complete" or len(draft_allies if is_ally_slot else draft_enemies) >= 3:
+            candidates = []
+        interactions = self.meta_engine.compute_interactions(mode, map_name)
+        neutral_pair = {'paired_matches': 0, 'matches_faced': 0, 'smoothed_win_rate': .5}
         recommendations = []
 
         for cand_id in candidates:
@@ -645,7 +592,7 @@ class BrawlerOutcomePredictor:
             synergy_delta = 0.0
             reference_team = draft_allies if is_ally_slot else draft_enemies
             for teammate_id in reference_team:
-                syn = self.meta_engine.compute_pair_synergy(cand_id, teammate_id, mode=mode, map_name=map_name)
+                syn = interactions.get((True, cand_id, teammate_id), neutral_pair)
                 if syn["paired_matches"] >= 3:
                     synergy_delta += (syn["smoothed_win_rate"] - 0.50)
 
@@ -653,7 +600,7 @@ class BrawlerOutcomePredictor:
             counter_delta = 0.0
             opponents = draft_enemies if is_ally_slot else draft_allies
             for opp_id in opponents:
-                h2h = self.meta_engine.compute_head_to_head_counter(cand_id, opp_id, mode=mode)
+                h2h = interactions.get((False, cand_id, opp_id), neutral_pair)
                 if h2h["matches_faced"] >= 3:
                     counter_delta += (h2h["smoothed_win_rate"] - 0.50)
 
@@ -688,8 +635,8 @@ class BrawlerOutcomePredictor:
                 "smoothed_win_rate": round(smoothed_wr, 4),
                 "synergy_score": round(synergy_delta, 3),
                 "counter_score": round(counter_delta, 3),
-                "explanation": " • ".join(reason[:2]) or "Balanced tactical pick",
-                "rationale": " • ".join(reason[:2]) or "Balanced tactical pick",
+                "explanation": " â€¢ ".join(reason[:2]) or "Balanced tactical pick",
+                "rationale": " â€¢ ".join(reason[:2]) or "Balanced tactical pick",
                 "tier": cand_stat["tier"] if cand_stat else "B",
                 "sample_size": cand_stat["total_picks"] if cand_stat else 0,
             })
@@ -706,6 +653,9 @@ class BrawlerOutcomePredictor:
             "current_win_probability": round(base_win_prob, 4),
             "recommendations": recommendations[:top_k],
             "candidates": recommendations[:top_k],
+            "prediction_source": base_pred["source"],
+            "confidence": base_pred["confidence"],
+            "message": base_pred.get("message"),
         }
 
     def save_model(self) -> None:
@@ -713,17 +663,20 @@ class BrawlerOutcomePredictor:
         metadata_path = self.model_dir / f"{self.version}_meta.json"
         benchmark_path = self.model_dir / "model_benchmark.json"
 
-        with model_path.open("wb") as f:
+        with model_path.with_suffix(".pkl.tmp").open("wb") as f:
             pickle.dump({
                 "model": self.model,
                 "baseline_lr": self.baseline_lr,
                 "brawler_ids": self.brawler_ids,
                 "brawler_to_idx": self.brawler_to_idx,
                 "mode_to_idx": self.mode_to_idx,
+                "map_to_idx": self.map_to_idx,
+                "validation": self.validation,
                 "benchmark_results": self.benchmark_results,
                 "feature_importances": self.feature_importances,
             }, f)
 
+        model_path.with_suffix(".pkl.tmp").replace(model_path)
         meta_dict = {
             "version": self.version,
             "metrics": self.metrics.to_dict() if self.metrics else None,
@@ -731,9 +684,10 @@ class BrawlerOutcomePredictor:
             "benchmark_summary": self.benchmark_results,
             "feature_importances": self.feature_importances,
         }
-        with metadata_path.open("w", encoding="utf-8") as f:
+        with metadata_path.with_suffix(".json.tmp").open("w", encoding="utf-8") as f:
             json.dump(meta_dict, f, indent=2)
 
+        metadata_path.with_suffix(".json.tmp").replace(metadata_path)
         if self.benchmark_results:
             with benchmark_path.open("w", encoding="utf-8") as f:
                 json.dump({
@@ -750,23 +704,22 @@ class BrawlerOutcomePredictor:
         model_path = self.model_dir / f"{self.version}.pkl"
         metadata_path = self.model_dir / f"{self.version}_meta.json"
 
-        # Fallback to lgbm_v1 if v2 does not exist yet
-        if not model_path.exists():
-            v1_path = self.model_dir / "lgbm_v1.pkl"
-            if v1_path.exists():
-                model_path = v1_path
-                metadata_path = self.model_dir / "lgbm_v1_meta.json"
-            else:
-                return False
+        # Legacy models used unverified labels and leaking folds; retain their files but do not serve them.
+        if not model_path.exists() or not metadata_path.exists():
+            return False
 
         try:
             with model_path.open("rb") as f:
                 data = pickle.load(f)
+            if not data.get("validation") or data.get("model") is None:
+                return False
             self.model = data.get("model")
             self.baseline_lr = data.get("baseline_lr")
             self.brawler_ids = data.get("brawler_ids", [])
             self.brawler_to_idx = data.get("brawler_to_idx", {})
             self.mode_to_idx = data.get("mode_to_idx", {})
+            self.map_to_idx = data.get("map_to_idx", {})
+            self.validation = data.get("validation", {})
             self.benchmark_results = data.get("benchmark_results", [])
             self.feature_importances = data.get("feature_importances", {})
 
@@ -785,6 +738,8 @@ class BrawlerOutcomePredictor:
             logger.info("Loaded model %s successfully", self.version)
             return True
         except Exception as exc:
+            self.model = None
+            self.metrics = None
             logger.error("Failed loading model %s: %s", self.version, exc)
             return False
 

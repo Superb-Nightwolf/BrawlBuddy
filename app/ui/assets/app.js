@@ -4797,6 +4797,7 @@ async function handleRoute(options = {}) {
   const playerParam = urlParams.get('player') || urlParams.get('tag');
 
   // Fetch account and shared metadata together instead of serializing them.
+  if (state.page !== 'meta') globalThis.MetaExplorer?.stop();
   const catalogReady = loadCatalog();
   const accountReady = playerParam ? loadPlayer(playerParam) : !state.player ? loadInitialAccount() : Promise.resolve();
   await Promise.all([catalogReady, accountReady]);

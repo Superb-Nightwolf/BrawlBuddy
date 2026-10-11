@@ -126,3 +126,48 @@ def test_match_deduplication():
         assert is_new_again is False  # Must be deduplicated!
         assert fp_again == fp
         assert db.get_match_count() == 1  # Still exactly 1 match!
+
+
+@pytest.mark.parametrize('result,source', [('draw', '#P1'), ('victory', '#MISSING')])
+def test_unknown_outcomes_are_not_losses(ml_store, result, source):
+    from contextlib import closing
+    raw = {'battleTime':'20261012T010000.000Z', 'event':{'map':'Center Stage'},
+           'battle':{'mode':'brawlBall','result':result,'teams':[
+               [{'tag':'#P1','brawler':{'id':16000000,'power':11}}],
+               [{'tag':'#P2','brawler':{'id':16000001,'power':11}}]]}}
+    _, fp, _ = ml_store.save_match(raw, source)
+    with closing(ml_store.connect()) as conn:
+        assert all(r[0] is None for r in conn.execute('SELECT is_winner FROM match_participants WHERE match_fingerprint=?', (fp,)))
+
+
+def test_showdown_rank_does_not_label_other_players(ml_store):
+    from contextlib import closing
+    raw = {'battleTime':'20261012T020000.000Z', 'event':{'map':'Scorched Stone'},
+           'battle':{'mode':'soloShowdown','rank':1,'players':[
+               {'tag':'#P1','brawler':{'id':16000000}}, {'brawler':{'id':16000001}}]}}
+    _, fp, discovered = ml_store.save_match(raw, '#P1')
+    assert [p['player_tag'] for p in discovered] == ['#P1']
+    with closing(ml_store.connect()) as conn:
+        assert all(r[0] is None for r in conn.execute('SELECT is_winner FROM match_participants WHERE match_fingerprint=?', (fp,)))
+
+
+def test_reversed_team_duplicate_keeps_correct_outcomes(ml_store):
+    from contextlib import closing
+    a=[{'tag':'#Z1','brawler':{'id':16000000,'power':11}}]
+    b=[{'tag':'#A1','brawler':{'id':16000001,'power':11}}]
+    raw={'battleTime':'20261012T030000.000Z','event':{'map':'Center Stage'},
+         'battle':{'mode':'brawlBall','result':'victory','teams':[a,b]}}
+    _, fp, _=ml_store.save_match(raw,'Z1')
+    raw['battle'].update(result='defeat',teams=[b,a])
+    is_new, second_fp, _=ml_store.save_match(raw,'#A1')
+    assert not is_new and fp==second_fp
+    with closing(ml_store.connect()) as conn:
+        labels={r['player_tag']:r['is_winner'] for r in conn.execute('SELECT player_tag,is_winner FROM match_participants WHERE match_fingerprint=?',(fp,))}
+    assert labels=={'#Z1':1,'#A1':0}
+
+
+def test_repeated_discovery_reports_only_new_players(ml_store):
+    batch=[{'tag':'#NEW1','name':'New','trophies':100}]
+    assert ml_store.save_players_batch(batch)==1
+    assert ml_store.save_players_batch(batch)==0
+    assert ml_store.save_players_batch([{'tag':'#SHOWDOWN_1'}])==0

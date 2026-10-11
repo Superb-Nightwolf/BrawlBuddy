@@ -37,7 +37,7 @@ from app.services.resource_service import ResourceService
 from app.services.upgrade_service import UpgradeService
 from app.services.readiness_service import ReadinessService
 from app.services.overview_service import OverviewService, summarize_battles, summarize_club, event_timing
-from app.routers.ml_meta import router as ml_meta_router
+from app.routers.ml_meta import router as ml_meta_router, shutdown_operations
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 logger = logging.getLogger(__name__)
@@ -121,6 +121,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     _content_last_updated.cache_clear()
     await run_in_threadpool(_content_last_updated)
     yield
+    await shutdown_operations()
     if client:
         await client.close()
 

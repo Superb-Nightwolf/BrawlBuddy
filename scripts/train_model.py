@@ -36,26 +36,13 @@ def main() -> None:
     result = predictor.train_and_evaluate()
 
     if result.get("status") == "insufficient_data":
-        print(f"[-] Insufficient training data ({result.get('samples')} samples). Minimum 50 required.")
+        print(result['message'])
         return
 
-    samples = result["samples"]
-    lgbm = result["lgbm"]
-    baseline = result["baseline_lr"]
-
-    print(f"[+] Successfully extracted {samples} symmetrical match observations.")
-    print(f"    - Training samples: {lgbm['train_samples']}")
-    print(f"    - Temporal test samples: {lgbm['test_samples']}")
-    print("\n--- Evaluation Metrics Comparison ---")
-    print(f"{'Metric':<16} | {'Baseline (Logistic Reg)':<24} | {'Model A (LightGBM)':<20}")
-    print("-" * 66)
-    print(f"{'Accuracy':<16} | {baseline['accuracy']:<24.4f} | {lgbm['accuracy']:<20.4f}")
-    print(f"{'ROC-AUC':<16} | {baseline['roc_auc']:<24.4f} | {lgbm['roc_auc']:<20.4f}")
-    print(f"{'Log Loss':<16} | {baseline['log_loss']:<24.4f} | {lgbm['log_loss']:<20.4f}")
-    print(f"{'Brier Score':<16} | {baseline['brier_score']:<24.4f} | {lgbm['brier_score']:<20.4f}")
-    print("-" * 66)
-    print(f"[+] Model serialized and saved to: {predictor.model_dir / 'lgbm_v1.pkl'}")
-    print(f"[+] Metadata saved to: {predictor.model_dir / 'lgbm_v1_meta.json'}\n")
+    print(f"[+] Trained {result['samples']} mirrored observations; champion: {result['best_model']}")
+    for row in result['benchmark']:
+        print(f"{row['name']}: CV log loss {row['cv_log_loss_mean']:.4f}; holdout AUC {row['test_roc_auc']:.4f}")
+    print(f"[+] Model saved to {predictor.model_dir / (predictor.version + '.pkl')}")
 
 
 if __name__ == "__main__":

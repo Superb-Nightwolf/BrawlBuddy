@@ -7,7 +7,8 @@ from pathlib import Path
 from typing import Any, Optional
 
 from fastapi import APIRouter, HTTPException, Query, Request
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
+from starlette.concurrency import run_in_threadpool
 
 from app.core.config import PROJECT_ROOT
 from app.ml.database import MetaDatabase
@@ -27,26 +28,43 @@ predictor = BrawlerOutcomePredictor(meta_db)
 predictor.load_model()
 
 
-class PredictMatchRequest(BaseModel):
+class DraftRequest(BaseModel):
+    @model_validator(mode='after')
+    def validate_draft(self):
+        mode = getattr(self, 'mode', 'brawlBall')
+        if mode not in {'brawlBall', 'gemGrab', 'heist', 'hotZone', 'bounty', 'knockout', 'wipeout'}:
+            raise ValueError('Draft predictions support competitive team modes only')
+        team = getattr(self, 'teamBrawlers', getattr(self, 'draftAllies', []))
+        enemies = getattr(self, 'enemyBrawlers', getattr(self, 'draftEnemies', []))
+        if len(team) > 3 or len(enemies) > 3 or len(set(team + enemies)) != len(team + enemies):
+            raise ValueError('Use at most three unique brawlers per side, with no duplicate picks')
+        if any(b < 16000000 or b >= 17000000 for b in team + enemies):
+            raise ValueError('Invalid brawler identifier')
+        if getattr(self, 'ownedBrawlersOnly', False) and not getattr(self, 'playerTag', None):
+            raise ValueError('Connect a player before filtering by owned brawlers')
+        return self
+
+
+class PredictMatchRequest(DraftRequest):
     mode: str = "brawlBall"
     map: str = "Center Stage"
     teamBrawlers: list[int] = Field(default_factory=list)
     enemyBrawlers: list[int] = Field(default_factory=list)
-    powerDiff: float = 0.0
+    powerDiff: float = Field(default=0.0, ge=-10, le=10, allow_inf_nan=False)
 
 
-class RecommendRequest(BaseModel):
+class RecommendRequest(DraftRequest):
     mode: str = "brawlBall"
     map: Optional[str] = None
     teamBrawlers: list[int] = Field(default_factory=list)
     enemyBrawlers: list[int] = Field(default_factory=list)
     ownedBrawlersOnly: bool = False
     playerTag: Optional[str] = None
-    top_k: int = 15
+    top_k: int = Field(default=15, ge=1, le=50)
 
 
 @router.get("/meta/filters")
-async def get_meta_filters() -> dict[str, Any]:
+def get_meta_filters() -> dict[str, Any]:
     """Get active game modes, maps, and match types stored in the database."""
     filters = meta_engine.get_available_filters()
     return {
@@ -56,7 +74,7 @@ async def get_meta_filters() -> dict[str, Any]:
 
 
 @router.get("/meta/brawlers")
-async def get_brawler_meta_stats(
+def get_brawler_meta_stats(
     mode: Optional[str] = Query(None, description="Game mode (e.g. brawlBall, gemGrab, knockout)"),
     map: Optional[str] = Query(None, description="Map name"),
     match_type: Optional[str] = Query(None, description="Match type: ranked, soloRanked, etc."),
@@ -82,7 +100,7 @@ async def get_brawler_meta_stats(
 
 
 @router.get("/meta/teams")
-async def get_top_teams(
+def get_top_teams(
     mode: str = Query("brawlBall", description="Game mode"),
     map: Optional[str] = Query(None, description="Map name"),
     min_matches: int = Query(2, ge=1, description="Minimum team matches"),
@@ -106,7 +124,7 @@ async def get_top_teams(
         FROM match_participants p
         JOIN matches m ON p.match_fingerprint = m.match_fingerprint
         {where_clause}
-        AND p.team_index IN (0, 1)
+        AND m.ingestion_version=2 AND p.is_winner IS NOT NULL AND p.team_index IN (0, 1)
     """
 
     with closing(meta_db.connect()) as conn:
@@ -163,7 +181,7 @@ async def get_top_teams(
 @router.post("/ml/predict-match")
 async def predict_match(req: PredictMatchRequest) -> dict[str, Any]:
     """Predict victory probability for a specific team vs enemy matchup."""
-    result = predictor.predict_match(
+    result = await run_in_threadpool(predictor.predict_match,
         mode=req.mode,
         map_name=req.map,
         team_brawlers=req.teamBrawlers,
@@ -185,13 +203,13 @@ async def recommend_brawlers(req: RecommendRequest, request: Request) -> dict[st
     if req.ownedBrawlersOnly and req.playerTag:
         try:
             player_service: PlayerService = request.app.state.player_service
-            player_data = await player_service.get_player(req.playerTag)
+            player_data, _ = await player_service.get_player(req.playerTag)
             brawlers = player_data.brawlers or []
             owned_ids = [b.id for b in brawlers]
         except Exception as exc:
-            logger.warning("Could not fetch player brawlers for tag %s: %s", req.playerTag, exc)
+            raise HTTPException(status_code=502, detail="Could not load the connected player collection") from exc
 
-    recs = predictor.recommend_brawlers(
+    recs = await run_in_threadpool(predictor.recommend_brawlers,
         mode=req.mode,
         map_name=req.map,
         team_brawlers=req.teamBrawlers,
@@ -211,12 +229,12 @@ async def recommend_brawlers(req: RecommendRequest, request: Request) -> dict[st
     }
 
 
-class DraftStepRequest(BaseModel):
+class DraftStepRequest(DraftRequest):
     mode: str = Field(default="brawlBall", description="Game mode")
     map: Optional[str] = Field(default=None, description="Map name")
     draftAllies: list[int] = Field(default_factory=list, description="Currently locked ally brawlers")
     draftEnemies: list[int] = Field(default_factory=list, description="Currently locked enemy brawlers")
-    activeSlot: str = Field(default="ally_1", description="Draft slot to evaluate (ally_1, ally_2, enemy_1, etc.)")
+    activeSlot: str = Field(default="ally_1", pattern=r"^(ally_[123]|enemy_[123]|complete)$", description="Draft slot to evaluate (ally_1, ally_2, enemy_1, etc.)")
     ownedBrawlersOnly: bool = Field(default=False, description="Filter candidates to owned brawlers only")
     playerTag: Optional[str] = Field(default=None, description="Player tag for collection filtering")
     top_k: int = Field(default=12, ge=1, le=50, description="Max recommendations to return")
@@ -232,16 +250,16 @@ async def draft_step(req: DraftStepRequest, request: Request) -> dict[str, Any]:
             player_data, _ = await player_service.get_player(req.playerTag)
             if player_data and hasattr(player_data, "brawlers"):
                 owned_ids = [b.id for b in player_data.brawlers]
-        except Exception:
-            pass
+        except Exception as exc:
+            raise HTTPException(status_code=502, detail="Could not load the connected player collection") from exc
 
-    step_eval = predictor.evaluate_draft_step(
+    step_eval = await run_in_threadpool(predictor.evaluate_draft_step,
         mode=req.mode,
-        map_name=req.map or "Unknown Map",
+        map_name=req.map,
         draft_allies=req.draftAllies,
         draft_enemies=req.draftEnemies,
         active_slot=req.activeSlot,
-        owned_brawlers=owned_ids,
+        owned_brawlers=owned_ids if req.activeSlot.startswith("ally") else None,
         top_k=req.top_k,
     )
     return {
@@ -251,7 +269,7 @@ async def draft_step(req: DraftStepRequest, request: Request) -> dict[str, Any]:
 
 
 @router.get("/ml/transparency/summary")
-async def get_transparency_summary() -> dict[str, Any]:
+def get_transparency_summary() -> dict[str, Any]:
     """Full transparency summary: dataset audit, multi-framework benchmark, and feature importances."""
     dataset_summary = meta_db.get_dataset_summary()
     return {
@@ -262,11 +280,12 @@ async def get_transparency_summary() -> dict[str, Any]:
         "benchmark_leaderboard": predictor.benchmark_results,
         "metrics": predictor.metrics.to_dict() if predictor.metrics else None,
         "feature_importances": predictor.feature_importances,
+        "validation": predictor.validation,
     }
 
 
 @router.get("/ml/model-status")
-async def get_model_status() -> dict[str, Any]:
+def get_model_status() -> dict[str, Any]:
     """Get metadata, freshness, metrics, and dataset coverage for the current ML model."""
     p_count = meta_db.get_player_count()
     m_count = meta_db.get_match_count()
@@ -283,10 +302,12 @@ async def get_model_status() -> dict[str, Any]:
         "baseline_metrics": predictor.baseline_metrics.to_dict() if predictor.baseline_metrics else None,
         "benchmark_leaderboard": predictor.benchmark_results,
         "feature_importances": predictor.feature_importances,
+        "validation": predictor.validation,
         "dataset": {
             "total_discovered_players": p_count,
             "polled_players": polled_count,
             "total_unique_matches": m_count,
+            "verified_matches": meta_db.get_dataset_summary()["verified_matches"],
             "latest_match_time": latest_match,
         },
     }
@@ -299,6 +320,8 @@ import asyncio
 from app.clients.brawl_stars import BrawlStarsClient
 from app.core.config import get_settings
 from app.ml.collector import BattleLogCollector, CollectionStats
+
+operation_task: asyncio.Task | None = None
 
 operation_state: dict[str, Any] = {
     "running": False,
@@ -323,13 +346,13 @@ class CollectRequest(BaseModel):
 
 
 @router.get("/ml/operations/incremental-status")
-async def get_incremental_status() -> dict[str, Any]:
+def get_incremental_status() -> dict[str, Any]:
     """Get real-time tracking of player pool progress toward 100k and unpolled queue."""
     return meta_db.get_incremental_status()
 
 
 @router.get("/ml/operations/telemetry")
-async def get_operations_telemetry() -> dict[str, Any]:
+def get_operations_telemetry() -> dict[str, Any]:
     """Provide comprehensive engine telemetry for the operational control center."""
     p_count = meta_db.get_player_count()
     m_count = meta_db.get_match_count()
@@ -372,7 +395,7 @@ async def get_operations_telemetry() -> dict[str, Any]:
 
 
 @router.get("/ml/operations/status")
-async def get_operations_status() -> dict[str, Any]:
+def get_operations_status() -> dict[str, Any]:
     """Get real-time status of ongoing background operations."""
     return operation_state
 
@@ -397,10 +420,11 @@ async def _run_discovery_bg(target_players: int) -> None:
             on_progress=on_prog,
         )
         operation_state["last_result"] = {"action": "discover", "total_players": total}
-        operation_state["message"] = f"Player discovery complete! Total database pool: {total:,} competitive tags."
+        operation_state["message"] = f"Player discovery complete! Total database pool: {total:,} player tags."
     except Exception as exc:
         logger.error("Discovery error: %s", exc)
-        operation_state["message"] = f"Discovery error: {exc}"
+        operation_state["message"] = f"Discovery stopped: {exc}"
+        operation_state["last_result"] = {"status": "error"}
     finally:
         await client.close()
         operation_state["running"] = False
@@ -410,6 +434,8 @@ async def _run_discovery_bg(target_players: int) -> None:
 async def trigger_player_discovery(req: DiscoverRequest) -> dict[str, Any]:
     """Trigger background competitive player discovery."""
     global operation_state
+    if not get_settings().api_token:
+        raise HTTPException(status_code=503, detail="Configure the game token before collection")
     if operation_state["running"]:
         raise HTTPException(status_code=409, detail=f"An operation is already in progress ({operation_state['task']}).")
 
@@ -417,8 +443,9 @@ async def trigger_player_discovery(req: DiscoverRequest) -> dict[str, Any]:
     operation_state["task"] = "Player Discovery"
     operation_state["message"] = f"Starting player discovery (target: {req.target_players:,})..."
     operation_state["progress"] = {}
+    operation_state["last_result"] = None
 
-    asyncio.create_task(_run_discovery_bg(req.target_players))
+    start_operation(_run_discovery_bg(req.target_players))
     return {"status": "started", "task": "Player Discovery", "target": req.target_players}
 
 
@@ -426,15 +453,18 @@ async def trigger_player_discovery(req: DiscoverRequest) -> dict[str, Any]:
 async def trigger_scale_players(req: ScalePlayersRequest) -> dict[str, Any]:
     """Trigger massive player discovery scaling up to 100,000 competitive players."""
     global operation_state
+    if not get_settings().api_token:
+        raise HTTPException(status_code=503, detail="Configure the game token before collection")
     if operation_state["running"]:
         raise HTTPException(status_code=409, detail=f"An operation is already in progress ({operation_state['task']}).")
 
     operation_state["running"] = True
     operation_state["task"] = "Scale to 100k Players"
-    operation_state["message"] = f"Initiating 100k player discovery pipeline across 36 regional leaderboards and clubs..."
+    operation_state["message"] = f"Discovering player pool toward {req.target_players:,} tags across regional rankings, clubs and participants..."
     operation_state["progress"] = {}
+    operation_state["last_result"] = None
 
-    asyncio.create_task(_run_discovery_bg(req.target_players))
+    start_operation(_run_discovery_bg(req.target_players))
     return {"status": "started", "task": "Scale to 100k Players", "target": req.target_players}
 
 
@@ -468,11 +498,12 @@ async def _run_collection_bg(max_players: int, rps: float) -> None:
         operation_state["message"] = (
             f"Collection finished! Polled {stats.players_polled} players, "
             f"saved {stats.new_matches_saved} unique matches ({stats.duplicate_matches_skipped} duplicates skipped). "
-            f"Total players in DB: {stats.players_discovered:,}."
+            f"Total players in DB: {stats.total_players:,}."
         )
     except Exception as exc:
         logger.error("Collection error: %s", exc)
-        operation_state["message"] = f"Collection error: {exc}"
+        operation_state["message"] = f"Collection stopped: {exc}"
+        operation_state["last_result"] = {"status": "error"}
     finally:
         await client.close()
         operation_state["running"] = False
@@ -482,6 +513,8 @@ async def _run_collection_bg(max_players: int, rps: float) -> None:
 async def trigger_battle_collection(req: CollectRequest) -> dict[str, Any]:
     """Trigger background battle log collection batch."""
     global operation_state
+    if not get_settings().api_token:
+        raise HTTPException(status_code=503, detail="Configure the game token before collection")
     if operation_state["running"]:
         raise HTTPException(status_code=409, detail=f"An operation is already in progress ({operation_state['task']}).")
 
@@ -489,39 +522,63 @@ async def trigger_battle_collection(req: CollectRequest) -> dict[str, Any]:
     operation_state["task"] = "Battle Collection"
     operation_state["message"] = f"Initiating battle log collection for {req.max_players} players (RPS: {req.rps})..."
     operation_state["progress"] = {}
+    operation_state["last_result"] = None
 
-    asyncio.create_task(_run_collection_bg(req.max_players, req.rps))
+    start_operation(_run_collection_bg(req.max_players, req.rps))
     return {"status": "started", "task": "Battle Collection", "max_players": req.max_players}
 
 
-@router.post("/ml/operations/retrain")
-async def trigger_model_retrain() -> dict[str, Any]:
-    """Retrain and benchmark all 6 models with 5-fold cross-validation and hot-reload."""
-    global operation_state, predictor
-    if operation_state["running"]:
-        raise HTTPException(status_code=409, detail=f"An operation is already in progress ({operation_state['task']}).")
+def start_operation(coro) -> None:
+    global operation_task
+    operation_task = asyncio.create_task(coro)
 
-    operation_state["running"] = True
-    operation_state["task"] = "Model Retraining & CV Benchmarking"
-    operation_state["message"] = "Running 5-fold cross-validation across 6 model frameworks (LR, RF, HistGB, XGB, LGBM, Ensemble)..."
-    
-    try:
-        res = predictor.train_and_evaluate(n_splits=5)
-        operation_state["last_result"] = res
-        if res.get("status") == "success":
-            predictor.load_model()
-            m = res.get("metrics", {})
-            operation_state["message"] = (
-                f"Suite successfully retrained on {res['samples']:,} matches! "
-                f"Champion: {res.get('best_model', 'Ensemble')} "
-                f"(Test AUC: {round(m.get('roc_auc', 0)*100, 2)}%, Acc: {round(m.get('accuracy', 0)*100, 2)}%, CV AUC: {m.get('cv_roc_auc')})."
-            )
+
+async def shutdown_operations() -> None:
+    if operation_task and not operation_task.done():
+        if operation_state['task'] == 'Model Training':
+            # A worker thread cannot be safely interrupted while writing a model.
+            await operation_task
         else:
-            operation_state["message"] = f"Retrain status: {res.get('status')}"
-        return res
-    except Exception as exc:
-        logger.error("Retrain error: %s", exc)
-        operation_state["message"] = f"Retrain error: {exc}"
-        raise HTTPException(status_code=500, detail=str(exc))
+            operation_task.cancel()
+            await asyncio.gather(operation_task, return_exceptions=True)
+    operation_state['running'] = False
+
+
+async def _run_training_bg() -> None:
+    global predictor
+    candidate = BrawlerOutcomePredictor(meta_db, model_dir=predictor.model_dir)
+    try:
+        result = await run_in_threadpool(candidate.train_and_evaluate)
+        if result['status'] == 'success':
+            # Publish a complete predictor; requests keep using the previous one during training.
+            predictor = candidate
+        operation_state['last_result'] = result
+        operation_state['message'] = ('Training complete: ' + result['best_model'] if result['status'] == 'success'
+                                      else result.get('message', result['status']))
+    except Exception:
+        logger.exception('Model training failed')
+        operation_state['last_result'] = {'status': 'error'}
+        operation_state['message'] = 'Training failed; the previous model remains active.'
     finally:
-        operation_state["running"] = False
+        operation_state['running'] = False
+
+
+@router.post('/ml/operations/retrain', status_code=202)
+async def trigger_model_retrain() -> dict[str, Any]:
+    if operation_state['running']:
+        raise HTTPException(status_code=409, detail='Another engine operation is already running')
+    operation_state.update(running=True, task='Model Training', message='Training with temporal validation…',
+                           last_result=None, progress={})
+    start_operation(_run_training_bg())
+    return {'status': 'started', 'task': 'Model Training'}
+
+
+@router.post('/ml/operations/cancel')
+async def cancel_collection() -> dict[str, Any]:
+    if operation_state['task'] == 'Model Training' and operation_state['running']:
+        raise HTTPException(status_code=409, detail='Training finishes its current run before shutdown')
+    if operation_task and not operation_task.done():
+        operation_task.cancel()
+        await asyncio.gather(operation_task, return_exceptions=True)
+    operation_state.update(running=False, message='Collection stopped. Saved data is preserved.')
+    return {'status': 'cancelled'}

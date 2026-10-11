@@ -4,8 +4,22 @@ version = "0.1.0"
 description = "Brawl Stars account intelligence and progression planning"
 requires-python = ">=3.12"
 dependencies = [
-    "xgboost>=3.4.1",
+    "fastapi>=0.116,<1.0",
+    "httpx>=0.28,<1.0",
+    "pydantic>=2.11,<3.0",
+    "python-dotenv>=1.1,<2.0",
+    "PyYAML>=6.0,<7.0",
+    "truststore>=0.10,<1.0",
+    "uvicorn[standard]>=0.35,<1.0",
+    "numpy>=2.0,<3.0",
+    "pandas>=2.2,<4.0",
+    "scikit-learn>=1.6,<2.0",
+    "threadpoolctl>=3.5,<4.0",
 ]
+
+[project.optional-dependencies]
+boosters = ["lightgbm>=4.6,<5.0", "xgboost>=3.0,<4.0"]
+dev = ["pytest>=8.4,<9.0", "pytest-asyncio>=1.1,<2.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

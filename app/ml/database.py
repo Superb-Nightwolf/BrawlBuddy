@@ -126,6 +126,10 @@ class MetaDatabase:
             conn.execute("CREATE INDEX IF NOT EXISTS idx_participants_match ON match_participants(match_fingerprint)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_participants_brawler_mode_map ON match_participants(brawler_id, is_winner)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_players_polled ON players(last_polled_at, priority)")
+            columns = {r['name'] for r in conn.execute('PRAGMA table_info(matches)')}
+            if 'ingestion_version' not in columns:
+                # Keep legacy rows for auditing; their source-relative labels cannot be verified.
+                conn.execute('ALTER TABLE matches ADD COLUMN ingestion_version INTEGER NOT NULL DEFAULT 0')
 
     def save_player(
         self,
@@ -179,10 +183,11 @@ class MetaDatabase:
             cur = conn.execute(
                 """
                 SELECT * FROM players
+                WHERE tag NOT GLOB '*_*'
                 ORDER BY
                     CASE WHEN last_polled_at IS NULL THEN 0 ELSE 1 END ASC,
-                    priority DESC,
-                    last_polled_at ASC
+                    last_polled_at ASC,
+                    priority DESC
                 LIMIT ?
                 """,
                 (limit,),
@@ -209,165 +214,80 @@ class MetaDatabase:
         Returns:
             tuple of (is_new_match, fingerprint, discovered_participants)
         """
-        battle = raw_battle.get("battle", {})
-        event = raw_battle.get("event", {})
-        battle_time = raw_battle.get("battleTime", "")
+        battle = raw_battle.get("battle") or {}
+        event = raw_battle.get("event") or {}
+        battle_time = raw_battle.get("battleTime") or ""
+        try:
+            datetime.strptime(battle_time, "%Y%m%dT%H%M%S.%fZ")
+        except (ValueError, TypeError):
+            raise ValueError("A valid battle timestamp is required for deduplication")
+        normalize = lambda tag: "#" + str(tag or "").strip().upper().lstrip("#") if tag else ""
+        source = normalize(source_player_tag)
         event_map = event.get("map") or "Unknown Map"
         mode = battle.get("mode") or event.get("mode") or "unknown"
-        event_mode = event.get("mode")
-        event_id = event.get("id", 0)
-        match_type = battle.get("type", "ranked")
-        duration = battle.get("duration")
-        trophy_change = battle.get("trophyChange")
         result = battle.get("result")
-        star_player_tag = (battle.get("starPlayer") or {}).get("tag", "").upper()
-
-        # Extract participants across teams or showdown players
-        teams = battle.get("teams", [])
-        showdown_players = battle.get("players", [])
-        
-        all_participants: list[dict[str, Any]] = []
-        all_tags: list[str] = []
-        brawler_ids: list[int] = []
-
-        if teams:
-            # 3v3 or 5v5 team match
-            for team_idx, team_members in enumerate(teams):
-                for p in team_members:
-                    tag = (p.get("tag") or "").strip().upper()
-                    if tag and not tag.startswith("#"):
-                        tag = f"#{tag}"
-                    brawler = p.get("brawler") or {}
-                    b_id = brawler.get("id", 0)
-                    b_name = brawler.get("name", "Unknown")
-                    b_power = brawler.get("power", 1)
-                    b_trophies = brawler.get("trophies", 0)
-                    p_name = p.get("name", "Player")
-                    
-                    if tag:
-                        all_tags.append(tag)
-                    if b_id:
-                        brawler_ids.append(b_id)
-
-                    # Determine winner:
-                    # In Supercell API: result is reported relative to the tracked player!
-                    # If result == 'victory', the team containing source_player_tag won!
-                    is_winner: Optional[int] = None
-                    if result in ("victory", "defeat"):
-                        source_tag = source_player_tag.strip().upper()
-                        # Check which team has source_tag
-                        source_in_this_team = any(
-                            (m.get("tag") or "").strip().upper() == source_tag for m in team_members
-                        )
-                        if result == "victory":
-                            is_winner = 1 if source_in_this_team else 0
-                        elif result == "defeat":
-                            is_winner = 0 if source_in_this_team else 1
-                    elif result == "draw":
-                        is_winner = 0
-
-                    all_participants.append({
-                        "player_tag": tag or f"#UNKNOWN_{team_idx}_{b_id}",
-                        "name": p_name,
-                        "team_index": team_idx,
-                        "brawler_id": b_id,
-                        "brawler_name": b_name,
-                        "brawler_power": b_power,
-                        "brawler_trophies": b_trophies,
-                        "is_star_player": 1 if tag and tag == star_player_tag else 0,
-                        "is_winner": is_winner,
-                    })
-        elif showdown_players:
-            # Showdown / solo match
-            rank = battle.get("rank", 0)
-            for p in showdown_players:
-                tag = (p.get("tag") or "").strip().upper()
-                if tag and not tag.startswith("#"):
-                    tag = f"#{tag}"
-                brawler = p.get("brawler") or {}
-                b_id = brawler.get("id", 0)
-                b_name = brawler.get("name", "Unknown")
-                b_power = brawler.get("power", 1)
-                b_trophies = brawler.get("trophies", 0)
-                p_name = p.get("name", "Player")
-
-                if tag:
-                    all_tags.append(tag)
-                if b_id:
-                    brawler_ids.append(b_id)
-
-                # In showdown: top 4 (duo) or top 1-4 (solo) is considered winning / positive trophies
-                is_win = 1 if rank and rank <= 4 else 0
-                all_participants.append({
-                    "player_tag": tag or f"#SHOWDOWN_{b_id}",
-                    "name": p_name,
-                    "team_index": 0,
-                    "brawler_id": b_id,
-                    "brawler_name": b_name,
-                    "brawler_power": b_power,
-                    "brawler_trophies": b_trophies,
-                    "is_star_player": 0,
-                    "is_winner": is_win,
+        teams = battle.get("teams") or []
+        # The same match can arrive with opposite team order from another player's log.
+        teams = sorted(teams, key=lambda team: sorted(normalize(p.get("tag")) for p in team))
+        source_teams = [i for i, team in enumerate(teams) if any(normalize(p.get("tag")) == source for p in team)]
+        winner_team = None
+        if len(teams) == 2 and len(source_teams) == 1 and result in {"victory", "defeat"}:
+            winner_team = source_teams[0] if result == "victory" else 1 - source_teams[0]
+        participants = []
+        groups = teams or [battle.get("players") or []]
+        for team_index, members in enumerate(groups):
+            for slot, player in enumerate(members):
+                tag = normalize(player.get("tag"))
+                brawler = player.get("brawler") or {}
+                participants.append({
+                    "player_tag": tag or f"#UNKNOWN_{team_index}_{slot}",
+                    "name": player.get("name") or "Player",
+                    "team_index": team_index,
+                    "brawler_id": int(brawler.get("id") or 0),
+                    "brawler_name": brawler.get("name") or "Unknown",
+                    "brawler_power": int(brawler.get("power") or 0),
+                    "brawler_trophies": int(brawler.get("trophies") or 0),
+                    "is_star_player": int(bool(tag) and tag == normalize((battle.get("starPlayer") or {}).get("tag"))),
+                    # Draws, missing source players, PvE and showdown placements have no binary team outcome.
+                    "is_winner": int(team_index == winner_team) if winner_team is not None else None,
                 })
-
-        # Calculate power averages if 2 teams
-        team_a_avg = 0.0
-        team_b_avg = 0.0
-        t0 = [p for p in all_participants if p["team_index"] == 0]
-        t1 = [p for p in all_participants if p["team_index"] == 1]
-        if t0 and t1:
-            team_a_avg = round(sum(p["brawler_power"] for p in t0) / len(t0), 2)
-            team_b_avg = round(sum(p["brawler_power"] for p in t1) / len(t1), 2)
-        diff = team_a_avg - team_b_avg
-        advantage = "blue_favored" if diff >= 0.5 else ("red_favored" if diff <= -0.5 else "balanced")
-
-        fingerprint = generate_match_fingerprint(battle_time, event_map, mode, all_tags, brawler_ids)
-        now_iso = datetime.now(UTC).isoformat()
-
+        tags = [p["player_tag"] for p in participants]
+        fingerprint = generate_match_fingerprint(battle_time, event_map, mode, tags,
+                                               [p["brawler_id"] for p in participants])
+        averages = []
+        for index in (0, 1):
+            powers = [p["brawler_power"] for p in participants if p["team_index"] == index]
+            averages.append(round(sum(powers) / len(powers), 2) if powers and all(powers) else 0)
+        diff = averages[0] - averages[1]
+        advantage = "blue_favored" if diff >= .5 else "red_favored" if diff <= -.5 else "balanced"
         with closing(self.connect()) as conn, conn:
-            # Check if match already exists
-            cur = conn.execute(
-                """
-                INSERT OR IGNORE INTO matches (
-                    match_fingerprint, battle_time, mode, event_mode, map, event_id,
-                    match_type, duration, trophy_change, result,
-                    team_a_avg_power, team_b_avg_power, power_advantage, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    fingerprint, battle_time, mode, event_mode, event_map, event_id,
-                    match_type, duration, trophy_change, result,
-                    team_a_avg, team_b_avg, advantage, now_iso
-                ),
-            )
-            is_new = cur.rowcount > 0
-
-            if is_new:
-                for part in all_participants:
-                    conn.execute(
-                        """
-                        INSERT OR IGNORE INTO match_participants (
-                            match_fingerprint, player_tag, team_index, brawler_id,
-                            brawler_name, brawler_power, brawler_trophies,
-                            is_star_player, is_winner
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """,
-                        (
-                            fingerprint,
-                            part["player_tag"],
-                            part["team_index"],
-                            part["brawler_id"],
-                            part["brawler_name"],
-                            part["brawler_power"],
-                            part["brawler_trophies"],
-                            part["is_star_player"],
-                            part["is_winner"],
-                        ),
-                    )
-
-        # Return discovered participants that can be used for cascading discovery
-        discovered = [p for p in all_participants if p["player_tag"].startswith("#") and "UNKNOWN" not in p["player_tag"]]
-        return is_new, fingerprint, discovered
+            existing = conn.execute('SELECT ingestion_version FROM matches WHERE match_fingerprint = ?', (fingerprint,)).fetchone()
+            is_new = existing is None
+            if existing is None or existing['ingestion_version'] < 2:
+                conn.execute("""
+                    INSERT INTO matches (match_fingerprint, battle_time, mode, event_mode, map, event_id,
+                        match_type, duration, trophy_change, result, team_a_avg_power, team_b_avg_power,
+                        power_advantage, created_at, ingestion_version)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 2)
+                    ON CONFLICT(match_fingerprint) DO UPDATE SET
+                        team_a_avg_power=excluded.team_a_avg_power, team_b_avg_power=excluded.team_b_avg_power,
+                        result=excluded.result, ingestion_version=2
+                """, (fingerprint, battle_time, mode, event.get('mode'), event_map, event.get('id', 0),
+                      battle.get('type') or 'unknown', battle.get('duration'), battle.get('trophyChange'),
+                      result, *averages, advantage, datetime.now(UTC).isoformat()))
+                conn.execute('DELETE FROM match_participants WHERE match_fingerprint=?', (fingerprint,))
+            for part in participants:
+                conn.execute("""
+                    INSERT INTO match_participants (match_fingerprint, player_tag, team_index, brawler_id,
+                        brawler_name, brawler_power, brawler_trophies, is_star_player, is_winner)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(match_fingerprint, player_tag, brawler_id) DO UPDATE SET
+                        is_winner=COALESCE(match_participants.is_winner, excluded.is_winner),
+                        is_star_player=MAX(match_participants.is_star_player, excluded.is_star_player)
+                """, (fingerprint, part['player_tag'], part['team_index'], part['brawler_id'],
+                      part['brawler_name'], part['brawler_power'], part['brawler_trophies'],
+                      part['is_star_player'], part['is_winner']))
+        return is_new, fingerprint, [p for p in participants if 'UNKNOWN' not in p['player_tag']]
 
     def get_checkpoint(self, key: str) -> Optional[str]:
         with closing(self.connect()) as conn:
@@ -400,6 +320,8 @@ class MetaDatabase:
                     clean_tag = f"#{clean_tag}"
                 else:
                     continue
+            if not clean_tag[1:].isalnum():
+                continue
             rows.append((
                 clean_tag,
                 p.get("name", "Player"),
@@ -413,6 +335,7 @@ class MetaDatabase:
         if not rows:
             return 0
         with closing(self.connect()) as conn, conn:
+            before = conn.execute("SELECT COUNT(*) FROM players").fetchone()[0]
             cur = conn.executemany(
                 """
                 INSERT INTO players (tag, name, trophies, highest_trophies, club_name, source, discovered_at, priority)
@@ -426,14 +349,14 @@ class MetaDatabase:
                 """,
                 rows,
             )
-            return cur.rowcount
+            return conn.execute("SELECT COUNT(*) FROM players").fetchone()[0] - before
 
     def extract_participants_as_players(self) -> int:
         """Ingest all known battle participants from matches into the players table."""
         with closing(self.connect()) as conn:
             rows = conn.execute(
                 """
-                SELECT DISTINCT player_tag, brawler_trophies
+                SELECT DISTINCT player_tag
                 FROM match_participants
                 WHERE player_tag LIKE '#%' AND player_tag NOT LIKE '%UNKNOWN%'
                 """
@@ -442,7 +365,7 @@ class MetaDatabase:
             {
                 "tag": r["player_tag"],
                 "name": "Player",
-                "trophies": r["brawler_trophies"] or 0,
+                "trophies": 0,
                 "source": "battle_participant",
                 "priority": 1,
             }
@@ -494,6 +417,20 @@ class MetaDatabase:
                 WHERE team_a_avg_power > 0 AND team_b_avg_power > 0
                 """
             ).fetchone()
+            trainable_matches = conn.execute("""
+                SELECT COUNT(*) FROM (
+                    SELECT m.match_fingerprint FROM matches m
+                    JOIN match_participants p ON p.match_fingerprint=m.match_fingerprint
+                    WHERE m.ingestion_version=2 AND m.result IN ('victory','defeat')
+                      AND m.team_a_avg_power>0 AND m.team_b_avg_power>0 AND p.brawler_id>0
+                    GROUP BY m.match_fingerprint HAVING COUNT(*)=6
+                      AND SUM(p.team_index=0)=3 AND SUM(p.team_index=1)=3
+                      AND COUNT(p.is_winner)=6 AND SUM(p.is_winner)=3
+                      AND COUNT(DISTINCT CASE WHEN p.team_index=0 THEN p.is_winner END)=1
+                      AND COUNT(DISTINCT CASE WHEN p.team_index=1 THEN p.is_winner END)=1
+                )
+            """).fetchone()[0]
+            verified_matches = conn.execute("SELECT COUNT(*) FROM matches WHERE ingestion_version=2").fetchone()[0]
             sample_matches = conn.execute(
                 """
                 SELECT match_fingerprint, battle_time, mode, map, match_type,
@@ -506,6 +443,9 @@ class MetaDatabase:
 
         return {
             "total_matches": total_matches,
+            "verified_matches": verified_matches,
+            "trainable_3v3_matches": trainable_matches,
+            "legacy_matches": total_matches - verified_matches,
             "total_participants": total_participants,
             "time_range": {
                 "earliest": time_range["earliest"] if time_range else None,
@@ -519,7 +459,8 @@ class MetaDatabase:
                 "max": round(power_diff_stats["max_diff"] or 0.0, 1) if power_diff_stats else 0.0,
             },
             "audit_verification": {
-                "target_leakage_prevented": True,
+                "pre_match_features_only": True,
+                "legacy_labels_excluded": True,
                 "excluded_features": ["star_player", "match_duration", "trophy_change", "battle_result"],
                 "symmetrical_pairing": True,
                 "deduplication_method": "SHA-256 fingerprint on UTC timestamp, map, mode, and participant tags",

@@ -6,6 +6,7 @@ with rate limiting, deduplication, and progress reporting.
 
 from __future__ import annotations
 
+from contextlib import closing
 import argparse
 import asyncio
 import logging
@@ -32,35 +33,18 @@ logger = logging.getLogger("brawlbuddy.collection")
 
 async def main_async(args: argparse.Namespace) -> None:
     settings = get_settings()
+    database = MetaDatabase(PROJECT_ROOT / "data" / "brawl_meta.db")
+    if args.status:
+        import json
+        print(json.dumps(database.get_dataset_summary(), indent=2))
+        return
     if not settings.api_token:
-        logger.error("BRAWL_STARS_API_TOKEN is not set in environment or .env file.")
+        logger.error("Configure the game token before collection.")
         sys.exit(1)
-
-    db_path = PROJECT_ROOT / "data" / "brawl_meta.db"
-    database = MetaDatabase(db_path)
     client = BrawlStarsClient(settings.brawl_stars, settings.api_token)
     collector = BattleLogCollector(client, database, requests_per_second=args.rps)
 
     try:
-        if args.status:
-            p_count = database.get_player_count()
-            m_count = database.get_match_count()
-            with database.connect() as conn:
-                polled_count = conn.execute("SELECT COUNT(*) as c FROM players WHERE last_polled_at IS NOT NULL").fetchone()["c"]
-                part_count = conn.execute("SELECT COUNT(*) as c FROM match_participants").fetchone()["c"]
-                modes_summary = conn.execute("SELECT mode, COUNT(*) as c FROM matches GROUP BY mode ORDER BY c DESC LIMIT 10").fetchall()
-            
-            print("\n=== BrawlBuddy Meta Database Status ===")
-            print(f"Total Discovered Players: {p_count}")
-            print(f"Players Polled for Battles: {polled_count} ({(polled_count/p_count*100) if p_count else 0:.1f}%)")
-            print(f"Total Unique Matches Stored: {m_count}")
-            print(f"Total Match Participant Rows: {part_count}")
-            print("\nTop Modes Stored:")
-            for row in modes_summary:
-                print(f"  - {row['mode']}: {row['c']} matches")
-            print("========================================\n")
-            return
-
         if args.discover:
             print(f"[*] Discovering competitive players (Target: {args.target_players})...")
             def on_disc_prog(step: str, count: int) -> None:
@@ -94,7 +78,7 @@ async def main_async(args: argparse.Namespace) -> None:
             print(f"    - New unique matches saved: {stats.new_matches_saved}")
             print(f"    - Matches deduplicated (exact duplicates prevented): {stats.duplicate_matches_skipped}")
             print(f"    - Failed/404 polls: {stats.failed_polls}")
-            print(f"    - Total players discovered in DB now: {stats.players_discovered}")
+            print(f"    - Total players discovered in DB now: {stats.total_players}")
 
     finally:
         await client.close()
@@ -115,6 +99,8 @@ def main() -> None:
         parser.print_help()
         sys.exit(0)
 
+    if not 1 <= args.max_players <= 1000 or not 1 <= args.rps <= 10 or not 10 <= args.target_players <= 100000:
+        parser.error("Use max-players 1–1000, rps 1–10 and target-players 10–100000")
     asyncio.run(main_async(args))
 
 

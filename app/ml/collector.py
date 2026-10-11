@@ -8,7 +8,7 @@ from datetime import UTC, datetime
 from typing import Any, Callable, Optional
 
 from app.clients.brawl_stars import BrawlStarsClient
-from app.core.errors import ApiRateLimited, PlayerNotFound, UpstreamUnavailable
+from app.core.errors import ApiAuthenticationError, ApiRateLimited, PlayerNotFound, UpstreamUnavailable
 from app.ml.database import MetaDatabase
 
 logger = logging.getLogger("brawlbuddy.ml.collector")
@@ -68,11 +68,13 @@ COMPETITIVE_REGIONS = [
 @dataclass
 class CollectionStats:
     players_discovered: int = 0
+    total_players: int = 0
     players_polled: int = 0
     battles_fetched: int = 0
     new_matches_saved: int = 0
     duplicate_matches_skipped: int = 0
     failed_polls: int = 0
+    malformed_entries_skipped: int = 0
     start_time: float = field(default_factory=time.monotonic)
 
     def elapsed_seconds(self) -> float:
@@ -81,11 +83,13 @@ class CollectionStats:
     def to_dict(self) -> dict[str, Any]:
         return {
             "players_discovered": self.players_discovered,
+            "total_players": self.total_players,
             "players_polled": self.players_polled,
             "battles_fetched": self.battles_fetched,
             "new_matches_saved": self.new_matches_saved,
             "duplicate_matches_skipped": self.duplicate_matches_skipped,
             "failed_polls": self.failed_polls,
+            "malformed_entries_skipped": self.malformed_entries_skipped,
             "elapsed_seconds": round(self.elapsed_seconds(), 2),
         }
 
@@ -157,6 +161,8 @@ class BattleLogCollector:
                     current_count = self.db.get_player_count()
                 if on_progress:
                     on_progress(f"Leaderboard {cc}", current_count)
+            except (ApiAuthenticationError, ApiRateLimited):
+                raise
             except Exception as e:
                 logger.warning("Error fetching leaderboard for %s: %s", cc, e)
 
@@ -196,10 +202,14 @@ class BattleLogCollector:
                             if batch_members:
                                 self.db.save_players_batch(batch_members)
                                 current_count = self.db.get_player_count()
+                        except (ApiAuthenticationError, ApiRateLimited):
+                            raise
                         except Exception as c_exc:
                             logger.debug("Failed club %s: %s", c_tag, c_exc)
                     if on_progress:
                         on_progress(f"Clubs {cc}", current_count)
+                except (ApiAuthenticationError, ApiRateLimited):
+                    raise
                 except Exception as exc:
                     logger.warning("Failed club ranking %s: %s", cc, exc)
 
@@ -228,8 +238,8 @@ class BattleLogCollector:
                                 batch_brawlers.append({
                                     "tag": tag,
                                     "name": item.get("name", "Player"),
-                                    "trophies": item.get("trophies", 0),
-                                    "highest_trophies": item.get("trophies", 0),
+                                    "trophies": 0,
+                                    "highest_trophies": 0,
                                     "club_name": item.get("club", {}).get("name") if item.get("club") else None,
                                     "source": f"brawler_leaderboard_{b_id}",
                                     "priority": 2,
@@ -239,8 +249,12 @@ class BattleLogCollector:
                             current_count = self.db.get_player_count()
                         if on_progress:
                             on_progress(f"Brawler {b_name}", current_count)
+                    except (ApiAuthenticationError, ApiRateLimited):
+                        raise
                     except Exception as exc:
                         logger.warning("Failed brawler leaderboard %d: %s", b_id, exc)
+            except (ApiAuthenticationError, ApiRateLimited):
+                raise
             except Exception as exc:
                 logger.warning("Failed to list brawlers for leaderboard: %s", exc)
 
@@ -265,8 +279,8 @@ class BattleLogCollector:
                                 cascade_batch.append({
                                     "tag": t,
                                     "name": part.get("name", "Player"),
-                                    "trophies": part.get("brawler_trophies", 0),
-                                    "highest_trophies": part.get("brawler_trophies", 0),
+                                    "trophies": 0,
+                                    "highest_trophies": 0,
                                     "source": "battle_participant",
                                     "priority": 1,
                                 })
@@ -278,7 +292,10 @@ class BattleLogCollector:
                     if on_progress and (idx + 1) % 15 == 0:
                         current_count = self.db.get_player_count()
                         on_progress(f"Battle Log Cascade #{idx+1}", current_count)
+                except (ApiAuthenticationError, ApiRateLimited):
+                    raise
                 except Exception as exc:
+                    self.db.mark_player_polled(p_tag, 0)
                     logger.debug("Cascade battle log skipped for %s: %s", p_tag, exc)
             if cascade_batch:
                 self.db.save_players_batch(cascade_batch)
@@ -298,6 +315,7 @@ class BattleLogCollector:
     ) -> CollectionStats:
         """Fetch battle logs for unpolled or prioritized players with robust deduplication."""
         stats = CollectionStats()
+        initial_player_count = self.db.get_player_count()
         players_to_poll = self.db.get_unpolled_players(limit=max_players)
         logger.info("Collecting battle logs for %d players", len(players_to_poll))
 
@@ -312,7 +330,11 @@ class BattleLogCollector:
                 stats.battles_fetched += len(items)
 
                 for item in items:
-                    is_new, fingerprint, participants = self.db.save_match(item, source_player_tag=tag)
+                    try:
+                        is_new, fingerprint, participants = self.db.save_match(item, source_player_tag=tag)
+                    except (ValueError, TypeError):
+                        stats.malformed_entries_skipped += 1
+                        continue
                     if is_new:
                         stats.new_matches_saved += 1
                     else:
@@ -326,8 +348,8 @@ class BattleLogCollector:
                                 batch_cascade.append({
                                     "tag": p_tag,
                                     "name": part.get("name", "Player"),
-                                    "trophies": part.get("brawler_trophies", 0),
-                                    "highest_trophies": part.get("brawler_trophies", 0),
+                                    "trophies": 0,
+                                    "highest_trophies": 0,
                                     "source": "battle_participant",
                                     "priority": 1,
                                 })
@@ -344,27 +366,33 @@ class BattleLogCollector:
                 logger.debug("Player %s not found on API, marking polled with 0 battles", tag)
                 self.db.mark_player_polled(tag, 0)
                 stats.failed_polls += 1
+            except ApiAuthenticationError:
+                raise
             except ApiRateLimited:
                 logger.warning("API rate limited while polling %s. Waiting 2.0s...", tag)
                 stats.failed_polls += 1
                 await asyncio.sleep(2.0)
+                raise
             except UpstreamUnavailable as exc:
                 logger.warning("Upstream unavailable for %s: %s", tag, exc)
                 stats.failed_polls += 1
+                self.db.mark_player_polled(tag, 0)
                 await asyncio.sleep(1.0)
             except Exception as exc:
                 logger.error("Unexpected error collecting for %s: %s", tag, exc)
                 stats.failed_polls += 1
 
             if on_progress and (idx + 1) % 10 == 0:
-                stats.players_discovered = self.db.get_player_count()
+                stats.total_players = self.db.get_player_count()
+                stats.players_discovered = stats.total_players - initial_player_count
                 on_progress(stats)
 
         if batch_cascade:
             self.db.save_players_batch(batch_cascade)
             batch_cascade.clear()
 
-        stats.players_discovered = self.db.get_player_count()
+        stats.total_players = self.db.get_player_count()
+        stats.players_discovered = stats.total_players - initial_player_count
         if on_progress:
             on_progress(stats)
 
@@ -373,7 +401,7 @@ class BattleLogCollector:
             stats.players_polled,
             stats.new_matches_saved,
             stats.duplicate_matches_skipped,
-            stats.players_discovered,
+            stats.total_players,
         )
         return stats
 

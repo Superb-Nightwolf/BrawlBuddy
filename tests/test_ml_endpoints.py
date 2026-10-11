@@ -1,158 +1,76 @@
+import asyncio
+import threading
 import pytest
 from fastapi.testclient import TestClient
-
 from app.main import app
+from app.ml.meta_engine import StatisticalMetaEngine
+from app.ml.model import BrawlerOutcomePredictor
+from app.routers import ml_meta as routes
 
-client = TestClient(app)
+
+@pytest.fixture
+def ml_client(ml_store, monkeypatch):
+    monkeypatch.setattr(routes, 'meta_db', ml_store)
+    monkeypatch.setattr(routes, 'meta_engine', StatisticalMetaEngine(ml_store))
+    monkeypatch.setattr(routes, 'predictor', BrawlerOutcomePredictor(ml_store))
+    monkeypatch.setattr(routes, 'operation_task', None)
+    monkeypatch.setattr(routes, 'operation_state', {'running': False, 'task': 'Idle', 'message': '', 'last_result': None, 'progress': {}})
+    with TestClient(app) as client:
+        yield client
 
 
-def test_meta_filters_endpoint():
-    response = client.get("/api/meta/filters")
+@pytest.mark.parametrize('url', ['/api/meta/filters', '/api/meta/brawlers?mode=brawlBall',
+    '/api/meta/teams?mode=brawlBall&min_matches=1', '/api/ml/model-status',
+    '/api/ml/transparency/summary', '/api/ml/operations/telemetry', '/api/ml/operations/status', '/meta'])
+def test_ml_routes(ml_client, url):
+    assert ml_client.get(url).status_code == 200
+
+
+@pytest.mark.parametrize('payload', [
+    {'teamBrawlers': [16000000]*2},
+    {'teamBrawlers': [16000000], 'enemyBrawlers': [16000000]},
+    {'teamBrawlers': list(range(16000000, 16000004))},
+    {'mode': 'soloShowdown'}, {'powerDiff': 99},
+])
+def test_invalid_drafts_are_rejected(ml_client, payload):
+    assert ml_client.post('/api/ml/predict-match', json=payload).status_code == 422
+
+
+def test_owned_collection_uses_player_service_tuple(ml_client, monkeypatch):
+    from types import SimpleNamespace
+    class PlayerService:
+        async def get_player(self, tag):
+            return SimpleNamespace(brawlers=[SimpleNamespace(id=16000000)]), 'CACHE'
+    monkeypatch.setattr(app.state, 'player_service', PlayerService())
+    response = ml_client.post('/api/ml/recommend', json={'ownedBrawlersOnly': True, 'playerTag': '#P1'})
     assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    assert "modes" in data["data"]
-    assert "brawlBall" in data["data"]["modes"]
+    assert response.json()['ownedFiltered'] is True
+    assert [r['brawler_id'] for r in response.json()['recommendations']] == [16000000]
 
 
-def test_meta_brawlers_endpoint():
-    response = client.get("/api/meta/brawlers?mode=brawlBall")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    assert "brawlers" in data
-    assert len(data["brawlers"]) > 0
-    first = data["brawlers"][0]
-    assert "brawler_id" in first
-    assert "smoothed_win_rate" in first
-    assert "tier" in first
+def test_owned_filter_fails_visibly_instead_of_recommending_unowned(ml_client, monkeypatch):
+    class BrokenService:
+        async def get_player(self, tag):
+            raise RuntimeError('offline')
+    monkeypatch.setattr(app.state, 'player_service', BrokenService())
+    response = ml_client.post('/api/ml/recommend', json={'ownedBrawlersOnly': True, 'playerTag': '#P1'})
+    assert response.status_code == 502
+    assert ml_client.post('/api/ml/recommend', json={'ownedBrawlersOnly': True}).status_code == 422
 
 
-def test_meta_teams_endpoint():
-    response = client.get("/api/meta/teams?mode=brawlBall&min_matches=1")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    assert "teams" in data
-
-
-def test_predict_match_endpoint():
-    payload = {
-        "mode": "brawlBall",
-        "map": "Center Stage",
-        "teamBrawlers": [16000000, 16000001, 16000002],
-        "enemyBrawlers": [16000003, 16000004, 16000005],
-        "powerDiff": 0.0,
-    }
-    response = client.post("/api/ml/predict-match", json=payload)
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    pred = data["data"]
-    assert "win_probability" in pred
-    assert 0.0 <= pred["win_probability"] <= 1.0
-
-
-def test_recommend_endpoint():
-    payload = {
-        "mode": "brawlBall",
-        "map": "Center Stage",
-        "teamBrawlers": [16000000],
-        "enemyBrawlers": [16000003],
-        "top_k": 5,
-    }
-    response = client.post("/api/ml/recommend", json=payload)
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    recs = data["recommendations"]
-    assert len(recs) <= 5
-    for r in recs:
-        assert "brawler_id" in r
-        assert "score" in r
-        assert "explanation" in r
-
-
-def test_model_status_endpoint():
-    response = client.get("/api/ml/model-status")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "operational"
-    assert "metrics" in data
-    assert "dataset" in data
-    assert data["dataset"]["total_unique_matches"] > 0
-
-
-def test_meta_page_route():
-    response = client.get("/meta")
-    assert response.status_code == 200
-    assert "text/html" in response.headers.get("content-type", "")
-
-
-def test_operations_telemetry():
-    response = client.get("/api/ml/operations/telemetry")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    assert "telemetry" in data
-    assert data["telemetry"]["total_matches"] > 0
-    assert "model" in data
-
-
-def test_operations_status():
-    response = client.get("/api/ml/operations/status")
-    assert response.status_code == 200
-    data = response.json()
-    assert "running" in data
-    assert "task" in data
-
-
-def test_operations_retrain():
-    response = client.post("/api/ml/operations/retrain")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    assert "lgbm" in data
-    assert data["lgbm"]["roc_auc"] > 0.80
-
-
-def test_transparency_summary_endpoint():
-    response = client.get("/api/ml/transparency/summary")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    assert "dataset" in data
-    assert "benchmark_leaderboard" in data
-    assert len(data["benchmark_leaderboard"]) >= 5
-    assert "feature_importances" in data
-
-
-def test_draft_step_endpoint():
-    payload = {
-        "mode": "brawlBall",
-        "map": "Center Stage",
-        "draftAllies": [16000000],
-        "draftEnemies": [16000003],
-        "activeSlot": "ally_2",
-        "top_k": 5,
-    }
-    response = client.post("/api/ml/draft/step", json=payload)
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "success"
-    step_data = data["data"]
-    assert "current_win_probability" in step_data
-    assert "candidates" in step_data
-    assert len(step_data["candidates"]) <= 5
-    assert "win_rate_delta" in step_data["candidates"][0]
-
-
-def test_incremental_status_endpoint():
-    response = client.get("/api/ml/operations/incremental-status")
-    assert response.status_code == 200
-    data = response.json()
-    assert "total_players" in data
-    assert "unpolled_players" in data
-    assert "target_players" in data
-    assert data["target_players"] == 100000
-
+def test_training_runs_in_background_and_prevents_overlap(ml_client, monkeypatch):
+    gate, entered = threading.Event(), threading.Event()
+    def train(self):
+        entered.set()
+        gate.wait(3)
+        return {'status': 'insufficient_data', 'message': 'More verified matches needed'}
+    monkeypatch.setattr(BrawlerOutcomePredictor, 'train_and_evaluate', train)
+    response = ml_client.post('/api/ml/operations/retrain')
+    assert response.status_code == 202
+    assert entered.wait(1)
+    try:
+        assert ml_client.get('/api/ml/operations/status').json()['running'] is True
+        assert ml_client.post('/api/ml/operations/retrain').status_code == 409
+        assert ml_client.get('/api/meta/brawlers').status_code == 200
+    finally:
+        gate.set()

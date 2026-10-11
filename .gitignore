@@ -11,3 +11,8 @@ data/brawl_advisor.db
 
 # Generated local Overview browser previews
 /data/overview-preview/
+
+# Local ML data and generated model artifacts
+/data/brawl_meta.db*
+/data/models/
+/data/server.*.log

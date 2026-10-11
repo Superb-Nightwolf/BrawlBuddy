@@ -58,9 +58,9 @@ class StatisticalMetaEngine:
     def get_available_filters(self) -> dict[str, Any]:
         """Return available game modes, maps, and match types in the database."""
         with closing(self.db.connect()) as conn:
-            modes = [row["mode"] for row in conn.execute("SELECT DISTINCT mode FROM matches ORDER BY mode").fetchall()]
-            types = [row["match_type"] for row in conn.execute("SELECT DISTINCT match_type FROM matches ORDER BY match_type").fetchall()]
-            map_rows = conn.execute("SELECT mode, map, COUNT(*) as match_count FROM matches GROUP BY mode, map ORDER BY match_count DESC").fetchall()
+            modes = [row["mode"] for row in conn.execute("SELECT DISTINCT mode FROM matches WHERE ingestion_version=2 ORDER BY mode").fetchall()]
+            types = [row["match_type"] for row in conn.execute("SELECT DISTINCT match_type FROM matches WHERE ingestion_version=2 ORDER BY match_type").fetchall()]
+            map_rows = conn.execute("SELECT mode, map, COUNT(*) as match_count FROM matches WHERE ingestion_version=2 GROUP BY mode, map ORDER BY match_count DESC").fetchall()
             
             maps_by_mode: dict[str, list[dict[str, Any]]] = defaultdict(list)
             for r in map_rows:
@@ -80,7 +80,7 @@ class StatisticalMetaEngine:
         min_picks: int = 1,
     ) -> list[dict[str, Any]]:
         """Calculate empirically smoothed win rates, pick rates, and meta tiers."""
-        filters = []
+        filters = ["m.ingestion_version = 2"]
         params = []
         if mode:
             filters.append("m.mode = ?")
@@ -96,7 +96,7 @@ class StatisticalMetaEngine:
 
         with closing(self.db.connect()) as conn:
             # 1. Total matches for pick rate denominator
-            total_matches_query = f"SELECT COUNT(*) as total FROM matches m {where_clause}"
+            total_matches_query = f"SELECT COUNT(*) as total FROM match_participants p JOIN matches m ON p.match_fingerprint=m.match_fingerprint {where_clause} AND p.is_winner IS NOT NULL AND p.brawler_id > 0"
             total_matches = conn.execute(total_matches_query, params).fetchone()["total"] or 0
 
             # 2. Aggregated participant stats per brawler
@@ -112,7 +112,7 @@ class StatisticalMetaEngine:
                     AVG(p.brawler_trophies) as avg_trophies
                 FROM match_participants p
                 JOIN matches m ON p.match_fingerprint = m.match_fingerprint
-                {where_clause}
+                {where_clause} AND p.is_winner IS NOT NULL AND p.brawler_id > 0
                 GROUP BY p.brawler_id, p.brawler_name
                 HAVING total_picks >= ?
             """
@@ -126,9 +126,7 @@ class StatisticalMetaEngine:
         total_picks_all = sum(r["total_picks"] for r in rows)
         prior_mean = (total_wins_all / total_picks_all) if total_picks_all > 0 else 0.50
 
-        # Team slots per match: ~6 for 3v3, ~10 for showdown
-        slots_multiplier = 6.0 if (not mode or "showdown" not in mode.lower()) else 10.0
-        total_slots = max(total_matches * slots_multiplier, 1.0)
+        total_slots = max(total_matches, 1.0)
 
         stats_list: list[BrawlerMetaStat] = []
         for r in rows:
@@ -173,8 +171,10 @@ class StatisticalMetaEngine:
         stats_list.sort(key=lambda s: s.smoothed_win_rate, reverse=True)
         count = len(stats_list)
         for idx, s in enumerate(stats_list):
-            percentile = (idx + 1) / count
-            if percentile <= 0.15:
+            percentile = idx / max(count - 1, 1)
+            if count == 1:
+                s.tier = "B"
+            elif percentile <= 0.15:
                 s.tier = "S"
             elif percentile <= 0.40:
                 s.tier = "A"
@@ -186,6 +186,35 @@ class StatisticalMetaEngine:
                 s.tier = "D"
 
         return [s.to_dict() for s in stats_list]
+
+    def compute_interactions(self, mode=None, map_name=None):
+        """Load directional team-pair and opponent evidence in one query per draft."""
+        filters = ['m.ingestion_version=2', 'p1.is_winner IS NOT NULL',
+                   'p2.is_winner IS NOT NULL', 'p1.player_tag != p2.player_tag']
+        params = []
+        if mode:
+            filters.append('m.mode=?')
+            params.append(mode)
+        if map_name:
+            filters.append('m.map=?')
+            params.append(map_name)
+        with closing(self.db.connect()) as conn:
+            rows = conn.execute(f"""
+                SELECT first_id, second_id, same_team, COUNT(*) AS samples, SUM(is_winner) AS wins
+                FROM (
+                    SELECT DISTINCT m.match_fingerprint, p1.team_index, p1.brawler_id AS first_id,
+                        p2.brawler_id AS second_id, p1.team_index=p2.team_index AS same_team,
+                        p1.is_winner
+                    FROM match_participants p1
+                    JOIN match_participants p2 ON p1.match_fingerprint=p2.match_fingerprint
+                    JOIN matches m ON m.match_fingerprint=p1.match_fingerprint
+                    WHERE {' AND '.join(filters)}
+                ) GROUP BY first_id, second_id, same_team
+            """, params).fetchall()
+        return {(bool(r['same_team']), r['first_id'], r['second_id']): {
+            'paired_matches': r['samples'], 'matches_faced': r['samples'],
+            'smoothed_win_rate': (r['wins'] + 5) / (r['samples'] + 10),
+        } for r in rows}
 
     def compute_pair_synergy(
         self,
@@ -217,6 +246,7 @@ class StatisticalMetaEngine:
                 AND p1.player_tag != p2.player_tag
             JOIN matches m ON p1.match_fingerprint = m.match_fingerprint
             WHERE p1.brawler_id = ? AND p2.brawler_id = ?
+            AND m.ingestion_version=2 AND p1.is_winner IS NOT NULL AND p2.is_winner IS NOT NULL
             {where_extra}
         """
 
@@ -243,6 +273,7 @@ class StatisticalMetaEngine:
         brawler: int,
         opponent: int,
         mode: Optional[str] = None,
+        map_name: Optional[str] = None,
     ) -> dict[str, Any]:
         """Calculate head-to-head performance of brawler facing opponent on opposing team."""
         filters = []
@@ -250,6 +281,10 @@ class StatisticalMetaEngine:
         if mode:
             filters.append("m.mode = ?")
             params.append(mode)
+
+        if map_name:
+            filters.append("m.map = ?")
+            params.append(map_name)
 
         where_extra = f"AND {' AND '.join(filters)}" if filters else ""
 
@@ -263,6 +298,7 @@ class StatisticalMetaEngine:
                 AND p1.team_index != p2.team_index
             JOIN matches m ON p1.match_fingerprint = m.match_fingerprint
             WHERE p1.brawler_id = ? AND p2.brawler_id = ?
+            AND m.ingestion_version=2 AND p1.is_winner IS NOT NULL AND p2.is_winner IS NOT NULL
             {where_extra}
         """
 
