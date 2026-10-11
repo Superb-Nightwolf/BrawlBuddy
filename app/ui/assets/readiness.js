@@ -15,8 +15,13 @@ function readinessCurrencyIcon(currency) {
   const icon = readinessElement('span', `readiness-currency-icon currency-${currency}`);
   icon.setAttribute('aria-hidden', 'true');
   const files = { coins: 'coins', powerPoints: 'power-points', gems: 'gems' };
-  const image = document.createElement('img');
   const assetUrl = getUiIconRecord('currencies', currency)?.local_url || `/assets/currencies/${files[currency] || files.coins}.png`;
+  const framed = BrawlBuddyArtwork.framedIconMarkup(assetUrl);
+  if (framed) {
+    icon.innerHTML = framed;
+    return icon;
+  }
+  const image = document.createElement('img');
   image.src = `${assetUrl}?v=20261002-2`;
   image.alt = '';
   image.decoding = 'async';

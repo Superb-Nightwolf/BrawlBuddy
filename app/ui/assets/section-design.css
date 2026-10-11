@@ -261,7 +261,7 @@
 .section-system .flagship-visual { border: 3px solid #fff; border-radius: 17px; box-shadow: 0 4px 0 var(--section-shadow); overflow: visible; }
 .section-system .flagship-title > span { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
 .section-system .equipment-chip { border-radius: 11px; border-width: 1.5px; box-shadow: 0 2px 0 var(--section-shadow); }
-.section-system .section-inline-icon { display: inline-block; width: 18px; height: 18px; object-fit: contain; flex: 0 0 18px; vertical-align: middle; margin-right: 3px; }
+.section-system .section-inline-icon { display: inline-block; width: var(--inline-game-icon-size); height: var(--inline-game-icon-size); object-fit: contain; flex: 0 0 var(--inline-game-icon-size); vertical-align: middle; margin-right: 3px; }
 .section-system .section-emblem-icon { width: 48px; height: 48px; object-fit: contain; }
 .section-system .club-badge-symbol { display: grid; place-items: center; }
 .section-system .club-badge-symbol .section-emblem-icon { width: 70px; height: 70px; }
@@ -288,14 +288,12 @@
 .section-system .event-timer-row { box-shadow: 0 2px 0 #c6dbd1; }
 .section-system .ranking-tab-group button, .section-system .battle-filter-tabs .level-chip { border-radius: 12px; }
 
-/* Keep each page's opening banner as compact as the account summary. */
+/* Keep page summaries compact; brawler detail retains its original sizing. */
 @media (min-width: 1181px) {
+  #brawlers-view .prestige-collection { height: var(--profile-cover-height); min-height: var(--profile-cover-height); grid-template-rows: minmax(0, 1fr) auto; row-gap: 16px; }
   .section-system .player-hero,
-  .section-system .collection-banner,
-  #brawlers-view .prestige-collection { height: var(--section-banner-height); min-height: var(--section-banner-height); }
-  .section-system .collection-banner,
-  #brawlers-view .prestige-collection { grid-template-rows: minmax(0, 1fr) auto; row-gap: 12px; }
-  #brawlers-view .prestige-collection { row-gap: 8px; }
+  .section-system .collection-banner { height: var(--section-banner-height); min-height: var(--section-banner-height); }
+  .section-system .collection-banner { grid-template-rows: minmax(0, 1fr) auto; row-gap: 12px; }
   .section-hero-emblem { gap: 6px; }
   .section-hero-emblem > img { width: 90px; height: 90px; }
   .section-hero-emblem::before { width: 120px; height: 120px; }

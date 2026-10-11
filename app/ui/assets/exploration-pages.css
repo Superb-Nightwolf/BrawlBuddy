@@ -1,0 +1,163 @@
+/* Overview's cover, card and information hierarchy for the exploration pages. */
+:is(#battles-view,#events-view,#leaderboards-view) { --ov-ink: #19365b; --ov-muted: #617895; }
+:is(#battles-view,#events-view,#leaderboards-view) .collection-banner {
+  grid-template-columns: minmax(0,1fr) 244px; grid-template-rows: minmax(0,1fr) auto;
+  padding: 28px; gap: 24px; border-radius: 26px; overflow: visible;
+}
+:is(#battles-view,#events-view,#leaderboards-view) .collection-banner::before { border-radius: inherit; }
+:is(#battles-view,#events-view,#leaderboards-view) .collection-banner::after { inset: 0; width: auto; height: auto; border-radius: inherit; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-hero-copy { align-self: center; }
+:is(#battles-view,#events-view,#leaderboards-view) .collection-banner h2 { margin: 12px 0; font-size: clamp(34px,3.3vw,48px); line-height: 1.12; }
+:is(#battles-view,#events-view,#leaderboards-view) .collection-banner p { max-width: 590px; margin: 0; line-height: 1.65; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-hero-emblem { gap: 16px; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-hero-emblem::before { width: 160px; height: 160px; border: 2px solid #fff; border-radius: 28px; box-shadow: 0 5px 0 var(--section-shadow),0 0 0 8px #ffffff50; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-hero-emblem > img { width: 112px; height: 112px; transform: none; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-hero-counter { z-index: 1; padding: 7px 12px; gap: 8px; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-hero-counter strong { font-size: 28px; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-stat-strip { border: 0; padding: 0; gap: 12px; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-stat {
+  --stat-tint: #eaf3ff; --stat-line: #bfd6f2; --stat-accent: #2872b9;
+  position: relative; container-type: inline-size; padding: 13px 14px; gap: 8px;
+  border: 2px solid var(--stat-line); border-radius: 17px;
+  background: radial-gradient(ellipse at 0 0,#ffffffd9,transparent 75%),var(--stat-tint);
+  box-shadow: 0 4px 0 var(--stat-line),inset 0 0 0 1px #fff;
+}
+:is(#battles-view,#events-view,#leaderboards-view) .section-stat:nth-child(2) { --stat-tint:#ffedf2; --stat-line:#efc5d0; --stat-accent:#bb416b; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-stat:nth-child(3) { --stat-tint:#e6f7f0; --stat-line:#b5dfd0; --stat-accent:#218d70; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-stat:nth-child(4) { --stat-tint:#fff4d2; --stat-line:#e9d6a0; --stat-accent:#966b12; }
+.section-stat-heading { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.section-stat-heading > span:first-child { display: grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px; border-radius: 9px; color: var(--stat-accent); }
+.section-stat-heading .ov-art { width: 28px; height: 28px; }
+.section-stat-heading > b { flex: 1; min-width: 0; color: var(--stat-accent); font-size: 8px; letter-spacing: .5px; line-height: 1.4; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-stat strong { font-size: min(30px,17cqi); line-height: 1.15; white-space: nowrap; }
+#leaderboards-view .section-stat:first-child strong { font-size: min(23px,12cqi); white-space: normal; }
+:is(#battles-view,#events-view,#leaderboards-view) :is(.battles-panel,.events-panel,.meta-tier-panel,.leaderboard-panel) { margin-top: 28px; padding: 22px; border-radius: 24px; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-heading { gap: 14px; margin-bottom: 16px; padding-bottom: 14px; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-heading h2 { font-size: 25px; margin-top: 4px; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-toolbar { margin-top: 0; gap: 12px; }
+:is(#battles-view,#events-view,#leaderboards-view) .section-results { margin: 14px 0; font-size: 10px; }
+:is(#battles-view,#events-view,#leaderboards-view) [data-explore-info] { display: inline-flex; align-items: center; flex-shrink: 0; }
+:is(#battles-view,#events-view,#leaderboards-view) .readiness-info-wrap { z-index: 5; }
+:is(#battles-view,#events-view,#leaderboards-view) :is(.panel,.section-stat,.battle-log-card,.podium-card):has(.readiness-info-wrap:is(:hover,:focus-within,.is-open)) { position: relative; z-index: 80; }
+:is(#battles-view,#events-view,#leaderboards-view) .readiness-info-tooltip p { white-space: pre-line; }
+:is(#battles-view,#events-view,#leaderboards-view) .readiness-info-wrap .readiness-info-tooltip h3 { margin: 0 0 10px; color: #f8fafc; font: 800 13px/1.4 var(--font-main); }
+.explore-arrow { width: 16px; height: 16px; flex: 0 0 16px; }
+#battles-view .battle-filter-tabs .level-chip { min-height: 40px; border-radius: 11px; font-family: inherit; }
+#battles-view .battle-log-card { padding: 16px; margin: 0; border-radius: 20px; }
+#battles-view .battle-card-top { gap: 14px; padding-bottom: 12px; align-items: flex-start; }
+#battles-view .battle-card-mode { flex: 1; min-width: 0; gap: 7px 10px; }
+#battles-view .battle-card-mode strong { font-size: 20px; }
+#battles-view .battle-card-result { flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+#battles-view .mode-badge .mode-icon-img { width: var(--inline-game-icon-size); height: var(--inline-game-icon-size); flex-basis: var(--inline-game-icon-size); }
+#battles-view .trophy-delta { display: inline-flex; align-items: center; gap: 4px; font-size: 18px; }
+#battles-view .match-teams-grid { align-items: stretch; gap: 12px; }
+#battles-view .match-vs-divider { align-self: center; font-size: 11px; }
+#battles-view .team-header { font-size: 9px; letter-spacing: .4px; }
+#battles-view .player-roster-row { min-height: 54px; gap: 9px; }
+#battles-view .battle-brawler-link { flex: 0 0 38px; line-height: 0; }
+#battles-view .battle-brawler-link img { width: 38px; height: 38px; }
+#battles-view .roster-player-meta strong { font-size: 12px; }
+#battles-view .battle-card-actions { display: flex; align-items: center; padding-top: 12px; margin-top: 12px; border-top: 1px solid #e6edf5; }
+#battles-view .battle-card-actions .small-action { display: inline-flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 12px; font: 800 10px var(--font-main); }
+#battles-view .battle-card-actions .small-action .ov-art { width: 18px; height: 18px; }
+#events-view .events-grid { gap: 18px; align-items: stretch; }
+#events-view .event-card { padding: 0; display: flex; flex-direction: column; overflow: visible; position: relative; }
+#events-view .event-card-banner { height: 184px; border-radius: 18px 18px 0 0; isolation: isolate; background: #e1f2eb; }
+#events-view .event-card-banner > img { object-fit: contain; opacity: 1; }
+#events-view .event-banner-overlay { border-radius: inherit; background: linear-gradient(180deg,#10264315,transparent 35%,#102643ed); }
+#events-view .event-card-body { display: flex; flex: 1; flex-direction: column; padding: 14px; }
+#events-view .event-timer-row { justify-content: space-between; gap: 8px; }
+#events-view .event-timer-row .event-countdown { margin-right: auto; }
+#events-view .event-meta-picks { margin-top: 12px; margin-bottom: 14px; }
+#events-view .event-card-action { margin-top: auto; padding: 9px 11px; gap: 10px; }
+#events-view .event-mode-tag .mode-icon-img { width: var(--inline-game-icon-size); height: var(--inline-game-icon-size); flex-basis: var(--inline-game-icon-size); }
+#events-view .modifier-tag img { width: var(--inline-game-icon-size); height: var(--inline-game-icon-size); object-fit: contain; }
+#events-view .tier-badge-cell { color: var(--ov-ink); }
+#leaderboards-view .leaderboard-toolbar { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 0; }
+#leaderboards-view .ranking-tab-group { flex-shrink: 0; gap: 8px; }
+#leaderboards-view .ranking-tab-group button { min-height: 40px; border-radius: 11px; }
+#leaderboards-view .leaderboard-toolbar .search-box { flex: 1; min-width: 200px; }
+#leaderboards-view .ranking-podium { gap: 16px; margin-top: 22px; align-items: stretch; }
+#leaderboards-view .podium-card { padding: 16px; gap: 9px; }
+#leaderboards-view .podium-card > strong { font-size: 18px; min-height: 24px; }
+#leaderboards-view .podium-place { font-size: 11px; }
+#leaderboards-view .podium-score { font-size: clamp(21px,2vw,28px); white-space: nowrap; }
+#leaderboards-view .podium-card .small-action { display: flex; align-items: center; justify-content: space-between; padding: 9px 10px; margin-top: auto; }
+#leaderboards-view .podium-score img, #leaderboards-view .table-trophy-icon { width: var(--inline-game-icon-size); height: var(--inline-game-icon-size); }
+#leaderboards-view .roster-table-wrap { margin-top: 16px; max-height: 720px; }
+#leaderboards-view .roster-table th { position: sticky; top: 0; z-index: 2; }
+#leaderboards-view .roster-row td { padding: 12px 14px; }
+#leaderboards-view .ranking-person > img { width: 38px; height: 38px; }
+@media (min-width:1181px) {
+  :is(#battles-view,#events-view,#leaderboards-view) .collection-banner { height: var(--profile-cover-height); min-height: var(--profile-cover-height); }
+}
+@media (max-width:1180px) {
+  :is(#battles-view,#events-view,#leaderboards-view) .collection-banner { height: auto; min-height: 330px; grid-template-columns: minmax(0,1fr) 185px; }
+}
+@media (max-width:768px) {
+  :is(#battles-view,#events-view,#leaderboards-view) .collection-banner { padding: 22px; gap: 22px; grid-template-columns: minmax(0,1fr) 140px; }
+  :is(#battles-view,#events-view,#leaderboards-view) .collection-banner h2 { font-size: 32px; }
+  :is(#battles-view,#events-view,#leaderboards-view) .section-stat-strip { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  :is(#battles-view,#events-view,#leaderboards-view) .section-hero-emblem > img { width: 90px; height: 90px; }
+  :is(#battles-view,#events-view,#leaderboards-view) .section-hero-emblem::before { width: 126px; height: 126px; }
+  #leaderboards-view .leaderboard-toolbar .search-box { order: 3; flex-basis: 100%; }
+  #battles-view .battle-card-top { flex-wrap: wrap; }
+}
+@media (max-width:540px) {
+  :is(#battles-view,#events-view,#leaderboards-view) .collection-banner { grid-template-columns: minmax(0,1fr); padding: 20px; gap: 22px; }
+  :is(#battles-view,#events-view,#leaderboards-view) .collection-banner h2 { font-size: 30px; }
+  :is(#battles-view,#events-view,#leaderboards-view) .section-hero-emblem { flex-direction: row; gap: 22px; }
+  :is(#battles-view,#events-view,#leaderboards-view) .section-hero-emblem::before { display: none; }
+  :is(#battles-view,#events-view,#leaderboards-view) .section-stat { padding: 10px; }
+  .section-stat-heading { gap: 5px; }
+  .section-stat-heading > span:first-child { width: 26px; height: 26px; flex-basis: 26px; }
+  .section-stat-heading .ov-art { width: 24px; height: 24px; }
+  :is(#battles-view,#events-view,#leaderboards-view) :is(.battles-panel,.events-panel,.meta-tier-panel,.leaderboard-panel) { padding: 15px; border-radius: 20px; }
+  :is(#battles-view,#events-view,#leaderboards-view) .section-heading h2 { font-size: 22px; }
+  #battles-view .battle-filter-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+  #battles-view .battle-filter-tabs .level-chip { padding: 8px 5px; font-size: 9px; }
+  #battles-view .battle-log-card { padding: 13px; }
+  #battles-view .match-teams-grid { grid-template-columns: minmax(0,1fr); }
+  #battles-view .match-vs-divider { justify-self: center; }
+  #battles-view .battle-card-mode strong { font-size: 18px; }
+  #leaderboards-view .ranking-podium { grid-template-columns: minmax(0,1fr); gap: 14px; }
+  #leaderboards-view .podium-card { grid-column: auto; grid-row: auto; }
+  #leaderboards-view .leaderboard-toolbar { align-items: stretch; }
+  #leaderboards-view .ranking-tab-group { width: 100%; }
+  #leaderboards-view .region-select-label { width: 100%; justify-content: space-between; }
+  #leaderboards-view .region-select-label select { flex: 1; }
+}
+@media (prefers-reduced-motion:reduce) {
+  :is(#battles-view,#events-view,#leaderboards-view) :is(.event-card,.battle-log-card):hover { transform: none; }
+}
+
+/* Detail overlays use the same pastel shell; map artwork keeps its full bounds. */
+:is(#map-preview-dialog,#recreator-dialog) {
+  border: 2px solid #bdd6f5;
+  border-radius: 24px;
+  background: linear-gradient(135deg,#fff,#f1f7ff);
+  color: var(--ink);
+  box-shadow: 0 7px 0 #bdd1eb, 0 24px 70px #142d5940;
+}
+#map-preview-dialog { width: min(460px,calc(100vw - 24px)); }
+#map-preview-dialog .map-dialog-shell { padding: 24px; gap: 18px; }
+#map-preview-dialog .map-dialog-img-frame {
+  max-width: 380px; height: min(420px,52dvh); min-height: 180px;
+  background: #eaf4ff; border: 2px solid #c7dbf4; border-radius: 18px;
+}
+#map-preview-dialog .map-dialog-img-frame img { width: 100%; height: 100%; object-fit: contain; }
+#map-preview-dialog .map-dialog-body { padding: 0; }
+#map-preview-dialog .map-dialog-body h2 { color: var(--ink); font-size: 27px; }
+#map-preview-dialog .map-card-mode { color: #51779f; }
+#recreator-dialog .recreator-shell { padding: 24px; }
+#recreator-dialog .recreator-header h2 { color: var(--ink); font-size: 27px; }
+#recreator-dialog .recreator-header p { max-width: 560px; font-size: 12px; line-height: 1.6; }
+#recreator-dialog .recreator-stat-card { box-shadow: 0 4px 0 #d5e2f3; }
+#recreator-dialog .spawn-node { min-width: 0; max-width: 65px; }
+#recreator-dialog .spawn-node strong { max-width: 100%; overflow-wrap: anywhere; }
+@media(max-width:540px) {
+  #recreator-dialog .recreator-shell { padding: 18px; }
+  #recreator-dialog .arena-board { grid-template-columns: 1fr; gap: 16px; padding: 14px; }
+  #recreator-dialog .team-spawns { justify-content: center; flex-wrap: wrap; }
+  #recreator-dialog .recreator-stats-grid { grid-template-columns: 1fr; }
+}

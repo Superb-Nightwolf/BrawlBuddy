@@ -37,6 +37,7 @@ from app.services.resource_service import ResourceService
 from app.services.upgrade_service import UpgradeService
 from app.services.readiness_service import ReadinessService
 from app.services.overview_service import OverviewService, summarize_battles, summarize_club, event_timing
+from app.routers.ml_meta import router as ml_meta_router
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 logger = logging.getLogger(__name__)
@@ -140,6 +141,8 @@ app.add_middleware(
 )
 assets = PROJECT_ROOT / "app" / "ui" / "assets"
 app.mount("/assets", StaticFiles(directory=assets), name="assets")
+app.state.player_service = player_service
+app.include_router(ml_meta_router)
 
 
 @app.middleware("http")
@@ -229,6 +232,11 @@ async def events_page() -> FileResponse:
 async def leaderboards_page() -> FileResponse:
     return FileResponse(PROJECT_ROOT / "app" / "ui" / "index.html")
 
+
+
+@app.get("/meta", include_in_schema=False)
+async def meta_page() -> FileResponse:
+    return FileResponse(PROJECT_ROOT / "app" / "ui" / "index.html")
 
 
 @app.get("/brawlers/{brawler_id}", include_in_schema=False)

@@ -1,15 +1,4 @@
 #overview-view, #club-view { --ov-ink: #19365b; --ov-muted: #617895; --ov-line: #c5daf0; }
-#overview-view .player-avatar-card { padding: 0; align-self: center; }
-#overview-view .avatar-frame { width: 180px; height: 180px; margin: 0; }
-#overview-view .avatar-frame img { max-width: none; max-height: none; }
-@media (min-width: 541px) and (max-width: 1100px) {
-  #overview-view .player-hero { grid-template-columns: 152px minmax(0, 1fr); }
-  #overview-view .avatar-frame { width: 152px; height: 152px; }
-}
-@media (max-width: 540px) {
-  #overview-view .avatar-frame { width: 136px; height: 136px; }
-}
-#overview-view .hero-stats { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .ov-art { display: inline-block; width: 30px; height: 30px; object-fit: contain; vertical-align: middle; }
 .ov-ui-symbol { color: var(--ov-group-accent,#315f98); }
 .ov-stat .ov-ui-symbol { color: var(--stat-color); }
@@ -26,12 +15,10 @@
 .ov-section-emblem small { position: absolute; right: -5px; bottom: -5px; display: grid; place-items: center; min-width: 24px; height: 21px; padding: 0 4px; background: #fff; border: 1.5px solid var(--ov-group-line); border-radius: 7px; color: var(--ov-group-accent); font-size: 9px; font-weight: 900; }
 .ov-section-copy { min-width: 0; }
 .ov-section-kicker { display: block; margin-bottom: 5px; color: var(--ov-group-accent); font-size: 9px; font-weight: 900; letter-spacing: 1.2px; }
-.ov-card-emblem { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; background: linear-gradient(145deg,#fff,var(--ov-group-tint)); border: 1.5px solid var(--ov-group-line); border-radius: 13px; box-shadow: 0 2px 0 var(--ov-group-line); }
-.ov-card-emblem :is(img,svg) { width: 30px; height: 30px; object-fit: contain; }
 .ov-row-name { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
-.ov-row-icon { width: 22px; height: 22px; flex: 0 0 22px; object-fit: contain; }
-.ov-row-name img[src*="/classes/"], .ov-card-emblem img[src*="/classes/"] { filter: invert(21%) sepia(27%) saturate(1279%) hue-rotate(179deg) brightness(93%); }
-.ov-resource-icon { width: 23px; height: 23px; flex-shrink: 0; object-fit: contain; }
+.ov-row-icon { width: var(--inline-game-icon-size); height: var(--inline-game-icon-size); flex: 0 0 var(--inline-game-icon-size); object-fit: contain; }
+.ov-row-name img[src*="/classes/"] { filter: invert(21%) sepia(27%) saturate(1279%) hue-rotate(179deg) brightness(93%); }
+.ov-resource-icon { width: var(--inline-game-icon-size); height: var(--inline-game-icon-size); flex: 0 0 var(--inline-game-icon-size); object-fit: contain; }
 .ov-wallet-fields label > span { display: flex; align-items: center; gap: 7px; min-height: 25px; }
 .ov-rank-badge { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 3px 2px #53368c20); }
 .ov-club-emblem > img { width: 42px; height: 48px; object-fit: contain; }
@@ -48,9 +35,9 @@
 .ov-jump-nav img { width: 20px; height: 20px; object-fit: contain; }
 .ov-jump-nav a[aria-current] { background: #fff0a6; border-color: #eecb59; color: #684918; box-shadow: 0 3px 0 #e5c662; }
 .ov-jump-nav a:hover { background: #e0efff; color: #1269c8; border-color: #8ebdef; }
-#overview-refresh { flex-shrink: 0; font-size: 11px; white-space: nowrap; }
 .ov-snapshot-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 10px; color: var(--ov-muted); margin-bottom: 16px; }
 .ov-snapshot-meta i { display: inline-block; height: 6px; width: 6px; border-radius: 50%; background: #29b18d; margin-right: 6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-snapshot-meta { justify-content: flex-end; }
 .ov-stats-grid { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 12px; }
 .ov-stat { --stat-color: #237ce2; --stat-tint: #e6f1ff; --stat-border: #b9d4f6; display: flex; flex-direction: column; position: relative; gap: 11px; padding: 20px 17px; border: 2px solid var(--stat-border); border-radius: 22px; background: linear-gradient(145deg,#fff,var(--stat-tint)); box-shadow: 0 5px 0 var(--stat-border), inset 0 1px 0 #fff; min-width: 0; }
 .ov-stat::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--roster-dot-pattern) 0 0 / 20px 20px; opacity: .35; pointer-events: none; }
@@ -66,14 +53,21 @@
 .ov-stat-green { --stat-color: #218d70; --stat-tint: #e6f7f0; --stat-border: #b5dfd0; }
 .ov-stat-purple { --stat-color: #7e58bd; --stat-tint: #f0eaff; --stat-border: #d4c5ed; }
 .ov-stat-orange { --stat-color: #b4773a; --stat-tint: #fff0e1; --stat-border: #e9cfb6; }
-.ov-insight-links { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 22px; }
-.ov-insight-links a { display: flex; align-items: center; gap: 12px; padding: 15px 17px; text-decoration: none; border: 1.5px solid #d2e1f1; border-radius: 16px; background: #ffffffc9; box-shadow: 0 3px 0 #dce7f3; color: var(--ov-ink); }
-.ov-insight-links a:hover { border-color: #81b7eb; background: #f5faff; }
-.ov-insight-links .ov-art { width: 27px; height: 27px; flex-shrink: 0; }
-.ov-insight-links span { min-width: 0; }
-.ov-insight-links small { display: block; margin-bottom: 5px; color: #6483a4; font-size: 8px; font-weight: 900; letter-spacing: .6px; }
-.ov-insight-links strong { display: block; font-size: 11px; line-height: 1.65; }
-.ov-insight-links b { margin-left: auto; color: #719bc3; }
+.ov-insight-links { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-auto-rows: 1fr; gap: 12px; margin-top: 18px; }
+.ov-insight-links a { --insight-tint: #eaf3ff; --insight-line: #bfd6f2; --insight-accent: #2868b5; display: flex; align-items: center; gap: 13px; min-width: 0; min-height: 86px; padding: 13px 16px; text-decoration: none; border: 2px solid var(--insight-line); border-radius: 18px; background: linear-gradient(135deg,#fff,var(--insight-tint)); box-shadow: 0 4px 0 var(--insight-line),inset 0 0 0 1px #fff; color: var(--ov-ink); transition: transform .15s ease,box-shadow .15s ease; }
+.ov-insight-links .ov-insight-gold { --insight-tint: #fff4d2; --insight-line: #e9d6a0; --insight-accent: #966b12; }
+.ov-insight-links .ov-insight-purple { --insight-tint: #f0eaff; --insight-line: #d4c5ed; --insight-accent: #7e58bd; }
+.ov-insight-links a:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--insight-line),0 8px 16px #19365b08,inset 0 0 0 1px #fff; }
+.ov-insight-links .ov-insight-emblem { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border: 1.5px solid var(--insight-line); border-radius: 13px; background: linear-gradient(145deg,#fff,var(--insight-tint)); box-shadow: 0 3px 0 var(--insight-line); color: var(--insight-accent); }
+.ov-insight-links .ov-art { width: 31px; height: 31px; filter: drop-shadow(0 2px 1px #19365b12); }
+.ov-insight-links .ov-ui-symbol { color: var(--insight-accent); }
+.ov-insight-links .ov-insight-copy { min-width: 0; flex: 1; }
+.ov-insight-links small { display: block; margin-bottom: 5px; color: var(--insight-accent); font-size: 9px; font-weight: 900; line-height: 1.5; letter-spacing: .45px; }
+.ov-insight-links strong { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 7px; line-height: 1.4; }
+.ov-insight-links .ov-insight-value { font: 24px/1 var(--font-heading); font-variant-numeric: tabular-nums; }
+.ov-insight-links .ov-insight-detail { font-size: 10px; font-weight: 700; line-height: 1.5; }
+.ov-insight-links .ov-insight-arrow { display: grid; place-items: center; width: 28px; height: 28px; flex: 0 0 28px; align-self: center; margin-left: auto; border: 1px solid var(--insight-line); border-radius: 9px; background: #ffffffa6; color: var(--insight-accent); line-height: 0; }
+.ov-insight-links .ov-insight-arrow > svg { display: block; width: 16px; height: 16px; }
 .ov-section-heading { display: flex; align-items: center; gap: 14px; margin: 0 0 22px; padding-bottom: 20px; border-bottom: 1px solid var(--ov-group-line); scroll-margin-top: 22px; }
 .ov-section-heading h2 { margin: 0; font: 800 clamp(21px,2.2vw,28px)/1.25 var(--font-heading); letter-spacing: -.4px; color: var(--ov-ink); }
 .ov-section-heading p { margin: 5px 0 0; font-size: 11px; line-height: 1.6; color: var(--ov-muted); }
@@ -83,7 +77,6 @@
 .ov-card-body { min-width: 0; margin-bottom: 18px; }
 .ov-prestige-layout { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px; align-items: center; }
 .ov-prestige-layout .ov-mini-stats { margin-top: 0; }
-#ov-trophies + .ov-grid > .ov-card:nth-child(3) { grid-row: span 2; }
 .ov-span-4 { grid-column: span 4; }
 .ov-span-6 { grid-column: span 6; }
 .ov-span-8 { grid-column: span 8; }
@@ -256,8 +249,8 @@
   .ov-club-header { flex-wrap: wrap; }
 }
 @media (max-width: 900px) {
+  .ov-insight-links { grid-template-columns: 1fr; }
   .ov-group { padding: 20px; border-radius: 24px; }
-  #overview-view .hero-stats { grid-template-columns: repeat(3,minmax(0,1fr)); }
   .ov-span-4,.ov-span-6,.ov-span-8 { grid-column: span 6; }
   .ov-grid { gap: 16px; }
   .ov-equipment-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
@@ -279,8 +272,6 @@
   .ov-section-emblem small { font-size: 8px; height: 18px; min-width: 20px; }
   .ov-section-heading p { line-height: 1.6; }
   .ov-section-kicker { font-size: 8px; }
-  .ov-card-emblem { width: 36px; height: 36px; border-radius: 11px; }
-  .ov-card-emblem :is(img,svg) { width: 26px; height: 26px; }
   .ov-card-heading > div { min-width: 0; }
   .ov-jump-nav { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; padding: 2px 2px 5px; scrollbar-width: thin; }
   .ov-jump-nav a { flex-shrink: 0; min-height: 44px; }
@@ -295,15 +286,14 @@
   .ov-ledger > summary > span { flex: 1; min-width: 160px; }
   .ov-wallet-fields input, .ov-select-label select, .ov-ledger-controls select, .ov-ledger-controls input { min-height: 44px; }
   .ov-wallet-fields { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  #overview-view .hero-stats { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .ov-toolbar { flex-direction: column; gap: 13px; }
-  .ov-toolbar #overview-refresh { align-self: flex-end; }
   .ov-stats-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
   .ov-stat { padding: 15px 13px; gap: 9px; border-radius: 14px; }
   .ov-stat > strong { font-size: 28px; }
   .ov-stat > small { font-size: 9px; }
   .ov-snapshot-meta { font-size: 9px; }
   .ov-snapshot-meta > span:last-child { display: none; }
+  :is(#overview-dashboard, #club-dashboard) .ov-snapshot-meta { display: none; }
   .ov-section-heading { margin-top: 0; gap: 10px; align-items: flex-start; }
   .ov-section-heading h2 { font-size: 21px; }
   .ov-section-heading p { font-size: 10px; }
@@ -339,4 +329,415 @@
 @media (prefers-reduced-motion: reduce) {
   .ov-loading-dot { animation: none; }
   .ov-track i,.ov-goal { transition: none; }
+  .ov-insight-links a { transition: none; }
+  .ov-insight-links a:hover { transform: none; }
+}
+
+/* Account summary cards: the same framed, pastel treatment as the cover. */
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric {
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 164px;
+  padding: 14px 18px;
+  gap: 8px;
+  border-radius: 20px;
+  background: linear-gradient(135deg,#ffffffd9,var(--stat-tint) 75%);
+  box-shadow: 0 5px 0 var(--stat-border),0 9px 18px #19365b06,inset 0 0 0 2px #ffffff9c;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric::before { opacity: .22; z-index: -1; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric::after {
+  content: '';
+  position: absolute;
+  width: 118px;
+  height: 118px;
+  right: -55px;
+  top: 30px;
+  border: 18px solid var(--stat-border);
+  border-radius: 50%;
+  opacity: .18;
+  z-index: -1;
+  pointer-events: none;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading { display: flex; align-items: center; gap: 11px; min-height: 46px; }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-emblem {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border: 1.5px solid var(--stat-border);
+  border-radius: 14px;
+  background: linear-gradient(145deg,#fff,var(--stat-tint));
+  box-shadow: 0 3px 0 var(--stat-border),inset 0 0 0 1px #fff;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-metric-emblem .ov-stat-art { width: 33px; height: 33px; }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading h3 { margin: 0; font: 900 10px/1.5 var(--font-main); letter-spacing: .45px; color: var(--stat-color); }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric > strong { display: flex; align-items: baseline; gap: 7px; font-size: 42px; line-height: 1; white-space: nowrap; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric em { font: 800 12px/1.3 var(--font-main); color: #617895; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric > small { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--stat-border); min-height: 27px; font-size: 10px; line-height: 1.6; color: #526b88; }
+@media (min-width: 1201px) and (max-width: 1400px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric { padding: 14px 15px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading { gap: 8px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading h3 { font-size: 9px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-emblem { width: 40px; height: 40px; border-radius: 12px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-emblem .ov-stat-art { width: 29px; height: 29px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric > strong { font-size: 36px; gap: 5px; }
+}
+@media (max-width: 640px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric { min-height: 164px; padding: 12px 14px; gap: 8px; border-radius: 17px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading { min-height: 40px; gap: 9px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading h3 { font-size: 9px; letter-spacing: .2px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-emblem { width: 40px; height: 40px; border-radius: 12px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-emblem .ov-stat-art { width: 29px; height: 29px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric > strong { font-size: 36px; gap: 5px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric em { font-size: 11px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric > small { font-size: 10px; }
+}
+@media (max-width: 360px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric { padding: 11px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading { gap: 4px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-emblem { width: 34px; height: 36px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-emblem .ov-stat-art { width: 26px; height: 26px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading h3 { font-size: 8px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric > strong { font-size: 32px; }
+}
+
+/* Detailed overview: shared frames, chart spacing and readable data rows. */
+:is(#overview-dashboard, #club-dashboard) .ov-group { margin-top: 28px; padding: 22px; border-radius: 24px; }
+:is(#overview-dashboard, #club-dashboard) .ov-grid { gap: 16px; }
+:is(#overview-dashboard, #club-dashboard) .ov-section-heading { gap: 14px; margin-bottom: 18px; padding-bottom: 16px; }
+:is(#overview-dashboard, #club-dashboard) .ov-section-emblem { width: 56px; height: 56px; border-radius: 16px; }
+:is(#overview-dashboard, #club-dashboard) .ov-section-emblem > :is(img,svg) { width: 38px; height: 38px; }
+:is(#overview-dashboard, #club-dashboard) .ov-section-heading h2 { font-size: 26px; }
+:is(#overview-dashboard, #club-dashboard) .ov-section-heading p { font-size: 11px; line-height: 1.5; }
+:is(#overview-dashboard, #club-dashboard) .ov-source { background: #ffffffb8; border-color: var(--ov-group-line); color: var(--ov-group-accent); }
+:is(#overview-dashboard, #club-dashboard) .ov-account-card {
+  --card-tint: #eaf3ff;
+  --card-line: #bfd6f2;
+  --card-accent: #2868b5;
+  padding: 16px;
+  border-radius: 20px;
+  border-color: var(--card-line);
+  background: linear-gradient(155deg,#fff 45%,color-mix(in srgb,var(--card-tint),white 45%));
+  box-shadow: 0 4px 0 var(--card-line),inset 0 0 0 1px #fff;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-card-gold { --card-tint: #fff4d2; --card-line: #e9d6a0; --card-accent: #966b12; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-purple { --card-tint: #f0eaff; --card-line: #d4c5ed; --card-accent: #7e58bd; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-pink { --card-tint: #ffedf2; --card-line: #efc5d0; --card-accent: #bb416b; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-green { --card-tint: #e6f7f0; --card-line: #b5dfd0; --card-accent: #218d70; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-heading { gap: 12px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--card-line); }
+:is(#overview-dashboard, #club-dashboard) .ov-card-heading > div { flex: 1; min-width: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-heading h3 { font-size: 20px; line-height: 1.25; }
+:is(#overview-dashboard, #club-dashboard) .ov-kicker { margin-bottom: 4px; color: var(--card-accent); font-size: 8px; line-height: 1.4; letter-spacing: .6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-body { margin-bottom: 8px; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-body:has(> .ov-donut-layout), :is(#overview-dashboard, #club-dashboard) .ov-card-body:has(> .ov-fame) { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+:is(#overview-dashboard, #club-dashboard) .ov-note { font-size: 10px; line-height: 1.6; padding-top: 8px; border-color: var(--card-line,var(--ov-line)); }
+:is(#overview-dashboard, #club-dashboard) .ov-mini-stats { gap: 10px; margin: 16px 0 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-mini-stats > div { padding: 11px 12px; gap: 6px; border-color: var(--card-line); background: linear-gradient(145deg,#fff,var(--card-tint)); border-radius: 13px; box-shadow: 0 3px 0 var(--card-line); }
+:is(#overview-dashboard, #club-dashboard) .ov-mini-stats span { min-height: 16px; color: #526b88; font-size: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-mini-stats strong { font-size: 23px; line-height: 1.2; }
+:is(#overview-dashboard, #club-dashboard) .ov-donut-layout { display: grid; grid-template-columns: 146px minmax(0,1fr); gap: 18px; align-items: center; }
+:is(#overview-dashboard, #club-dashboard) .ov-donut { width: 146px; height: 146px; justify-self: center; }
+:is(#overview-dashboard, #club-dashboard) .ov-donut > div { width: 110px; height: 110px; background: #fff; container-type: inline-size; }
+/* Fit long totals to the ring's inner width, retaining padding around the text. */
+:is(#overview-dashboard, #club-dashboard) .ov-donut strong { font-size: min(28px,calc(160cqi / var(--ov-center-length,5))); line-height: 1.1; white-space: nowrap; }
+:is(#overview-dashboard, #club-dashboard) .ov-donut > div > span { max-width: calc(100% - 16px); text-align: center; line-height: 1.3; }
+:is(#overview-dashboard, #club-dashboard) .ov-legend { width: 100%; max-width: none; min-width: 0; gap: 6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-legend > div { padding: 4px 0; border-bottom: 1px solid #e5edf5; gap: 7px; font-size: 11px; }
+:is(#overview-dashboard, #club-dashboard) .ov-legend > div:last-child { border-bottom: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-legend small { width: auto; min-width: 34px; }
+:is(#overview-dashboard, #club-dashboard) .ov-span-4 .ov-donut-layout { grid-template-columns: minmax(0,1fr); gap: 14px; }
+:is(#overview-dashboard, #club-dashboard) .ov-span-4 .ov-donut { width: 130px; height: 130px; }
+:is(#overview-dashboard, #club-dashboard) .ov-span-4 .ov-donut > div { width: 98px; height: 98px; }
+:is(#overview-dashboard, #club-dashboard) .ov-bars { gap: 13px; }
+:is(#overview-dashboard, #club-dashboard) .ov-bars-compact { gap: 11px; }
+:is(#overview-dashboard, #club-dashboard) .ov-bar-label { font-size: 11px; gap: 10px; margin-bottom: 6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-bar-label a { font-size: 11px; line-height: 1.4; }
+:is(#overview-dashboard, #club-dashboard) .ov-bar-label a img { width: 32px; height: 32px; border-radius: 8px; }
+:is(#overview-dashboard, #club-dashboard) .ov-bar-row > small { font-size: 10px; line-height: 1.5; margin-top: 5px; }
+:is(#overview-dashboard, #club-dashboard) .ov-track { height: 9px; border: 1px solid #dce6f0; border-radius: 8px; background: #eaf0f7; }
+:is(#overview-dashboard, #club-dashboard) .ov-bars-compact .ov-track { height: 7px; }
+:is(#overview-dashboard, #club-dashboard) .ov-track i { box-shadow: inset 0 1px 0 #ffffff6b; }
+:is(#overview-dashboard, #club-dashboard) .ov-columns { height: 200px; gap: 8px; padding: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-column { gap: 8px; }
+:is(#overview-dashboard, #club-dashboard) .ov-column > strong { font-size: 12px; font-weight: 800; }
+:is(#overview-dashboard, #club-dashboard) .ov-column-track { height: 148px; max-width: 46px; border-radius: 8px 8px 0 0; background: repeating-linear-gradient(to top,transparent 0 36px,#e7eef6 36px 37px); }
+:is(#overview-dashboard, #club-dashboard) .ov-column-track i { box-shadow: inset 0 0 0 1px #ffffff5c; }
+:is(#overview-dashboard, #club-dashboard) .ov-column > span { font-size: 10px; line-height: 1.4; }
+:is(#overview-dashboard, #club-dashboard) .ov-column:focus-visible { outline: 2px solid var(--card-accent); outline-offset: 3px; border-radius: 6px; }
+:is(#overview-dashboard, #club-dashboard) #ov-top-trophies .ov-bars { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px 20px; }
+:is(#overview-dashboard, #club-dashboard) .ov-select-label { margin: 0 0 15px; font-size: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-select-label select { min-height: 40px; border-color: var(--card-line); background: #fff; }
+:is(#overview-dashboard, #club-dashboard) .ov-prestige-layout { gap: 18px; }
+:is(#overview-dashboard, #club-dashboard) .ov-target { gap: 15px; padding: 14px 16px; border: 1.5px solid var(--card-line); border-radius: 16px; background: linear-gradient(135deg,#fff,var(--card-tint)); }
+:is(#overview-dashboard, #club-dashboard) .ov-target > img { width: 52px; height: 52px; }
+:is(#overview-dashboard, #club-dashboard) .ov-target strong { font-size: 34px; }
+:is(#overview-dashboard, #club-dashboard) .ov-target > b { font-size: 26px; }
+:is(#overview-dashboard, #club-dashboard) .ov-track-large { height: 12px; margin-top: 12px; }
+:is(#overview-dashboard, #club-dashboard) .ov-chart-key { flex-wrap: wrap; gap: 8px 16px; font-size: 10px; margin-top: 6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-scatter { max-height: 250px; }
+:is(#overview-dashboard, #club-dashboard) .ov-line-chart { max-height: 240px; }
+@media (max-width: 1000px) {
+  :is(#overview-dashboard, #club-dashboard) :is(.ov-span-4,.ov-span-6,.ov-span-8) { grid-column: span 12; }
+  :is(#overview-dashboard, #club-dashboard) .ov-span-4 .ov-donut-layout { grid-template-columns: 146px minmax(0,1fr); }
+}
+@media (max-width: 640px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-group { padding: 13px; border-radius: 22px; margin-top: 24px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-grid { gap: 14px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-section-heading { gap: 11px; margin-bottom: 15px; padding-bottom: 14px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-section-emblem { width: 46px; height: 46px; border-radius: 13px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-section-emblem > :is(img,svg) { width: 31px; height: 31px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-section-heading h2 { font-size: 22px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-section-heading p { font-size: 10px; line-height: 1.6; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-card { padding: 15px; border-radius: 17px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-card-heading { gap: 10px; padding-bottom: 12px; margin-bottom: 14px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-card-heading h3 { font-size: 19px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-donut-layout, :is(#overview-dashboard, #club-dashboard) .ov-span-4 .ov-donut-layout { grid-template-columns: minmax(0,1fr); gap: 15px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-legend > div { font-size: 11px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-mini-stats { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-mini-stats strong { font-size: 21px; }
+  :is(#overview-dashboard, #club-dashboard) #ov-top-trophies .ov-bars { grid-template-columns: minmax(0,1fr); }
+  :is(#overview-dashboard, #club-dashboard) .ov-prestige-layout { grid-template-columns: minmax(0,1fr); gap: 16px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-columns { gap: 5px; height: 206px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-column-track { height: 150px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-column > span { font-size: 8px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-target { gap: 11px; padding: 12px; flex-wrap: wrap; }
+  :is(#overview-dashboard, #club-dashboard) .ov-target > img { width: 42px; height: 42px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-target strong { font-size: 30px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-target > b { font-size: 22px; }
+}
+
+/* Equipment, records, activity, team context and upgrade plans. */
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-grid { gap: 12px; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile { padding: 15px; border-radius: 17px; box-shadow: 0 4px 0 var(--equipment-line),inset 0 0 0 1px #fff; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-heading { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-emblem { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; border: 1.5px solid var(--equipment-line); border-radius: 12px; background: linear-gradient(145deg,#fff,var(--equipment-tint)); box-shadow: 0 3px 0 var(--equipment-line); }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-emblem > :is(img,svg) { width: 32px; height: 32px; object-fit: contain; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile h4 { margin: 0; font-size: 16px; line-height: 1.25; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile > strong { font-size: 32px; line-height: 1.1; margin-bottom: 15px; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile strong small { font-size: 10px; margin-top: 5px; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile .ov-bar-label { font-size: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile p { margin: 8px 0 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile p, :is(#overview-dashboard, #club-dashboard) .ov-equipment-tile > small { font-size: 10px; line-height: 1.5; color: #526b88; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-completion { border-color: var(--equipment-line); padding-top: 10px; margin: 12px 0 7px; font-size: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-current { margin-bottom: 18px; padding: 14px; gap: 12px; border: 1.5px solid var(--card-line); background: linear-gradient(135deg,#fff,var(--card-tint)); box-shadow: 0 3px 0 var(--card-line); border-radius: 15px; }
+:is(#overview-dashboard, #club-dashboard) .ov-rank-badge { width: 62px; height: 62px; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-current > strong { font-size: 28px; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-current > span { font-size: 22px; }
+:is(#overview-dashboard, #club-dashboard) .ov-fame { min-height: 170px; gap: 12px; }
+:is(#overview-dashboard, #club-dashboard) .ov-fame > strong { font-size: 42px; }
+:is(#overview-dashboard, #club-dashboard) .ov-fame > span:last-child { font-size: 12px; }
+:is(#overview-dashboard, #club-dashboard) .ov-empty { border-color: var(--card-line,var(--ov-line)); background: linear-gradient(145deg,#fff,var(--card-tint,#f3f8ff)); padding: 20px 15px; color: #526b88; }
+:is(#overview-dashboard, #club-dashboard) .ov-run-label { margin-bottom: 12px; font-size: 10px; line-height: 1.5; }
+:is(#overview-dashboard, #club-dashboard) .ov-result-timeline { gap: 7px; }
+:is(#overview-dashboard, #club-dashboard) .ov-result { min-width: 32px; max-width: 48px; height: 36px; border-radius: 10px; font-size: 12px; box-shadow: 0 2px 0 color-mix(in srgb,currentColor,transparent 78%); }
+:is(#overview-dashboard, #club-dashboard) .ov-club-header { gap: 12px; flex-wrap: wrap; }
+:is(#overview-dashboard, #club-dashboard) .ov-club-emblem { width: 52px; height: 58px; border: 1.5px solid var(--card-line); border-radius: 14px; background: linear-gradient(145deg,#fff,var(--card-tint)); box-shadow: 0 3px 0 var(--card-line); }
+:is(#overview-dashboard, #club-dashboard) .ov-club-header > div { flex: 1; }
+:is(#overview-dashboard, #club-dashboard) .ov-club-header h4 { font-size: 24px; line-height: 1.2; }
+:is(#overview-dashboard, #club-dashboard) .ov-club-header a { min-height: 36px; display: inline-flex; align-items: center; padding: 8px 11px; border: 1px solid var(--card-line); border-radius: 10px; background: var(--card-tint); color: var(--card-accent); font-size: 10px; font-weight: 800; text-decoration: none; }
+:is(#overview-dashboard, #club-dashboard) [data-ov-card="yourclub"] .ov-mini-stats { grid-template-columns: repeat(3,minmax(0,1fr)); margin-bottom: 16px; }
+:is(#overview-dashboard, #club-dashboard) .ov-events { gap: 6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-event { gap: 11px; min-height: 62px; padding: 7px 0; border-bottom: 1px solid var(--card-line); }
+:is(#overview-dashboard, #club-dashboard) .ov-event:last-child { border-bottom: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-event > img { width: 44px; height: 44px; flex-shrink: 0; padding: 5px; border: 1px solid var(--card-line); border-radius: 12px; background: var(--card-tint); }
+:is(#overview-dashboard, #club-dashboard) .ov-event strong { font-size: 12px; line-height: 1.4; }
+:is(#overview-dashboard, #club-dashboard) .ov-event span { margin: 4px 0 6px; font-size: 10px; line-height: 1.4; }
+:is(#overview-dashboard, #club-dashboard) .ov-event .ov-track { height: 5px; }
+:is(#overview-dashboard, #club-dashboard) .ov-event > b { padding: 5px 7px; border: 1px solid var(--card-line); border-radius: 8px; background: var(--card-tint); color: var(--card-accent); font-size: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-readiness-mean { padding-top: 12px; margin-top: 15px; border-color: var(--card-line); }
+:is(#overview-dashboard, #club-dashboard) .ov-readiness-mean strong { font-size: 25px; }
+:is(#overview-dashboard, #club-dashboard) .ov-milestones { gap: 8px; }
+:is(#overview-dashboard, #club-dashboard) [data-ov-card="closesttrophymilestones"] .ov-milestones { grid-template-columns: repeat(2,minmax(0,1fr)); }
+:is(#overview-dashboard, #club-dashboard) [data-ov-card="closesttrophymilestones"] .ov-milestones > a:last-child:nth-child(odd) { grid-column: 1 / -1; }
+:is(#overview-dashboard, #club-dashboard) [data-ov-card="winstreakrecords"] .ov-bars { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px 18px; }
+:is(#overview-dashboard, #club-dashboard) [data-ov-card="whatremainstocompleteyourchosenbuilds"] .ov-card-body { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 18px; }
+:is(#overview-dashboard, #club-dashboard) [data-ov-card="whatremainstocompleteyourchosenbuilds"] .ov-mini-stats { margin-top: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-milestones > a { padding: 8px 10px; border: 1px solid var(--card-line); border-radius: 12px; background: linear-gradient(135deg,#fff,var(--card-tint)); }
+:is(#overview-dashboard, #club-dashboard) .ov-milestones img { width: 40px; height: 40px; border-radius: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-milestones strong { font: 16px/1.2 var(--font-heading); }
+:is(#overview-dashboard, #club-dashboard) .ov-milestones b { font-size: 23px; line-height: 1; color: var(--card-accent); }
+:is(#overview-dashboard, #club-dashboard) .ov-milestones small { font-size: 10px; line-height: 1.5; margin-top: 3px; }
+:is(#overview-dashboard, #club-dashboard) .ov-goals { gap: 12px; grid-auto-rows: 1fr; }
+:is(#overview-dashboard, #club-dashboard) .ov-goal { display: flex; flex-direction: column; padding: 15px; border: 1.5px solid var(--card-line); border-radius: 16px; background: linear-gradient(145deg,#fff,var(--card-tint)); box-shadow: 0 3px 0 var(--card-line); }
+:is(#overview-dashboard, #club-dashboard) .ov-goal-title { gap: 10px; margin-bottom: 13px; }
+:is(#overview-dashboard, #club-dashboard) .ov-goal-title img { width: 44px; height: 44px; border-radius: 11px; }
+:is(#overview-dashboard, #club-dashboard) .ov-goal-title > div { min-width: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-goal-title strong { font-size: 18px; line-height: 1.25; overflow-wrap: anywhere; }
+:is(#overview-dashboard, #club-dashboard) .ov-goal-title b { font-size: 22px; }
+:is(#overview-dashboard, #club-dashboard) .ov-goal > p { min-height: 30px; margin: 10px 0 0; font-size: 10px; line-height: 1.6; }
+:is(#overview-dashboard, #club-dashboard) .ov-cost-chips { gap: 6px; margin: 12px 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-cost-chips span { padding: 6px 8px; border-color: var(--card-line); border-radius: 8px; font-size: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-goal > small { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--card-line); font-size: 10px; line-height: 1.5; }
+:is(#overview-dashboard, #club-dashboard) .ov-wallet-empty { gap: 14px; padding: 12px; border: 1px solid var(--card-line); border-radius: 14px; background: linear-gradient(135deg,#fff,var(--card-tint)); }
+:is(#overview-dashboard, #club-dashboard) .ov-wallet-empty > img { width: 48px; height: 48px; }
+:is(#overview-dashboard, #club-dashboard) .ov-wallet-empty strong { font: 20px/1.3 var(--font-heading); }
+:is(#overview-dashboard, #club-dashboard) .ov-wallet-empty p { font-size: 10px; line-height: 1.6; }
+:is(#overview-dashboard, #club-dashboard) .ov-wallet-editor { padding: 12px; margin-top: 14px; border: 1px solid var(--card-line); border-radius: 12px; background: #ffffffa6; }
+:is(#overview-dashboard, #club-dashboard) .ov-wallet-editor summary { min-height: 24px; line-height: 1.6; color: var(--card-accent); }
+:is(#overview-dashboard, #club-dashboard) .ov-wallet-fields { gap: 10px; margin-top: 15px; }
+:is(#overview-dashboard, #club-dashboard) .ov-wallet-fields input { min-height: 44px; border-color: var(--card-line); background: #fff; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger { margin-top: 28px; border: 2px solid #bfd6f2; border-radius: 20px; background: linear-gradient(150deg,#fff,#eef5ff); box-shadow: 0 4px 0 #bfd6f2; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger > summary { padding: 18px 20px; min-height: 88px; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger summary small { margin-bottom: 5px; font-size: 9px; letter-spacing: .5px; color: #2868b5; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger summary strong { font-size: 23px; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger-art { width: 46px; height: 46px; padding: 6px; border: 1px solid #bfd6f2; border-radius: 13px; background: linear-gradient(145deg,#fff,#eaf3ff); box-shadow: 0 3px 0 #bfd6f2; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger summary i { display: inline-grid; place-items: center; width: 28px; height: 28px; margin-left: 9px; border: 1px solid #bfd6f2; border-radius: 8px; background: #fff; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger-controls { padding: 0 20px 16px; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger-controls :is(select,input) { min-height: 44px; background: #fff; }
+:is(#overview-dashboard, #club-dashboard) .ov-table-scroll { background: #fff; border-color: #bfd6f2; }
+:is(#overview-dashboard, #club-dashboard) .ov-table th { padding: 13px 12px; font-size: 10px; background: #eaf3ff; }
+:is(#overview-dashboard, #club-dashboard) .ov-table td { padding: 10px 12px; }
+:is(#overview-dashboard, #club-dashboard) .ov-table td img { width: 36px; height: 36px; border-radius: 9px; }
+:is(#overview-dashboard, #club-dashboard) .ov-footer-note { padding-top: 18px; font-size: 10px; }
+@media (max-width: 1200px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 1000px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-goals { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 640px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-tile { padding: 13px; }
+  :is(#overview-dashboard, #club-dashboard) [data-ov-card="winstreakrecords"] .ov-bars, :is(#overview-dashboard, #club-dashboard) [data-ov-card="closesttrophymilestones"] .ov-milestones { grid-template-columns: minmax(0,1fr); }
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-heading { gap: 9px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-tile h4 { font-size: 19px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-current { gap: 10px; padding: 12px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-current > span { font-size: 21px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-current > strong { font-size: 25px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-run-label { flex-wrap: wrap; }
+  :is(#overview-dashboard, #club-dashboard) .ov-club-header a { margin-left: 0; }
+  :is(#overview-dashboard, #club-dashboard) [data-ov-card="yourclub"] .ov-mini-stats { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  :is(#overview-dashboard, #club-dashboard) .ov-event { gap: 9px; flex-wrap: wrap; }
+  :is(#overview-dashboard, #club-dashboard) .ov-event > img { width: 40px; height: 40px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-goals { grid-template-columns: minmax(0,1fr); }
+  :is(#overview-dashboard, #club-dashboard) .ov-goal-title strong { font-size: 19px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-wallet-empty { flex-wrap: nowrap; align-items: flex-start; }
+  :is(#overview-dashboard, #club-dashboard) .ov-wallet-empty > div { flex: 1; min-width: 0; }
+  :is(#overview-dashboard, #club-dashboard) .ov-wallet-empty > img { width: 40px; height: 40px; flex-shrink: 0; }
+  :is(#overview-dashboard, #club-dashboard) .ov-wallet-empty strong { font-size: 18px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ledger > summary { padding: 16px; gap: 12px; flex-wrap: wrap; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ledger > summary > span { flex: 1; min-width: 0; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ledger summary strong { font-size: 20px; line-height: 1.3; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ledger summary b { margin-left: auto; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ledger-controls { padding: 0 16px 16px; gap: 12px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-table-scroll { margin: 0 12px; }
+}
+@media (max-width: 480px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-grid { grid-template-columns: minmax(0,1fr); }
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-tile { padding: 15px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-heading { margin-bottom: 12px; }
+}
+@media (max-width: 360px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-heading { gap: 8px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-tile h4 { font-size: 15px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-emblem { width: 40px; height: 40px; flex-basis: 40px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-equipment-emblem > :is(img,svg) { width: 30px; height: 30px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-column > strong { font-size: 11px; }
+}
+@media (min-width: 1001px) {
+  :is(#overview-dashboard, #club-dashboard) [data-ov-card="trophydistribution"] .ov-card-body { flex: 1; display: flex; }
+  :is(#overview-dashboard, #club-dashboard) [data-ov-card="trophydistribution"] .ov-columns { flex: 1; height: auto; }
+  :is(#overview-dashboard, #club-dashboard) [data-ov-card="trophydistribution"] .ov-column-track { flex: 1; height: auto; min-height: 148px; }
+  :is(#overview-dashboard, #club-dashboard) [data-ov-card="trophydistribution"] .ov-column > span { height: 36px; }
+}
+
+/* Use the brawler detail page's shared information buttons and tooltips. */
+:is(#overview-dashboard, #club-dashboard) .ov-info-wrap { margin-left: auto; flex-shrink: 0; z-index: 5; }
+:is(#overview-dashboard, #club-dashboard) .ov-info-wrap:is(:hover,:focus-within,.is-open) { z-index: 60; }
+:is(#overview-dashboard, #club-dashboard) .ov-info-wrap p { white-space: pre-line; }
+:is(#overview-dashboard, #club-dashboard) .ov-section-copy { flex: 1; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-heading > .ov-info-wrap { align-self: center; flex: 0 0 auto; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-heading > div:not(.ov-info-wrap) > h3 { overflow-wrap: anywhere; }
+:is(#overview-dashboard, #club-dashboard) .ov-group:has(.ov-info-wrap:is(.is-open,:hover,:focus-within)) { z-index: 70; }
+:is(#overview-dashboard, #club-dashboard) .ov-info-wrap .readiness-info-tooltip h3 { margin: 0 0 10px; color: #f8fafc; font: 800 13px/1.4 var(--font-main); }
+:is(#overview-dashboard, #club-dashboard) .ov-info-wrap .readiness-info-tooltip p { margin: 8px 0; color: inherit; font: inherit; line-height: inherit; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric { justify-content: space-between; overflow: visible; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric:is(:hover,:focus-within) { z-index: 60; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric::after { clip-path: inset(0 55px 0 0); }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px 6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading h3 { grid-column: 1 / -1; }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading .ov-info-wrap { justify-self: end; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-card:is(:hover,:focus-within), :is(#overview-dashboard, #club-dashboard) .ov-equipment-tile:is(:hover,:focus-within) { z-index: 60; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile { position: relative; }
+:is(#overview-dashboard, #club-dashboard) .ov-equipment-tile h4 { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+:is(#overview-dashboard, #club-dashboard) .ov-card-body { margin-bottom: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-ledger { overflow: visible; }
+:is(#overview-dashboard, #club-dashboard) .ov-data-info { display: flex; align-items: center; justify-content: flex-end; gap: 9px; margin-top: 20px; color: #58718e; font-size: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-data-info .ov-info-wrap { margin-left: 0; }
+:is(#overview-dashboard, #club-dashboard) #ov-wallet-status:empty { display: none; }
+@media (max-width: 640px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading { gap: 8px 6px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-card-heading h3 { font-size: 18px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ledger-controls > .ov-info-wrap { align-self: flex-end; }
+}
+
+/* Five distinct account or club summaries; capacity already appears in the cover. */
+:is(#overview-dashboard, #club-dashboard) .ov-stats-grid { grid-template-columns: repeat(5,minmax(0,1fr)); }
+/* Ranked records and Fame use the same compact pastel tiles as the cover. */
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-tiles { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-tile { --record-tint: #eaf3ff; --record-line: #bfd6f2; --record-accent: #2868b5; display: grid; gap: 12px; min-width: 0; padding: 12px; border: 1.5px solid var(--record-line); border-radius: 15px; background: linear-gradient(140deg,#fff,var(--record-tint)); box-shadow: 0 3px 0 var(--record-line),inset 0 0 0 1px #fff; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-record-season { --record-tint: #f0eaff; --record-line: #d4c5ed; --record-accent: #7e58bd; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-record-best { --record-tint: #fff4d2; --record-line: #e9d6a0; --record-accent: #966b12; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-label { display: flex; align-items: center; gap: 9px; min-width: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-label .ov-rank-badge { width: 44px; height: 44px; flex: 0 0 44px; object-fit: contain; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-label > span { color: var(--record-accent); font-size: 10px; font-weight: 900; line-height: 1.4; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-tier { color: var(--ov-ink); font-size: 12px; font-weight: 900; line-height: 1.4; overflow-wrap: anywhere; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-tile > strong { color: var(--ov-ink); font: 400 32px/1.1 'Lilita One',var(--font-heading); font-variant-numeric: tabular-nums; }
+:is(#overview-dashboard, #club-dashboard) .ov-ranked-tile > strong > small { color: var(--ov-muted); font: 700 10px var(--font-main); }
+:is(#overview-dashboard, #club-dashboard) .ov-fame { display: grid; grid-template-columns: 76px minmax(0,1fr); gap: 12px; min-height: 0; padding: 12px; border: 1.5px solid #e9d6a0; border-radius: 15px; background: linear-gradient(140deg,#fff,#fff4d2); box-shadow: 0 3px 0 #e9d6a0; }
+:is(#overview-dashboard, #club-dashboard) .ov-fame:not(:has(> .ov-fame-badge)) { grid-template-columns: 1fr; }
+:is(#overview-dashboard, #club-dashboard) .ov-fame-badge { width: 76px; height: 76px; object-fit: contain; filter: drop-shadow(0 3px 1px #966b1220); }
+:is(#overview-dashboard, #club-dashboard) .ov-fame-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; min-width: 0; }
+:is(#overview-dashboard, #club-dashboard) .ov-fame-copy > small { color: #966b12; font-size: 8px; font-weight: 900; letter-spacing: .7px; }
+:is(#overview-dashboard, #club-dashboard) .ov-fame-copy > strong { color: var(--ov-ink); font: 400 34px/1.1 'Lilita One',var(--font-heading); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+:is(#overview-dashboard, #club-dashboard) .ov-fame-copy > span { color: #806020; font-size: 10px; font-weight: 800; line-height: 1.4; }
+@media (max-width: 1100px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-tiles { grid-template-columns: 1fr; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-tile { grid-template-columns: 40px minmax(0,1fr) auto; gap: 4px 10px; align-items: center; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-label { display: contents; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-label .ov-rank-badge { grid-column: 1; grid-row: 1 / 3; width: 40px; height: 40px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-label > span { grid-column: 2; grid-row: 1; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-tier { grid-column: 2; grid-row: 2; font-size: 10px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-tile > strong { grid-column: 3; grid-row: 1 / 3; font-size: 27px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-fame { grid-template-columns: 60px minmax(0,1fr); gap: 10px; padding: 10px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-fame-badge { width: 60px; height: 60px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-fame-copy > strong { font-size: 30px; }
+}
+@media (max-width: 360px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-tile { grid-template-columns: 32px minmax(0,1fr) auto; gap: 4px 7px; padding: 10px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-label .ov-rank-badge { width: 32px; height: 32px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-ranked-tile > strong { font-size: 24px; }
+}
+@media (max-width: 1200px) and (min-width: 641px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid { grid-template-columns: repeat(6,minmax(0,1fr)); }
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid > .ov-account-metric { grid-column: span 2; }
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid > .ov-account-metric:nth-last-child(-n+2) { grid-column: span 3; }
+}
+@media (max-width: 640px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid > .ov-account-metric:last-child { grid-column: 1 / -1; }
+}
+
+/* A proportionately smaller account summary row. */
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric {
+  min-height: 140px;
+  padding: 12px 14px;
+  gap: 6px;
+  border-radius: 17px;
+  box-shadow: 0 4px 0 var(--stat-border),0 7px 14px #19365b06,inset 0 0 0 2px #ffffff9c;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading { min-height: 38px; gap: 6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-emblem { width: 38px; height: 38px; border-radius: 11px; }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-emblem .ov-stat-art { width: 27px; height: 27px; }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading h3 { font-size: 9px; letter-spacing: .25px; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric > strong { font-size: 36px; gap: 6px; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric em { font-size: 11px; }
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric::after { top: 22px; width: 100px; height: 100px; border-width: 15px; }
+@media (max-width: 640px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric { min-height: 136px; padding: 11px 12px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-emblem { width: 34px; height: 34px; border-radius: 10px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-emblem .ov-stat-art { width: 25px; height: 25px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading h3 { font-size: 8px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric > strong { font-size: 32px; gap: 5px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric em { font-size: 10px; }
 }

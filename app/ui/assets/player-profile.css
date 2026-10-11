@@ -1,0 +1,254 @@
+/* Shared player and club covers in the roster's light palette. */
+:is(#overview-view, #club-view) .player-hero {
+  height: auto; min-height: 0; isolation: isolate;
+  grid-template-columns: 196px minmax(0, 1fr) 240px;
+  gap: 24px 32px; padding: 28px; border: 2px solid #bfd6f2; border-radius: 26px;
+  background: radial-gradient(ellipse at 62% 24%, #d7eaff 0, transparent 46%), linear-gradient(120deg, #f2f7ff, #e7f0ff 70%, #eef5ff);
+  box-shadow: 0 7px 0 #c3d5ec, 0 15px 30px #19365b0a, inset 0 2px 0 #fff;
+}
+:is(#overview-view, #club-view) .player-hero::before { background: url('/assets/brawl-chrome-pattern.svg') 20px 0 / 215px 168px; opacity: .25; }
+:is(#overview-view, #club-view) .player-hero::after { content: ''; position: absolute; width: 320px; height: 320px; right: 220px; top: -30px; background: url('/assets/brawl-chrome-emblem.svg') center / contain no-repeat; opacity: .12; transform: rotate(-13deg); z-index: -1; pointer-events: none; }
+:is(#overview-view, #club-view) .hero-burst { display: block; opacity: .035; left: 135px; }
+:is(#overview-view, #club-view) .player-avatar-card { padding: 28px 10px 20px; align-self: center; }
+:is(#overview-view, #club-view) .avatar-frame {
+  width: 176px; height: 176px; margin: 0; padding: 9px; border: 3px solid #fffbea; border-radius: 27px;
+  background: linear-gradient(135deg, #fff9cd 0 12%, #f8ce54 13% 28%, #fff1a0 30% 47%, #e9b741 49% 62%, #ffe790 65% 86%, #fff9d5 90%);
+  box-shadow: 0 0 0 3px #dec385, 0 0 0 9px #d8d5f6, 0 7px 0 9px #b8c8e6, 0 13px 20px #40598020, inset 0 0 0 2px #fff6b1;
+}
+:is(#overview-view, #club-view) .avatar-frame :is(#player-art, #club-hero-badge-img) { max-width: none; max-height: none; width: 100%; height: 100%; border-radius: 16px; filter: none; object-fit: contain; }
+:is(#overview-view, #club-view) .profile-crown { position: absolute; top: -31px; left: 50%; transform: translateX(-50%); width: 48px; height: 35px; filter: drop-shadow(0 2px 0 #fff9da); }
+:is(#overview-view, #club-view) .avatar-frame::before, :is(#overview-view, #club-view) .avatar-frame::after { content: '✦'; position: absolute; color: #fff; font-size: 23px; text-shadow: 0 0 8px #8d73dc; pointer-events: none; }
+:is(#overview-view, #club-view) .avatar-frame::before { left: -16px; top: 24px; }
+:is(#overview-view, #club-view) .avatar-frame::after { right: -12px; bottom: 18px; }
+:is(#overview-view, #club-view) .exp-badge { bottom: -16px; padding: 5px 15px; border: 2px solid #fffbe4; font-size: 12px; background: linear-gradient(#fff088, #ffd147); box-shadow: 0 3px 0 #c6a03c, 0 0 0 2px #dfbd6f; }
+/* Keep metadata tooltips above the separately stacked cover statistics. */
+:is(#overview-view, #club-view) .player-hero-copy { padding: 0; z-index: 3; }
+:is(#overview-view, #club-view) .player-hero-copy h2 { margin: 0; font: 400 clamp(32px, 4vw, 56px)/1.05 'Lilita One', var(--font-heading); letter-spacing: .2px; color: #19365b; text-shadow: 0 2px 0 #fff, 0 4px 0 #b9d4f1; overflow-wrap: anywhere; }
+:is(#overview-view, #club-view) .label-row { gap: 9px; }
+:is(#overview-view, #club-view) :is(.hero-xp-badge, .champ-badge) { min-height: 31px; box-sizing: border-box; padding: 5px 9px; border-width: 2px; border-radius: 10px; font-size: 9px; letter-spacing: .35px; text-shadow: none; }
+:is(#overview-view, #club-view) .hero-xp-badge { background: linear-gradient(#edfaff, #cdeeff); border-color: #b3d7ef; box-shadow: 0 3px 0 #b4d0e8, inset 0 1px 0 #fff; color: #256284; }
+:is(#overview-view, #club-view) .profile-meta { margin-top: 12px; gap: 10px; }
+:is(#overview-view, #club-view) :is(.meta-tag, .club-pill) { display: inline-flex; align-items: center; gap: 8px; padding: 6px 9px; border: 2px solid #bed5ef; border-radius: 10px; background: linear-gradient(#fff, #edf5ff); box-shadow: 0 3px 0 #ccdcf0; color: #356597; font-family: var(--font-main); font-size: 11px; text-decoration: none; }
+:is(#overview-view, #club-view) .meta-tag { cursor: pointer; }
+:is(#overview-view, #club-view) .meta-tag > svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .65; }
+:is(#overview-view, #club-view) :is(.meta-tag, .club-pill):hover { background: #fff; border-color: #8bb8e7; }
+:is(#overview-view, #club-view) .club-tag-small { color: #6c84a1; font-size: 9px; }
+:is(#overview-view, #club-view) .profile-copy-status { font-size: 10px; color: #258668; }
+:is(#overview-view, #club-view) .profile-copy-status:empty { display: none; }
+:is(#overview-view, #club-view) .hero-stats { position: relative; z-index: 2; grid-column: 1 / -1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 15px; margin: 0; width: 100%; }
+:is(#overview-view, #club-view) .hero-stats > div {
+  --tile-ink: #896317; --tile-tint: #ffe9a8; --tile-line: #e8cb7d;
+  display: grid; grid-template-columns: 38px minmax(0, 1fr); grid-template-rows: auto auto; gap: 8px 8px;
+  position: relative; isolation: isolate; overflow: hidden; min-width: 0; padding: 12px 14px;
+  border: 2px solid var(--tile-line); border-radius: 19px; text-align: left;
+  background: radial-gradient(ellipse at 5% 0, #ffffffd9, transparent 70%), linear-gradient(140deg, color-mix(in srgb, var(--tile-tint), white 40%), var(--tile-tint));
+  box-shadow: 0 5px 0 var(--tile-line), inset 0 0 0 2px #ffffffa8, 0 7px 14px #19365b08;
+}
+:is(#overview-view, #club-view) .hero-stats > .hero-stat-pink { --tile-ink: #a3486a; --tile-tint: #ffd6e5; --tile-line: #eab5cb; }
+:is(#overview-view, #club-view) .hero-stats > .hero-stat-green { --tile-ink: #258668; --tile-tint: #c6f0e3; --tile-line: #a5d9c8; }
+:is(#overview-view, #club-view) .hero-stats > .hero-stat-purple { --tile-ink: #7950b5; --tile-tint: #e2d2ff; --tile-line: #c6b0eb; }
+:is(#overview-view, #club-view) .hero-stats > .hero-stat-blue { --tile-ink: #326dae; --tile-tint: #cfe5ff; --tile-line: #accbef; }
+:is(#overview-view, #club-view) .hero-stats > div::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--roster-dot-pattern) 0 0 / 20px 20px; opacity: .4; pointer-events: none; }
+:is(#overview-view, #club-view) .hero-stats > div::after { content: '✦'; position: absolute; right: 12px; bottom: 8px; color: var(--tile-ink); opacity: .14; font-size: 28px; pointer-events: none; }
+:is(#overview-view, #club-view) .hero-stats .mini-icon { grid-column: 1; grid-row: 1; width: 38px; height: 38px; align-self: center; border: 0; border-radius: 0; background: none; color: var(--tile-ink); filter: drop-shadow(0 2px 0 #ffffffc0); }
+:is(#overview-view, #club-view) .hero-stats .mini-icon :is(img, svg) { width: 38px; height: 38px; object-fit: contain; margin: 0; }
+:is(#overview-view, #club-view) .hero-stats small { position: relative; z-index: 1; grid-column: 2; grid-row: 1; color: var(--tile-ink); font-size: 11px; font-weight: 800; line-height: 1.35; align-self: center; }
+:is(#overview-view, #club-view) .hero-stats strong { position: relative; z-index: 1; grid-column: 1 / -1; grid-row: 2; font: 400 clamp(27px, 2.6vw, 37px)/1.05 'Lilita One', var(--font-heading); color: #19365b; font-variant-numeric: tabular-nums; letter-spacing: .4px; text-shadow: 0 2px 0 #ffffffbc; overflow-wrap: normal; }
+:is(#overview-view, #club-view) .hero-stat-watermark { position: absolute; z-index: -1; right: -5px; bottom: 14px; height: 88px; width: 88px; object-fit: contain; opacity: .1; transform: rotate(-14deg); filter: grayscale(1); pointer-events: none; }
+:is(#overview-view, #club-view) .hero-stats > div:last-child { grid-column: auto; }
+:is(#overview-view, #club-view) .prestige-stat-icon { position: relative; }
+:is(#overview-view, #club-view) .hero-prestige-emblem-value { position: absolute; z-index: 1; left: 50%; top: 52%; transform: translate(-50%,-50%); color: #f5ffdc; font: 900 clamp(8px,.8vw,12px)/1 var(--font-main); text-shadow: 0 1px 1px #171544,-1px 0 #171544,1px 0 #171544; }
+/* Match visible artwork height, accounting for aspect ratios and transparent padding. */
+:is(#overview-view, #club-view) .hero-stats .mini-icon > img { transform: scale(var(--hero-icon-scale,1)); transform-origin: center; }
+:is(#overview-view, #club-view) .hero-stats :is(.trophy-icon,.best-icon) { --hero-icon-scale: 1.2; }
+:is(#overview-view, #club-view) .hero-stats .win-icon { --hero-icon-scale: .9; }
+:is(#overview-view, #club-view) .hero-stats .prestige-stat-icon { --hero-icon-scale: 1.16; }
+:is(#overview-view, #club-view) .hero-stats .champ-stat-icon { --hero-icon-scale: .9; }
+:is(#overview-view, #club-view) .hero-stats .champ-stat-icon > img[src$="/legendary.png"] { --hero-icon-scale: 1.05; }
+:is(#overview-view, #club-view) .hero-stats .champ-stat-icon > img[src$="/pro.png"] { --hero-icon-scale: 1.02; }
+:is(#overview-view, #club-view) .hero-collection-link { grid-column: 3; grid-row: 1; width: 100%; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 16px; text-align: left; border: 2px solid #e5c66d; border-radius: 21px; color: #19365b; background: radial-gradient(ellipse at 12% 0, #fffce8, transparent 80%), linear-gradient(145deg, #fff3af, #ffe18a); box-shadow: 0 5px 0 #debd68, inset 0 0 0 3px #fff9d4, 0 8px 16px #9877210d; }
+:is(#overview-view, #club-view) .hero-collection-link::before { content: ''; position: absolute; z-index: -1; right: 4px; top: 3px; width: 130px; height: 130px; background: url('/assets/rarity-skull.svg') center / 54px 54px no-repeat, url('/assets/prestige-accent-star.svg') center / contain no-repeat; opacity: .09; transform: rotate(14deg); pointer-events: none; }
+:is(#overview-view, #club-view) .hero-collection-link:hover { transform: translateY(-2px); border-color: #cfa83b; box-shadow: 0 7px 0 #debd68, inset 0 0 0 3px #fff9d4; }
+:is(#overview-view, #club-view) .hero-collection-link span, :is(#overview-view, #club-view) .hero-collection-link small { width: auto; text-align: left; }
+:is(#overview-view, #club-view) .hero-collection-link .hero-collection-heading { display: flex; align-items: center; gap: 8px; color: #806020; font-size: 10px; font-weight: 900; letter-spacing: .4px; }
+:is(#overview-view, #club-view) .hero-collection-heading img { width: 28px; height: 28px; object-fit: contain; }
+:is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { display: flex; align-items: baseline; gap: 8px; width: auto; margin: 10px 0 3px; text-align: left; font: 400 47px/1 'Lilita One', var(--font-heading); }
+:is(#overview-view, #club-view) .hero-collection-link :is(#hero-brawler-count, #club-hero-member-total) { font: inherit; letter-spacing: -.5px; }
+:is(#overview-view, #club-view) .hero-collection-link .hero-collection-total { color: #7e682e; font: 700 16px var(--font-main); letter-spacing: -.5px; }
+:is(#overview-view, #club-view) .hero-collection-total b { color: #685221; }
+:is(#overview-view, #club-view) .hero-collection-link > small { color: #806832; font-size: 11px; font-weight: 700; }
+:is(#overview-view, #club-view) .hero-collection-link .hero-collection-progress { height: 11px; margin: 12px 0 6px; background: #dac17a; border: 1px solid #cfb164; border-radius: 8px; box-shadow: inset 0 2px 3px #83622020; overflow: hidden; }
+:is(#overview-view, #club-view) .hero-collection-progress i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(#fff297 0 35%, #f5c934 40%); box-shadow: inset 0 0 0 1px #ffe98b; }
+:is(#overview-view, #club-view) .hero-collection-link .hero-collection-remaining { color: #806832; font-size: 10px; font-weight: 700; letter-spacing: 0; }
+:is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding: 8px 11px; background: linear-gradient(#fffef3, #fff2bf); border: 2px solid #fffdf0; border-radius: 10px; box-shadow: 0 3px 0 #d9b963; color: #19365b; font-size: 11px; font-weight: 800; letter-spacing: 0; }
+:is(#overview-view, #club-view) .hero-collection-action b { font-size: 29px; line-height: .7; }
+/* Player and club covers share the roster Prestige banner's desktop height. */
+@media (min-width: 1181px) {
+  :is(#overview-view, #club-view) .player-hero {
+    height: var(--profile-cover-height);
+    min-height: var(--profile-cover-height);
+    grid-template-columns: 276px minmax(0, 1fr) 244px;
+    grid-template-rows: minmax(0, 1fr) 156px;
+    gap: 16px 24px;
+    padding: 28px;
+  }
+  /* Compact only the player and club cover statistics; retain the established cover height. */
+  :is(#overview-view, #club-view) .player-hero { grid-template-rows: minmax(0, 1fr) 128px; }
+  :is(#overview-view, #club-view) .hero-stats > div { grid-template-rows: 44px auto; align-content: center; row-gap: 10px; }
+  :is(#overview-view, #club-view) .player-avatar-card { grid-column: 1; grid-row: 1 / -1; align-self: stretch; padding: 24px 10px 20px; }
+  :is(#overview-view, #club-view) .avatar-frame { width: 256px; height: 256px; flex-shrink: 0; }
+  :is(#overview-view, #club-view) .player-hero-copy { grid-column: 2; grid-row: 1; align-self: end; }
+  :is(#overview-view, #club-view) .player-hero-copy h2 { margin-top: 0; font-size: clamp(36px, 3.8vw, 58px); }
+  :is(#overview-view, #club-view) .profile-meta { margin-top: 12px; gap: 8px; }
+  :is(#overview-view, #club-view) .hero-collection-link { grid-column: 3; grid-row: 1 / -1; align-self: stretch; justify-content: center; padding: 14px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { font-size: 56px; margin: 12px 0 5px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { margin-top: 10px; }
+  :is(#overview-view, #club-view) .hero-stats { grid-column: 2; grid-row: 2; gap: 10px; align-self: stretch; height: 100%; }
+  :is(#overview-view, #club-view) .hero-stats > div { grid-template-columns: 44px minmax(0, 1fr); gap: 8px 6px; padding: 12px 10px; border-radius: 17px; }
+  :is(#overview-view, #club-view) .hero-stats .mini-icon,
+  :is(#overview-view, #club-view) .hero-stats .mini-icon :is(img, svg) { width: 44px; height: 44px; }
+  :is(#overview-view, #club-view) .hero-stats small { font-size: 9px; line-height: 1.25; }
+  :is(#overview-view, #club-view) .hero-stats strong { font-size: clamp(24px, 2.2vw, 34px); }
+  :is(#overview-view, #club-view) .hero-stat-watermark { width: 88px; height: 88px; }
+}
+@media (min-width: 1181px) and (max-width: 1300px) {
+  :is(#overview-view, #club-view) .player-hero { grid-template-columns: 252px minmax(0, 1fr) 208px; column-gap: 18px; }
+  :is(#overview-view, #club-view) .avatar-frame { width: 232px; height: 232px; }
+  :is(#overview-view, #club-view) .hero-stats { gap: 8px; }
+  :is(#overview-view, #club-view) .hero-stats > div { grid-template-columns: 36px minmax(0, 1fr); padding: 9px 7px; column-gap: 4px; }
+  :is(#overview-view, #club-view) .hero-stats > div { grid-template-rows: 36px auto; column-gap: 7px; }
+  :is(#overview-view, #club-view) .hero-stats .mini-icon,
+  :is(#overview-view, #club-view) .hero-stats .mini-icon :is(img, svg) { width: 36px; height: 36px; }
+  :is(#overview-view, #club-view) .hero-stats small { font-size: 8px; }
+  :is(#overview-view, #club-view) .hero-stats strong { font-size: 26px; }
+}
+@media (max-width: 1180px) {
+  :is(#overview-view, #club-view) .player-hero { grid-template-columns: 170px minmax(0, 1fr) 220px; gap: 22px 26px; padding: 26px; }
+  :is(#overview-view, #club-view) .avatar-frame { width: 150px; height: 150px; }
+  :is(#overview-view, #club-view) .player-hero-copy h2 { font-size: clamp(30px, 4.7vw, 52px); }
+  :is(#overview-view, #club-view) .hero-stats { gap: 12px; }
+  :is(#overview-view, #club-view) .hero-stats > div { padding: 11px 12px; gap: 8px 7px; grid-template-columns: 34px minmax(0, 1fr); }
+  :is(#overview-view, #club-view) .hero-stats .mini-icon, :is(#overview-view, #club-view) .hero-stats .mini-icon :is(img, svg) { width: 34px; height: 34px; }
+  :is(#overview-view, #club-view) .hero-stats small { font-size: 10px; }
+}
+@media (max-width: 950px) {
+  :is(#overview-view, #club-view) .player-hero { grid-template-columns: 160px minmax(0, 1fr); }
+  :is(#overview-view, #club-view) .avatar-frame { width: 140px; height: 140px; }
+  :is(#overview-view, #club-view) .hero-collection-link { grid-column: 1 / -1; grid-row: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  :is(#overview-view, #club-view) .hero-collection-heading { grid-column: 1; }
+  :is(#overview-view, #club-view) .hero-collection-count { grid-column: 1; grid-row: 2; }
+  :is(#overview-view, #club-view) .hero-collection-link > small { grid-column: 1; grid-row: 3; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-progress { grid-column: 2; grid-row: 1; align-self: center; margin: 0; }
+  :is(#overview-view, #club-view) .hero-collection-remaining { grid-column: 2; grid-row: 2; align-self: center; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { grid-column: 2; grid-row: 3; margin: 0; }
+  :is(#overview-view, #club-view) .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 540px) {
+  :is(#overview-view, #club-view) .player-hero { grid-template-columns: 94px minmax(0, 1fr); padding: 20px; gap: 20px 19px; text-align: left; border-radius: 25px; }
+  :is(#overview-view, #club-view) .player-avatar-card { align-self: center; margin: 0; padding: 24px 0 16px; }
+  :is(#overview-view, #club-view) .avatar-frame { width: 94px; height: 94px; padding: 5px; border-radius: 18px; box-shadow: 0 0 0 2px #dec385, 0 0 0 5px #d8d5f6, 0 5px 0 5px #b8c8e6; }
+  :is(#overview-view, #club-view) .avatar-frame :is(#player-art, #club-hero-badge-img) { border-radius: 10px; }
+  :is(#overview-view, #club-view) .profile-crown { width: 34px; height: 26px; top: -24px; }
+  :is(#overview-view, #club-view) .exp-badge { font-size: 9px; padding: 3px 9px; bottom: -13px; }
+  :is(#overview-view, #club-view) .player-hero-copy { display: flex; flex-direction: column; align-items: stretch; }
+  :is(#overview-view, #club-view) .player-hero-copy h2 { order: -2; margin: 0; font-size: clamp(21px, 6.4vw, 32px); letter-spacing: 0; }
+  :is(#overview-view, #club-view) .profile-meta { order: -1; justify-content: flex-start; gap: 8px; margin-top: 11px; }
+  :is(#overview-view, #club-view) :is(.meta-tag, .club-pill) { padding: 6px 7px; gap: 5px; font-size: 9px; }
+  :is(#overview-view, #club-view) .meta-tag > svg { width: 13px; height: 13px; }
+  :is(#overview-view, #club-view) .club-pill { flex-wrap: wrap; }
+  :is(#overview-view, #club-view) .club-tag-small { font-size: 8px; }
+  :is(#overview-view, #club-view) .label-row { justify-content: flex-start; gap: 7px; margin-top: 13px; }
+  :is(#overview-view, #club-view) :is(.hero-xp-badge, .champ-badge) { min-height: 27px; padding: 4px 6px; font-size: 7px; letter-spacing: 0; }
+  :is(#overview-view, #club-view) .hero-collection-link { padding: 14px; gap: 0 14px; border-radius: 18px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-heading { font-size: 9px; gap: 7px; letter-spacing: .4px; }
+  :is(#overview-view, #club-view) .hero-collection-heading img { width: 25px; height: 25px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { font-size: 40px; gap: 6px; margin: 8px 0 3px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-total { font-size: 14px; }
+  :is(#overview-view, #club-view) .hero-collection-link > small { font-size: 10px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-remaining { font-size: 9px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { padding: 7px 9px; font-size: 10px; }
+  :is(#overview-view, #club-view) .hero-collection-action b { font-size: 23px; }
+  :is(#overview-view, #club-view) .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; }
+  :is(#overview-view, #club-view) .hero-stats > div { padding: 11px; gap: 8px 7px; border-radius: 17px; grid-template-columns: 30px minmax(0, 1fr); }
+  :is(#overview-view, #club-view) .hero-stats .mini-icon, :is(#overview-view, #club-view) .hero-stats .mini-icon :is(img, svg) { width: 30px; height: 30px; }
+  :is(#overview-view, #club-view) .hero-stats small { font-size: 9px; }
+  :is(#overview-view, #club-view) .hero-stats strong { font-size: 29px; }
+  :is(#overview-view, #club-view) .hero-stat-watermark { width: 76px; height: 76px; }
+  :is(#overview-view, #club-view) .hero-stats > div:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 360px) {
+  :is(#overview-view, #club-view) .player-hero { grid-template-columns: 78px minmax(0, 1fr); padding: 16px; gap: 20px 14px; }
+  :is(#overview-view, #club-view) .avatar-frame { width: 78px; height: 78px; }
+  :is(#overview-view, #club-view) .player-hero-copy h2 { font-size: 21px; }
+  :is(#overview-view, #club-view) .hero-collection-link { padding: 12px; gap: 0 10px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { font-size: 35px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-total { font-size: 12px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { font-size: 9px; padding: 7px; }
+  :is(#overview-view, #club-view) .hero-stats > div { padding: 10px 9px; gap: 8px 5px; grid-template-columns: 28px minmax(0, 1fr); }
+  :is(#overview-view, #club-view) .hero-stats .mini-icon, :is(#overview-view, #club-view) .hero-stats .mini-icon :is(img, svg) { width: 28px; height: 28px; }
+  :is(#overview-view, #club-view) .hero-stats small { font-size: 8px; }
+  :is(#overview-view, #club-view) .hero-stats strong { font-size: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(#overview-view, #club-view) .hero-collection-link { transition: none; }
+}
+
+/* Align the player and club statistics by header and value rows, including six-digit totals. */
+:is(#overview-view, #club-view) .hero-stats > div {
+  --hero-stat-icon-size: 38px;
+  container-type: inline-size;
+  grid-template-rows: var(--hero-stat-icon-size) auto;
+  align-content: center;
+  row-gap: 10px;
+}
+:is(#overview-view, #club-view) .hero-stats small { display: flex; align-items: center; align-self: stretch; min-width: 0; }
+:is(#overview-view, #club-view) .hero-stats strong {
+  align-self: end;
+  min-width: 0;
+  width: 100%;
+  font-size: min(34px,25cqi);
+  line-height: 1.1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+@media (min-width: 1301px) {
+  :is(#overview-view, #club-view) .hero-stats > div { --hero-stat-icon-size: 44px; }
+}
+@media (min-width: 1181px) and (max-width: 1300px) {
+  :is(#overview-view, #club-view) .hero-stats > div { --hero-stat-icon-size: 36px; }
+}
+@media (max-width: 1180px) {
+  :is(#overview-view, #club-view) .hero-stats > div { --hero-stat-icon-size: 34px; }
+}
+@media (max-width: 540px) {
+  :is(#overview-view, #club-view) .hero-stats > div { --hero-stat-icon-size: 30px; }
+  :is(#overview-view, #club-view) .hero-stats strong { font-size: min(29px,25cqi); }
+}
+@media (max-width: 360px) {
+  :is(#overview-view, #club-view) .hero-stats > div { --hero-stat-icon-size: 28px; }
+  :is(#overview-view, #club-view) .hero-stats strong { font-size: min(26px,25cqi); }
+}
+
+/* The username and stat row share the avatar frame's top and bottom edges. */
+@media (min-width: 1181px) {
+  :is(#overview-view, #club-view) .player-hero {
+    --player-frame-size: 256px;
+    --player-stat-row-size: 128px;
+    grid-template-rows: calc(var(--player-frame-size) - var(--player-stat-row-size) - 16px) var(--player-stat-row-size);
+    align-content: center;
+  }
+  :is(#overview-view, #club-view) .player-avatar-card { padding: 0 10px; }
+  :is(#overview-view, #club-view) .player-hero-copy { align-self: start; }
+  :is(#overview-view, #club-view) .hero-collection-link { height: var(--player-frame-size); align-self: center; padding: 12px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-heading { font-size: 9px; }
+  :is(#overview-view, #club-view) .hero-collection-heading img { width: 24px; height: 24px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { font-size: 48px; margin: 8px 0 3px; }
+  :is(#overview-view, #club-view) .hero-collection-link > small { font-size: 10px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-progress { flex-shrink: 0; height: 9px; margin: 8px 0 4px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-remaining { font-size: 9px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { margin-top: 8px; padding: 7px 10px; font-size: 10px; }
+}
+@media (min-width: 1181px) and (max-width: 1300px) {
+  :is(#overview-view, #club-view) .player-hero { --player-frame-size: 232px; --player-stat-row-size: 112px; }
+  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { font-size: 42px; }
+}

@@ -11,13 +11,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=641">
+  <link rel="stylesheet" href="/assets/styles.css?v=645">
   <link rel="stylesheet" href="/assets/brawler-hero-atmosphere.css?v=9">
   <link rel="stylesheet" href="/assets/ui-motion.css?v=3">
   <link rel="stylesheet" href="/assets/header-navigation.css?v=6">
-  <link rel="stylesheet" href="/assets/section-design.css?v=9">
-  <link rel="stylesheet" href="/assets/overview.css?v=5">
-  <link rel="stylesheet" href="/assets/club-dashboard.css?v=1">
+  <link rel="stylesheet" href="/assets/section-design.css?v=14">
+  <link rel="stylesheet" href="/assets/overview.css?v=41">
+  <link rel="stylesheet" href="/assets/player-profile.css?v=19">
+  <link rel="stylesheet" href="/assets/club-dashboard.css?v=6">
+  <link rel="stylesheet" href="/assets/exploration-pages.css?v=3">
+  <link rel="stylesheet" href="/assets/meta-explorer.css?v=1">
 </head>
 <body>
   <div class="app-shell">
@@ -51,6 +54,7 @@
               <a class="nav-item" data-nav="leaderboards" href="/leaderboards"><span class="nav-icon" aria-hidden="true"><img loading="lazy" src="/assets/icon_trophy.png" alt=""></span><span>Leaderboards</span></a>
               <a class="nav-item" data-nav="battles" href="/battles"><span class="nav-icon" aria-hidden="true"><img loading="lazy" src="/assets/modes/duels.png" alt=""></span><span>Battle Log</span></a>
               <a class="nav-item" data-nav="club" href="/club"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="#173162" stroke-width="2.2" stroke-linejoin="round"><path d="m16 3 12 4v9c0 7-12 13-12 13S4 23 4 16V7Z" fill="#c3a2ff"/><circle cx="16" cy="12" r="3" fill="#fff4ab"/><path d="M10 22v-2c0-3 2-5 6-5s6 2 6 5v2" fill="#fff4ab"/></svg></span><span>Club Hub</span></a>
+              <a class="nav-item" data-nav="meta" href="/meta"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#173162" stroke-width="2.2" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="#ffd43f"/></svg></span><span>AI Meta</span></a>
             </div>
           </div>
         </nav>
@@ -70,48 +74,39 @@
           <div class="hero-burst" aria-hidden="true"></div>
           <div class="player-avatar-card">
             <div class="avatar-frame">
+              <svg class="profile-crown" viewBox="0 0 64 46" aria-hidden="true"><path d="m8 34-5-23 15 9L32 3l14 17 15-9-5 23Z" fill="#ffdc57" stroke="#b88726" stroke-width="3" stroke-linejoin="round"/><path d="M10 34h44v8H10Z" fill="#f6b939" stroke="#b88726" stroke-width="3"/><path d="m32 9 5 18H27Z" fill="#fff7b9"/></svg>
               <img loading="lazy" id="player-art" src="/assets/brawlers/portraits/16000000.webp" alt="Official player profile icon">
               <span id="exp-badge" class="exp-badge">LVL <strong id="exp-level">—</strong></span>
             </div>
           </div>
           <div class="player-hero-copy">
-            <div class="label-row">
-              <span id="data-label" class="data-label demo">OFFICIAL BRAWLER</span>
-              <span id="prestige-tier-badge" class="prestige-tier-badge">PRESTIGE BATTLE CARD</span>
-              <span id="brawler-prestige-badge" class="brawler-prestige-badge"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/filter-prestige.png" alt="" aria-hidden="true"> TOTAL PRESTIGE <b id="brawler-prestige-val" class="prestige-num-bubble">0</b></span>
-              <span id="champ-badge" class="champ-badge hidden"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"> 15-WIN QUALIFIED</span>
-              <span id="hero-xp-badge" class="hero-xp-badge"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/rarity-skull.svg" alt="" aria-hidden="true"> <strong id="hero-xp-points">—</strong> XP</span>
-              <span id="freshness" class="freshness-pill"><i class="live-dot"></i> <span id="freshness-text">Updated now</span></span>
-            </div>
             <h2 id="profile-name">Loading brawler</h2>
-            <div class="profile-meta">
-              <span id="player-tag" class="meta-tag">—</span>
-              <span id="club-pill" class="club-pill"><span class="section-inline-icon" data-dashboard-icon="team"></span> <strong id="club-name">—</strong> <span id="club-tag" class="club-tag-small">—</span></span>
-              <span id="hero-level-tag" class="hero-level-tag"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/rarity-skull.svg" alt="" aria-hidden="true"> <strong id="hero-level-num">—</strong></span>
-            </div>
-            <div class="hero-stats">
-              <div><span class="mini-icon trophy-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="trophy-count">—</strong><small>Current Trophies</small></div>
-              <div><span class="mini-icon best-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="highest-trophies">—</strong><small>Personal Best</small></div>
-              <div><span class="mini-icon win-icon" data-dashboard-icon="wins"></span><strong id="total-victories-count">—</strong><small>Total Victories</small></div>
-              <div><span class="mini-icon prestige-stat-icon"><img loading="lazy" src="/assets/filter-prestige.png" alt="" aria-hidden="true"></span><strong id="hero-prestige-count" class="prestige-stat-highlight">0</strong><small>Total Prestige</small></div>
-              <div><span class="mini-icon champ-stat-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="hero-ranked-rating">—</strong><small id="hero-ranked-label">Ranked rating</small></div>
+            <div class="profile-meta label-row">
+              <button id="player-tag-copy" class="meta-tag" type="button" aria-label="Copy player tag"><span id="player-tag">—</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v13h5"/></svg></button>
+              <a id="club-pill" class="club-pill" href="/club"><span class="section-inline-icon" data-dashboard-icon="team"></span> <strong id="club-name">—</strong> <span id="club-tag" class="club-tag-small">—</span></a>
+              <span id="hero-xp-badge" class="hero-xp-badge"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/rarity-skull.svg" alt="" aria-hidden="true"> <strong id="hero-xp-points">—</strong> XP</span>
+              <span id="data-label" class="data-label demo hidden">DEMO ACCOUNT</span>
+              <span id="champ-badge" class="champ-badge hidden"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"> 15-WIN QUALIFIED</span>
+              <span id="player-tag-copy-status" class="profile-copy-status" role="status"></span>
             </div>
           </div>
-          <a class="hero-collection-link" href="/brawlers"><span>VIEW COLLECTION</span><strong id="hero-brawler-count">—</strong><small>Brawlers →</small></a>
+          <a class="hero-collection-link" href="/brawlers">
+            <span class="hero-collection-heading"><img src="/assets/rarity-skull.svg" alt="" aria-hidden="true">YOUR COLLECTION</span>
+            <strong class="hero-collection-count"><span id="hero-brawler-count">—</span><span class="hero-collection-total">of <b id="hero-brawler-total">—</b></span></strong>
+            <small>Brawlers unlocked</small>
+            <span id="hero-collection-progress" class="hero-collection-progress" role="progressbar" aria-label="Brawler collection completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="hero-collection-fill"></i></span>
+            <span id="hero-collection-remaining" class="hero-collection-remaining">Loading collection</span>
+            <span class="hero-collection-action">View collection <b aria-hidden="true">›</b></span>
+          </a>
+          <div class="hero-stats" aria-label="Player statistics">
+            <div class="hero-stat-gold"><span class="mini-icon trophy-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><small>Current Trophies</small><strong id="trophy-count">—</strong><img class="hero-stat-watermark" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></div>
+            <div class="hero-stat-pink"><span class="mini-icon best-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><small>Personal Best</small><strong id="highest-trophies">—</strong><img class="hero-stat-watermark" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></div>
+            <div class="hero-stat-green"><span class="mini-icon win-icon"><img src="/assets/rarity-skull.svg" alt="" aria-hidden="true"></span><small>Total Victories</small><strong id="total-victories-count">—</strong><img class="hero-stat-watermark" src="/assets/rarity-skull.svg" alt="" aria-hidden="true"></div>
+            <div class="hero-stat-purple"><span class="mini-icon prestige-stat-icon"><span id="hero-prestige-emblem-value" class="hero-prestige-emblem-value" aria-hidden="true">0</span><img loading="lazy" src="/assets/total-prestige-emblem-hd.webp" alt="" aria-hidden="true"></span><small>Total Prestige</small><strong id="hero-prestige-count">0</strong><img class="hero-stat-watermark" src="/assets/total-prestige-emblem-hd.webp" alt="" aria-hidden="true"></div>
+            <div class="hero-stat-blue"><span class="mini-icon champ-stat-icon"><img class="hero-ranked-art" src="/assets/rarity-skull.svg" alt="" aria-hidden="true"></span><small id="hero-ranked-label">Ranked rating</small><strong id="hero-ranked-rating">—</strong><img class="hero-stat-watermark hero-ranked-art" src="/assets/rarity-skull.svg" alt="" aria-hidden="true"></div>
+          </div>
         </article>
 
-        <div class="ov-toolbar">
-          <nav class="ov-jump-nav" aria-label="Overview sections">
-            <a href="#ov-collection" aria-current="location"><span data-dashboard-icon="collection"></span>Collection</a>
-            <a href="#ov-trophies"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true">Trophies</a>
-            <a href="#ov-equipment"><span data-dashboard-icon="equipment"></span>Equipment</a>
-            <a href="#ov-competitive"><span data-dashboard-icon="wins"></span>Competitive</a>
-            <a href="#ov-recent"><span data-dashboard-icon="battle"></span>Recent play</a>
-            <a href="#ov-context"><span data-dashboard-icon="team"></span>Club &amp; events</a>
-            <a href="#ov-goals"><img src="/assets/currencies/coins.png" alt="" aria-hidden="true">Next goals</a>
-          </nav>
-          <button id="overview-refresh" class="subtle-button" type="button">Refresh data</button>
-        </div>
         <div id="overview-dashboard" aria-busy="true">
           <div class="ov-loading" role="status"><span class="ov-loading-dot"></span> Building your account analytics</div>
         </div>
@@ -239,59 +234,50 @@
           <div class="hero-burst" aria-hidden="true"></div>
           <div class="player-avatar-card">
             <div class="avatar-frame club-badge-frame">
+              <svg class="profile-crown" viewBox="0 0 64 46" aria-hidden="true"><path d="m8 34-5-23 15 9L32 3l14 17 15-9-5 23Z" fill="#ffdc57" stroke="#b88726" stroke-width="3" stroke-linejoin="round"/><path d="M10 34h44v8H10Z" fill="#f6b939" stroke="#b88726" stroke-width="3"/><path d="m32 9 5 18H27Z" fill="#fff7b9"/></svg>
               <span id="club-hero-badge-icon" class="club-badge-symbol" data-dashboard-icon="team"></span>
               <img loading="lazy" id="club-hero-badge-img" class="club-badge-img hidden" src="" alt="Club Emblem">
               <span id="club-capacity-pill" class="exp-badge">—</span>
             </div>
           </div>
           <div class="player-hero-copy">
-            <div class="label-row">
-              <span id="club-data-label" class="data-label demo">DEMO CLUB</span>
-              <span id="club-prestige-badge" class="banner-chip">CLUB SNAPSHOT</span>
-              <span id="club-type-badge" class="banner-chip">OPEN CLUB</span>
-              <span id="club-freshness" class="freshness">Updated now</span>
-            </div>
             <h2 id="club-view-name">Loading club</h2>
-            <div class="profile-meta">
-              <span id="club-view-tag" class="meta-tag">—</span>
-              <span>•</span>
-              <span id="club-desc-text" class="club-hero-desc">The returned club description appears here</span>
-            </div>
-            <div class="hero-stats">
-              <div><span class="mini-icon trophy-icon"><img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="club-total-trophies">—</strong><small>Reported club trophies</small></div>
-              <div><span class="mini-icon win-icon" data-dashboard-icon="team"></span><strong id="club-member-count">—</strong><small>Members</small></div>
-              <div><span class="mini-icon best-icon"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><strong id="club-required-trophies">—</strong><small>Min Required</small></div>
+            <div class="profile-meta label-row">
+              <button id="copy-club-hero-tag" class="meta-tag" type="button" aria-label="Copy club tag"><span id="club-view-tag">—</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v13h5"/></svg></button>
+              <span id="club-type-badge" class="hero-xp-badge">OPEN CLUB</span>
+              <span id="club-cover-info"></span>
+              <span id="club-data-label" class="data-label demo hidden">DEMO CLUB</span>
             </div>
           </div>
-          <a class="hero-collection-link" id="copy-club-hero-tag" href="#roster"><span>ACTION</span><span class="copy-tag-symbol" data-dashboard-icon="copy" aria-hidden="true"></span><small>Copy Tag</small></a>
+          <a id="club-hero-roster-link" class="hero-collection-link" href="#roster">
+            <span class="hero-collection-heading"><img src="/assets/rarity-skull.svg" alt="" aria-hidden="true">YOUR MEMBERS</span>
+            <strong class="hero-collection-count"><span id="club-hero-member-total">—</span><span class="hero-collection-total">of <b>30</b></span></strong>
+            <small>Members joined</small>
+            <span id="club-hero-capacity-progress" class="hero-collection-progress" role="progressbar" aria-label="Club membership capacity" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0"><i id="club-hero-capacity-fill" style="width: 0%"></i></span>
+            <span id="club-hero-spots-remaining" class="hero-collection-remaining">Loading members</span>
+            <span class="hero-collection-action">View members <b aria-hidden="true">›</b></span>
+          </a>
+          <div class="hero-stats" aria-label="Club statistics">
+            <div class="hero-stat-yellow"><span class="mini-icon trophy-icon"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><small>Club Trophies</small><strong id="club-total-trophies">—</strong><img class="hero-stat-watermark" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></div>
+            <div class="hero-stat-green"><span class="mini-icon win-icon" data-dashboard-icon="team"></span><small>Members</small><strong id="club-member-count">—</strong><span class="hero-stat-watermark" data-dashboard-icon="team" aria-hidden="true"></span></div>
+            <div class="hero-stat-pink"><span class="mini-icon best-icon"><img src="/assets/icon_trophy.png" alt="" aria-hidden="true"></span><small>Required Trophies</small><strong id="club-required-trophies">—</strong><img class="hero-stat-watermark" src="/assets/icon_trophy.png" alt="" aria-hidden="true"></div>
+          </div>
         </article>
-
-        <div class="ov-toolbar club-toolbar">
-          <nav class="ov-jump-nav" aria-label="Club sections">
-            <a href="#club-composition"><span data-dashboard-icon="team"></span>Club snapshot</a>
-            <a href="#club-distribution"><span data-dashboard-icon="trophy"></span>Trophy spread</a>
-            <a href="#club-contributions"><span data-dashboard-icon="chart"></span>Contributions</a>
-            <a href="#club-planning"><span data-dashboard-icon="target"></span>Next target</a>
-            <a href="#roster"><span data-dashboard-icon="team"></span>Member roster</a>
-          </nav>
-          <button id="club-refresh" class="subtle-button" type="button">Refresh club</button>
-        </div>
         <p id="club-refresh-status" class="club-refresh-status" role="status"></p>
         <div id="club-dashboard"><div class="ov-loading" role="status"><span class="ov-loading-dot"></span>Building your club snapshot</div></div>
 
         <!-- Club Member Roster Table -->
-        <section class="panel club-roster-panel" id="roster">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">CLUB ROSTER</p>
-              <h2><span class="section-title-icon" data-dashboard-icon="team"></span><span>Member contributions (<span id="roster-count-label">—</span>)</span></h2>
-            </div>
+        <section class="panel ov-group ov-tone-blue club-roster-panel" id="roster">
+          <div class="ov-section-heading">
+            <span class="ov-section-emblem" aria-hidden="true"><span data-dashboard-icon="team"></span><small>05</small></span>
+            <div class="ov-section-copy"><span class="ov-section-kicker">CLUB ROSTER</span><h2>Member contributions (<span id="roster-count-label">—</span>)</h2></div>
+            <span id="club-roster-info"></span>
+          </div>
             <div class="roster-toolbar">
               <input id="roster-search" class="search-box-input" type="search" placeholder="Search name or player tag" aria-label="Search club members">
               <label class="club-filter">Role <select id="club-role-filter"><option value="all">All roles</option><option value="president">President</option><option value="vicepresident">Vice president</option><option value="senior">Senior</option><option value="member">Member</option><option value="unknown">Other roles</option></select></label>
               <label class="club-filter">Sort <select id="club-roster-sort"><option value="trophies">Most trophies</option><option value="trophies_asc">Fewest trophies</option><option value="name">Name A–Z</option></select></label>
             </div>
-          </div>
           <p id="club-roster-summary" class="section-results" role="status"></p>
           <div class="roster-table-wrap" role="region" aria-label="Member contribution table" tabindex="0">
             <table class="roster-table">
@@ -317,31 +303,32 @@
           <div class="section-hero-copy">
             <span class="banner-chip pink-chip">ARENA CHRONICLES</span>
             <h2>Every battle<br><em>A better game plan</em></h2>
-            <p>Review your last 25 battles with full team lineups, MVP awards, power differentials, and 2D tactical arena recreation</p>
+            <p>Your recent results, team lineups, and the next match worth learning from.</p>
           </div>
           <div class="section-hero-emblem">
             <img loading="lazy" src="/assets/modes/duels.png" alt="" aria-hidden="true">
             <div class="section-hero-counter"><strong id="battles-count-badge">—</strong><span>RECENT MATCHES</span></div>
           </div>
           <div class="section-stat-strip" aria-label="Recent battle summary">
-            <div class="section-stat"><span>VICTORIES</span><strong id="battle-summary-wins">—</strong><small>Recorded results</small></div>
-            <div class="section-stat"><span>DEFEATS</span><strong id="battle-summary-losses">—</strong><small>Recorded results</small></div>
-            <div class="section-stat"><span>WIN RATE</span><strong id="battle-summary-rate">—</strong><small>Decided matches only</small></div>
-            <div class="section-stat"><span>TROPHY CHANGE</span><strong id="battle-summary-trophies">—</strong><small>Net recorded change</small></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="wins"></span><b>VICTORIES</b><span id="battle-wins-info" data-explore-title="Victories" data-explore-info="Wins in the selected match sample. First-place Showdown finishes count as victories."></span></div><strong id="battle-summary-wins">—</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="battle"></span><b>DEFEATS</b><span id="battle-losses-info" data-explore-title="Defeats" data-explore-info="Matches with a defeat result in the selected sample. Draws and placement-only results are excluded."></span></div><strong id="battle-summary-losses">—</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="target"></span><b>WIN RATE</b><span id="battle-rate-info" data-explore-title="Win rate" data-explore-info="Victories divided by victories plus defeats in this sample. This is recent performance, not a lifetime win rate."></span></div><strong id="battle-summary-rate">—</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="trophy"></span><b>TROPHY CHANGE</b><span id="battle-trophies-info" data-explore-title="Trophy change" data-explore-info="The sum of recorded trophy changes in the selected matches. A dash means no changes were reported."></span></div><strong id="battle-summary-trophies">—</strong></div>
           </div>
         </div>
 
         <section class="panel battles-panel">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">MATCH TELEMETRY</p>
-              <h2><img class="section-title-icon" loading="lazy" decoding="async" src="/assets/modes/duels.png" alt="" aria-hidden="true">Recent Arena Battles</h2>
+              <p class="eyebrow">MATCH HISTORY</p>
+              <h2>Your recent battles</h2>
             </div>
-            <div class="battle-filter-tabs">
-              <button class="level-chip active" id="battle-filter-all" type="button">ALL MODES</button>
-              <button class="level-chip" id="battle-filter-3v3" type="button">3v3 TEAM</button>
-              <button class="level-chip" id="battle-filter-sd" type="button">SHOWDOWN</button>
-            </div>
+            <span id="battle-page-info" data-explore-title="Recent battles" data-explore-info="Filter your recent match sample by team or Showdown modes. Open a brawler portrait for their guide. The tactical view recreates the arena layout; it is not a recording of player movements."></span>
+          </div>
+          <div class="section-toolbar battle-filter-tabs" role="group" aria-label="Filter recent battles">
+            <button class="level-chip active" id="battle-filter-all" type="button" aria-pressed="true">All matches</button>
+            <button class="level-chip" id="battle-filter-3v3" type="button" aria-pressed="false">Team modes</button>
+            <button class="level-chip" id="battle-filter-sd" type="button" aria-pressed="false">Showdown</button>
           </div>
           <p id="battle-results-summary" class="section-results" role="status"></p>
           <div id="battle-cards-list" class="battle-cards-list"></div>
@@ -352,19 +339,19 @@
       <section id="events-view" class="view section-system hidden">
         <div class="collection-banner panel events-hero">
           <div class="section-hero-copy">
-            <span id="events-source-chip" class="banner-chip yellow-chip">EVENT ROTATION</span>
+            <span class="banner-chip yellow-chip">MAP EXPLORER</span>
             <h2>Know the map<br><em>Own the arena</em></h2>
-            <p>Live countdown timers for all active slots, game modifiers, and curated meta brawler picks for every active map</p>
+            <p>Find your next arena, check the rotation, and explore brawler picks for each map.</p>
           </div>
           <div class="section-hero-emblem section-mode-emblem">
             <img loading="lazy" src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true">
             <div class="section-hero-counter"><strong id="events-count-badge">—</strong><span>ROTATION SLOTS</span></div>
           </div>
           <div class="section-stat-strip" aria-label="Event rotation summary">
-            <div class="section-stat"><span>GAME MODES</span><strong id="event-summary-modes">—</strong><small>In this rotation</small></div>
-            <div class="section-stat"><span>MAPS</span><strong id="event-summary-maps">—</strong><small>Unique arenas</small></div>
-            <div class="section-stat"><span>NEXT ROTATION</span><strong id="event-summary-next">—</strong><small>Time until the next change</small></div>
-            <div class="section-stat"><span>MODIFIED SLOTS</span><strong id="event-summary-modifiers">—</strong><small>Special game rules</small></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="battle"></span><b>GAME MODES</b><span id="event-modes-info" data-explore-title="Game modes" data-explore-info="Distinct game modes in the complete rotation. Searching the map list does not change this total."></span></div><strong id="event-summary-modes">—</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="target"></span><b>MAPS</b><span id="event-maps-info" data-explore-title="Maps" data-explore-info="Unique arenas in the rotation. One map can appear in multiple slots."></span></div><strong id="event-summary-maps">—</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="refresh"></span><b>NEXT ROTATION</b><span id="event-next-info" data-explore-title="Next rotation" data-explore-info="Time until the earliest upcoming slot change. Sample rotations do not represent a live countdown."></span></div><strong id="event-summary-next">—</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="equipment"></span><b>MODIFIED SLOTS</b><span id="event-modifiers-info" data-explore-title="Modified slots" data-explore-info="Slots with at least one special game modifier. This counts affected slots, not individual modifiers."></span></div><strong id="event-summary-modifiers">—</strong></div>
           </div>
         </div>
 
@@ -372,9 +359,9 @@
           <div class="section-heading">
             <div>
               <p class="eyebrow">ROTATION TIMERS</p>
-              <h2><img class="section-title-icon" loading="lazy" decoding="async" src="/assets/modes/brawl-ball.png" alt="" aria-hidden="true">Current Active Modes &amp; Map Operations</h2>
+              <h2>Explore the rotation</h2>
             </div>
-            <span id="events-panel-source" class="source-chip official-chip">ROTATION</span>
+            <span id="events-page-info" data-explore-title="Event rotation" data-explore-info="Search by map or game mode. Inspect a map to see its full layout. Brawler picks are curated recommendations, not measured win rates."></span>
           </div>
           <div class="section-toolbar">
             <label class="search-box"><span aria-hidden="true">⌕</span><input id="event-search" type="search" placeholder="Search maps or modes" aria-label="Search maps or modes"></label>
@@ -389,9 +376,9 @@
           <div class="section-heading">
             <div>
               <p class="eyebrow">ARENA META</p>
-              <h2><img class="section-title-icon" loading="lazy" decoding="async" src="/assets/rarity-skull.svg" alt="" aria-hidden="true">Competitive Brawler Tier List</h2>
+              <h2>Brawlers to consider</h2>
             </div>
-            <span class="source-chip calculated">CURRENT BALANCE</span>
+            <span id="event-tier-info" data-explore-title="Brawler tiers" data-explore-info="Curated tiers provide general guidance. Map, mode, team composition and your equipped build also affect a pick. Open any brawler to explore their guide."></span>
           </div>
           <div id="meta-tierlist-container" class="meta-tierlist-grid"></div>
         </section>
@@ -403,27 +390,28 @@
           <div class="section-hero-copy">
             <span class="banner-chip blue-chip">HALL OF CHAMPIONS</span>
             <h2>The trophy chase<br><em>Meet the champions</em></h2>
-            <p>Track top 200 brawlers and alliances across the world Click any brawler tag to inspect their full live profile</p>
+            <p>Explore top players and clubs, compare trophy totals, and open their profiles.</p>
           </div>
           <div class="section-hero-emblem">
             <img loading="lazy" src="/assets/icon_trophy.png" alt="" aria-hidden="true">
             <div class="section-hero-counter"><strong>#1</strong><span>HALL OF CHAMPIONS</span></div>
           </div>
           <div class="section-stat-strip" aria-label="Ranking summary">
-            <div class="section-stat"><span>REGION</span><strong id="ranking-summary-region">Global</strong><small>Selected leaderboard</small></div>
-            <div class="section-stat"><span>COMPETITORS</span><strong id="ranking-summary-count">—</strong><small id="ranking-summary-kind">Ranked players</small></div>
-            <div class="section-stat"><span>LEADING SCORE</span><strong id="ranking-summary-top">—</strong><small>Trophies at the top</small></div>
-            <div class="section-stat"><span>DATA SOURCE</span><strong id="ranking-summary-source">—</strong><small>Leaderboard availability</small></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="team"></span><b>REGION</b><span id="ranking-region-info" data-explore-title="Region" data-explore-info="The selected global or country leaderboard. Country selection uses the game's regional ranking assignment."></span></div><strong id="ranking-summary-region">Global</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="chart"></span><b>COMPETITORS</b><span id="ranking-count-info" data-explore-title="Competitors" data-explore-info="The number of players or clubs in this leaderboard snapshot, up to 200. Search filters the table, not this total."></span></div><strong id="ranking-summary-count">—</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="trophy"></span><b>LEADING SCORE</b><span id="ranking-top-info" data-explore-title="Leading score" data-explore-info="Trophies held by the first-ranked player or club in the selected leaderboard."></span></div><strong id="ranking-summary-top">—</strong></div>
+            <div class="section-stat"><div class="section-stat-heading"><span data-dashboard-icon="streak"></span><b>TROPHY SPREAD</b><span id="ranking-spread-info" data-explore-title="Trophy spread" data-explore-info="The difference between the highest and lowest trophy totals in the returned leaderboard. This is a snapshot, not trophy growth over time."></span></div><strong id="ranking-summary-spread">—</strong></div>
           </div>
         </div>
 
         <section class="panel leaderboard-panel">
-          <div class="section-heading"><div><p class="eyebrow">PODIUM &amp; RANKINGS</p><h2><img class="section-title-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true">At the top of the game</h2></div><span class="source-chip calculated">TROPHY STANDINGS</span></div>
+          <div class="section-heading"><div><p class="eyebrow">PODIUM &amp; RANKINGS</p><h2>At the top of the game</h2></div><span id="ranking-page-info" data-explore-title="Trophy standings" data-explore-info="Switch between players and clubs or choose a region. The podium shows the top three in that leaderboard. Search the table by name or tag, then open a profile to explore it."></span></div>
           <div class="leaderboard-toolbar">
             <div class="ranking-tab-group">
-              <button id="tab-rankings-players" class="primary-button" type="button" aria-pressed="true">Top Brawlers</button>
-              <button id="tab-rankings-clubs" class="subtle-button" type="button" aria-pressed="false">Top Clubs</button>
+              <button id="tab-rankings-players" class="primary-button" type="button" aria-pressed="true">Players</button>
+              <button id="tab-rankings-clubs" class="subtle-button" type="button" aria-pressed="false">Clubs</button>
             </div>
+            <label class="search-box"><span aria-hidden="true">⌕</span><input id="ranking-search" type="search" placeholder="Search players by name or tag" aria-label="Search standings"></label>
             <label class="region-select-label">
               <span>REGION</span>
               <select id="ranking-region-select" aria-label="Select Region">
@@ -445,7 +433,7 @@
               <thead>
                 <tr>
                   <th style="width: 60px;">Rank</th>
-                  <th id="lb-col-name">Brawler</th>
+                  <th id="lb-col-name">Player</th>
                   <th id="lb-col-meta">Club / Syndicate</th>
                   <th>Trophies</th>
                   <th style="text-align: right;">Profile Action</th>
@@ -456,6 +444,8 @@
           </div>
         </section>
       </section>
+
+      <section id="meta-view" class="view section-system hidden"></section>
 
       <section id="detail-view" class="view hidden">
         <div class="detail-hero panel" id="detail-hero">
@@ -957,13 +947,13 @@
 
   
   <!-- Tactical Match Recreator Dialog -->
-  <dialog id="recreator-dialog" class="recreator-dialog">
+  <dialog id="recreator-dialog" class="recreator-dialog" aria-labelledby="rec-match-map" aria-describedby="rec-match-meta">
     <div class="recreator-shell">
       <button id="recreator-close-btn" class="dialog-close" type="button" aria-label="Close recreator">✕</button>
       <div class="recreator-header">
         <span class="banner-chip pink-chip" id="rec-match-mode">3v3 BRAWL BALL</span>
         <h2 id="rec-match-map">Center Stage</h2>
-        <p id="rec-match-meta">Match Breakdown &amp; Tactical Simulation</p>
+        <p id="rec-match-meta">Arena layout &amp; team comparison. Positions illustrate the teams; they are not a replay.</p>
       </div>
 
       <!-- 2D Arena Canvas Recreator -->
@@ -971,7 +961,7 @@
         <div class="arena-board" id="arena-board">
           <!-- Blue Team Spawn Base -->
           <div class="arena-zone blue-zone">
-            <span class="zone-label">BLUE TEAM (HOME)</span>
+            <span class="zone-label">BLUE TEAM</span>
             <div id="arena-blue-spawns" class="team-spawns"></div>
           </div>
           <!-- Neutral Objective Center -->
@@ -984,7 +974,7 @@
           </div>
           <!-- Red Team Spawn Base -->
           <div class="arena-zone red-zone">
-            <span class="zone-label">RED TEAM (OPPONENTS)</span>
+            <span class="zone-label">RED TEAM</span>
             <div id="arena-red-spawns" class="team-spawns"></div>
           </div>
         </div>
@@ -998,7 +988,7 @@
           <span id="rec-mvp-brawler">—</span>
         </div>
         <div class="recreator-stat-card">
-          <small>AVERAGE POWER DIFF</small>
+          <small>AVERAGE TEAM POWER</small>
           <strong id="rec-power-diff">Blue 11.0 vs Red 10.3</strong>
           <span id="rec-power-status">+0.7 Blue Advantage</span>
         </div>
@@ -1064,7 +1054,7 @@
   </div>
 
   <!-- Mobile Map Preview Dialog -->
-  <dialog id="map-preview-dialog" class="map-preview-dialog" aria-label="Map Details">
+  <dialog id="map-preview-dialog" class="map-preview-dialog" aria-labelledby="map-dialog-name">
     <div class="dialog-shell map-dialog-shell">
       <button id="map-dialog-close-btn" class="dialog-close" type="button" aria-label="Close dialog">✕</button>
       <div class="map-dialog-img-frame">
@@ -1079,15 +1069,17 @@
   </dialog>
 
   <script src="/config.js" defer></script>
-  <script src="/assets/artwork-layout.js?v=1" defer></script>
+  <script src="/assets/artwork-layout.js?v=2" defer></script>
   <script src="/assets/brawler-backgrounds.js?v=5" defer></script>
   <script src="/assets/brawler-hero-themes.js?v=1" defer></script>
-  <script src="/assets/readiness.js?v=26" defer></script>
+  <script src="/assets/readiness.js?v=27" defer></script>
   <script src="/assets/roster-dropdowns.js?v=11" defer></script>
   <script src="/assets/ui-motion.js?v=1" defer></script>
-  <script src="/assets/app.js?v=159" defer></script>
-  <script src="/assets/dashboard-ui.js?v=1" defer></script>
-  <script src="/assets/club-dashboard.js?v=1" defer></script>
-  <script src="/assets/overview.js?v=4" defer></script>
+  <script src="/assets/app.js?v=171" defer></script>
+  <script src="/assets/dashboard-ui.js?v=4" defer></script>
+  <script src="/assets/exploration-pages.js?v=1" defer></script>
+  <script src="/assets/club-dashboard.js?v=4" defer></script>
+  <script src="/assets/overview.js?v=29" defer></script>
+  <script src="/assets/meta-explorer.js?v=2" defer></script>
 </body>
 </html>

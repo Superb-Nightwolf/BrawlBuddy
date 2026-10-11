@@ -62,6 +62,9 @@ class BrawlStarsClient:
     async def get_rankings_clubs(self, country_code: str = "global") -> dict[str, Any]:
         return await self._request(f"/rankings/{country_code}/clubs")
 
+    async def get_rankings_brawler(self, brawler_id: int, country_code: str = "global") -> dict[str, Any]:
+        return await self._request(f"/rankings/{country_code}/brawlers/{brawler_id}")
+
     async def get_brawlers(self) -> dict[str, Any]:
         return await self._request("/brawlers")
 

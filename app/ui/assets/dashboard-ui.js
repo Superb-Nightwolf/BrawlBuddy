@@ -10,13 +10,6 @@
     coins:'currencies/coins.png', powerPoints:'currencies/power-points.png', gems:'currencies/gems.png',
     prestige:'filter-prestige.png', collection:'brawl-stars-symbol-official.png',
   };
-  // Match the roster's visible artwork bounds while retaining the original files
-  const frames = {
-    'section_gadget.png':[1254,1254,99,92,1049,1050],
-    'section_gear.png':[1254,1254,185,186,880,869],
-    'section_hypercharge.png':[1254,1254,175,85,901,1037],
-    'brawl-stars-symbol-official.png':[1502,852,502,177,498,498],
-  };
   const paths = {
     power:'<path d="m13 2-9 12h7l-1 8 10-13h-7z"/>',
     streak:'<path d="M3 17h5l4-5 4 2 5-8M17 6h4v4"/><path d="M3 7h5M3 11h3"/>',
@@ -34,10 +27,7 @@
     copy:'<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V3H3v13h5"/>',
   };
   function image(asset, className = 'ov-art') {
-    const frame = frames[asset];
-    if (!frame) return sectionIconMarkup(asset,className);
-    const [width,height,x,y,w,h] = frame;
-    return `<svg class="${className} ov-game-art" viewBox="${x} ${y} ${w} ${h}" aria-hidden="true"><image href="/assets/${asset}" width="${width}" height="${height}"/></svg>`;
+    return sectionIconMarkup(asset,className);
   }
   function icon(key, className = 'ov-art') {
     if (assets[key]) return image(assets[key],className);
@@ -54,8 +44,8 @@
   function empty(message = 'This information was not returned') {
     return `<div class="ov-empty">${icon('records','ov-empty-art')}<p>${esc(message)}</p></div>`;
   }
-  function card({title,body,note='',span=6,kicker='',symbol=''}) {
-    return `<article class="ov-card ov-span-${span}"><div class="ov-card-heading"><div>${kicker ? `<span class="ov-kicker">${esc(kicker)}</span>` : ''}<h3>${esc(title)}</h3></div>${symbol ? `<span class="ov-card-emblem">${symbol}</span>` : ''}</div><div class="ov-card-body">${body}</div>${note ? `<p class="ov-note">${esc(note)}</p>` : ''}</article>`;
+  function card({title,body,note='',span=6,kicker=''}) {
+    return `<article class="ov-card ov-span-${span}"><div class="ov-card-heading"><div>${kicker ? `<span class="ov-kicker">${esc(kicker)}</span>` : ''}<h3>${esc(title)}</h3></div></div><div class="ov-card-body">${body}</div>${note ? `<p class="ov-note">${esc(note)}</p>` : ''}</article>`;
   }
   function metric(label,value,detail,tone='blue',symbol='',id='') {
     return `<article class="ov-stat ov-stat-${tone}"><div class="ov-stat-heading"><span>${esc(label)}</span>${symbol}</div><strong ${id ? `id="${id}"` : ''}>${value}</strong><small>${esc(detail)}</small></article>`;
@@ -68,7 +58,7 @@
     const total = valid.reduce((sum,row)=>sum+row.value,0);
     let angle = 0;
     const stops = valid.map((row,i)=>{const start=angle;angle+=row.value/total*360;return `${row.color || palette[i%palette.length]} ${start}deg ${angle}deg`;});
-    return `<div class="ov-donut-layout"><div class="ov-donut" role="img" aria-label="${esc(rows.map(row=>`${row.label} ${num(row.value)}`).join(', '))}" style="--ov-gradient:${total ? `conic-gradient(${stops.join(',')})` : '#e8eef6'}"><div><strong>${center}</strong><span>${esc(label)}</span></div></div><div class="ov-legend">${rows.map((row,i)=>`<div><i style="--ov-color:${row.color || palette[i%palette.length]}"></i>${rowLabel(row)}<strong>${num(row.value)}</strong><small>${total && row.value != null ? pct(row.value/total*100) : '—'}</small></div>`).join('')}</div></div>`;
+    return `<div class="ov-donut-layout"><div class="ov-donut" role="img" aria-label="${esc(rows.map(row=>`${row.label} ${num(row.value)}`).join(', '))}" style="--ov-gradient:${total ? `conic-gradient(${stops.join(',')})` : '#e8eef6'}"><div style="--ov-center-length:${Math.max(1,String(center).length)}"><strong>${center}</strong><span>${esc(label)}</span></div></div><div class="ov-legend">${rows.map((row,i)=>`<div><i style="--ov-color:${row.color || palette[i%palette.length]}"></i>${rowLabel(row)}<strong>${num(row.value)}</strong><small>${total && row.value != null ? pct(row.value/total*100) : '—'}</small></div>`).join('')}</div></div>`;
   }
   function bars(rows,options={}) {
     if (!rows.length) return empty();

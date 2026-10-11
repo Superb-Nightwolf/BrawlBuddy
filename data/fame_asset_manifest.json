@@ -1,0 +1,348 @@
+{
+  "source": "https://fankit.supercell.com/d/YvtsWV4pUQVm/game-assets?q=fame",
+  "description": "Official Supercell Fan Kit Fame artwork, stored unchanged from the CDN PNG renditions.",
+  "assets": [
+    {
+      "name": "icon_fame_5",
+      "source_url": "https://media.ffycdn.net/eu/supercell/3exkbMxukiWWgepHHjd6.png?width=800",
+      "local_url": "/assets/fame/icon_fame_5.png",
+      "sha256": "075b8573842cdf47287fa06a5361df9a2a460cc51fd9ccfa737a2bcf955ce97d",
+      "dimensions": [
+        800,
+        813
+      ]
+    },
+    {
+      "name": "pin_fame_sun",
+      "source_url": "https://media.ffycdn.net/eu/supercell/9mpivAWZto9s6SXhLXUu.png?width=800",
+      "local_url": "/assets/fame/pin_fame_sun.png",
+      "sha256": "ceac359a5c30e55fcaf4585b7f9ed017fcf00dab213421b0b637d5887effe2c5",
+      "dimensions": [
+        662,
+        675
+      ]
+    },
+    {
+      "name": "icon_fame_1_2",
+      "source_url": "https://media.ffycdn.net/eu/supercell/xoVT9DGrQBzckXcAGZap.png?width=800",
+      "local_url": "/assets/fame/icon_fame_1_2.png",
+      "sha256": "82e07d88a1d4bb50abe5a3c04d96f9a704ec10158f67fef411860dda11f9dc01",
+      "dimensions": [
+        800,
+        940
+      ]
+    },
+    {
+      "name": "icon_fame_1_3",
+      "source_url": "https://media.ffycdn.net/eu/supercell/G5Jgn2pptXEVXC1NJDc9.png?width=800",
+      "local_url": "/assets/fame/icon_fame_1_3.png",
+      "sha256": "3f8a01b66e2ba002dd97cfc701fe9ec8802d620044b8823944aa2a5903fffd12",
+      "dimensions": [
+        800,
+        961
+      ]
+    },
+    {
+      "name": "icon_fame_3",
+      "source_url": "https://media.ffycdn.net/eu/supercell/C8gzgi2AnUNaWWWK58uw.png?width=800",
+      "local_url": "/assets/fame/icon_fame_3.png",
+      "sha256": "194f11cb3ca95049d4993c44f0605ee60648fd46ae34be6278d8bf0831a7cc0b",
+      "dimensions": [
+        800,
+        938
+      ]
+    },
+    {
+      "name": "icon_fame_4",
+      "source_url": "https://media.ffycdn.net/eu/supercell/YkpeZLvsoZCapkbRwoCs.png?width=800",
+      "local_url": "/assets/fame/icon_fame_4.png",
+      "sha256": "db7d87514b810d9b1f98252e426fe1213c4fbf3b9d8394011cdc0b4293e4f575",
+      "dimensions": [
+        800,
+        710
+      ]
+    },
+    {
+      "name": "icon_fame_2",
+      "source_url": "https://media.ffycdn.net/eu/supercell/6JAksQ6ynkkPiULUMzwh.png?width=800",
+      "local_url": "/assets/fame/icon_fame_2.png",
+      "sha256": "f69e24d24a6ee89248ea74dd67ba602d89177f6e111a1826a56bedf1071c50e0",
+      "dimensions": [
+        800,
+        937
+      ]
+    },
+    {
+      "name": "icon_fame_1_1",
+      "source_url": "https://media.ffycdn.net/eu/supercell/eMQPpppj5c1uyTL1wqFz.png?width=800",
+      "local_url": "/assets/fame/icon_fame_1_1.png",
+      "sha256": "8ee4401ab02f7dd8b9efba70bb16353ca79c78bd2570fcd27f4504d74a45575b",
+      "dimensions": [
+        800,
+        937
+      ]
+    },
+    {
+      "name": "pin_fame_mars",
+      "source_url": "https://media.ffycdn.net/eu/supercell/RRmHQe5h6r4towqJQpDL.png?width=800",
+      "local_url": "/assets/fame/pin_fame_mars.png",
+      "sha256": "58e3d0148b35c62fd257ff8ad6323b6fb0f4a89532071d52ff9fd202061d8543",
+      "dimensions": [
+        661,
+        661
+      ]
+    },
+    {
+      "name": "pin_fame_moon",
+      "source_url": "https://media.ffycdn.net/eu/supercell/uyYtCnsh5QfC3kyFCoQj.png?width=800",
+      "local_url": "/assets/fame/pin_fame_moon.png",
+      "sha256": "7b9974fc4b424c42b7176d87621964cb3e5dd3ca21e7a55155887f6624ba52b9",
+      "dimensions": [
+        661,
+        661
+      ]
+    },
+    {
+      "name": "pin_fame_earth",
+      "source_url": "https://media.ffycdn.net/eu/supercell/7XqUUsnxSMwdzvJSmYsw.png?width=800",
+      "local_url": "/assets/fame/pin_fame_earth.png",
+      "sha256": "8ff5ceb048109517fdf26fe41569b652ea7d7510dc34747aeb39d527178d3d35",
+      "dimensions": [
+        709,
+        711
+      ]
+    },
+    {
+      "name": "pin_fame_meteor",
+      "source_url": "https://media.ffycdn.net/eu/supercell/29SwCihRHWPNkusSDyxp.png?width=800",
+      "local_url": "/assets/fame/pin_fame_meteor.png",
+      "sha256": "a60d011610b570ab23705ad13f815d97018eff798db70160f8a9d90c73e1447b",
+      "dimensions": [
+        661,
+        776
+      ]
+    },
+    {
+      "name": "pin_fame_saturn",
+      "source_url": "https://media.ffycdn.net/eu/supercell/2ftmxsoDgcxbEyLQsZKw.png?width=800",
+      "local_url": "/assets/fame/pin_fame_saturn.png",
+      "sha256": "03ac513215dc6221f48e0fb8d1edc1083c1edbb4645570089a9b3bb338e6e501",
+      "dimensions": [
+        693,
+        688
+      ]
+    },
+    {
+      "name": "icon_fame_meteoric",
+      "source_url": "https://media.ffycdn.net/eu/supercell/LnD6V648qAvniJ7KJDu1.png?width=800",
+      "local_url": "/assets/fame/icon_fame_meteoric.png",
+      "sha256": "082a7d5a5a831044f7573961c13b068ec4b8260391fa1022eb379a728d22d11f",
+      "dimensions": [
+        800,
+        1068
+      ]
+    },
+    {
+      "name": "emoji_fame_starrforce",
+      "source_url": "https://media.ffycdn.net/eu/supercell/1QMtGCYB9csusxPqFJH6.png?width=800",
+      "local_url": "/assets/fame/emoji_fame_starrforce.png",
+      "sha256": "2c0ef0f50060133db562336be79a257ab10a9c0449d39cf52df63dc9d39222fc",
+      "dimensions": [
+        661,
+        673
+      ]
+    },
+    {
+      "name": "profile_icon_earth",
+      "source_url": "https://media.ffycdn.net/eu/supercell/5JJRRBD54ZMrfsiPy8sF.png?width=800",
+      "local_url": "/assets/fame/profile_icon_earth.png",
+      "sha256": "c5e1e638840b3b41062f60e26297ccf1fed8236c23a19979543a40f8ef5f2228",
+      "dimensions": [
+        601,
+        601
+      ]
+    },
+    {
+      "name": "profile_icon_moon",
+      "source_url": "https://media.ffycdn.net/eu/supercell/pVsG3CwapR4Mes9DRBaC.png?width=800",
+      "local_url": "/assets/fame/profile_icon_moon.png",
+      "sha256": "51b88ce79d28db635e6549651fd82a802e2f8064274753ed316129b7df2dd4d0",
+      "dimensions": [
+        601,
+        601
+      ]
+    },
+    {
+      "name": "profile_icon_sun",
+      "source_url": "https://media.ffycdn.net/eu/supercell/euKZP5E7EWbX95DYGbh2.png?width=800",
+      "local_url": "/assets/fame/profile_icon_sun.png",
+      "sha256": "b63085f8469cac972f560788abbfcf734f1abb8c2879a22905161e78dadae5eb",
+      "dimensions": [
+        704,
+        657
+      ]
+    },
+    {
+      "name": "profile_icon_mars",
+      "source_url": "https://media.ffycdn.net/eu/supercell/X32ayQAfURSK3wqQ6FHm.png?width=800",
+      "local_url": "/assets/fame/profile_icon_mars.png",
+      "sha256": "3b7c0f083574334dd084d5d35894e3a1df4fb0814797466fb5a99baaa3a57d26",
+      "dimensions": [
+        601,
+        601
+      ]
+    },
+    {
+      "name": "profile_icon_saturn",
+      "source_url": "https://media.ffycdn.net/eu/supercell/JgC388p4YCewx6WQ6oPU.png?width=800",
+      "local_url": "/assets/fame/profile_icon_saturn.png",
+      "sha256": "1a0be06dfa57e97322a52f8a6302b0e656e15ac1231c666bfdf9be9f77da4395",
+      "dimensions": [
+        729,
+        601
+      ]
+    },
+    {
+      "name": "profile_icon_meteor",
+      "source_url": "https://media.ffycdn.net/eu/supercell/NrjbYrJJoQi7nNncR9q1.png?width=800",
+      "local_url": "/assets/fame/profile_icon_meteor.png",
+      "sha256": "98c491c902579f5200f4b84b99ecb4e03f79b6507a7876e36288d12a02433a6e",
+      "dimensions": [
+        601,
+        684
+      ]
+    },
+    {
+      "name": "AlienFame.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/56/AlienFame.png/revision/latest?cb=20260107154809",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:AlienFame.png",
+      "origin": "Supercell game artwork, wiki mirror for assets absent from the Fan Kit",
+      "local_url": "/assets/fame/AlienFame.png",
+      "sha256": "a0ba596a6986cc7a5c8619a736a82e1e737a930b49173841037f03fbaf17ba18",
+      "dimensions": [
+        288,
+        200
+      ]
+    },
+    {
+      "name": "Alien Fame-pfp.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/a/ab/Alien_Fame-pfp.png/revision/latest?cb=20251228190721",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:Alien_Fame-pfp.png",
+      "origin": "Supercell game artwork, wiki mirror for assets absent from the Fan Kit",
+      "local_url": "/assets/fame/Alien_Fame-pfp.png",
+      "sha256": "bfa1c01461486bd419884927b99d93cabe1b56ba74028e4299087a831ca1f110",
+      "dimensions": [
+        328,
+        280
+      ]
+    },
+    {
+      "name": "Fame Pin-Alien.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/c/ce/Fame_Pin-Alien.png/revision/latest?cb=20250703195836",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:Fame_Pin-Alien.png",
+      "origin": "Supercell game artwork, wiki mirror for assets absent from the Fan Kit",
+      "local_url": "/assets/fame/Fame_Pin-Alien.png",
+      "sha256": "15be32c405b37667885da951e6d52c83aaebb6871f0c79f9c8646b3babd9d0e4",
+      "dimensions": [
+        770,
+        570
+      ]
+    },
+    {
+      "name": "SolarFame.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/b/b1/SolarFame.png/revision/latest?cb=20260107154730",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:SolarFame.png",
+      "origin": "Supercell game artwork, wiki mirror for assets absent from the Fan Kit",
+      "local_url": "/assets/fame/SolarFame.png",
+      "sha256": "4f9c2898aa80efae13ba53e997c062e72233bcd4fa03aeb857226937d4d98b8e",
+      "dimensions": [
+        256,
+        230
+      ]
+    },
+    {
+      "name": "StarrForceFame.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/3/3d/StarrForceFame.png/revision/latest?cb=20260107154823",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:StarrForceFame.png",
+      "origin": "Supercell game artwork, wiki mirror for assets absent from the Fan Kit",
+      "local_url": "/assets/fame/StarrForceFame.png",
+      "sha256": "58143df7b3a3d15644d0be15013a9a72db11131affa6562a387f3bce83c1e485",
+      "dimensions": [
+        250,
+        203
+      ]
+    },
+    {
+      "name": "Starr Force Fame-pfp.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/f/f4/Starr_Force_Fame-pfp.png/revision/latest?cb=20251228190307",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:Starr_Force_Fame-pfp.png",
+      "origin": "Supercell game artwork, wiki mirror for assets absent from the Fan Kit",
+      "local_url": "/assets/fame/Starr_Force_Fame-pfp.png",
+      "sha256": "99ce44da5f2c5d75f7459cf9a1126bb7091eac0a872132061801f5bc910e2e93",
+      "dimensions": [
+        376,
+        332
+      ]
+    },
+    {
+      "name": "GlobalFame.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/60/GlobalFame.png/revision/latest?cb=20260107154640",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:GlobalFame.png",
+      "origin": "Supercell game artwork, wiki mirror for the badge without an embedded level star",
+      "local_url": "/assets/fame/GlobalFame.png",
+      "sha256": "6299fa1920e4f4fa2fdc4824c3fcd37a7dc2d23fd274b43c17e977bb1479cf38",
+      "dimensions": [
+        195,
+        194
+      ]
+    },
+    {
+      "name": "LunarFame.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/6/69/LunarFame.png/revision/latest?cb=20260107154654",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:LunarFame.png",
+      "origin": "Supercell game artwork, wiki mirror for the badge without an embedded level star",
+      "local_url": "/assets/fame/LunarFame.png",
+      "sha256": "48e7f1dd7182ba67a52ffa484998e8934f5232f3bd36b20d71f3f056d79acb68",
+      "dimensions": [
+        195,
+        195
+      ]
+    },
+    {
+      "name": "MartianFame.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/4/49/MartianFame.png/revision/latest?cb=20260107154716",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:MartianFame.png",
+      "origin": "Supercell game artwork, wiki mirror for the badge without an embedded level star",
+      "local_url": "/assets/fame/MartianFame.png",
+      "sha256": "4d9f7087193cce7a80c2fe38aa3046574f0276611c4c4dd4c62b1d861f29104b",
+      "dimensions": [
+        194,
+        195
+      ]
+    },
+    {
+      "name": "MeteoricFame.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/5/54/MeteoricFame.png/revision/latest?cb=20260107154736",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:MeteoricFame.png",
+      "origin": "Supercell game artwork, wiki mirror for the badge without an embedded level star",
+      "local_url": "/assets/fame/MeteoricFame.png",
+      "sha256": "fb40880cad0b4775847076093f3f7b7c638bbd89a996b546d258a485f30615cc",
+      "dimensions": [
+        190,
+        234
+      ]
+    },
+    {
+      "name": "SaturnianFame.png",
+      "source_url": "https://static.wikia.nocookie.net/brawlstars/images/9/98/SaturnianFame.png/revision/latest?cb=20260107154723",
+      "source_page": "https://brawlstars.fandom.com/wiki/File:SaturnianFame.png",
+      "origin": "Supercell game artwork, wiki mirror for the badge without an embedded level star",
+      "local_url": "/assets/fame/SaturnianFame.png",
+      "sha256": "a8228cbb4f76bcedada88b8db0f9001b7581e4d635ad8e1253ee6ebcb3f82244",
+      "dimensions": [
+        256,
+        194
+      ]
+    }
+  ]
+}
