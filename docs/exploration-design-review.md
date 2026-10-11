@@ -2,6 +2,8 @@
 
 Reviewed and implemented on 11 October 2026. This review uses the current local application and its existing artwork, rather than a new visual theme.
 
+The design changes are isolated on `feature/brawlbuddy_v0.0.9` in the attached `design-v0-0-9` worktree. Preview server: `http://127.0.0.1:8001/`. The original checkout remains on `ml`; ML routes, models, dependencies and the AI Meta page were excluded from this worktree.
+
 ## What the four reference pages teach us
 
 | Reference page | Information and layout | Strong design pattern | What carries forward |
@@ -59,10 +61,12 @@ Rotation summaries describe all returned slots; search and mode filters affect t
 | JavaScript syntax | `app.js` and `exploration-pages.js` pass `node --check`. |
 | Existing service tests | Battle log, rankings and events tests: 3 passed. |
 | Product route/guide test | Overview, Brawlers, Battle Log, Events, Leaderboards and the existing Surge guide: passed. |
+| Isolated branch validation | Re-ran the three service tests, two Overview metrics tests and the product route/guide test from the 0.0.9 worktree: 6 passed. |
 | Desktop covers | All three destination covers measured 400px at the browser's actual 1280px viewport. |
 | Battle interaction | All/Team/Showdown filters, empty Showdown state, tactical overlay and match ⓘ verified. |
 | Events interaction | Map search returns the expected slot; Brawl Ball filter returns 3 slots; preview shows the full map; close button verified. First-row cards measured equal height. |
 | Rankings interaction | Search for Mikee returns one row while preserving three podium cards. Empty search result, club mode, India region, and player-profile navigation verified. Original connected player restored after testing. Podium cards measured equal height. |
+| Club-opening regression fix | Podium and table profile actions now use direct profile links through the shared page router. They no longer call the dialog-only Connect tag flow. Verified Heaven, CODE: LENAIN, and @toxicgenie, including a podium click with an empty search result; player navigation also verified. Ranking and club service tests: 3 passed. |
 | Information controls | Click and Escape verified; the rightmost metric tooltip stays within the desktop viewport. |
 | Browser errors | No JavaScript console errors observed on the three updated pages. |
 | Responsive scope | Responsive rules added for tablet and phone layouts, including stacked teams/dialog content and table scrolling. The browser viewport override did not change its actual width, so phone screenshots were not verified in this session. |

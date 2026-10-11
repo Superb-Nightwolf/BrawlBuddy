@@ -1716,6 +1716,7 @@ function renderLeaderboard() {
 
   const isPlayers = state.rankingsType === 'players';
   const displayName = value => String(value || '').replace(/<c[0-9a-f]*>|<\/c>/gi,'');
+  const profileHref = item => isPlayers ? `/?player=${encodeURIComponent(item.tag)}` : `/club/${encodeURIComponent(item.tag)}`;
   setText('lb-col-name', isPlayers ? 'Player' : 'Club');
   setText('lb-col-meta', isPlayers ? 'Club / Alliance' : 'Members Capacity');
 
@@ -1746,7 +1747,7 @@ function renderLeaderboard() {
         <img class="podium-portrait" src="${rankingPortrait(item)}" alt="" onerror="this.onerror=null;this.src='/assets/roster-all.svg'">
         <strong>${escapeMarkup(displayName(item.name))}</strong><small>${escapeMarkup(isPlayers ? displayName(item.club_name) || 'No club' : `${item.member_count ?? 0} / 30 members`)}</small>
         <div class="podium-score"><img src="/assets/icon_trophy.png" alt="Trophies">${format(item.trophies)}</div>
-        <button class="small-action inspect-lb-btn" data-tag="${escapeMarkup(item.tag)}" type="button">Open ${isPlayers ? 'player' : 'club'} ${ExplorationPages.arrow}</button>`;
+        <a class="small-action inspect-lb-btn" href="${profileHref(item)}">Open ${isPlayers ? 'player' : 'club'} ${ExplorationPages.arrow}</a>`;
       podium.append(card);
     });
     BrawlBuddyMotion.enter(podium, true);
@@ -1756,7 +1757,6 @@ function renderLeaderboard() {
     const emptyRow = document.createElement('tr');
     emptyRow.innerHTML = `<td colspan="5"><div class="empty-state"><strong>${state.rankingsLoading ? 'Loading the standings' : items?.length ? 'No matching competitors' : 'No rankings available'}</strong>${state.rankingsLoading ? 'Fetching players and clubs for the selected region' : items?.length ? 'Try a different name, tag or club' : 'Try another region to explore its trophy standings'}</div></td>`;
     tbody.append(emptyRow);
-    bindProfiles();
     return;
   }
 
@@ -1775,30 +1775,14 @@ function renderLeaderboard() {
       </td>
       <td class="roster-trophies"><img class="table-trophy-icon" src="/assets/icon_trophy.png" alt="Trophies">${format(item.trophies)}</td>
       <td style="text-align: right;">
-        <button class="member-tag-pill inspect-lb-btn" data-tag="${escapeMarkup(item.tag)}" type="button">
+        <a class="member-tag-pill inspect-lb-btn" href="${profileHref(item)}">
           <span>#</span>${escapeMarkup(item.tag.replace('#', ''))}
-        </button>
+        </a>
       </td>
     `;
     tbody.append(tr);
   });
 
-  bindProfiles();
-  function bindProfiles() {
-    $('leaderboards-view').querySelectorAll('.inspect-lb-btn').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      const tag = e.currentTarget.dataset.tag;
-      if (tag) {
-        if (state.rankingsType === 'players') {
-          loadPlayer(tag);
-          history.pushState(null, '', `/?player=${encodeURIComponent(tag)}`);
-        } else {
-          loadSmartTag(tag);
-        }
-      }
-    });
-    });
-  }
 }
 
 // -------------------------------------------------------------
