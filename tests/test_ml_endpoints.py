@@ -26,6 +26,35 @@ def test_ml_routes(ml_client, url):
     assert ml_client.get(url).status_code == 200
 
 
+def test_bulk_progress_reports_fresh_external_worker(ml_client, monkeypatch, tmp_path):
+    import json
+    from datetime import UTC, datetime
+    monkeypatch.setattr(routes, 'bulk_dataset_directory', tmp_path)
+    (tmp_path / 'progress.json').write_text(json.dumps({'updated_at': datetime.now(UTC).isoformat(),
+        'state': 'running', 'selected_players': 100000, 'unique_matches': 2000}))
+    response = ml_client.get('/api/ml/bulk-dataset/status').json()
+    assert response['available'] is True
+    assert response['is_stale'] is False
+    assert response['unique_matches'] == 2000
+    assert response['selected_players'] == 100000
+
+
+def test_bulk_progress_flags_stale_running_report(ml_client, monkeypatch, tmp_path):
+    import json
+    from datetime import UTC, datetime, timedelta
+    monkeypatch.setattr(routes, 'bulk_dataset_directory', tmp_path)
+    (tmp_path / 'progress.json').write_text(json.dumps({'updated_at': (datetime.now(UTC)-timedelta(minutes=5)).isoformat(), 'state': 'running'}))
+    response = ml_client.get('/api/ml/bulk-dataset/status').json()
+    assert response['is_stale'] is True
+
+
+def test_bulk_progress_handles_missing_and_malformed_report(ml_client, monkeypatch, tmp_path):
+    monkeypatch.setattr(routes, 'bulk_dataset_directory', tmp_path)
+    assert ml_client.get('/api/ml/bulk-dataset/status').json()['state'] == 'not_started'
+    (tmp_path / 'progress.json').write_text('{broken')
+    assert ml_client.get('/api/ml/bulk-dataset/status').json()['state'] == 'unavailable'
+
+
 @pytest.mark.parametrize('payload', [
     {'teamBrawlers': [16000000]*2},
     {'teamBrawlers': [16000000], 'enemyBrawlers': [16000000]},

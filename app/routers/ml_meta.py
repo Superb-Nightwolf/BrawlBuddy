@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import logging
+import json
 from collections import defaultdict
 from contextlib import closing
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Optional
 
@@ -19,6 +21,24 @@ from app.services.player_service import PlayerService
 logger = logging.getLogger("brawlbuddy.router.ml_meta")
 
 router = APIRouter(prefix="/api", tags=["ML & Meta"])
+bulk_dataset_directory = PROJECT_ROOT / 'data' / 'bulk-sample-100k'
+
+
+@router.get('/ml/bulk-dataset/status')
+def get_bulk_dataset_status() -> dict[str, Any]:
+    """Read the external worker's published checkpoint without touching its database."""
+    try:
+        progress = json.loads((bulk_dataset_directory / 'progress.json').read_text(encoding='utf-8'))
+        timestamp = datetime.fromisoformat(progress['updated_at'])
+        if timestamp.tzinfo is None:
+            timestamp = timestamp.replace(tzinfo=UTC)
+        age = max(0, (datetime.now(UTC) - timestamp).total_seconds())
+        return {**progress, 'available': True, 'is_stale': age > 120,
+                'report_age_seconds': round(age), 'publish_interval_seconds': 30}
+    except FileNotFoundError:
+        return {'available': False, 'state': 'not_started', 'message': 'The bulk CSV worker has not started.'}
+    except (OSError, ValueError, KeyError, TypeError):
+        return {'available': False, 'state': 'unavailable', 'message': 'The latest collection report could not be read. Retrying…'}
 
 # Initialize ML services
 db_path = PROJECT_ROOT / "data" / "brawl_meta.db"

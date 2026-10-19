@@ -16,7 +16,7 @@
   const heading = (title, text) => `<div class="meta-section-heading"><h3>${esc(title)}</h3>${help(title,text)}</div>`;
   const empty = (title, text) => `<div class="meta-empty"><strong>${esc(title)}</strong><p>${esc(text)}</p></div>`;
   async function request(url, payload) {
-    const response = await fetch(url, {signal:ui.controller?.signal,
+    const response = await fetch(url, {signal:ui.controller?.signal,cache:'no-store',
       ...(payload === undefined ? {} : {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})});
     const data = await response.json();
     if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : 'Check the selected draft and try again.');
@@ -28,12 +28,15 @@
   }
   async function load() {
     stop(); ui.controller=new AbortController(); const epoch=ui.epoch;
+    if(new URLSearchParams(location.search).get('section')==='pipeline') ui.tab='operations';
     $('meta-view').innerHTML='<div class="meta-empty" role="status">Loading the meta explorer…</div>';
     try {
       const [status, filters] = await Promise.all([request('/api/ml/model-status'),request('/api/meta/filters')]);
       if (epoch !== ui.epoch) return;
       ui.status=status; ui.filters=filters.data;
       renderShell(); await refresh();
+      if(new URLSearchParams(location.search).get('section')==='pipeline' && ui.tab==='operations')
+        $('meta-view').querySelector('.meta-bulk-panel')?.scrollIntoView({block:'start'});
     } catch (error) {
       if (error.name !== 'AbortError') $('meta-view').innerHTML=empty('Meta explorer is unavailable',error.message);
     }
@@ -92,7 +95,10 @@
           mode:ui.mode,map:ui.map || 'Unknown Map',teamBrawlers:ui.allies,enemyBrawlers:ui.enemies})).data;
         markup=draft(step.data,prediction);
       } else if(ui.tab==='transparency') {markup=transparency(await request('/api/ml/transparency/summary'));}
-      else markup=operations(await request('/api/ml/operations/telemetry'));
+      else {
+        const [data,bulk]=await Promise.all([request('/api/ml/operations/telemetry'),request('/api/ml/bulk-dataset/status')]);
+        markup=operations(data,bulk);
+      }
       if(epoch!==ui.epoch)return;
       area.innerHTML=markup;ExplorationPages.bind(area);bindContent();
       if(ui.tab==='operations') pollOperations();
@@ -134,9 +140,23 @@
       <h4>Stored matches by mode</h4><div class="meta-summary-grid">${(ds.modes_distribution || []).map(item=>metric(titleMode(item.mode),num(item.matches),'blue')).join('')}</div>
     </section>`;
   }
-  function operations(data) {
+  function bulkProgress(data) {
+    if(!data.available)return empty('Collection report unavailable',data.message || 'The worker has not published its first report.');
+    const target=Number(data.target_players) || 100000, recordTarget=Number(data.target_observations) || 5000000;
+    const stale=data.is_stale && ['running','backoff'].includes(data.state);
+    const tags=Number(data.selected_players) || Number(data.candidate_tags) || 0;
+    const bar=(label,value,max)=>`<div class="meta-bulk-progress"><div><span>${esc(label)}</span><strong>${pct(Math.min(1,value/max))}</strong></div><progress value="${Math.max(0,Math.min(max,value))}" max="${max}" aria-label="${esc(label)}"></progress><small>${num(value)} / ${num(max)}</small></div>`;
+    const labels={running:'Running',backoff:'Retrying after a service delay',complete:'Complete',incomplete:'Finished with gaps',stopped:'Stopped',needs_token:'Token needs attention',disk_low:'Paused · low disk space',error:'Worker error'};
+    return `<div class="meta-bulk-state"><span class="meta-bulk-badge ${stale?'is-stale':''}">${esc(stale?'Awaiting a fresh worker report':labels[data.state] || data.state)}</span><span>${data.phase==='collection'?'Collecting recent player matches':'Discovering player tags'}</span></div>
+      <div class="meta-summary-grid">${metric('Players polled',num(data.players_polled),'blue')}${metric('Captured match records',num(data.player_match_observations),'mint')}${metric('Unique matches',num(data.unique_matches),'purple')}${metric('Eligible 3v3 matches',num(data.eligible_3v3_matches),'gold')}</div>
+      <div class="meta-bulk-bars">${bar('Player tags',tags,target)}${bar('Players with 50 matches',Number(data.players_at_target) || 0,target)}${bar('Match records',Number(data.player_match_observations) || 0,recordTarget)}</div>
+      <div class="meta-bulk-activity"><span>Latest worker activity</span><strong>${esc(data.message)}</strong><small>Last report ${esc(new Date(data.updated_at).toLocaleTimeString())} · publishes about every 30 seconds${stale?' · check the worker before assuming collection is active':''}</small></div>`;
+  }
+  function operations(data,bulk) {
     const t=data.telemetry, running=data.operation_state.running;
-    return `<section class="meta-panel">${heading('Collect, verify and train','Discovery gathers tags from leaderboards and club rosters, then follows observed participants in bounded batches. The target is a collection goal, not a guarantee. Collection is rate limited and stops on credential or exhausted rate-limit errors. Training runs in a worker thread while pages remain available. Only one operation runs at a time in this local server process. Saved rows survive restarts; in-flight jobs do not resume automatically.')}
+    return `<section class="meta-panel meta-bulk-panel">${heading('Live collection · 100,000 players','This separate background worker targets 100,000 player tags and 50 distinct captured matches per player. It publishes progress about every 30 seconds; this panel checks automatically. Each poll supplies up to 25 recent matches, so reaching 50 needs new activity. Shared matches are deduplicated, while player-relative results remain separate. The temporary CSV sample is not yet imported into the current model data. Stale reports are flagged; completed or unavailable players are skipped. All counts come from worker checkpoints.')}
+      <div id="meta-bulk-live">${bulkProgress(bulk)}</div></section>
+      <section class="meta-panel">${heading('Collect, verify and train','These manual controls operate on the current model data, separately from the bulk CSV sample above. Discovery gathers tags from leaderboards and club rosters, then follows observed participants in bounded batches. The target is a collection goal, not a guarantee. Collection is rate limited and stops on credential or exhausted rate-limit errors. Training runs in a worker thread while pages remain available. Only one operation runs at a time in this local server process. Saved rows survive restarts; in-flight manual jobs do not resume automatically.')}
       <div class="meta-summary-grid">${metric('Player pool',num(t.total_players),'blue')}${metric('Polled players',num(t.polled_players),'mint')}${metric('Stored matches',num(t.total_matches),'purple')}</div>
       <div class="meta-operation-grid"><form data-operation="scale-players"><h4>Discover players</h4><label>Pool target<input name="target_players" type="number" value="5000" min="100" max="100000" required></label><button type="submit" ${running?'disabled':''}>Discover tags</button></form>
         <form data-operation="collect"><h4>Collect current battles</h4><label>Players in this batch<input name="max_players" type="number" value="50" min="1" max="1000" required></label><label>Requests per second<input name="rps" type="number" value="2" min="1" max="10" step=".5" required></label><button type="submit" ${running?'disabled':''}>Collect battles</button></form>
@@ -168,7 +188,9 @@
     if(ui.tab!=='operations' || location.pathname!=='/meta' || document.hidden) {ui.timer=setTimeout(pollOperations,3000);return;}
     const epoch=ui.epoch;
     try {
-      const op=await request('/api/ml/operations/status');if(epoch!==ui.epoch)return;
+      const [op,bulk]=await Promise.all([request('/api/ml/operations/status'),request('/api/ml/bulk-dataset/status')]);if(epoch!==ui.epoch)return;
+      const bulkMarkup=bulkProgress(bulk), bulkArea=$('meta-bulk-live');
+      if(bulkArea && bulkArea.innerHTML!==bulkMarkup)bulkArea.innerHTML=bulkMarkup;
       if($('meta-operation-title'))$('meta-operation-title').textContent=op.running?'Running: '+op.task:'Ready';
       if($('meta-operation-message'))$('meta-operation-message').textContent=op.message;
       $('meta-content')?.querySelectorAll('[type="submit"]').forEach(button=>button.disabled=op.running);
@@ -185,7 +207,7 @@
           metric('Current matches',num(ds.verified_matches),'mint')+
           metric('Active model',metrics?.model_name || 'Awaiting training','purple')+
           metric('Holdout ROC-AUC',metrics?Number(metrics.roc_auc).toFixed(3):'—','gold');
-        const summary=$('meta-content').querySelector('.meta-summary-grid');
+        const summary=$('meta-content').querySelector('.meta-panel:not(.meta-bulk-panel) .meta-summary-grid');
         if(summary)summary.innerHTML=metric('Player pool',num(data.telemetry.total_players),'blue')+
           metric('Polled players',num(data.telemetry.polled_players),'mint')+metric('Stored matches',num(data.telemetry.total_matches),'purple');
       }

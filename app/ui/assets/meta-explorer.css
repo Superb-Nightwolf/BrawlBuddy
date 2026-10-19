@@ -78,6 +78,22 @@
 .meta-operation-grid button { margin-top:auto; }
 .meta-operation-status { padding:20px; margin-top:24px; border-radius:20px; border:2px solid #b5dacd; background:#f0faf6; }
 .meta-operation-status p { color:#5d7d72; font-size:14px; line-height:1.6; }
+.meta-bulk-panel { border-color:#b5ddcf; background:linear-gradient(125deg,#fff,#f2fbf8); scroll-margin-top:16px; }
+.meta-bulk-state { display:flex; align-items:center; gap:14px; flex-wrap:wrap; color:#607f96; font-size:13px; }
+.meta-bulk-badge { border:1px solid #9cd4bd; background:#ddf7ec; color:#188366; border-radius:20px; padding:7px 14px; font-weight:800; }
+.meta-bulk-badge.is-stale { border-color:#ebd295; background:#fff5d4; color:#997326; }
+.meta-bulk-bars { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+.meta-bulk-progress>div { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:13px; margin-bottom:10px; }
+.meta-bulk-progress progress { display:block; appearance:none; width:100%; height:12px; border:0; border-radius:9px; overflow:hidden; background:#e5eef7; }
+.meta-bulk-progress progress::-webkit-progress-bar { background:#e5eef7; border-radius:9px; }
+.meta-bulk-progress progress::-webkit-progress-value { background:linear-gradient(90deg,#27b697,#2794ec); border-radius:9px; }
+.meta-bulk-progress progress::-moz-progress-bar { background:#27b697; border-radius:9px; }
+.meta-bulk-progress small { display:block; margin-top:8px; color:#628099; font-size:12px; }
+.meta-bulk-activity { display:flex; flex-direction:column; gap:8px; margin-top:24px; padding:18px 20px; border:1px solid #c4dfd5; border-radius:16px; background:#fff; }
+.meta-bulk-activity>span { color:#478873; font-size:11px; text-transform:uppercase; letter-spacing:.07em; font-weight:800; }
+.meta-bulk-activity strong { overflow-wrap:anywhere; font-size:14px; }
+.meta-bulk-activity small { color:#68829c; font-size:12px; }
+@media(max-width:650px) { .meta-bulk-bars { grid-template-columns:1fr; } }
 @media(min-width:1200px) { .header-navigation .nav-list { grid-template-columns:repeat(7,minmax(0,1fr)); } }
 @media(max-width:1000px) { .meta-split { grid-template-columns:1fr; } .meta-cover-metrics,.meta-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .meta-operation-grid { grid-template-columns:1fr; } }
 @media(max-width:650px) { .meta-cover { min-height:0; padding:22px; gap:24px; border-radius:26px; } .meta-cover-top { flex-wrap:wrap; gap:18px; } .meta-cover-emblem { width:88px;height:88px;flex-basis:88px;border-radius:22px; } .meta-cover-emblem img { width:60px;height:60px; } .meta-cover-copy { flex-basis:60%; } .meta-cover h2 { font-size:32px; } .meta-cover-copy p { font-size:13px; } .meta-cover-top>.readiness-info-wrap { position:absolute; right:0; top:0; } .meta-panel { padding:18px; } .meta-draft-teams { grid-template-columns:1fr; } .meta-tabs button { flex:1 0 40%; } .meta-filters label { min-width:140px; } .meta-metric { padding:14px; } .meta-section-heading h3 { font-size:22px; } }

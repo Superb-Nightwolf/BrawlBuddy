@@ -16,3 +16,6 @@ data/brawl_advisor.db
 /data/brawl_meta.db*
 /data/models/
 /data/server.*.log
+
+# Temporary large collection samples, exports and worker checkpoints
+/data/bulk-sample-*/
