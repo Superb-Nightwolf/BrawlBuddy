@@ -82,9 +82,9 @@
 :is(#overview-view, #club-view) .hero-collection-link .hero-collection-remaining { color: #806832; font-size: 10px; font-weight: 700; letter-spacing: 0; }
 :is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding: 8px 11px; background: linear-gradient(#fffef3, #fff2bf); border: 2px solid #fffdf0; border-radius: 10px; box-shadow: 0 3px 0 #d9b963; color: #19365b; font-size: 11px; font-weight: 800; letter-spacing: 0; }
 :is(#overview-view, #club-view) .hero-collection-action b { font-size: 29px; line-height: .7; }
-/* Player and club covers share the roster Prestige banner's desktop height. */
+/* The club cover keeps its compact statistics beside the badge. */
 @media (min-width: 1181px) {
-  :is(#overview-view, #club-view) .player-hero {
+  #club-view .player-hero {
     height: var(--profile-cover-height);
     min-height: var(--profile-cover-height);
     grid-template-columns: 276px minmax(0, 1fr) 244px;
@@ -93,34 +93,34 @@
     padding: 28px;
   }
   /* Compact only the player and club cover statistics; retain the established cover height. */
-  :is(#overview-view, #club-view) .player-hero { grid-template-rows: minmax(0, 1fr) 128px; }
-  :is(#overview-view, #club-view) .hero-stats > div { grid-template-rows: 44px auto; align-content: center; row-gap: 10px; }
-  :is(#overview-view, #club-view) .player-avatar-card { grid-column: 1; grid-row: 1 / -1; align-self: stretch; padding: 24px 10px 20px; }
-  :is(#overview-view, #club-view) .avatar-frame { width: 256px; height: 256px; flex-shrink: 0; }
-  :is(#overview-view, #club-view) .player-hero-copy { grid-column: 2; grid-row: 1; align-self: end; }
-  :is(#overview-view, #club-view) .player-hero-copy h2 { margin-top: 0; font-size: clamp(36px, 3.8vw, 58px); }
-  :is(#overview-view, #club-view) .profile-meta { margin-top: 12px; gap: 8px; }
-  :is(#overview-view, #club-view) .hero-collection-link { grid-column: 3; grid-row: 1 / -1; align-self: stretch; justify-content: center; padding: 14px; }
-  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { font-size: 56px; margin: 12px 0 5px; }
-  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { margin-top: 10px; }
-  :is(#overview-view, #club-view) .hero-stats { grid-column: 2; grid-row: 2; gap: 10px; align-self: stretch; height: 100%; }
-  :is(#overview-view, #club-view) .hero-stats > div { grid-template-columns: 44px minmax(0, 1fr); gap: 8px 6px; padding: 12px 10px; border-radius: 17px; }
-  :is(#overview-view, #club-view) .hero-stats .mini-icon,
-  :is(#overview-view, #club-view) .hero-stats .mini-icon :is(img, svg) { width: 44px; height: 44px; }
-  :is(#overview-view, #club-view) .hero-stats small { font-size: 9px; line-height: 1.25; }
-  :is(#overview-view, #club-view) .hero-stats strong { font-size: clamp(24px, 2.2vw, 34px); }
-  :is(#overview-view, #club-view) .hero-stat-watermark { width: 88px; height: 88px; }
+  #club-view .player-hero { grid-template-rows: minmax(0, 1fr) 128px; }
+  #club-view .hero-stats > div { grid-template-rows: 44px auto; align-content: center; row-gap: 10px; }
+  #club-view .player-avatar-card { grid-column: 1; grid-row: 1 / -1; align-self: stretch; padding: 24px 10px 20px; }
+  #club-view .avatar-frame { width: 256px; height: 256px; flex-shrink: 0; }
+  #club-view .player-hero-copy { grid-column: 2; grid-row: 1; align-self: end; }
+  #club-view .player-hero-copy h2 { margin-top: 0; font-size: clamp(36px, 3.8vw, 58px); }
+  #club-view .profile-meta { margin-top: 12px; gap: 8px; }
+  #club-view .hero-collection-link { grid-column: 3; grid-row: 1 / -1; align-self: stretch; justify-content: center; padding: 14px; }
+  #club-view .hero-collection-link .hero-collection-count { font-size: 56px; margin: 12px 0 5px; }
+  #club-view .hero-collection-link .hero-collection-action { margin-top: 10px; }
+  #club-view .hero-stats { grid-column: 2; grid-row: 2; gap: 10px; align-self: stretch; height: 100%; }
+  #club-view .hero-stats > div { grid-template-columns: 44px minmax(0, 1fr); gap: 8px 6px; padding: 12px 10px; border-radius: 17px; }
+  #club-view .hero-stats .mini-icon,
+  #club-view .hero-stats .mini-icon :is(img, svg) { width: 44px; height: 44px; }
+  #club-view .hero-stats small { font-size: 9px; line-height: 1.25; }
+  #club-view .hero-stats strong { font-size: clamp(24px, 2.2vw, 34px); }
+  #club-view .hero-stat-watermark { width: 88px; height: 88px; }
 }
 @media (min-width: 1181px) and (max-width: 1300px) {
-  :is(#overview-view, #club-view) .player-hero { grid-template-columns: 252px minmax(0, 1fr) 208px; column-gap: 18px; }
-  :is(#overview-view, #club-view) .avatar-frame { width: 232px; height: 232px; }
-  :is(#overview-view, #club-view) .hero-stats { gap: 8px; }
-  :is(#overview-view, #club-view) .hero-stats > div { grid-template-columns: 36px minmax(0, 1fr); padding: 9px 7px; column-gap: 4px; }
-  :is(#overview-view, #club-view) .hero-stats > div { grid-template-rows: 36px auto; column-gap: 7px; }
-  :is(#overview-view, #club-view) .hero-stats .mini-icon,
-  :is(#overview-view, #club-view) .hero-stats .mini-icon :is(img, svg) { width: 36px; height: 36px; }
-  :is(#overview-view, #club-view) .hero-stats small { font-size: 8px; }
-  :is(#overview-view, #club-view) .hero-stats strong { font-size: 26px; }
+  #club-view .player-hero { grid-template-columns: 252px minmax(0, 1fr) 208px; column-gap: 18px; }
+  #club-view .avatar-frame { width: 232px; height: 232px; }
+  #club-view .hero-stats { gap: 8px; }
+  #club-view .hero-stats > div { grid-template-columns: 36px minmax(0, 1fr); padding: 9px 7px; column-gap: 4px; }
+  #club-view .hero-stats > div { grid-template-rows: 36px auto; column-gap: 7px; }
+  #club-view .hero-stats .mini-icon,
+  #club-view .hero-stats .mini-icon :is(img, svg) { width: 36px; height: 36px; }
+  #club-view .hero-stats small { font-size: 8px; }
+  #club-view .hero-stats strong { font-size: 26px; }
 }
 @media (max-width: 1180px) {
   :is(#overview-view, #club-view) .player-hero { grid-template-columns: 170px minmax(0, 1fr) 220px; gap: 22px 26px; padding: 26px; }
@@ -229,26 +229,116 @@
   :is(#overview-view, #club-view) .hero-stats strong { font-size: min(26px,25cqi); }
 }
 
-/* The username and stat row share the avatar frame's top and bottom edges. */
+/* Align the club name and statistics with the badge frame. */
 @media (min-width: 1181px) {
-  :is(#overview-view, #club-view) .player-hero {
+  #club-view .player-hero {
     --player-frame-size: 256px;
     --player-stat-row-size: 128px;
     grid-template-rows: calc(var(--player-frame-size) - var(--player-stat-row-size) - 16px) var(--player-stat-row-size);
     align-content: center;
   }
-  :is(#overview-view, #club-view) .player-avatar-card { padding: 0 10px; }
-  :is(#overview-view, #club-view) .player-hero-copy { align-self: start; }
-  :is(#overview-view, #club-view) .hero-collection-link { height: var(--player-frame-size); align-self: center; padding: 12px; }
-  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-heading { font-size: 9px; }
-  :is(#overview-view, #club-view) .hero-collection-heading img { width: 24px; height: 24px; }
-  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { font-size: 48px; margin: 8px 0 3px; }
-  :is(#overview-view, #club-view) .hero-collection-link > small { font-size: 10px; }
-  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-progress { flex-shrink: 0; height: 9px; margin: 8px 0 4px; }
-  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-remaining { font-size: 9px; }
-  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-action { margin-top: 8px; padding: 7px 10px; font-size: 10px; }
+  #club-view .player-avatar-card { padding: 0 10px; }
+  #club-view .player-hero-copy { align-self: start; }
+  #club-view .hero-collection-link { height: var(--player-frame-size); align-self: center; padding: 12px; }
+  #club-view .hero-collection-link .hero-collection-heading { font-size: 9px; }
+  #club-view .hero-collection-heading img { width: 24px; height: 24px; }
+  #club-view .hero-collection-link .hero-collection-count { font-size: 48px; margin: 8px 0 3px; }
+  #club-view .hero-collection-link > small { font-size: 10px; }
+  #club-view .hero-collection-link .hero-collection-progress { flex-shrink: 0; height: 9px; margin: 8px 0 4px; }
+  #club-view .hero-collection-link .hero-collection-remaining { font-size: 9px; }
+  #club-view .hero-collection-link .hero-collection-action { margin-top: 8px; padding: 7px 10px; font-size: 10px; }
 }
 @media (min-width: 1181px) and (max-width: 1300px) {
-  :is(#overview-view, #club-view) .player-hero { --player-frame-size: 232px; --player-stat-row-size: 112px; }
-  :is(#overview-view, #club-view) .hero-collection-link .hero-collection-count { font-size: 42px; }
+  #club-view .player-hero { --player-frame-size: 232px; --player-stat-row-size: 112px; }
+  #club-view .hero-collection-link .hero-collection-count { font-size: 42px; }
+}
+
+/* Overview: equal portrait and collection panels frame a centered identity.
+   The five statistics share one full-width baseline at every desktop size. */
+#overview-view .player-hero {
+  --profile-panel-size: 216px;
+  grid-template-columns: var(--profile-panel-size) minmax(0, 1fr) var(--profile-panel-size);
+  grid-template-rows: minmax(var(--profile-panel-size), auto) auto;
+  gap: 26px 32px;
+  padding: 38px 32px 28px;
+  min-height: var(--profile-cover-height);
+  height: auto;
+  background: radial-gradient(ellipse at 50% 8%, #fff 0, #ffffff00 52%), linear-gradient(120deg, #edf5ff, #e4efff 50%, #edf5ff);
+}
+#overview-view .player-hero::before { opacity: .16; }
+#overview-view .player-hero::after {
+  top: -55px; left: 50%; right: auto; width: 310px; height: 310px;
+  transform: translateX(-50%); opacity: .055;
+}
+#overview-view .hero-burst { left: 50%; transform: translateX(-50%); opacity: .025; }
+#overview-view .player-avatar-card { grid-column: 1; grid-row: 1; padding: 0; align-self: center; }
+#overview-view .avatar-frame { width: var(--profile-panel-size); height: var(--profile-panel-size); flex-shrink: 0; }
+#overview-view .player-hero-copy { grid-column: 2; grid-row: 1; align-self: center; text-align: center; }
+#overview-view .player-hero-copy h2 { font-size: clamp(36px, 4.2vw, 62px); line-height: 1.12; text-wrap: balance; }
+#overview-view .profile-meta { justify-content: center; gap: 10px; margin-top: 20px; }
+#overview-view :is(.meta-tag, .club-pill, .hero-xp-badge) { min-height: 36px; }
+#overview-view .hero-collection-link {
+  grid-column: 3; grid-row: 1; align-self: center; justify-content: center;
+  min-height: var(--profile-panel-size); height: auto; padding: 14px;
+  border-radius: 24px;
+}
+#overview-view .hero-collection-link .hero-collection-heading { font-size: 9px; letter-spacing: .5px; }
+#overview-view .hero-collection-heading img { width: 24px; height: 24px; }
+#overview-view .hero-collection-link .hero-collection-count { font-size: 44px; margin: 8px 0 4px; }
+#overview-view .hero-collection-link .hero-collection-total { font-size: 14px; }
+#overview-view .hero-collection-link > small { font-size: 10px; }
+#overview-view .hero-collection-link .hero-collection-progress { height: 9px; margin: 10px 0 5px; flex-shrink: 0; }
+#overview-view .hero-collection-link .hero-collection-remaining { font-size: 9px; }
+#overview-view .hero-collection-link .hero-collection-action { margin-top: 10px; padding: 8px 10px; font-size: 10px; }
+#overview-view .hero-stats { grid-column: 1 / -1; grid-row: 2; gap: 14px; align-self: stretch; height: auto; }
+#overview-view .hero-stats > div {
+  --hero-stat-icon-size: 36px;
+  grid-template-columns: var(--hero-stat-icon-size) minmax(0, 1fr);
+  grid-template-rows: var(--hero-stat-icon-size) auto;
+  align-content: center; gap: 10px; padding: 14px 16px;
+  border-radius: 18px; min-height: 112px;
+}
+#overview-view .hero-stats .mini-icon,
+#overview-view .hero-stats .mini-icon :is(img, svg) { width: var(--hero-stat-icon-size); height: var(--hero-stat-icon-size); }
+#overview-view .hero-stats small { font-size: 10px; line-height: 1.35; }
+#overview-view .hero-stats strong { font-size: min(34px, 24cqi); line-height: 1; }
+#overview-view .hero-stat-watermark { width: 80px; height: 80px; right: 12px; bottom: 8px; opacity: .065; }
+#overview-view .hero-stats > div::after { display: none; }
+#overview-view .hero-collection-link:focus-visible,
+#overview-view :is(.meta-tag, .club-pill):focus-visible { outline: 3px solid #326dae; outline-offset: 5px; }
+@media (min-width: 1600px) {
+  #overview-view .player-hero { --profile-panel-size: 216px; gap: 28px 40px; padding: 42px 40px 30px; }
+}
+@media (min-width: 951px) and (max-width: 1180px) {
+  #overview-view .player-hero { --profile-panel-size: 216px; gap: 24px; padding: 36px 26px 26px; }
+  #overview-view .player-hero-copy h2 { font-size: 42px; }
+  #overview-view .hero-stats > div { padding: 12px; gap: 8px; --hero-stat-icon-size: 32px; }
+}
+@media (min-width: 541px) and (max-width: 950px) {
+  #overview-view .player-hero { --profile-panel-size: 144px; grid-template-columns: 144px minmax(0, 1fr); padding: 34px 26px 26px; gap: 24px; }
+  #overview-view .player-hero-copy { text-align: left; }
+  #overview-view .profile-meta { justify-content: flex-start; margin-top: 14px; }
+  #overview-view .hero-collection-link { grid-column: 1 / -1; grid-row: 2; min-height: 0; height: auto; display: grid; padding: 18px; }
+  #overview-view .hero-stats { grid-row: 3; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  #overview-view .hero-stats > div { grid-column: span 2; }
+  #overview-view .hero-stats > div:nth-last-child(-n+2) { grid-column: span 3; }
+}
+@media (max-width: 540px) {
+  #overview-view .player-hero { --profile-panel-size: 120px; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; padding: 38px 18px 22px; gap: 26px; }
+  #overview-view .player-avatar-card { grid-column: 1; grid-row: 1; margin: 0; padding: 0; }
+  #overview-view .avatar-frame { padding: 6px; border-radius: 24px; }
+  #overview-view .player-hero-copy { grid-column: 1; grid-row: 2; align-items: center; }
+  #overview-view .player-hero-copy h2 { font-size: clamp(28px, 8vw, 38px); }
+  #overview-view .profile-meta { justify-content: center; margin-top: 14px; gap: 9px; }
+  #overview-view .club-pill { justify-content: center; }
+  #overview-view .hero-collection-link { grid-column: 1; grid-row: 3; min-height: 0; display: grid; padding: 14px; gap: 0 14px; border-radius: 18px; }
+  #overview-view .hero-collection-link .hero-collection-count { font-size: 40px; }
+  #overview-view .hero-collection-link .hero-collection-progress { margin: 0; }
+  #overview-view .hero-collection-link .hero-collection-action { margin: 0; }
+  #overview-view .hero-stats { grid-column: 1; grid-row: 4; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; }
+  #overview-view .hero-stats > div { --hero-stat-icon-size: 30px; padding: 12px; gap: 10px 7px; min-height: 108px; }
+  #overview-view .hero-stats small { font-size: 9px; }
+  #overview-view .hero-stats strong { font-size: min(30px, 24cqi); }
+  #overview-view .hero-stats > div:last-child { grid-column: 1 / -1; grid-template-columns: 36px minmax(0, 1fr) auto; grid-template-rows: 36px; min-height: 64px; }
+  #overview-view .hero-stats > div:last-child strong { grid-column: 3; grid-row: 1; width: auto; align-self: center; font-size: 28px; }
 }
