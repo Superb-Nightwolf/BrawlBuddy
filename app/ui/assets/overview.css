@@ -48,11 +48,11 @@
 .ov-stat > strong { font-family: var(--font-heading); font-size: clamp(24px,2.5vw,36px); line-height: 1.15; color: var(--ov-ink); font-variant-numeric: tabular-nums; }
 .ov-stat em { font-size: 15px; font-style: normal; color: #6c83a1; }
 .ov-stat > small { font-size: 10px; line-height: 1.65; color: #58718e; }
-.ov-stat-yellow { --stat-color: #aa7913; --stat-tint: #fff4d2; --stat-border: #e9d6a0; }
-.ov-stat-pink { --stat-color: #cb456f; --stat-tint: #ffedf2; --stat-border: #efc5d0; }
-.ov-stat-green { --stat-color: #218d70; --stat-tint: #e6f7f0; --stat-border: #b5dfd0; }
-.ov-stat-purple { --stat-color: #7e58bd; --stat-tint: #f0eaff; --stat-border: #d4c5ed; }
-.ov-stat-orange { --stat-color: #b4773a; --stat-tint: #fff0e1; --stat-border: #e9cfb6; }
+.ov-stat-yellow { --stat-color: #7b4e00; --stat-tint: #ffe68d; --stat-border: #d49f2b; }
+.ov-stat-pink { --stat-color: #a42054; --stat-tint: #ffbed4; --stat-border: #e07a9b; }
+.ov-stat-green { --stat-color: #0f6e52; --stat-tint: #a3eed7; --stat-border: #56c2a1; }
+.ov-stat-purple { --stat-color: #5c2ea5; --stat-tint: #d4bcff; --stat-border: #996beb; }
+.ov-stat-orange { --stat-color: #9c4c08; --stat-tint: #ffd4a8; --stat-border: #e08e45; }
 .ov-insight-links { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-auto-rows: 1fr; gap: 12px; margin-top: 18px; }
 .ov-insight-links a { --insight-tint: #eaf3ff; --insight-line: #bfd6f2; --insight-accent: #2868b5; display: flex; align-items: center; gap: 13px; min-width: 0; min-height: 86px; padding: 13px 16px; text-decoration: none; border: 2px solid var(--insight-line); border-radius: 18px; background: linear-gradient(135deg,#fff,var(--insight-tint)); box-shadow: 0 4px 0 var(--insight-line),inset 0 0 0 1px #fff; color: var(--ov-ink); transition: transform .15s ease,box-shadow .15s ease; }
 .ov-insight-links .ov-insight-gold { --insight-tint: #fff4d2; --insight-line: #e9d6a0; --insight-accent: #966b12; }

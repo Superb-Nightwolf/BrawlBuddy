@@ -51,8 +51,13 @@
 :is(#overview-dashboard, #club-dashboard) .ov-account-metric {
   overflow: visible; isolation: isolate;
   border-color: var(--stat-border);
-  background: radial-gradient(ellipse at 12% 0,#ffffffed,transparent 75%),linear-gradient(140deg,#fff,var(--stat-tint));
-  box-shadow: 0 5px 0 var(--stat-border),inset 0 0 0 2px #ffffffa8,0 7px 14px #19365b08;
+  background: radial-gradient(ellipse at 12% 0,#fffffffa,transparent 75%),linear-gradient(140deg,#fff,var(--stat-tint));
+  box-shadow: 0 5px 0 var(--stat-border),inset 0 0 0 2px #ffffffc0,0 8px 16px #19365b0a;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 var(--stat-border),inset 0 0 0 2px #ffffffc0,0 12px 22px #19365b12;
 }
 :is(#overview-dashboard, #club-dashboard) .ov-account-metric::before {
   content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
