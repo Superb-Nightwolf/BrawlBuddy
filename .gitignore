@@ -19,3 +19,7 @@ data/brawl_advisor.db
 
 # Temporary large collection samples, exports and worker checkpoints
 /data/bulk-sample-*/
+
+# Temporary preview captures and local scratch files
+/*.png
+/temp_*

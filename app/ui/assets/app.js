@@ -4788,7 +4788,9 @@ function setView(view) {
 
 async function handleRoute(options = {}) {
   globalThis.RosterDropdowns?.close();
-  document.querySelectorAll('.readiness-info-wrap').forEach(wrap => readinessSetInfoOpen(wrap, false));
+  if (typeof document !== 'undefined' && typeof readinessSetInfoOpen === 'function') {
+    document.querySelectorAll('.readiness-info-wrap').forEach(wrap => readinessSetInfoOpen(wrap, false));
+  }
   configurePage();
   showView();
   if (!options.isPop) {
