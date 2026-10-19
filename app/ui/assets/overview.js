@@ -239,17 +239,21 @@
     const rarityOrder = ['common','rare','superrare','epic','mythic','legendary','ultralegendary'];
     const rarityColors = {'common':'var(--rarity-common)','rare':'var(--rarity-rare)','superrare':'var(--rarity-super-rare)','epic':'var(--rarity-epic)','mythic':'var(--rarity-mythic)','legendary':'var(--rarity-legendary)','ultralegendary':'var(--rarity-ultra)'};
     const playerFameBadge = fameBadge(s.fame.tier);
-    let html=`<div class="ov-stats-grid">`
-      +metric('AVERAGE POWER',num(s.power.average),`Median ${num(s.power.median)} · ${num(s.power.remaining_levels)} levels to max`,'yellow','average-power','/ 11')
-      +metric('POWER 11',num(s.power.maxed),`${pct(s.power.maxed_pct)} of owned brawlers`,'pink','power-eleven',`/ ${num(s.collection.owned)}`)
-      +metric('EQUIPPED',num(rows.filter((r)=>(r.equipment.gadgets || 0)+(r.equipment.star_powers || 0)>0).length),'Gadget or Star Power equipped','green','equipped-count',`/ ${num(s.collection.owned)}`)
-      +metric('BUILD READY',num(s.builds.complete),`${num(s.builds.known)} chosen builds checked`,'purple','',`/ ${num(s.builds.known)}`)
-      +metric('BEST WIN STREAK',num(s.streaks.record),`Reported by ${num(s.streaks.known)} brawlers`,'orange','',s.streaks.record == null ? '' : 'wins')+'</div>';
-    const buildGap = Math.max(0,s.builds.known-s.builds.complete);
-    html += `<nav class="ov-insight-links" aria-label="Account planning shortcuts">`
-      +insight('POWER PROGRESSION',num(s.collection.owned-s.power.maxed),'brawlers below Power 11','gold','power','ov-collection')
-      +insight('NEXT TROPHY TARGET',num(s.trophies.to_goal),`trophies to ${num(s.trophies.next_goal)}`,'blue','trophy','ov-trophies')
-      +insight('BUILD PLANS',s.builds.known ? num(buildGap) : '—',s.builds.known ? buildGap ? 'chosen builds to finish' : 'builds left · all complete' : 'Inventory data needed','purple','build','ov-goals')+'</nav>';
+    let html = `<section class="ov-group ov-tone-blue ov-summary-group" aria-label="Account summary and planning shortcuts">`
+      + `<div class="ov-summary-layout">`
+      + `<div class="ov-stats-grid">`
+      + metric('AVERAGE POWER',num(s.power.average),`Median ${num(s.power.median)} · ${num(s.power.remaining_levels)} levels to max`,'yellow','average-power','/ 11')
+      + metric('POWER 11',num(s.power.maxed),`${pct(s.power.maxed_pct)} of owned brawlers`,'pink','power-eleven',`/ ${num(s.collection.owned)}`)
+      + metric('EQUIPPED',num(rows.filter((r)=>(r.equipment.gadgets || 0)+(r.equipment.star_powers || 0)>0).length),'Gadget or Star Power equipped','green','equipped-count',`/ ${num(s.collection.owned)}`)
+      + metric('BUILD READY',num(s.builds.complete),`${num(s.builds.known)} chosen builds checked`,'purple','',`/ ${num(s.builds.known)}`)
+      + metric('BEST WIN STREAK',num(s.streaks.record),`Reported by ${num(s.streaks.known)} brawlers`,'orange','',s.streaks.record == null ? '' : 'wins')
+      + `</div>`
+      + `<nav class="ov-insight-links" aria-label="Account planning shortcuts">`
+      + insight('POWER PROGRESSION',num(s.collection.owned-s.power.maxed),'brawlers below Power 11','gold','power','ov-collection')
+      + insight('NEXT TROPHY TARGET',num(s.trophies.to_goal),`trophies to ${num(s.trophies.next_goal)}`,'blue','trophy','ov-trophies')
+      + `</nav>`
+      + `</div>`
+      + `</section>`;
     html+=head('01','ov-collection','Your collection, unpacked','Power, roles, rarity and permanent progression');
     html+='<div class="ov-grid">';
     html+=card('Power distribution',columns(s.power.bars,Array.from({length:11},(_,i)=>i===10?'#ed6587':i>=8?'#8d63d7':'#2585ee')),
