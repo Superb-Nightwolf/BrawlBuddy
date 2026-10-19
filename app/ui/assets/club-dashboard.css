@@ -35,7 +35,7 @@
 .club-filter { display: flex; align-items: center; gap: 7px; color: #735b96; font-size: 10px; font-weight: 800; }
 .club-filter select { min-height: 44px; max-width: 100%; padding: 8px 11px; background: #fff; border: 1.5px solid #d6c9eb; border-radius: 11px; font-size: 11px; font-weight: 800; color: #4d3870; box-shadow: 0 2px 0 #e1d8ee; }
 #club-view .roster-toolbar input { min-height: 44px; width: 240px; max-width: 100%; }
-#club-view .roster-table { min-width: 1020px; }
+#club-view .roster-table { min-width: 860px; }
 #club-view .roster-table-wrap { max-height: 720px; overflow: auto; scrollbar-width: thin; scrollbar-color: #c6b7dd #f7f3fc; border: 1.5px solid #dfd3ee; border-radius: 15px; }
 #club-view .roster-table thead { position: sticky; top: 0; z-index: 2; background: #f0eafa; }
 #club-view .roster-table .ranking-person { text-decoration: none; }
@@ -115,3 +115,5 @@
 
 #club-dashboard .ov-account-metric { container-type: inline-size; }
 #club-dashboard .ov-account-metric > strong { font-size: min(36px,18cqi); }
+
+.club-column-heading { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }

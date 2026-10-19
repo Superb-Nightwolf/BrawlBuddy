@@ -1,0 +1,177 @@
+/* Shared summary tiles and covers. Brawlers and Roster Lab retain their own layouts. */
+:is(#overview-view, #club-view, #events-view, #battles-view, #leaderboards-view, #meta-view) {
+  --summary-radius: 24px;
+  --summary-height: 128px;
+  --summary-gap: 12px;
+  --summary-value-size: 30px;
+  --summary-label-size: 10px;
+  --summary-icon-size: 34px;
+}
+
+/* One tile geometry for cover totals and the account/club snapshot. */
+:is(#overview-view, #club-view) .hero-stats {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
+  gap: var(--summary-gap); container-type: normal;
+}
+:is(#overview-view, #club-view) .hero-stats > div,
+:is(#overview-dashboard, #club-dashboard) .ov-stats-grid > .ov-account-metric {
+  container-type: inline-size; box-sizing: border-box;
+  display: grid; grid-template-columns: var(--summary-icon-size) minmax(0,1fr);
+  grid-template-rows: var(--summary-icon-size) 34px;
+  align-content: center; align-items: center; justify-items: start;
+  width: calc((100% - 4 * var(--summary-gap)) / 5); flex: 0 0 auto;
+  height: var(--summary-height); min-height: var(--summary-height);
+  padding: 14px 16px; gap: 10px 10px; border-width: 2px;
+  border-radius: var(--summary-radius); text-align: left;
+}
+:is(#overview-view, #club-view) .hero-stats > div { --hero-stat-icon-size: var(--summary-icon-size); }
+#club-view .hero-stats > div { width: calc((100% - 2 * var(--summary-gap)) / 3); }
+:is(#overview-view, #club-view) .hero-stats .mini-icon,
+:is(#overview-view, #club-view) .hero-stats .mini-icon :is(img,svg) {
+  width: var(--summary-icon-size); height: var(--summary-icon-size);
+}
+:is(#overview-view, #club-view) .hero-stats small,
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading > h3 {
+  display: flex; align-items: center; grid-column: 2; grid-row: 1;
+  min-width: 0; min-height: var(--summary-icon-size); margin: 0; padding: 0;
+  font: 800 var(--summary-label-size)/1.4 var(--font-main); letter-spacing: 0;
+  text-transform: none; text-wrap: balance; background: none; border-radius: 0;
+}
+:is(#overview-view, #club-view) .hero-stats strong,
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric > strong {
+  display: flex; align-items: baseline; align-self: center; justify-content: flex-start;
+  grid-column: 1 / -1; grid-row: 2; width: 100%; min-width: 0; gap: 6px;
+  font: 800 min(var(--summary-value-size), 20cqi)/1.1 var(--font-heading);
+  font-variant-numeric: tabular-nums; letter-spacing: -.3px; white-space: nowrap;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-stats-grid {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
+  gap: var(--summary-gap); padding: 0 30px;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric {
+  overflow: visible; isolation: isolate;
+  border-color: var(--stat-border);
+  background: radial-gradient(ellipse at 12% 0,#ffffffed,transparent 75%),linear-gradient(140deg,#fff,var(--stat-tint));
+  box-shadow: 0 5px 0 var(--stat-border),inset 0 0 0 2px #ffffffa8,0 7px 14px #19365b08;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+  background: var(--roster-dot-pattern) 0 0 / 20px 20px; opacity: .35;
+  pointer-events: none;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric::after {
+  content: ''; position: absolute; inset: auto 8px 12px auto;
+  width: 66px; height: 66px; border: 9px solid var(--stat-border); border-radius: 50%;
+  opacity: .16; clip-path: none; z-index: -1; pointer-events: none;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading { display: contents; }
+:is(#overview-dashboard, #club-dashboard) .ov-metric-emblem {
+  grid-column: 1; grid-row: 1; width: var(--summary-icon-size); height: var(--summary-icon-size);
+  border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--stat-color);
+}
+:is(#overview-dashboard, #club-dashboard) .ov-metric-emblem .ov-stat-art {
+  width: var(--summary-icon-size); height: var(--summary-icon-size);
+}
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading > h3 {
+  color: var(--stat-color); width: 100%; padding-right: 18px;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-metric-heading > .ov-info-wrap {
+  position: absolute; top: 12px; right: 10px; margin: 0;
+}
+:is(#overview-dashboard, #club-dashboard) .ov-account-metric em {
+  font: 800 11px/1.3 var(--font-main); letter-spacing: 0;
+}
+
+/* Curved shortcuts share the same frame as the surrounding cards. */
+.ov-insight-links { gap: 12px; margin-top: 22px; margin-bottom: 28px; }
+.ov-insight-links a {
+  min-height: 104px; padding: 16px 20px; gap: 14px; border-radius: var(--summary-radius);
+}
+.ov-insight-links .ov-insight-emblem {
+  width: 44px; height: 44px; border-radius: 14px;
+}
+.ov-insight-links .ov-insight-arrow { width: 30px; height: 30px; flex-basis: 30px; border-radius: 10px; }
+.ov-insight-links .ov-insight-value { font: 800 30px/1.1 var(--font-heading); }
+.ov-insight-links .ov-insight-detail { font-size: 11px; }
+:is(#overview-dashboard, #club-dashboard) .ov-group:not([aria-labelledby="ov-collection-title"]) { border-radius: 26px; padding: 22px; }
+:is(#overview-dashboard, #club-dashboard) .ov-group:not([aria-labelledby="ov-collection-title"]) .ov-grid > .ov-account-card { border-radius: 22px; }
+
+/* Other page summaries use the same corners, label scale and number family. */
+:is(#events-view, #battles-view, #leaderboards-view) { --section-banner-height: var(--profile-cover-height); }
+:is(#events-view, #battles-view, #leaderboards-view) .section-stat,
+#meta-view .meta-cover-metrics .meta-metric {
+  height: var(--summary-height); min-height: var(--summary-height);
+  border-radius: var(--summary-radius); padding: 14px 16px; gap: 10px;
+}
+:is(#events-view, #battles-view, #leaderboards-view) .section-stat-heading { min-height: var(--summary-icon-size); }
+:is(#events-view, #battles-view, #leaderboards-view) .section-stat-heading > b,
+#meta-view .meta-cover-metrics .meta-metric > span {
+  font: 800 var(--summary-label-size)/1.4 var(--font-main); letter-spacing: 0;
+}
+:is(#events-view, #battles-view, #leaderboards-view) .section-stat strong,
+#leaderboards-view .section-stat:first-child strong {
+  margin-top: auto; font: 800 min(var(--summary-value-size),20cqi)/1.1 var(--font-heading);
+  font-variant-numeric: tabular-nums;
+}
+#meta-view .meta-cover-metrics .meta-metric > span { min-height: 14px; }
+#meta-view .meta-cover-metrics .meta-metric strong {
+  margin-top: auto; font: 800 var(--summary-value-size)/1.1 var(--font-heading);
+  font-variant-numeric: tabular-nums;
+}
+#meta-view .meta-cover { padding: 28px; border-radius: 26px; border-width: 2px; }
+.meta-panel { border-radius: 26px; }
+
+/* A full-width cover row matches the five snapshot tiles underneath it. */
+@media (min-width: 1181px) {
+  :is(#overview-view, #club-view) .player-hero {
+    grid-template-columns: 196px minmax(0,1fr) 244px;
+    grid-template-rows: minmax(0,1fr) var(--summary-height);
+    height: var(--profile-cover-height); min-height: var(--profile-cover-height);
+    gap: 20px 24px; padding: 28px; align-content: stretch;
+  }
+  :is(#overview-view, #club-view) .player-avatar-card { grid-column: 1; grid-row: 1; align-self: center; padding: 0 10px; }
+  :is(#overview-view, #club-view) .avatar-frame { width: 176px; height: 176px; }
+  :is(#overview-view, #club-view) .player-hero-copy { grid-column: 2; grid-row: 1; align-self: center; }
+  :is(#overview-view, #club-view) .hero-collection-link { grid-column: 3; grid-row: 1; height: 100%; align-self: stretch; }
+  :is(#overview-view, #club-view) .hero-stats { grid-column: 1 / -1; grid-row: 2; height: var(--summary-height); }
+  #meta-view .meta-cover { height: var(--profile-cover-height); min-height: var(--profile-cover-height); gap: 20px; }
+}
+@media (max-width: 1180px) {
+  :is(#overview-view, #club-view, #events-view, #battles-view, #leaderboards-view, #meta-view) { --summary-label-size: 9px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading > h3 { padding-right: 0; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading > .ov-info-wrap { top: 8px; right: 6px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid { padding: 0 28px; }
+}
+@media (min-width: 641px) and (max-width: 1200px) {
+  .ov-insight-links { grid-template-columns: 1fr; }
+}
+@media (max-width: 950px) {
+  :is(#overview-view, #club-view) .hero-stats > div,
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid > .ov-account-metric {
+    width: calc((100% - 2 * var(--summary-gap)) / 3);
+  }
+}
+@media (max-width: 640px) {
+  :is(#overview-view, #club-view, #events-view, #battles-view, #leaderboards-view, #meta-view) {
+    --summary-height: 120px; --summary-icon-size: 28px; --summary-label-size: 9px;
+  }
+  :is(#overview-view, #club-view) .hero-stats > div,
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid > .ov-account-metric {
+    width: calc((100% - var(--summary-gap)) / 2); padding: 12px 10px; column-gap: 7px;
+  }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading > h3 { padding-right: 0; }
+  :is(#overview-dashboard, #club-dashboard) .ov-metric-heading > .ov-info-wrap { top: 8px; right: 6px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-account-metric em { font-size: 9px; }
+  .ov-insight-links { grid-template-columns: 1fr; }
+  .ov-insight-links a { min-height: 100px; padding: 14px 16px; }
+  .ov-insight-links .ov-insight-value { font-size: 26px; }
+  :is(#overview-dashboard, #club-dashboard) .ov-group:not([aria-labelledby="ov-collection-title"]) { padding: 18px 14px; border-radius: 24px; }
+  #meta-view .meta-cover { height: auto; min-height: 0; padding: 22px 18px; }
+  #meta-view .meta-cover-metrics .meta-metric strong { font-size: 22px; }
+}
+@media (max-width: 540px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid { padding: 0 22px; }
+}
+@media (max-width: 360px) {
+  :is(#overview-dashboard, #club-dashboard) .ov-stats-grid { padding: 0 18px; }
+}

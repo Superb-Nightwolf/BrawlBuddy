@@ -52,6 +52,52 @@ function escapeMarkup(value) {
   })[character]);
 }
 
+// Every visible profile tag supports the same copy-and-inspect action.
+function profileTagAttributes(type, tag) {
+  const label = `Inspect ${type} ${tag} and copy tag`;
+  return {
+    href: type === 'club' ? `/club/${encodeURIComponent(tag)}` : `/?player=${encodeURIComponent(tag)}`,
+    'data-copy-tag': tag,
+    title: label,
+    'aria-label': label,
+  };
+}
+
+function setProfileTagLink(id, type, tag) {
+  const link = $(id);
+  if (!link) return;
+  if (!tag) {
+    link.removeAttribute('href');
+    link.removeAttribute('data-copy-tag');
+    link.setAttribute('aria-disabled', 'true');
+    link.setAttribute('aria-label', `No ${type} tag available`);
+    link.removeAttribute('title');
+    return;
+  }
+  link.removeAttribute('aria-disabled');
+  Object.entries(profileTagAttributes(type, tag)).forEach(([key, value]) => link.setAttribute(key, value));
+}
+
+function profileTagMarkup(type, tag, className = 'member-tag-pill') {
+  const attributes = Object.entries(profileTagAttributes(type, tag))
+    .map(([key, value]) => `${key}="${escapeMarkup(value)}"`).join(' ');
+  return `<a class="${escapeMarkup(className)}" ${attributes}>${escapeMarkup(tag)}</a>`;
+}
+
+let tagActionTimer;
+async function copyInspectedTag(tag) {
+  let message;
+  try {
+    await navigator.clipboard.writeText(tag);
+    message = `${tag} copied`;
+  } catch {
+    message = `Copy unavailable for ${tag}`;
+  }
+  clearTimeout(tagActionTimer);
+  setText('tag-action-status', message);
+  tagActionTimer = setTimeout(() => setText('tag-action-status', ''), 3000);
+}
+
 function sourceLabel(source) {
   return ({ LIVE: 'Live data', OFFICIAL_API: 'Official API', CACHE: 'Cached data', DEMO: 'Demo data' })[source] || 'Unavailable';
 }
@@ -981,9 +1027,8 @@ function renderAccount(payload, options = {}) {
   renderHeroCollection(payload.player.brawlers.length, state.catalog.length);
   setText('club-name', payload.player.club?.name || 'No club');
   setText('club-tag', payload.player.club?.tag || '—');
-  $('club-pill')?.setAttribute('href', payload.player.club?.tag ? `/club/${encodeURIComponent(payload.player.club.tag)}` : '/club');
-  $('player-tag-copy')?.setAttribute('aria-label', `Copy player tag ${payload.player.tag}`);
-  setText('player-tag-copy-status', '');
+  setProfileTagLink('club-pill', 'club', payload.player.club?.tag);
+  setProfileTagLink('player-tag-link', 'player', payload.player.tag);
 
   setText('exp-level', expLevel);
   setText('hero-xp-points', expPoints == null ? '—' : format(expPoints));
@@ -1775,9 +1820,7 @@ function renderLeaderboard() {
       </td>
       <td class="roster-trophies"><img class="table-trophy-icon" src="/assets/icon_trophy.png" alt="Trophies">${format(item.trophies)}</td>
       <td style="text-align: right;">
-        <a class="member-tag-pill inspect-lb-btn" href="${profileHref(item)}">
-          <span>#</span>${escapeMarkup(item.tag.replace('#', ''))}
-        </a>
+        ${profileTagMarkup(isPlayers ? 'player' : 'club', item.tag, 'member-tag-pill inspect-lb-btn')}
       </td>
     `;
     tbody.append(tr);
@@ -1815,7 +1858,7 @@ function renderClub(payload) {
   $('club-hero-capacity-progress')?.setAttribute('aria-valuenow', String(Math.min(memberCount, 30)));
   const spotsRemaining = Math.max(30 - memberCount, 0);
   setText('club-hero-spots-remaining', spotsRemaining ? `${spotsRemaining} ${spotsRemaining === 1 ? 'spot' : 'spots'} available` : 'Club is full');
-  $('copy-club-hero-tag')?.setAttribute('aria-label', `Copy club tag ${payload.club.tag}`);
+  setProfileTagLink('club-tag-link', 'club', payload.club.tag);
 
   const typeBadge = $('club-type-badge');
   if (typeBadge) typeBadge.textContent = `${(payload.club.type || 'OPEN').toUpperCase()} CLUB`;
@@ -3302,19 +3345,7 @@ async function renderMatchups(brawler, matchupsData = null, resetExpanded = true
     };
   }
 
-  // Bind info button click toggle for mobile / click interactions
-  const infoBtn = $('matchups-info-btn');
-  const infoWrap = infoBtn?.closest('.matchups-info-wrap');
-  if (infoBtn && infoWrap && !infoBtn.dataset.bound) {
-    infoBtn.dataset.bound = 'true';
-    infoBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      infoWrap.classList.toggle('is-open');
-    });
-    document.addEventListener('click', () => {
-      infoWrap.classList.remove('is-open');
-    });
-  }
+  readinessBindInfo($('matchups-info-btn')?.closest('.readiness-info-wrap'));
 }
 
 let detailRefreshTimer = null;
@@ -4542,16 +4573,6 @@ function initializeHeaderNavigation() {
 }
 
 function bindEvents() {
-  $('player-tag-copy')?.addEventListener('click', async () => {
-    const tag = state.player?.tag;
-    if (!tag) return;
-    try {
-      await navigator.clipboard.writeText(tag);
-      setText('player-tag-copy-status', 'Tag copied ✓');
-    } catch {
-      setText('player-tag-copy-status', 'Copy unavailable');
-    }
-  });
   BrawlBuddyMotion.init();
   initializeHeaderNavigation();
   $('connect-button')?.addEventListener('click', openConnectDialog);
@@ -4722,38 +4743,18 @@ function bindEvents() {
   $('table-view')?.addEventListener('click', () => setView('table'));
   window.addEventListener('resize', () => scheduleBrawlerNameFit($('brawler-grid') || document));
 
-  $('copy-club-hero-tag')?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const tag = state.club?.tag;
-    if (tag) {
-      try {
-        await navigator.clipboard.writeText(tag);
-        showNotice(`Club tag ${tag} copied to clipboard! ✓`);
-      } catch {
-        showNotice(`Copy unavailable. Club tag: ${tag}`, 'error');
-      }
-    }
-  });
-
   $('club-hero-roster-link')?.addEventListener('click', (event) => {
     event.preventDefault();
     $('roster')?.scrollIntoView({behavior: 'smooth', block: 'start'});
   });
 
-  $('copy-club-tag')?.addEventListener('click', (e) => {
-    const tag = state.player?.club?.tag;
-    if (tag && tag !== '—') {
-      navigator.clipboard.writeText(tag);
-      const btn = e.currentTarget;
-      const old = btn.textContent;
-      btn.textContent = 'Tag Copied! ✓';
-      setTimeout(() => { btn.textContent = old; }, 1500);
-    }
-  });
-
   document.addEventListener('click', (e) => {
+    if (e.defaultPrevented || e.button !== 0) return;
     const link = e.target.closest('a');
     if (!link || !link.getAttribute('href')) return;
+    // Start copying during the click gesture; clipboard failure must not block inspection.
+    if (link.dataset.copyTag) void copyInspectedTag(link.dataset.copyTag);
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const href = link.getAttribute('href');
     if (href.startsWith('/') && !href.startsWith('//') && !link.target && !link.hasAttribute('download')) {
       e.preventDefault();
@@ -4787,6 +4788,7 @@ function setView(view) {
 
 async function handleRoute(options = {}) {
   globalThis.RosterDropdowns?.close();
+  document.querySelectorAll('.readiness-info-wrap').forEach(wrap => readinessSetInfoOpen(wrap, false));
   configurePage();
   showView();
   if (!options.isPop) {

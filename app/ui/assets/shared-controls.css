@@ -1,0 +1,37 @@
+/* Shared geometry for information buttons and illustrated select controls. */
+.readiness-info-wrap .matchups-info-btn { width: 22px; height: 22px; flex: 0 0 22px; margin: 0; }
+.readiness-info-tooltip.matchups-info-tooltip[popover] {
+  position: fixed; margin: 0; max-width: calc(100vw - 32px); padding: 16px; border: 1px solid #425779;
+  border-radius: 12px; background: #0f172a; color: #f8fafc;
+  font: 500 12px/1.6 var(--font-main); text-align: left;
+  text-transform: none; letter-spacing: normal; white-space: normal;
+  opacity: 1; visibility: visible; transform: none; pointer-events: auto;
+}
+.readiness-info-tooltip[popover] p { white-space: pre-line; }
+.readiness-info-tooltip[popover]::backdrop { background: transparent; }
+.readiness-info-wrap:has(> .readiness-info-tooltip[popover])::after { display: none; }
+.roster-shared-select { flex: 1 1 auto; width: 100%; min-width: 0; }
+.roster-shared-select > .roster-select-trigger { min-height: 48px; height: 48px; gap: 10px; padding: 7px 12px; }
+.roster-shared-select .roster-select-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.roster-shared-menu .roster-option, .roster-shared-menu .roster-option-group { grid-template-columns: 40px minmax(0, 1fr) 18px; }
+.roster-shared-menu .roster-option { min-height: 54px; }
+.roster-option:disabled { opacity: .45; cursor: default; }
+.roster-select-trigger:disabled { opacity: .55; cursor: default; }
+.club-filter .roster-shared-select { flex: 1 1 160px; width: auto; }
+.ov-select-label .roster-shared-select { flex: 1 1 180px; width: auto; }
+.section-select .roster-shared-select, .meta-draft-slot .roster-shared-select { width: 100%; }
+.club-column-heading .readiness-info-wrap { display: inline-flex; vertical-align: middle; }
+@media (max-width: 540px) {
+  .club-filter .roster-shared-select, .ov-select-label .roster-shared-select { flex-basis: 140px; }
+}
+
+#club-view .roster-toolbar input { min-height: 48px; }
+@media (max-width: 640px) {
+  #club-view .club-filter { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 8px; flex: 1 1 100%; min-width: 0; width: 100%; }
+  #club-view .club-filter .roster-shared-select { width: 100%; }
+}
+
+/* Country flags use local artwork instead of platform-dependent emoji glyphs. */
+.roster-country-art img { width: 34px; height: 23px; border: 1px solid #19365b1f; border-radius: 3px; object-fit: cover; filter: none; }
+.roster-select-trigger .roster-country-art img { width: 28px; height: 19px; }
+.roster-semantic-art svg { filter: drop-shadow(0 1px 1px #19365b12); }

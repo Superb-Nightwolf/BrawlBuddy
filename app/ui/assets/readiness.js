@@ -527,56 +527,91 @@ async function loadBrawlerReadiness(brawler, manualPoolSize) {
 }
 
 function readinessPositionInfo(infoWrap) {
-  const infoButton = infoWrap.querySelector('.matchups-info-btn');
+  const button = infoWrap.querySelector('.matchups-info-btn');
   const tooltip = infoWrap.querySelector('.readiness-info-tooltip');
-  const bounds = infoButton.getBoundingClientRect();
-  const viewportWidth = document.documentElement.clientWidth;
-  const tooltipWidth = Math.min(360, viewportWidth - 48);
-  const tooltipRight = Math.min(viewportWidth - 24, Math.max(tooltipWidth + 24, bounds.right));
-  tooltip.style.setProperty('--readiness-tooltip-width', `${tooltipWidth}px`);
-  tooltip.style.setProperty('--readiness-tooltip-right', `${bounds.right - tooltipRight}px`);
+  const bounds = button.getBoundingClientRect();
+  const width = Math.min(360, document.documentElement.clientWidth - 32);
   const navigation = document.querySelector('.mobile-nav');
-  const viewportBottom = navigation && getComputedStyle(navigation).display !== 'none'
+  const bottom = navigation && getComputedStyle(navigation).display !== 'none'
     ? navigation.getBoundingClientRect().top : window.innerHeight;
-  const below = viewportBottom - bounds.bottom - 24;
-  const above = bounds.top - 24;
-  const opensAbove = below < Math.min(tooltip.scrollHeight, 340) && above > below;
+  const below = Math.max(0, bottom - bounds.bottom - 24), above = Math.max(0, bounds.top - 24);
+  const opensAbove = below < Math.min(tooltip.scrollHeight, 280) && above > below;
+  const available = Math.max(60, opensAbove ? above : below);
+  tooltip.style.width = `${width}px`;
+  tooltip.style.maxHeight = `${Math.min(500, available)}px`;
+  tooltip.style.left = `${Math.max(16, Math.min(bounds.right - width, document.documentElement.clientWidth - width - 16))}px`;
+  tooltip.style.right = 'auto';
+  tooltip.style.top = opensAbove ? 'auto' : `${Math.max(16,bounds.bottom + 8)}px`;
+  tooltip.style.bottom = opensAbove ? `${Math.max(16,window.innerHeight - bounds.top + 8)}px` : 'auto';
   infoWrap.classList.toggle('opens-above', opensAbove);
-  tooltip.style.setProperty('--readiness-tooltip-space', `${Math.max(80, opensAbove ? above : below)}px`);
 }
 
-function readinessSetInfoOpen(infoWrap, open) {
-  const infoButton = infoWrap.querySelector('.matchups-info-btn');
-  if (open) readinessPositionInfo(infoWrap);
-  infoWrap.classList.toggle('is-open', open);
-  infoWrap.classList.toggle('is-dismissed', !open);
-  infoButton.classList.toggle('active', open);
-  infoButton.setAttribute('aria-expanded', String(open));
+function readinessSetInfoOpen(infoWrap, open, pinned = true) {
+  const button = infoWrap.querySelector('.matchups-info-btn');
+  const tooltip = infoWrap.querySelector('.readiness-info-tooltip');
+  if (!button || !tooltip) return;
+  if (open) {
+    document.querySelectorAll('.readiness-info-tooltip[popover]:popover-open').forEach(other => {
+      if (other !== tooltip) readinessSetInfoOpen(other.closest('.readiness-info-wrap'), false);
+    });
+    infoWrap.classList.remove('is-dismissed');
+    if (typeof tooltip.showPopover === 'function' && !tooltip.matches(':popover-open')) tooltip.showPopover();
+    readinessPositionInfo(infoWrap);
+  } else {
+    if (typeof tooltip.hidePopover === 'function' && tooltip.matches(':popover-open')) tooltip.hidePopover();
+    infoWrap.classList.add('is-dismissed');
+  }
+  infoWrap.classList.toggle('is-open', open && pinned);
+  button.classList.toggle('active', open);
+  button.setAttribute('aria-expanded', String(open));
 }
 
 function readinessBindInfo(infoWrap) {
   if (!infoWrap || infoWrap.dataset.bound) return;
+  const button = infoWrap.querySelector('.matchups-info-btn');
+  const tooltip = infoWrap.querySelector('.readiness-info-tooltip');
+  if (!button || !tooltip) return;
   infoWrap.dataset.bound = 'true';
-  const infoButton = infoWrap.querySelector('.matchups-info-btn');
-  infoButton.addEventListener('click', () => readinessSetInfoOpen(infoWrap, !infoWrap.classList.contains('is-open')));
-  infoWrap.addEventListener('mouseenter', () => {
-    readinessPositionInfo(infoWrap);
-    infoWrap.classList.remove('is-dismissed');
+  if (typeof tooltip.showPopover === 'function') tooltip.setAttribute('popover', 'manual');
+  if (tooltip.id) button.setAttribute('aria-describedby', tooltip.id);
+  let closeTimer;
+  const cancelClose = () => clearTimeout(closeTimer);
+  const closePreview = () => {
+    cancelClose();
+    closeTimer = setTimeout(() => {
+      if (!infoWrap.classList.contains('is-open') && !infoWrap.matches(':hover,:focus-within')) readinessSetInfoOpen(infoWrap, false);
+    }, 120);
+  };
+  button.addEventListener('click', () => {
+    cancelClose(); readinessSetInfoOpen(infoWrap, !infoWrap.classList.contains('is-open'));
   });
-  infoWrap.addEventListener('mouseleave', () => infoWrap.classList.remove('is-dismissed'));
-  infoButton.addEventListener('focus', () => {
-    readinessPositionInfo(infoWrap);
-    infoWrap.classList.remove('is-dismissed');
+  infoWrap.addEventListener('pointerenter', event => {
+    if (event.pointerType !== 'mouse') return;
+    cancelClose(); readinessSetInfoOpen(infoWrap, true, infoWrap.classList.contains('is-open'));
   });
+  infoWrap.addEventListener('pointerleave', closePreview);
+  tooltip.addEventListener('pointerenter', cancelClose);
+  tooltip.addEventListener('pointerleave', closePreview);
+  button.addEventListener('focus', () => {
+    cancelClose(); readinessSetInfoOpen(infoWrap, true, infoWrap.classList.contains('is-open'));
+  });
+  infoWrap.addEventListener('focusout', closePreview);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  readinessBindInfo($('readiness-info-btn')?.closest('.readiness-info-wrap'));
+  document.querySelectorAll('.readiness-info-wrap').forEach(readinessBindInfo);
+  new MutationObserver(records => {
+    for (const record of records) for (const node of record.addedNodes) {
+      if (node.nodeType !== 1) continue;
+      if (node.matches('.readiness-info-wrap')) readinessBindInfo(node);
+      node.querySelectorAll('.readiness-info-wrap').forEach(readinessBindInfo);
+    }
+  }).observe(document.body, {childList:true, subtree:true});
   const repositionIfVisible = () => document.querySelectorAll('.readiness-info-wrap').forEach((wrap) => {
-    if (wrap.classList.contains('is-open') || wrap.matches(':hover, :focus-within')) readinessPositionInfo(wrap);
+    if (wrap.querySelector('.readiness-info-tooltip')?.matches(':popover-open') || wrap.classList.contains('is-open')) readinessPositionInfo(wrap);
   });
   window.addEventListener('resize', repositionIfVisible);
-  window.addEventListener('scroll', repositionIfVisible, { passive: true });
+  window.addEventListener('scroll', repositionIfVisible, { passive: true, capture: true });
   document.addEventListener('click', (event) => document.querySelectorAll('.readiness-info-wrap').forEach((wrap) => {
     if (!wrap.contains(event.target)) readinessSetInfoOpen(wrap, false);
   }));

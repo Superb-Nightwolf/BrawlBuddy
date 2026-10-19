@@ -97,7 +97,9 @@
     rarity_legendary: ['rarity_legendary', 'Brawlers in the Legendary rarity'],
     rarity_ultra_legendary: ['rarity_ultra_legendary', 'Brawlers in the Ultra Legendary rarity'],
   };
-  const controls = [];
+  const controls = new Map();
+  let controlSequence = 0;
+  let observer;
   const chevron = '<svg class="roster-select-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 
   function icon(key) {
@@ -149,8 +151,8 @@
     return holder;
   }
 
-  function optionArt(value) {
-    const [key, , badge, missing] = metadata[value];
+  function optionArt(value, details = metadata[value] || ['all', '']) {
+    const [key, , badge, missing] = details;
     let holder;
     if (value.startsWith('buffie_combo_') && value !== 'buffie_combo_0') {
       holder = document.createElement('span');
@@ -172,11 +174,33 @@
     return holder;
   }
 
+  function semanticArt(key, badge = '') {
+    const holder = document.createElement('span');
+    holder.className = 'roster-option-art roster-semantic-art';
+    holder.setAttribute('aria-hidden', 'true');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 32 32');
+    const use = document.createElementNS(svg.namespaceURI,'use');
+    use.setAttribute('href',`/assets/dropdown-icons.svg#${key}`);
+    svg.append(use); holder.append(svg);
+    if (badge) {
+      const count = document.createElement('span'); count.className = 'roster-art-badge';
+      count.textContent = badge; holder.append(count);
+    }
+    return holder;
+  }
+
   function enhance(select) {
-    const sort = select.id === 'brawler-sort';
-    const field = sort ? 'Sort brawlers' : 'Filter equipment and roster categories';
+    if (!select || select.multiple || select.dataset.native === 'true' || controls.has(select)) return;
+    const roster = ['brawler-sort', 'equipment-filter'].includes(select.id);
+    const category = select.id === 'equipment-filter';
+    const labelHost = select.labels?.[0];
+    const labelText = labelHost ? [...labelHost.childNodes]
+      .filter(node => node.nodeType === 3 || node.nodeName === 'SPAN').map(node => node.textContent).join(' ').trim() : '';
+    const field = select.getAttribute('aria-label') || labelText || select.dataset.slot?.replaceAll('_', ' ') || 'Choose an option';
+    if (!select.id) select.id = `shared-select-${++controlSequence}`;
     const wrapper = document.createElement('div');
-    wrapper.className = `roster-select ${sort ? 'roster-sort-select' : 'roster-category-select'}`;
+    wrapper.className = `roster-select ${category ? 'roster-category-select' : roster ? 'roster-sort-select' : 'roster-shared-select'}`;
     select.before(wrapper);
     wrapper.append(select);
     const trigger = document.createElement('button');
@@ -187,173 +211,211 @@
     trigger.setAttribute('aria-expanded', 'false');
     trigger.setAttribute('aria-controls', `${select.id}-listbox`);
     const menu = document.createElement('div');
-    menu.className = `roster-select-menu${sort ? ' roster-sort-menu' : ''}`;
+    menu.className = `roster-select-menu${category ? '' : ' roster-sort-menu'}${roster ? '' : ' roster-shared-menu'}`;
     menu.id = `${select.id}-listbox`;
     menu.setAttribute('popover', 'auto');
     menu.setAttribute('role', 'listbox');
     menu.setAttribute('aria-label', field);
     wrapper.append(trigger, menu);
-    const buttons = [];
-    let options = [...select.children];
-    if (!sort) {
-      const order = Object.keys(groups);
-      options.sort((a, b) => order.indexOf(a.label) - order.indexOf(b.label));
+    let buttons = [], fingerprint = '';
+
+    function optionLabel(entry) {
+      return select.id === 'ranking-region-select' ? entry.textContent.replace(/^[^A-Za-z0-9]+/u,'') : entry.textContent;
     }
-    for (const child of options) {
-      const group = document.createElement('div');
-      if (child.tagName === 'OPTGROUP') {
-        const [label, key] = groups[child.label];
-        group.setAttribute('role', 'group');
-        group.setAttribute('aria-label', label);
-        const heading = document.createElement('div');
-        heading.className = 'roster-option-group';
-        heading.setAttribute('aria-hidden', 'true');
-        heading.append(icon(key));
-        const title = document.createElement('span');
-        title.textContent = label;
-        heading.append(title);
-        group.append(heading);
+    function details(entry) {
+      if (roster) return metadata[entry.value] || ['all', ''];
+      const sortKeys = {
+        trophies:['trophy','','↓'], trophies_asc:['trophy','','↑'], highest_trophies:['trophy','','PB'],
+        power:['power_desc',''], prestige:['prestige',''], name:['name',''], name_desc:['name_desc',''],
+      };
+      return sortKeys[entry.value] || ['all',''];
+    }
+    function artwork(entry) {
+      let src, country = false;
+      if (roster) return optionArt(entry.value,details(entry));
+      if (select.id === 'ranking-region-select') {
+        if (entry.value === 'global') return semanticArt('globe');
+        if (['us','in','br','de','jp','fr','gb'].includes(entry.value)) {
+          src = `/assets/flags/${entry.value}.svg`; country = true;
+        } else return semanticArt('globe');
+      } else if (select.id === 'club-role-filter') {
+        return semanticArt(({all:'roles',president:'crown',vicepresident:'vice',senior:'senior',member:'member',unknown:'unknown'})[entry.value] || 'roles');
+      } else if (select.id === 'meta-map') {
+        return semanticArt(entry.value ? 'map' : 'maps');
+      } else if (select.id === 'meta-type') {
+        const type = entry.value.toLowerCase().replace(/[^a-z]/g,'');
+        if (type === 'ranked' || type === 'soloranked') src = '/assets/ranked/masters.png';
+        else if (type === 'tournament') src = '/assets/icon_trophy.png';
+        else return semanticArt(type === 'challenge' ? 'challenge' : 'match-types');
+      } else if (select.id === 'meta-active-slot') {
+        const [side,number] = entry.value.split('_');
+        return semanticArt(side === 'enemy' ? 'enemy' : 'ally',number);
+      } else if (select.dataset.slot) {
+        if (entry.value) src = officialBrawlerIconSource({id:Number(entry.value)});
+        else {
+          const [side,number] = select.dataset.slot.split('_');
+          return semanticArt(side === 'enemy' ? 'enemy' : 'ally',number);
+        }
+      } else if (select.id === 'meta-mode' || select.id === 'event-mode-filter') {
+        src = getUiIconRecord('modes',entry.value)?.local_url;
+        if (!src) return semanticArt('gamepad');
+      } else if (entry.value === 'best_streak') {
+        return semanticArt('streak');
+      } else if (details(entry)[0] !== 'all') {
+        return optionArt(entry.value,details(entry));
+      } else return semanticArt('choices');
+      const holder = document.createElement('span');
+      holder.className = `roster-option-art${country ? ' roster-country-art' : ''}`;
+      holder.setAttribute('aria-hidden', 'true');
+      const image = document.createElement('img');
+      image.src = src; image.alt = '';
+      holder.append(image);
+      return holder;
+    }
+    function build() {
+      buttons = [];
+      menu.replaceChildren();
+      let children = [...select.children];
+      if (category) {
+        const order = Object.keys(groups);
+        children.sort((a,b) => order.indexOf(a.label)-order.indexOf(b.label));
       }
-      const entries = child.tagName === 'OPTGROUP' ? [...child.children] : [child];
-      entries.forEach((entry) => {
-        const row = document.createElement('button');
-        row.type = 'button';
-        row.className = 'roster-option';
-        row.id = `${select.id}-option-${entry.value}`;
-        row.dataset.value = entry.value;
-        row.setAttribute('role', 'option');
-        row.setAttribute('aria-selected', 'false');
-        row.tabIndex = -1;
-        row.append(optionArt(entry.value));
-        const copy = document.createElement('span');
-        copy.className = 'roster-option-copy';
-        const label = document.createElement('strong');
-        label.textContent = entry.textContent;
-        const guide = document.createElement('small');
-        guide.textContent = metadata[entry.value][1];
-        if (rarityTiers[entry.value]) {
-          label.className = 'roster-rarity-label';
-          const name = document.createElement('span');
-          name.textContent = entry.textContent;
-          const tier = document.createElement('span');
-          tier.className = 'roster-rarity-tier';
-          tier.textContent = rarityTiers[entry.value];
-          tier.setAttribute('aria-hidden', 'true');
-          label.replaceChildren(name, tier);
+      for (const child of children) {
+        const group = document.createElement('div');
+        if (child.tagName === 'OPTGROUP') {
+          const [label,key] = category && groups[child.label] ? groups[child.label] : [child.label,'all'];
+          group.setAttribute('role','group'); group.setAttribute('aria-label',label);
+          const heading = document.createElement('div');
+          heading.className = 'roster-option-group'; heading.setAttribute('aria-hidden','true');
+          const title = document.createElement('span'); title.textContent = label;
+          heading.append(icon(key),title); group.append(heading);
+        }
+        const entries = child.tagName === 'OPTGROUP' ? [...child.children] : [child];
+        entries.filter(entry => entry.tagName === 'OPTION' && !entry.hidden).forEach((entry) => {
+          const row = document.createElement('button');
+          row.type = 'button'; row.className = 'roster-option';
+          row.id = `${select.id}-option-${buttons.length}`; row.dataset.value = entry.value;
+          row.setAttribute('role','option'); row.tabIndex = -1;
+          row.disabled = entry.disabled || child.tagName === 'OPTGROUP' && child.disabled;
+          row.setAttribute('aria-disabled', String(row.disabled));
+          row.append(artwork(entry));
+          const copy = document.createElement('span'); copy.className = 'roster-option-copy';
+          const label = document.createElement('strong'); label.textContent = optionLabel(entry);
           copy.append(label);
-        } else copy.append(label, guide);
-        const radio = document.createElement('span');
-        radio.className = 'roster-option-radio';
-        radio.setAttribute('aria-hidden', 'true');
-        row.append(copy, radio);
-        row.addEventListener('click', () => {
-          select.value = entry.value;
-          sync();
-          menu.hidePopover();
-          trigger.focus();
-          select.dispatchEvent(new Event('change', { bubbles: true }));
+          if (roster && rarityTiers[entry.value]) {
+            label.className = 'roster-rarity-label';
+            const name = document.createElement('span'); name.textContent = entry.textContent;
+            const tier = document.createElement('span'); tier.className = 'roster-rarity-tier';
+            tier.textContent = rarityTiers[entry.value]; tier.setAttribute('aria-hidden','true');
+            label.replaceChildren(name,tier);
+          } else if (details(entry)[1]) {
+            const guide = document.createElement('small'); guide.textContent = details(entry)[1]; copy.append(guide);
+          }
+          const radio = document.createElement('span'); radio.className = 'roster-option-radio'; radio.setAttribute('aria-hidden','true');
+          row.append(copy,radio);
+          row.addEventListener('click', () => {
+            if (select.disabled || row.disabled) return;
+            select.value = entry.value; sync(); menu.hidePopover(); trigger.focus();
+            select.dispatchEvent(new Event('change',{bubbles:true}));
+          });
+          buttons.push(row); group.append(row);
         });
-        buttons.push(row);
-        group.append(row);
-      });
-      menu.append(group);
+        menu.append(group);
+      }
     }
-
     function sync() {
-      const current = select.selectedOptions[0];
-      trigger.replaceChildren(optionArt(current.value));
-      const label = document.createElement('span');
-      label.className = 'roster-select-label';
-      label.textContent = current.textContent;
-      trigger.append(label);
-      trigger.insertAdjacentHTML('beforeend', chevron);
-      trigger.setAttribute('aria-label', `${field}: ${current.textContent}`);
-      trigger.title = metadata[current.value][1];
-      buttons.forEach((button) => button.setAttribute('aria-selected', String(button.dataset.value === current.value)));
+      const next = [...select.options].map(option => [option.value,option.textContent,option.disabled,option.hidden,option.parentElement.label,option.parentElement.disabled].join('|')).join('\n');
+      if (next !== fingerprint) { fingerprint = next; build(); }
+      const current = select.selectedOptions[0] || select.options[0];
+      trigger.disabled = select.disabled || !current || !buttons.some(button => !button.disabled);
+      trigger.replaceChildren();
+      if (current) trigger.append(artwork(current));
+      const label = document.createElement('span'); label.className = 'roster-select-label';
+      label.textContent = current ? optionLabel(current) : 'No options available';
+      trigger.append(label); trigger.insertAdjacentHTML('beforeend',chevron);
+      trigger.setAttribute('aria-label', `${field}: ${label.textContent}`);
+      trigger.title = current && details(current)[1] || field;
+      buttons.forEach(button => button.setAttribute('aria-selected',String(button.dataset.value === current?.value)));
+      if (trigger.disabled && menu.matches(':popover-open')) menu.hidePopover();
     }
-
     function position() {
-      const rect = trigger.getBoundingClientRect();
-      const viewportWidth = document.documentElement.clientWidth;
-      const width = Math.min(sort ? 370 : 490, viewportWidth - 24);
-      const below = window.innerHeight - rect.bottom - 16;
-      const above = rect.top - 16;
+      const rect = trigger.getBoundingClientRect(), viewportWidth = document.documentElement.clientWidth;
+      const width = Math.min(category ? 490 : roster ? 370 : Math.max(300,rect.width),viewportWidth-24);
+      const below = window.innerHeight-rect.bottom-16, above = rect.top-16;
       const upwards = below < 220 && above > below;
-      const height = Math.min(560, Math.max(120, upwards ? above : below));
-      menu.style.width = `${width}px`;
-      menu.style.maxHeight = `${height}px`;
-      menu.style.left = `${Math.max(12, Math.min(rect.left, viewportWidth - width - 12))}px`;
-      menu.style.top = upwards ? 'auto' : `${rect.bottom + 8}px`;
-      menu.style.bottom = upwards ? `${window.innerHeight - rect.top + 8}px` : 'auto';
+      menu.style.width = `${width}px`; menu.style.maxHeight = `${Math.min(560,Math.max(80,upwards ? above : below))}px`;
+      menu.style.left = `${Math.max(12,Math.min(rect.left,viewportWidth-width-12))}px`;
+      menu.style.top = upwards ? 'auto' : `${rect.bottom+8}px`;
+      menu.style.bottom = upwards ? `${window.innerHeight-rect.top+8}px` : 'auto';
     }
     function reveal(row) {
-      // Scroll the popup itself so the surrounding roster stays in place.
-      const top = row.offsetTop;
-      const bottom = top + row.offsetHeight;
-      if (top < menu.scrollTop) menu.scrollTop = Math.max(0, top - 8);
-      else if (bottom > menu.scrollTop + menu.clientHeight) menu.scrollTop = bottom - menu.clientHeight + 8;
+      const top = row.offsetTop, bottom = top+row.offsetHeight;
+      if (top < menu.scrollTop) menu.scrollTop = Math.max(0,top-8);
+      else if (bottom > menu.scrollTop+menu.clientHeight) menu.scrollTop = bottom-menu.clientHeight+8;
     }
     function show() {
-      position();
-      menu.showPopover();
-      const selected = buttons.find((button) => button.dataset.value === select.value);
-      selected.focus({ preventScroll: true });
-      if (selected === buttons[0]) menu.scrollTop = 0;
-      else reveal(selected);
+      sync(); if (trigger.disabled) return;
+      position(); menu.showPopover();
+      const selected = buttons.find(button => !button.disabled && button.dataset.value === select.value) || buttons.find(button => !button.disabled);
+      if (selected) { selected.focus({preventScroll:true}); reveal(selected); }
     }
-    trigger.addEventListener('click', () => menu.matches(':popover-open') ? menu.hidePopover() : show());
-    trigger.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-        event.preventDefault();
-        show();
-      }
+    trigger.addEventListener('click',()=>menu.matches(':popover-open') ? menu.hidePopover() : show());
+    trigger.addEventListener('keydown',event=>{
+      if (['ArrowDown','ArrowUp'].includes(event.key)) {event.preventDefault(); show();}
     });
-    menu.addEventListener('toggle', () => {
-      const opened = menu.matches(':popover-open');
-      trigger.setAttribute('aria-expanded', String(opened));
-      wrapper.classList.toggle('roster-select-open', opened);
+    menu.addEventListener('toggle',()=>{
+      const opened = menu.matches(':popover-open'); trigger.setAttribute('aria-expanded',String(opened));
+      wrapper.classList.toggle('roster-select-open',opened);
     });
-    let typed = '';
-    let typeTimer;
-    menu.addEventListener('keydown', (event) => {
-      const active = buttons.indexOf(document.activeElement);
+    let typed = '', typeTimer;
+    menu.addEventListener('keydown',event=>{
+      const enabled = buttons.filter(button=>!button.disabled), active = enabled.indexOf(document.activeElement);
       let next;
-      if (event.key === 'ArrowDown') next = (active + 1) % buttons.length;
-      if (event.key === 'ArrowUp') next = (active - 1 + buttons.length) % buttons.length;
+      if (event.key === 'ArrowDown') next = (active+1)%enabled.length;
+      if (event.key === 'ArrowUp') next = (active-1+enabled.length)%enabled.length;
       if (event.key === 'Home') next = 0;
-      if (event.key === 'End') next = buttons.length - 1;
-      if (next !== undefined) {
-        event.preventDefault();
-        buttons[next].focus({ preventScroll: true });
-        reveal(buttons[next]);
-      } else if (event.key === 'Escape' || event.key === 'Tab') {
-        menu.hidePopover();
-        trigger.focus();
-        if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); }
+      if (event.key === 'End') next = enabled.length-1;
+      if (next !== undefined && enabled[next]) {event.preventDefault(); enabled[next].focus({preventScroll:true}); reveal(enabled[next]);}
+      else if (event.key === 'Escape' || event.key === 'Tab') {
+        menu.hidePopover(); trigger.focus();
+        if (event.key === 'Escape') {event.preventDefault(); event.stopPropagation();}
       } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && event.key !== ' ') {
-        typed += event.key.toLowerCase();
-        clearTimeout(typeTimer);
-        typeTimer = setTimeout(() => { typed = ''; }, 700);
-        const found = buttons.find((button) => button.querySelector('strong').textContent.toLowerCase().startsWith(typed));
-        if (found) { found.focus({ preventScroll: true }); reveal(found); }
+        typed += event.key.toLowerCase(); clearTimeout(typeTimer); typeTimer = setTimeout(()=>{typed='';},700);
+        const found = enabled.find(button=>button.querySelector('strong').textContent.toLowerCase().startsWith(typed));
+        if (found) {found.focus({preventScroll:true}); reveal(found);}
       }
     });
-    window.addEventListener('resize', () => { if (menu.matches(':popover-open')) position(); });
-    window.addEventListener('scroll', (event) => {
-      if (menu.matches(':popover-open') && !menu.contains(event.target)) position();
-    }, { capture: true, passive: true });
-    select.addEventListener('change', sync);
+    select.addEventListener('change',sync);
     select.hidden = true;
+    controls.set(select,{sync,menu,position});
     sync();
-    controls.push({ sync, menu });
   }
 
+  function scan(root = document) {
+    if (root.matches?.('select')) enhance(root);
+    root.querySelectorAll?.('select').forEach(enhance);
+    for (const [select] of controls) if (!select.isConnected) controls.delete(select);
+  }
+  window.addEventListener('resize',()=>controls.forEach(({menu,position})=>{if(menu.matches(':popover-open')) position();}));
+  window.addEventListener('scroll',event=>controls.forEach(({menu,position})=>{if(menu.matches(':popover-open') && !menu.contains(event.target)) position();}),{capture:true,passive:true});
   window.RosterDropdowns = {
     init() {
-      if (typeof HTMLElement.prototype.showPopover !== 'function' || controls.length) return;
-      ['brawler-sort', 'equipment-filter'].forEach((id) => enhance(document.getElementById(id)));
+      if (typeof HTMLElement.prototype.showPopover !== 'function') return;
+      scan();
+      if (observer) return;
+      observer = new MutationObserver(records=>{
+        const changed = new Set();
+        for (const record of records) {
+          const select = (record.target.nodeType === 1 ? record.target : record.target.parentElement)?.closest('select');
+          if (select && controls.has(select)) changed.add(select);
+          for (const node of record.addedNodes) if (node.nodeType === 1 && !node.closest('.roster-select-menu')) scan(node);
+        }
+        changed.forEach(select=>controls.get(select)?.sync());
+        for (const [select] of controls) if (!select.isConnected) controls.delete(select);
+      });
+      observer.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['disabled','selected','label','value','hidden']});
     },
-    sync() { controls.forEach((control) => control.sync()); },
-    close() { controls.forEach(({ menu }) => { if (menu.matches(':popover-open')) menu.hidePopover(); }); },
+    sync() { scan(); controls.forEach(control=>control.sync()); },
+    close() { controls.forEach(({menu})=>{if(menu.matches(':popover-open')) menu.hidePopover();}); },
   };
 })();

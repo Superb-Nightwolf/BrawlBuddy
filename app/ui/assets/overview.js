@@ -185,7 +185,7 @@
 
   function contextSection() {
     const c = data.club;
-    let club = c ? `<div class="ov-club-header"><span class="ov-club-emblem">${c.badge_id ? `<img src="https://cdn.brawlify.com/club-badges/regular/${Number(c.badge_id)}.png" alt="" onerror="this.onerror=null;this.src='/assets/rarity-skull.svg'">` : art('team')}</span><div><h4>${esc(c.name)}</h4><span>${esc(c.tag)} · ${esc(c.type)}</span></div><a href="/club/${encodeURIComponent(c.tag)}">Open club →</a></div>` + stats([
+    let club = c ? `<div class="ov-club-header"><span class="ov-club-emblem">${c.badge_id ? `<img src="https://cdn.brawlify.com/club-badges/regular/${Number(c.badge_id)}.png" alt="" onerror="this.onerror=null;this.src='/assets/rarity-skull.svg'">` : art('team')}</span><div><h4>${esc(c.name)}</h4><span>${profileTagMarkup('club', c.tag, 'ov-club-tag')} · ${esc(c.type)}</span></div><a href="/club/${encodeURIComponent(c.tag)}">Open club →</a></div>` + stats([
       ['Club trophies',num(c.trophies)], ['Members',num(c.members)], ['Your position',c.position ? `#${c.position}` : '—'],
       ['Your role',esc(c.role || 'Unavailable')], ['Average trophies',num(c.average)], ['Required trophies',num(c.required_trophies)]])
       + (c.contribution != null ? `<div class="ov-bar-label"><span>Your trophy contribution</span><strong>${pct(c.contribution)}</strong></div><div class="ov-track"><i style="width:${Math.min(100,c.contribution)}%;--ov-color:#8d63d7"></i></div>` : '')

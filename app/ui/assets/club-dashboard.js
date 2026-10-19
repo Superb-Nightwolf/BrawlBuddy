@@ -104,6 +104,8 @@
     html += `<div class="ov-data-info"><span>Club information</span>${infoButton('Club information','Club and member values describe the current roster. Activity, Mega Pig participation, member equipment, win rates and historical growth are not included in this snapshot.')}<button id="club-refresh" class="subtle-button" type="button">Refresh club</button></div>`;
     $('club-dashboard').innerHTML = html;
     $('club-roster-info').innerHTML = infoButton('Member contributions','Search members by name or player tag, filter by club role, and sort by trophy count or name. Positions use trophy rank, including ties. Shares use the current member trophy sum.');
+    $('club-roster-share-info').innerHTML = infoButton('Roster share', 'The percentage of the club members’ combined trophies contributed by this player.\n\nExample: 60,000 trophies out of a roster total of 600,000 = 10%.\n\nUses all current members, even when you filter the table.');
+    $('club-roster-mean-info').innerHTML = infoButton('Versus mean (club average)', 'Mean means average: all current members’ trophies added together, divided by the number of members.\n\nThis column shows the player’s trophies minus that average. +5,000 means 5,000 above average; −5,000 means 5,000 below. 0 means equal to the average.\n\nUses all current members, even when you filter the table.');
     document.querySelectorAll('#club-view .ov-info-wrap').forEach(readinessBindInfo);
     $('club-refresh').disabled = refreshing;
     renderRoster();
@@ -114,13 +116,14 @@
     const query = ($('roster-search')?.value || '').trim().toLowerCase();
     const rows = payload.analytics.rows.filter(row=>(role === 'all' || row.role_key === role) && `${row.name} ${row.tag}`.toLowerCase().includes(query))
       .sort((a,b)=>sort === 'name' ? a.name.localeCompare(b.name) : sort === 'trophies_asc' ? a.trophies-b.trophies : b.trophies-a.trophies);
-    const html = rows.map(row=>`<tr class="roster-row"><td class="roster-rank"><span class="rank-medal rank-${row.rank}">${row.rank}</span></td><td class="roster-name"><a href="/?player=${encodeURIComponent(row.tag)}" class="ranking-person"><img src="https://cdn.brawlify.com/profile-icons/regular/${Number(row.icon_id) || 28000000}.png" alt="" loading="lazy" onerror="this.onerror=null;this.src='/assets/rarity-skull.svg'"><strong>${esc(row.name)}</strong></a></td><td><span class="role-badge club-role-${row.role_key}">${esc(roleLabel(row.role_key))}</span></td><td class="roster-trophies">${UI.icon('trophy','table-trophy-icon')}${num(row.trophies)}</td><td class="club-share-cell"><strong>${pct(row.share)}</strong><span class="ov-track"><i style="width:${row.share || 0}%;--ov-color:#8d63d7"></i></span></td><td>${row.gap_to_average > 0 ? '+' : ''}${num(row.gap_to_average)}</td><td><a class="member-tag-pill" href="/?player=${encodeURIComponent(row.tag)}">${esc(row.tag)}</a></td><td><a class="small-action" href="/?player=${encodeURIComponent(row.tag)}">Inspect profile →</a></td></tr>`).join('');
+    const html = rows.map(row=>`<tr class="roster-row"><td class="roster-rank"><span class="rank-medal rank-${row.rank}">${row.rank}</span></td><td class="roster-name"><a href="/?player=${encodeURIComponent(row.tag)}" class="ranking-person"><img src="https://cdn.brawlify.com/profile-icons/regular/${Number(row.icon_id) || 28000000}.png" alt="" loading="lazy" onerror="this.onerror=null;this.src='/assets/rarity-skull.svg'"><strong>${esc(row.name)}</strong></a></td><td><span class="role-badge club-role-${row.role_key}">${esc(roleLabel(row.role_key))}</span></td><td class="roster-trophies">${UI.icon('trophy','table-trophy-icon')}${num(row.trophies)}</td><td class="club-share-cell"><strong>${pct(row.share)}</strong><span class="ov-track"><i style="width:${row.share || 0}%;--ov-color:#8d63d7"></i></span></td><td>${row.gap_to_average > 0 ? '+' : ''}${num(row.gap_to_average)}</td><td>${profileTagMarkup('player', row.tag)}</td></tr>`).join('');
     $('club-members-tbody').innerHTML = html || (payload.analytics.member_count
-      ? '<tr><td colspan="8"><div class="empty-state"><strong>No matching members</strong>Try another name, tag or role</div></td></tr>'
-      : '<tr><td colspan="8"><div class="empty-state"><strong>No members returned</strong>This club snapshot contains an empty roster</div></td></tr>');
+      ? '<tr><td colspan="7"><div class="empty-state"><strong>No matching members</strong>Try another name, tag or role</div></td></tr>'
+      : '<tr><td colspan="7"><div class="empty-state"><strong>No members returned</strong>This club snapshot contains an empty roster</div></td></tr>');
     setText('club-roster-summary',`${rows.length} of ${payload.analytics.member_count} members · Positions use trophy rank, including ties · Shares use the member sum`);
     $('club-roster-sort').value = sort;
     $('club-role-filter').value = role;
+    globalThis.RosterDropdowns?.sync();
   }
 
   async function refresh() {

@@ -17,10 +17,12 @@
   <link rel="stylesheet" href="/assets/header-navigation.css?v=6">
   <link rel="stylesheet" href="/assets/section-design.css?v=14">
   <link rel="stylesheet" href="/assets/overview.css?v=41">
-  <link rel="stylesheet" href="/assets/player-profile.css?v=19">
-  <link rel="stylesheet" href="/assets/club-dashboard.css?v=6">
+  <link rel="stylesheet" href="/assets/player-profile.css?v=25">
+  <link rel="stylesheet" href="/assets/club-dashboard.css?v=9">
   <link rel="stylesheet" href="/assets/exploration-pages.css?v=3">
-  <link rel="stylesheet" href="/assets/meta-explorer.css?v=5">
+  <link rel="stylesheet" href="/assets/meta-explorer.css?v=7">
+  <link rel="stylesheet" href="/assets/shared-controls.css?v=4">
+  <link rel="stylesheet" href="/assets/sculpted-layout.css?v=12">
 </head>
 <body>
   <div class="app-shell">
@@ -82,12 +84,11 @@
           <div class="player-hero-copy">
             <h2 id="profile-name">Loading brawler</h2>
             <div class="profile-meta label-row">
-              <button id="player-tag-copy" class="meta-tag" type="button" aria-label="Copy player tag"><span id="player-tag">—</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v13h5"/></svg></button>
+              <a id="player-tag-link" class="meta-tag" aria-label="Inspect player and copy tag"><span id="player-tag">—</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v13h5"/></svg></a>
               <a id="club-pill" class="club-pill" href="/club"><span class="section-inline-icon" data-dashboard-icon="team"></span> <strong id="club-name">—</strong> <span id="club-tag" class="club-tag-small">—</span></a>
               <span id="hero-xp-badge" class="hero-xp-badge"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/rarity-skull.svg" alt="" aria-hidden="true"> <strong id="hero-xp-points">—</strong> XP</span>
               <span id="data-label" class="data-label demo hidden">DEMO ACCOUNT</span>
               <span id="champ-badge" class="champ-badge hidden"><img class="section-inline-icon" loading="lazy" decoding="async" src="/assets/icon_trophy.png" alt="" aria-hidden="true"> 15-WIN QUALIFIED</span>
-              <span id="player-tag-copy-status" class="profile-copy-status" role="status"></span>
             </div>
           </div>
           <a class="hero-collection-link" href="/brawlers">
@@ -243,7 +244,7 @@
           <div class="player-hero-copy">
             <h2 id="club-view-name">Loading club</h2>
             <div class="profile-meta label-row">
-              <button id="copy-club-hero-tag" class="meta-tag" type="button" aria-label="Copy club tag"><span id="club-view-tag">—</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v13h5"/></svg></button>
+              <a id="club-tag-link" class="meta-tag" aria-label="Inspect club and copy tag"><span id="club-view-tag">—</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v13h5"/></svg></a>
               <span id="club-type-badge" class="hero-xp-badge">OPEN CLUB</span>
               <span id="club-cover-info"></span>
               <span id="club-data-label" class="data-label demo hidden">DEMO CLUB</span>
@@ -287,8 +288,9 @@
                   <th>Member</th>
                   <th>Role</th>
                   <th>Trophies</th>
-                  <th>Roster share</th><th>Versus mean</th><th>Player tag</th>
-                  <th style="text-align: right;">Action</th>
+                  <th><span class="club-column-heading">Roster share <span id="club-roster-share-info"></span></span></th>
+                  <th><span class="club-column-heading">Versus mean <span id="club-roster-mean-info"></span></span></th>
+                  <th>Player tag</th>
                 </tr>
               </thead>
               <tbody id="club-members-tbody"></tbody>
@@ -828,11 +830,11 @@
                   <span id="matchups-toggle-label">View All Matchups</span>
                   <span class="matchups-toggle-chevron">▼</span>
                 </button>
-                <div class="matchups-info-wrap">
-                  <button type="button" class="matchups-info-btn" id="matchups-info-btn" aria-label="Matchup win rate information" title="Percentages represent this Brawler’s win rate against opponents or alongside teammates">
+                <div class="matchups-info-wrap readiness-info-wrap">
+                  <button type="button" class="matchups-info-btn" id="matchups-info-btn" aria-label="Matchup win rate information" aria-expanded="false" aria-controls="matchups-info-tooltip">
                     <span class="matchups-info-icon" aria-hidden="true">i</span>
                   </button>
-                  <div class="matchups-info-tooltip" id="matchups-info-tooltip" role="tooltip">
+                  <div class="matchups-info-tooltip readiness-info-tooltip" id="matchups-info-tooltip" role="tooltip">
                     Percentages represent this Brawler’s win rate against opponents or alongside teammates
                   </div>
                 </div>
@@ -1068,18 +1070,20 @@
     </div>
   </dialog>
 
+  <div id="tag-action-status" class="tag-action-status" role="status" aria-live="polite" aria-atomic="true"></div>
+
   <script src="/config.js" defer></script>
   <script src="/assets/artwork-layout.js?v=2" defer></script>
   <script src="/assets/brawler-backgrounds.js?v=5" defer></script>
   <script src="/assets/brawler-hero-themes.js?v=1" defer></script>
-  <script src="/assets/readiness.js?v=27" defer></script>
-  <script src="/assets/roster-dropdowns.js?v=11" defer></script>
+  <script src="/assets/readiness.js?v=28" defer></script>
+  <script src="/assets/roster-dropdowns.js?v=15" defer></script>
   <script src="/assets/ui-motion.js?v=1" defer></script>
-  <script src="/assets/app.js?v=173" defer></script>
+  <script src="/assets/app.js?v=176" defer></script>
   <script src="/assets/dashboard-ui.js?v=4" defer></script>
   <script src="/assets/exploration-pages.js?v=1" defer></script>
-  <script src="/assets/club-dashboard.js?v=4" defer></script>
-  <script src="/assets/overview.js?v=29" defer></script>
+  <script src="/assets/club-dashboard.js?v=7" defer></script>
+  <script src="/assets/overview.js?v=30" defer></script>
   <script src="/assets/meta-explorer.js?v=8" defer></script>
 </body>
 </html>
