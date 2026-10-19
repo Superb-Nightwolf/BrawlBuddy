@@ -21,6 +21,9 @@
   function metric(label,value,detail,tone='blue',symbol='') {
     return `<article class="ov-stat ov-stat-${tone} ov-account-metric"><div class="ov-metric-heading"><span class="ov-metric-emblem" aria-hidden="true">${symbol}</span>${infoButton(label,detail)}<h3>${esc(label)}</h3></div><strong><span>${esc(value)}</span></strong></article>`;
   }
+  function insight(label, value, detail, tone, symbol, targetId, valId = '', detId = '') {
+    return `<a class="ov-insight-${tone}" href="#${targetId}"><span class="ov-insight-emblem" aria-hidden="true">${UI.icon(symbol)}</span><span class="ov-insight-copy"><small>${esc(label)}</small><strong><span class="ov-insight-value"${valId ? ` id="${valId}"` : ''}>${esc(value)}</span><span class="ov-insight-detail"${detId ? ` id="${detId}"` : ''}>${esc(detail)}</span></strong></span><span class="ov-insight-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></a>`;
+  }
   function card(title,body,note,span=6,key='chart',kicker='') {
     const tone = {trophy:'gold',roles:'purple',team:'blue',lock:'green',target:'green',chart:'purple'}[key] || 'blue';
     return `<article data-ov-card="${normalizeKey(title)}" class="ov-card ov-account-card ov-card-${tone} ov-span-${span}"><div class="ov-card-heading"><div>${kicker ? `<span class="ov-kicker">${esc(kicker)}</span>` : ''}<h3>${esc(title)}</h3></div>${infoButton(title,note)}</div><div class="ov-card-body">${body}</div></article>`;
@@ -59,12 +62,22 @@
     const source = c.source === 'DEMO' ? 'Demo club' : payload.freshness?.cache_hit ? 'Cached club snapshot' : 'Club snapshot';
     const clubDetails = `${c.description || 'No club description provided'}\n\n${source} · ${new Date(c.fetched_at).toLocaleString()}\n${num(s.member_count)} members · ${num(s.open_slots)} open spots\nClub trophies: ${num(s.reported_trophies)}\nMember trophy sum: ${num(s.roster_trophies)}${s.totals_match ? '' : `\nTotals differ by ${num(s.total_difference)}; charts use the member sum`}`;
     $('club-cover-info').innerHTML = infoButton('Club details',clubDetails);
-    let html = '<div class="ov-stats-grid">'
-      +metric('AVERAGE TROPHIES',num(s.average_trophies),'Mean trophies per current member','yellow',UI.icon('trophy','ov-stat-art'))
-      +metric('MEDIAN TROPHIES',num(s.median_trophies),'The middle of your roster','blue',UI.icon('chart','ov-stat-art'))
-      +metric('TROPHY RANGE',num(s.trophy_range),'Difference between the highest and lowest member trophy totals','green',UI.icon('streak','ov-stat-art'))
-      +metric('LEADERSHIP',num(s.leadership_count),'Presidents and vice presidents','purple',UI.icon('roles','ov-stat-art'))
-      +metric('TOP 5 SHARE',pct(s.top5_share),`${s.top5_count} members contribute this share of roster trophies`,'orange',UI.icon('chart','ov-stat-art'))+'</div>';
+    const clubTargetGap = Math.max(0, target - s.roster_trophies);
+    let html = `<section class="ov-group ov-tone-blue ov-summary-group" aria-label="Club summary and planning shortcuts">`
+      + `<div class="ov-summary-layout">`
+      + `<div class="ov-stats-grid">`
+      + metric('AVERAGE TROPHIES',num(s.average_trophies),'Mean trophies per current member','yellow',UI.icon('trophy','ov-stat-art'))
+      + metric('MEDIAN TROPHIES',num(s.median_trophies),'The middle of your roster','blue',UI.icon('chart','ov-stat-art'))
+      + metric('TROPHY RANGE',num(s.trophy_range),'Difference between the highest and lowest member trophy totals','green',UI.icon('streak','ov-stat-art'))
+      + metric('LEADERSHIP',num(s.leadership_count),'Presidents and vice presidents','purple',UI.icon('roles','ov-stat-art'))
+      + metric('TOP 5 SHARE',pct(s.top5_share),`${s.top5_count} members contribute this share of roster trophies`,'orange',UI.icon('chart','ov-stat-art'))
+      + `</div>`
+      + `<nav class="ov-insight-links" aria-label="Club planning shortcuts">`
+      + insight('ROSTER CAPACITY',`${num(s.member_count)} / 30`,s.open_slots ? `${num(s.open_slots)} open spots` : 'Club full','blue','team','roster')
+      + insight('NEXT CLUB TARGET',num(clubTargetGap),`trophies to ${num(target)}`,'gold','target','club-planning','club-target-shortcut-val','club-target-shortcut-det')
+      + `</nav>`
+      + `</div>`
+      + `</section>`;
 
     let body = card('Room for the next teammate',UI.donut([{label:'Occupied',value:s.member_count,color:'#8d63d7'},
       {label:'Open places',value:s.open_slots,color:'#dce6f3'}],`${s.member_count} / 30`,'MEMBERS'),
@@ -144,6 +157,14 @@
     finally {refreshing=false;button.disabled=false;button.textContent='Refresh club';}
   }
   document.addEventListener('click',event=>{
+    const shortcut = event.target.closest('#club-dashboard .ov-insight-links a');
+    if (shortcut && event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+      const section = document.getElementById(shortcut.hash.slice(1));
+      if (section) {
+        event.preventDefault();
+        section.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'start'});
+      }
+    }
     if (event.target.closest('#club-refresh')) refresh();
     if (event.target.closest('#club-retry')) loadInitialClub();
   });
@@ -152,13 +173,19 @@
     target = Math.trunc(Number(input.value));
     const s = payload.analytics, gap = Math.max(0,target-s.roster_trophies);
     const progress = Math.min(100,s.roster_trophies/target*100), plan = $('club-target-plan');
-    plan.querySelectorAll('.club-plan-values strong')[1].textContent = num(gap);
-    plan.querySelector('.club-plan-values > span').textContent = pct(progress);
-    plan.querySelector('.ov-track > i').style.width = `${progress}%`;
-    const values = plan.querySelectorAll('.ov-mini-stats strong');
-    values[0].textContent = num(target);
-    values[1].textContent = s.member_count ? num(Math.ceil(gap/s.member_count)) : '—';
-    values[2].textContent = gap ? 'In progress' : 'Target reached';
+    if (plan) {
+      plan.querySelectorAll('.club-plan-values strong')[1].textContent = num(gap);
+      plan.querySelector('.club-plan-values > span').textContent = pct(progress);
+      plan.querySelector('.ov-track > i').style.width = `${progress}%`;
+      const values = plan.querySelectorAll('.ov-mini-stats strong');
+      values[0].textContent = num(target);
+      values[1].textContent = s.member_count ? num(Math.ceil(gap/s.member_count)) : '—';
+      values[2].textContent = gap ? 'In progress' : 'Target reached';
+    }
+    const shortcutVal = $('club-target-shortcut-val');
+    if (shortcutVal) shortcutVal.textContent = num(gap);
+    const shortcutDet = $('club-target-shortcut-det');
+    if (shortcutDet) shortcutDet.textContent = `trophies to ${num(target)}`;
   }
   document.addEventListener('input',event=>{
     if (event.target.id === 'roster-search') renderRoster();

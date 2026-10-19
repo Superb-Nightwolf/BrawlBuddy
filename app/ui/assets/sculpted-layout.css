@@ -48,14 +48,14 @@
   display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
   gap: var(--summary-gap); padding: 0 30px;
 }
-#overview-dashboard .ov-summary-group .ov-stats-grid {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-stats-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
   padding: 0;
   width: 100%;
 }
-#overview-dashboard .ov-summary-group .ov-stats-grid > .ov-account-metric {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-stats-grid > .ov-account-metric {
   width: 100%;
   flex: 1 1 auto;
 }

@@ -80,14 +80,14 @@
   gap: 14px;
   align-items: stretch;
 }
-#overview-dashboard .ov-summary-group .ov-stats-grid {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-stats-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
   padding: 0;
   width: 100%;
 }
-#overview-dashboard .ov-summary-group .ov-stats-grid > .ov-account-metric {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-stats-grid > .ov-account-metric {
   width: 100%;
   height: 100%;
   min-height: var(--summary-height, 128px);
@@ -96,11 +96,11 @@
   border: 2px solid var(--stat-border);
   box-shadow: 0 4px 0 var(--stat-border),inset 0 1px 0 #fff,0 6px 14px #19365b06;
 }
-#overview-dashboard .ov-summary-group .ov-stats-grid > .ov-account-metric:hover {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-stats-grid > .ov-account-metric:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 0 var(--stat-border),inset 0 1px 0 #fff,0 10px 20px #19365b10;
 }
-#overview-dashboard .ov-summary-group .ov-insight-links {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-insight-links {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(2, minmax(0, 1fr));
@@ -108,7 +108,7 @@
   margin: 0;
   height: 100%;
 }
-#overview-dashboard .ov-summary-group .ov-insight-links a {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-insight-links a {
   min-height: 0;
   height: 100%;
   padding: 10px 14px;
@@ -118,20 +118,20 @@
   border: 2px solid var(--insight-line);
   box-shadow: 0 4px 0 var(--insight-line),inset 0 1px 0 #fff,0 6px 14px #19365b06;
 }
-#overview-dashboard .ov-summary-group .ov-insight-links a:hover {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-insight-links a:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 0 var(--insight-line),inset 0 1px 0 #fff,0 10px 20px #19365b10;
 }
-#overview-dashboard .ov-summary-group .ov-insight-links .ov-insight-emblem {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-insight-links .ov-insight-emblem {
   width: 38px;
   height: 38px;
   border-radius: 12px;
 }
-#overview-dashboard .ov-summary-group .ov-insight-links .ov-art {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-insight-links .ov-art {
   width: 26px;
   height: 26px;
 }
-#overview-dashboard .ov-summary-group .ov-insight-links .ov-insight-value {
+:is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-insight-links .ov-insight-value {
   font-size: 20px;
 }
 
@@ -140,19 +140,19 @@
     grid-template-columns: 1fr;
     gap: 14px;
   }
-  #overview-dashboard .ov-summary-group .ov-insight-links {
+  :is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-insight-links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: auto;
   }
 }
 @media (max-width: 720px) {
-  #overview-dashboard .ov-summary-group .ov-stats-grid {
+  :is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  #overview-dashboard .ov-summary-group .ov-stats-grid > .ov-account-metric:last-child {
+  :is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-stats-grid > .ov-account-metric:last-child {
     grid-column: 1 / -1;
   }
-  #overview-dashboard .ov-summary-group .ov-insight-links {
+  :is(#overview-dashboard, #club-dashboard) .ov-summary-group .ov-insight-links {
     grid-template-columns: 1fr;
   }
 }
